@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="LoginActivity"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="71dp"
+        android:src="@drawable/icon_logo"/>
+
+    <LinearLayout
+        android:id="@+id/btn_login_act_twitter_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="9dp"
+        android:background="@drawable/login_border_twitter"
+        android:orientation="horizontal"
+        android:gravity="center"
+         >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="9dp"
+            android:layout_marginRight="6dp"
+            android:src="@drawable/icon_twitter"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="트위터계정으로 시작하기"
+            android:textColor="@color/colorWhite"
+            android:textSize="15sp"
+            android:lineHeight="20sp"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/btn_login_act_kakao_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/login_border_kakao"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="6dp"
+            android:layout_marginVertical="6dp"
+            android:src="@drawable/icon_kakao"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="카카오계정으로 시작하기"
+            android:textColor="#3c1e1e"
+            android:textSize="15sp"
+            android:lineHeight="20sp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <View
+            android:layout_width="145dp"
+            android:layout_height="1dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="15.5dp"
+            android:layout_marginBottom="14.5dp"
+            android:background="#9b9b9b"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:marginHorizontal="5.5dp"
+            android:paddingHorizontal="13.5dp"
+            android:layout_gravity="center"
+            android:text="또는" />
+        <View
+            android:layout_width="145dp"
+            android:layout_height="1dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="15.5dp"
+            android:layout_marginBottom="14.5dp"
+            android:background="#9b9b9b"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/btn_login_act_without_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/login_without_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_underbar"
+            android:layout_marginTop="22dp"
+            android:layout_marginBottom="-2dp"
+            android:textStyle="normal"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#5c5c5c"/>
+    </LinearLayout>
+
+
+</LinearLayout>
