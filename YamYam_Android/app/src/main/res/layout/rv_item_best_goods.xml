@@ -4,65 +4,84 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="4dp">
+    android:layout_marginLeft="4dp"
+    android:layout_marginRight="4dp"
+    android:layout_marginBottom="14dp">
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/cardView"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/cl_rv_item_best_goods_image"
         android:layout_width="0dp"
-        android:layout_height="100dp"
+        android:layout_height="398dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/iv_rv_item_best_goods_picture"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:srcCompat="@android:color/black" />
-    </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:elevation="0dp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
-        android:id="@+id/iv_rv_item_best_goods_heart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/icon_heart" />
+            <ImageView
+                android:id="@+id/iv_rv_item_best_goods_picture"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:srcCompat="@android:color/black" />
+        </android.support.v7.widget.CardView>
+
+        <ImageView
+            android:id="@+id/iv_rv_item_best_goods_bookmark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="11dp"
+            android:layout_marginEnd="7dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/selector_bookmark_heart" />
+
+    </android.support.constraint.ConstraintLayout>
 
     <TextView
         android:id="@+id/tv_rv_item_best_goods_store_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="스토어이름"
-        app:layout_constraintStart_toStartOf="@+id/cardView"
-        app:layout_constraintTop_toBottomOf="@+id/cardView" />
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="@+id/cl_rv_item_best_goods_image"
+        app:layout_constraintTop_toBottomOf="@+id/cl_rv_item_best_goods_image" />
 
     <TextView
         android:id="@+id/tv_rv_item_best_goods_product_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="1dp"
         android:text="제품이름"
-        app:layout_constraintStart_toStartOf="@+id/cardView"
+        app:layout_constraintStart_toStartOf="@+id/tv_rv_item_best_goods_store_name"
         app:layout_constraintTop_toBottomOf="@+id/tv_rv_item_best_goods_store_name" />
 
     <TextView
         android:id="@+id/tv_rv_item_best_goods_product_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="제품가격"
-        app:layout_constraintStart_toStartOf="@+id/cardView"
+        android:text="00000"
+        android:textColor="@android:color/black"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@+id/tv_rv_item_best_goods_product_name"
         app:layout_constraintTop_toBottomOf="@+id/tv_rv_item_best_goods_product_name" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@+id/cardView"
-        app:layout_constraintTop_toBottomOf="@+id/tv_rv_item_best_goods_product_price"
-        android:orientation="horizontal">
+        android:layout_marginTop="1dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="@+id/tv_rv_item_best_goods_product_price"
+        app:layout_constraintTop_toBottomOf="@+id/tv_rv_item_best_goods_product_price">
 
         <ImageView
             android:id="@+id/imageView3"
@@ -79,6 +98,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="4.8"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView3"
             app:layout_constraintTop_toTopOf="parent" />
@@ -89,6 +109,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="최소수량"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_rv_item_best_goods_rate"
             app:layout_constraintTop_toTopOf="parent" />
@@ -100,6 +121,7 @@
             android:layout_marginStart="8dp"
             android:foregroundGravity="center_vertical"
             android:text="10"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView5"
             app:layout_constraintTop_toTopOf="parent"
@@ -111,6 +133,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="리뷰"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_rv_item_best_goods_minimum_quantity"
             app:layout_constraintTop_toTopOf="parent" />
@@ -121,6 +144,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="300"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView7"
             app:layout_constraintTop_toTopOf="parent"
