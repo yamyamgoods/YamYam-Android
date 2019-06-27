@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
 import kotlinx.android.synthetic.main.activity_home.*
+import org.yamyamgoods.yamyam_android.BestGoodsFragment
+import org.yamyamgoods.yamyam_android.Home.store.StoreMainFragment
 import org.yamyamgoods.yamyam_android.R
 
 class HomeActivity : AppCompatActivity() {
@@ -18,7 +20,7 @@ class HomeActivity : AppCompatActivity() {
     }
     fun startView(){
         //TODO 처음 뷰 넣어주세요
-//        addFragment()
+        addFragment(BestGoodsFragment())
         iv_bottom_best_icon.isSelected=true
         tv_bottom_best_text.isSelected=true
         setOnClickListener()
@@ -26,13 +28,13 @@ class HomeActivity : AppCompatActivity() {
     fun setOnClickListener(){
         btn_bottom_best.setOnClickListener{
             //TODO 프래그먼트 넣어주세요
-//            replaceFragment()
+            replaceFragment(BestGoodsFragment())
             clearBtnSelect()
             iv_bottom_best_icon.isSelected=true
             tv_bottom_best_text.isSelected=true
         }
         btn_bottom_store.setOnClickListener{
-//            replaceFragment()
+            replaceFragment(StoreMainFragment())
             clearBtnSelect()
             iv_bottom_store_icon.isSelected=true
             tv_bottom_store_text.isSelected=true
