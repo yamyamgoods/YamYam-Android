@@ -1,17 +1,17 @@
-package org.yamyamgoods.yamyam_android
+package org.yamyamgoods.yamyam_android.Home
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
-import kotlinx.android.synthetic.main.activity_main.*
-import org.jetbrains.anko.sdk27.coroutines.onClick
+import kotlinx.android.synthetic.main.activity_home.*
+import org.yamyamgoods.yamyam_android.R
 
-class MainActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_home)
         setOnClickListener()
 
         startView()
@@ -51,17 +51,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun clearBtnSelect(){
-        iv_bottom_best_icon.isSelected=false
-        tv_bottom_best_text.isSelected=false
-        iv_bottom_store_icon.isSelected=false
-        tv_bottom_store_text.isSelected=false
-        iv_bottom_goods_icon.isSelected=false
-        tv_bottom_goods_text.isSelected=false
-        iv_bottom_like_icon.isSelected=false
-        tv_bottom_like_text.isSelected=false
-    }
-
     fun replaceFragment(fragment:Fragment){
         val transaction:FragmentTransaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fl_main_fragment,fragment)
@@ -71,5 +60,16 @@ class MainActivity : AppCompatActivity() {
         val transaction:FragmentTransaction = supportFragmentManager.beginTransaction()
         transaction.add(R.id.fl_main_fragment,fragment)
         transaction.commit()
+    }
+
+    fun clearBtnSelect(){
+        iv_bottom_best_icon.isSelected=false
+        tv_bottom_best_text.isSelected=false
+        iv_bottom_store_icon.isSelected=false
+        tv_bottom_store_text.isSelected=false
+        iv_bottom_goods_icon.isSelected=false
+        tv_bottom_goods_text.isSelected=false
+        iv_bottom_like_icon.isSelected=false
+        tv_bottom_like_text.isSelected=false
     }
 }
