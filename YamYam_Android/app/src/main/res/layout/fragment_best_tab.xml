@@ -82,5 +82,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tl_best_tab_frag_tab" />
+        app:layout_constraintTop_toBottomOf="@+id/tl_best_tab_frag_tab"
+        android:overScrollMode="never"/>
 </android.support.constraint.ConstraintLayout>
