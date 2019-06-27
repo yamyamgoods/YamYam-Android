@@ -1,13 +1,14 @@
-package org.yamyamgoods.yamyam_android
+package org.yamyamgoods.yamyam_android.home.best.goods
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_best_goods.*
+import org.yamyamgoods.yamyam_android.home.best.goods.adapter.BestGoodsRVAdapter
+import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.util.TempData
 
 class BestGoodsFragment : Fragment() {

@@ -1,4 +1,4 @@
-package org.yamyamgoods.yamyam_android
+package org.yamyamgoods.yamyam_android.home.best.goods
 
 data class BestGoodsItem(
         val idx: Int,

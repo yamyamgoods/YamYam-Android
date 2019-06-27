@@ -1,8 +1,10 @@
-package org.yamyamgoods.yamyam_android
+package org.yamyamgoods.yamyam_android.home.best.adpater
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
+import org.yamyamgoods.yamyam_android.home.best.goods.BestGoodsFragment
+import org.yamyamgoods.yamyam_android.home.best.review.BestReviewFragment
 
 class BestTabFragmentStatePagerAdapter(fm: FragmentManager, private val fragmentCount: Int)
     : FragmentStatePagerAdapter(fm) {

@@ -1,15 +1,16 @@
-package org.yamyamgoods.yamyam_android
+package org.yamyamgoods.yamyam_android.home.best.goods.adapter
 
 import android.content.Context
 import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import org.jetbrains.anko.imageResource
+import org.yamyamgoods.yamyam_android.home.best.goods.BestGoodsItem
+import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.util.dp2px
 
 class BestGoodsRVAdapter(private val ctx: Context, private val dataList: List<BestGoodsItem>) : RecyclerView.Adapter<BestGoodsRVAdapter.Holder>() {

@@ -1,4 +1,4 @@
-package org.yamyamgoods.yamyam_android.Home
+package org.yamyamgoods.yamyam_android.home
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle

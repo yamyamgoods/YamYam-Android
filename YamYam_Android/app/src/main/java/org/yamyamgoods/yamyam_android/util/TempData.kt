@@ -1,6 +1,6 @@
 package org.yamyamgoods.yamyam_android.util
 
-import org.yamyamgoods.yamyam_android.BestGoodsItem
+import org.yamyamgoods.yamyam_android.home.best.goods.BestGoodsItem
 import org.yamyamgoods.yamyam_android.R
 
 class TempData {
