@@ -23,7 +23,7 @@ class StoreMainFragment : Fragment() {
 
     fun configureTabNavi(){
 
-        vp_store_info.adapter = StoreTabFragmentStatePagerAdapter(support,3)
+//        vp_store_info.adapter = StoreTabFragmentStatePagerAdapter(support,3)
         tl_store_tab.setupWithViewPager(vp_store_info)
         val storeNaviBar:View = this.layoutInflater.inflate(R.layout.fragment_store_tab,null,false)
 
