@@ -34,6 +34,7 @@ class StoreRankingRVAdapter(private val ctx: Context, private val dataList: List
 
             holder.tvStoreName.text = item.storeName
             holder.llHashTagList.apply {
+                removeAllViews()
                 for (text: String in item.hashTags) {
                     addView(getTextViewWith(text))
                 }
