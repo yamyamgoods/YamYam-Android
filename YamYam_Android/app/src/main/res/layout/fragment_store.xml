@@ -31,7 +31,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/icon_yamyam" />
+                app:srcCompat="@drawable/icon_yamyams" />
 
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/btn_store_fragment_search"
