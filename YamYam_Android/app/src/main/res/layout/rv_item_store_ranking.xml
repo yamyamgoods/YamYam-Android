@@ -40,6 +40,7 @@
             android:layout_height="wrap_content"
             android:text="가게 이름"
             android:textColor="#4D4D4D"
+            android:textSize="15sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -47,10 +48,10 @@
             android:id="@+id/tv_rv_item_store_ranking_tags"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="#해시태그"
-            android:textSize="13sp"
-            android:maxLines="1"
             android:ellipsize="end"
+            android:maxLines="1"
+            android:text="#해시태그"
+            android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@+id/texts"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_rv_item_store_ranking_name"></TextView>
@@ -95,7 +96,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:text="리뷰 "
-                android:textSize="12sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/tv_rv_item_store_ranking_review_count"
@@ -103,7 +104,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:text="0"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
         </LinearLayout>
 
     </android.support.constraint.ConstraintLayout>
