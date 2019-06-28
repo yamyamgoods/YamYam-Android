@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/tv_rv_item_store_ranking_idx"
-        android:layout_width="wrap_content"
+        android:layout_width="16dp"
         android:layout_height="wrap_content"
         android:text="0"
         android:textColor="#3C3C3C"
@@ -19,7 +19,7 @@
         android:id="@+id/iv_rv_item_store_ranking_image"
         android:layout_width="57dp"
         android:layout_height="57dp"
-        android:layout_marginStart="6dp"
+        android:layout_marginStart="2dp"
         app:layout_constraintStart_toEndOf="@+id/tv_rv_item_store_ranking_idx"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/img_store1" />
@@ -43,14 +43,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:id="@+id/ll_rv_item_store_ranking_tag_list"
+        <TextView
+            android:id="@+id/tv_rv_item_store_ranking_tags"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:text="#해시태그"
+            android:textSize="13sp"
+            android:maxLines="1"
+            android:ellipsize="end"
             app:layout_constraintBottom_toTopOf="@+id/texts"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_rv_item_store_ranking_name"></LinearLayout>
+            app:layout_constraintTop_toBottomOf="@+id/tv_rv_item_store_ranking_name"></TextView>
 
         <LinearLayout
             android:id="@+id/texts"

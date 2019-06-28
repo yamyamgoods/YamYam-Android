@@ -59,22 +59,22 @@ class TempData {
 
             result.add(
                     StoreRankingItem(0, 1, R.drawable.img_store1, "레드프린팅&프레스",
-                            listOf("#어쩌구 전문", "#저쩌구전문",""),
+                            listOf("#어쩌구 전문", "#저쩌구전문", "#어쩌구 전문", "#저쩌구전문", "#어쩌구 전문", "#저쩌구전문"),
                             4.8f, 1300, true
                     ))
             result.add(
                     StoreRankingItem(0, 2, R.drawable.img_store2, "후니프린팅",
-                            listOf("#어쩌구 전문", "#저쩌구전문",""),
+                            listOf("#어쩌구 전문", "#저쩌구전문", "#어쩌구 전문", "#저쩌구전문"),
                             4.8f, 1300, false
                     ))
             result.add(
                     StoreRankingItem(0, 3, R.drawable.img_store3, "또또굿즈제작소",
-                            listOf("#어쩌구 전문", "#저쩌구전문",""),
+                            listOf("#어쩌구 전문", "#저쩌구전문"),
                             4.8f, 1300, true
                     ))
             result.add(
                     StoreRankingItem(0, 4, R.drawable.img_goods1, "옥수수스토어",
-                            listOf("#어쩌구 전문", "#저쩌구전문",""),
+                            listOf("#어쩌구 전문", "#저쩌구전문"),
                             4.8f, 1300, false
                     ))
             result.add(
@@ -104,22 +104,22 @@ class TempData {
                     ))
             result.add(
                     StoreRankingItem(0, 10, R.drawable.img_store1, "레드프린팅&프레스",
-                            listOf("#어쩌구 전문", "#저쩌구전문",""),
+                            listOf("#어쩌구 전문", "#저쩌구전문", ""),
                             4.8f, 1300, true
                     ))
             result.add(
                     StoreRankingItem(0, 11, R.drawable.img_store2, "후니프린팅",
-                            listOf("#어쩌구 전문", "#저쩌구전문",""),
+                            listOf("#어쩌구 전문", "#저쩌구전문", ""),
                             4.8f, 1300, false
                     ))
             result.add(
                     StoreRankingItem(0, 12, R.drawable.img_store3, "또또굿즈제작소",
-                            listOf("#어쩌구 전문", "#저쩌구전문",""),
+                            listOf("#어쩌구 전문", "#저쩌구전문", ""),
                             4.8f, 1300, true
                     ))
             result.add(
                     StoreRankingItem(0, 13, R.drawable.img_goods1, "옥수수스토어",
-                            listOf("#어쩌구 전문", "#저쩌구전문",""),
+                            listOf("#어쩌구 전문", "#저쩌구전문", ""),
                             4.8f, 1300, false
                     ))
             result.add(

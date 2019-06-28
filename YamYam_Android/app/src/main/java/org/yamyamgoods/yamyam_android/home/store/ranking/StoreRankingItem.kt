@@ -1,5 +1,7 @@
 package org.yamyamgoods.yamyam_android.home.store.ranking
 
+import android.text.TextUtils
+
 data class StoreRankingItem(
 
         val storeIdx: Int,
@@ -14,4 +16,8 @@ data class StoreRankingItem(
 
         val isLiked: Boolean
 
-)
+) {
+    fun getOneLineHashTags(): String {
+        return TextUtils.join(" ", hashTags)
+    }
+}

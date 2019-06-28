@@ -2,9 +2,11 @@ package org.yamyamgoods.yamyam_android
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import kotlinx.android.synthetic.main.fragment_store.*
 import org.yamyamgoods.yamyam_android.home.store.adapter.StoreTabFragmentStatePagerAdapter
+import org.yamyamgoods.yamyam_android.util.TempData
 
 class test : AppCompatActivity() {
 
@@ -30,5 +32,7 @@ class test : AppCompatActivity() {
             getTabAt(1)!!.customView = tabLayout.findViewById(R.id.btn_store_tab_regular_store)
         }
 
+
+        Log.v("Malibin Debug", "${TempData.storeRankings()[4].getOneLineHashTags()}")
     }
 }
