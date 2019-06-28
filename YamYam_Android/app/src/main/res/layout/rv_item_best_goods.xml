@@ -53,7 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="스토어이름"
-        android:textSize="10sp"
+        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="@+id/cl_rv_item_best_goods_image"
         app:layout_constraintTop_toBottomOf="@+id/cl_rv_item_best_goods_image" />
 
@@ -63,6 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp"
         android:text="제품이름"
+        android:textSize="15sp"
         app:layout_constraintStart_toStartOf="@+id/tv_rv_item_best_goods_store_name"
         app:layout_constraintTop_toBottomOf="@+id/tv_rv_item_best_goods_store_name" />
 
@@ -109,7 +110,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="최소수량"
+            android:text="최소수량 "
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_rv_item_best_goods_rate"
@@ -119,7 +120,6 @@
             android:id="@+id/tv_rv_item_best_goods_minimum_quantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
             android:foregroundGravity="center_vertical"
             android:text="10"
             android:textSize="12sp"
@@ -133,7 +133,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="리뷰"
+            android:text="리뷰 "
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_rv_item_best_goods_minimum_quantity"
@@ -143,7 +143,6 @@
             android:id="@+id/tv_rv_item_best_goods_review_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
             android:text="300"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
