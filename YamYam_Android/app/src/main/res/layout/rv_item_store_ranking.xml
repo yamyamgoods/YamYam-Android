@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp">
+
+    <TextView
+        android:id="@+id/tv_rv_item_store_ranking_idx"
+        android:layout_width="16dp"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textColor="#3C3C3C"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_rv_item_store_ranking_image"
+        android:layout_width="57dp"
+        android:layout_height="57dp"
+        android:layout_marginStart="2dp"
+        app:layout_constraintStart_toEndOf="@+id/tv_rv_item_store_ranking_idx"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/img_store1" />
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_rv_item_store_ranking_image"
+        app:layout_constraintEnd_toStartOf="@+id/btn_rv_item_store_ranking_like"
+        app:layout_constraintStart_toEndOf="@+id/iv_rv_item_store_ranking_image"
+        app:layout_constraintTop_toTopOf="@+id/iv_rv_item_store_ranking_image">
+
+        <TextView
+            android:id="@+id/tv_rv_item_store_ranking_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="가게 이름"
+            android:textColor="#4D4D4D"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_rv_item_store_ranking_tags"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="#해시태그"
+            android:textSize="13sp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            app:layout_constraintBottom_toTopOf="@+id/texts"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_rv_item_store_ranking_name"></TextView>
+
+        <LinearLayout
+            android:id="@+id/texts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_rv_item_store_ranking_star"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/star" />
+
+            <Space
+                android:layout_width="6dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0" />
+
+            <TextView
+                android:id="@+id/tv_rv_item_store_ranking_star_rate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:text="0.0"
+                android:textSize="12sp" />
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0" />
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:text="리뷰 "
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_rv_item_store_ranking_review_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:text="0"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/btn_rv_item_store_ranking_like"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_rv_item_store_ranking_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/icon_likegray" />
+    </android.support.constraint.ConstraintLayout>
+</android.support.constraint.ConstraintLayout>
