@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
 import kotlinx.android.synthetic.main.activity_home.*
+import org.yamyamgoods.yamyam_android.Home.store.StoreMainFragment
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.home.best.goods.BestGoodsFragment
 import org.yamyamgoods.yamyam_android.home.store.ranking.StoreRankingFragment
@@ -35,6 +36,7 @@ class HomeActivity : AppCompatActivity() {
         }
         btn_bottom_store.setOnClickListener{
             replaceFragment(StoreRankingFragment())
+
             clearBtnSelect()
             iv_bottom_store_icon.isSelected=true
             tv_bottom_store_text.isSelected=true
