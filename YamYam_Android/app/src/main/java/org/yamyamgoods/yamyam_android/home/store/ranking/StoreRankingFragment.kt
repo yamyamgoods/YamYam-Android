@@ -2,6 +2,7 @@ package org.yamyamgoods.yamyam_android.home.store.ranking
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -28,6 +29,7 @@ class StoreRankingFragment : Fragment() {
             val ctx = activity!!.applicationContext
             adapter = StoreRankingRVAdapter(ctx, TempData.storeRankings())
             layoutManager = LinearLayoutManager(ctx)
+            addItemDecoration(DividerItemDecoration(ctx, DividerItemDecoration.VERTICAL))
         }
     }
 }
