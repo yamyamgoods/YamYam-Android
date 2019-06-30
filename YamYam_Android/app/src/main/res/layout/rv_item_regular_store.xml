@@ -5,7 +5,8 @@
     android:id="@+id/btn_rv_item_regular_store_whole"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="16dp">
+    android:layout_marginTop="12dp"
+    android:layout_marginBottom="12dp">
 
     <ImageView
         android:id="@+id/iv_rv_item_regular_store_image"

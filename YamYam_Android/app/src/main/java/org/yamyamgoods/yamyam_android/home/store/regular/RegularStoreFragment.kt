@@ -2,6 +2,7 @@ package org.yamyamgoods.yamyam_android.home.store.regular
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +12,7 @@ import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.home.store.regular.adapter.RegularStoreRVAdapter
 import org.yamyamgoods.yamyam_android.util.TempData
 
-class RegularStoreFragment : Fragment(){
+class RegularStoreFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_regular_store, container, false)
@@ -23,11 +24,12 @@ class RegularStoreFragment : Fragment(){
         viewInit()
     }
 
-    private fun viewInit(){
+    private fun viewInit() {
         rv_regular_store_frag_list.apply {
             val ctx = activity!!.applicationContext
             adapter = RegularStoreRVAdapter(ctx, TempData.regularStores())
             layoutManager = LinearLayoutManager(ctx)
+            addItemDecoration(DividerItemDecoration(ctx, DividerItemDecoration.VERTICAL))
         }
     }
 }
