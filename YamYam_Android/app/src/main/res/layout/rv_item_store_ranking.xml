@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:text="0"
         android:textColor="#3C3C3C"
+        android:textSize="14dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -41,7 +42,7 @@
             android:layout_height="wrap_content"
             android:text="가게 이름"
             android:textColor="#4D4D4D"
-            android:textSize="15sp"
+            android:textSize="15dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -52,7 +53,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:text="#해시태그"
-            android:textSize="14sp"
+            android:textSize="14dp"
             app:layout_constraintBottom_toTopOf="@+id/texts"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_rv_item_store_ranking_name"></TextView>
@@ -84,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:text="0.0"
-                android:textSize="12sp" />
+                android:textSize="12dp" />
 
             <Space
                 android:layout_width="10dp"
@@ -97,7 +98,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:text="리뷰 "
-                android:textSize="14sp" />
+                android:textSize="14dp" />
 
             <TextView
                 android:id="@+id/tv_rv_item_store_ranking_review_count"
@@ -105,7 +106,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:text="0"
-                android:textSize="14sp" />
+                android:textSize="14dp" />
         </LinearLayout>
 
     </android.support.constraint.ConstraintLayout>
