@@ -11,12 +11,12 @@ import android.renderscript.Element
 import android.renderscript.RenderScript
 import android.renderscript.ScriptIntrinsicBlur
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
-import jp.wasabeef.glide.transformations.BlurTransformation
 import kotlinx.android.synthetic.main.activity_product_detail.*
 import org.yamyamgoods.yamyam_android.R
 
@@ -33,52 +33,29 @@ class ProductDetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_product_detail)
 
         setStatusBarTransparent()
+        setContentScrimImage()
 
         viewInit()
-
-        //test()
-
-//        val collapsingToolbar = collapsing_toolbar_product_detail_act
-//
-//        val listener = AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
-//            if(collapsingToolbar.height + verticalOffset < 2 * ViewCompat.getMinimumHeight(collapsingToolbar)) {
-//                //collapsed
-//                iv_product_detail_act_image.animate().alpha(0.3f).setDuration(600)
-//            }else{
-//                //expanded
-//                iv_product_detail_act_image.animate().alpha(1f).setDuration(600)
-//            }
-//        }
-//
-//        appbar.addOnOffsetChangedListener(listener)
-
-        //BlurTransformation()
-
-        val url = "http://static.inven.co.kr/column/2019/07/02/news/i14473943170.jpg"
-        Glide
-                .with(this)
-                .asBitmap()
-                .load(url)
-                .transform(BlurTransformation(25))
-                .centerCrop()
-                .into(object : CustomTarget<Bitmap>() {
-                    override fun onLoadCleared(placeholder: Drawable?) {
-
-                    }
-
-                    override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                        val blurredImage = createBlurredImage(resource, 25)
-                        collapsing_toolbar_product_detail_act.contentScrim = BitmapDrawable(resources, blurredImage)
-                    }
-
-                })
-
 
 
     }
 
-    private fun createBlurredImage(originalBitmap: Bitmap, radius: Int): Bitmap {
+    private fun setContentScrimImage() = Glide
+            .with(this)
+            .asBitmap()
+            .load(R.drawable.img_topthumbnail)
+            .into(object : CustomTarget<Bitmap>() {
+                override fun onLoadCleared(placeholder: Drawable?) { /* Nothing */
+                }
 
+                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                    val blurredImage = createBlurredImage(resource, 25)
+                    collapsing_toolbar_product_detail_act.contentScrim = BitmapDrawable(resources, blurredImage)
+                }
+            })
+
+
+    private fun createBlurredImage(originalBitmap: Bitmap, radius: Int): Bitmap {
         // Create another bitmap that will hold the results of the filter.
         val blurredBitmap = Bitmap.createBitmap(originalBitmap)
 
@@ -91,14 +68,11 @@ class ProductDetailActivity : AppCompatActivity() {
         val output = Allocation.createTyped(rs, input.type)
 
         // Load up an instance of the specific script that we want to use.
-        val script = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs))
-        script.setInput(input)
-
-        // Set the blur radius
-        script.setRadius(radius.toFloat())
-
-        // Start the ScriptIntrinisicBlur
-        script.forEach(output)
+        ScriptIntrinsicBlur.create(rs, Element.U8_4(rs)).apply {
+            setInput(input)
+            setRadius(radius.toFloat()) // Set the blur radius
+            forEach(output) // Start the ScriptIntrinisicBlur
+        }
 
         // Copy the output to the blurred bitmap
         output.copyTo(blurredBitmap)
@@ -123,27 +97,19 @@ class ProductDetailActivity : AppCompatActivity() {
         val winParams = win.attributes
         if (on) {
             winParams.flags = winParams.flags or bits
-        } else {
-            winParams.flags = winParams.flags and bits.inv()
+            return
         }
+        winParams.flags = winParams.flags and bits.inv()
         win.attributes = winParams
     }
 
     private fun viewInit() {
-        //setImageCollapsingToolBar()
+        setMainImageHeight()
     }
 
-//    private fun setImageCollapsingToolBar() {
-//        collapsing_toolbar_product_detail_act.apply {
-//            contentScrim
-//
-//        }
-//
-//        val lp = iv_product_detail_act_image.layoutParams
-//        lp.height = getDynamicImageHeight()
-//
-//        iv_product_detail_act_image.layoutParams = lp
-//    }
+    private fun setMainImageHeight() {
+        iv_product_detail_act_image.layoutParams.height = getDynamicImageHeight()
+    }
 
     private fun getDynamicImageHeight(): Int {
         val displayMetrics = resources.displayMetrics
