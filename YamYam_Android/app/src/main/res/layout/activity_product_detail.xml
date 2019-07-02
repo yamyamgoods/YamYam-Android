@@ -14,7 +14,7 @@
             android:id="@+id/collapsing_toolbar_product_detail_act"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:contentScrim="@drawable/img_topthumbnail"
+            app:contentScrim="@android:color/white"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:toolbarId="@+id/toolbar">
 
