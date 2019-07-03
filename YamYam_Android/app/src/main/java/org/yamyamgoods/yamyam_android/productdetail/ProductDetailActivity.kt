@@ -1,6 +1,5 @@
 package org.yamyamgoods.yamyam_android.productdetail
 
-import android.animation.Animator
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
@@ -12,16 +11,16 @@ import android.renderscript.Element
 import android.renderscript.RenderScript
 import android.renderscript.ScriptIntrinsicBlur
 import android.support.design.widget.AppBarLayout
+import android.support.v4.widget.NestedScrollView
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
+import android.view.ViewTreeObserver
 import android.view.WindowManager
-import android.view.animation.AnimationUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import kotlinx.android.synthetic.main.activity_product_detail.*
-import android.animation.AnimatorListenerAdapter
 import org.yamyamgoods.yamyam_android.R
 
 
@@ -32,50 +31,35 @@ import org.yamyamgoods.yamyam_android.R
 
 class ProductDetailActivity : AppCompatActivity() {
 
-    var isAppbarCollapsing = false
+    private var originalDetailImageHeight: Int = 0
 
     private val appbarListener = AppBarLayout.OnOffsetChangedListener { _, offset ->
         val isCollapsed = (-900 == offset)
 
         if (isCollapsed) {
-
-            cl_product_detail_act_tabzone.animate()
-                    .alpha(1.0f)
-                    .setDuration(500)
-                    .setListener(object : AnimatorListenerAdapter() {
-                        override fun onAnimationEnd(animation: Animator) {
-                            super.onAnimationEnd(animation)
-                            cl_product_detail_act_tabzone.visibility = View.VISIBLE
-                        }
-                    })
-//            cl_product_detail_act_tabzone.visibility = View.VISIBLE
-//            cl_product_detail_act_tabzone.animate().setDuration(1000)
-//            isAppbarCollapsing = false
+            cl_product_detail_act_tabzone.visibility = View.VISIBLE
             return@OnOffsetChangedListener
         }
-        isAppbarCollapsing = true
-
-        //if(isCollapsed && isAppbarCollapsing)
-
         cl_product_detail_act_tabzone.visibility = View.INVISIBLE
+    }
 
-
-        Log.v("Malibin Debug", "isCollapsed : $isCollapsed, isAppbarCollapsing : $isAppbarCollapsing")
+    private val nestedScrollChangeListener = NestedScrollView.OnScrollChangeListener { _, _, newY, _, oldY ->
+        if (newY > oldY) {
+            cl_product_detail_act_bottom_bar.visibility = View.INVISIBLE
+        }
+        if (newY < oldY) {
+            cl_product_detail_act_bottom_bar.visibility = View.VISIBLE
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_detail)
 
-        val slowly_appear = AnimationUtils.loadAnimation(this, R.anim.slowly_fadein)
-        cl_product_detail_act_tabzone.animation = slowly_appear
-        //cl_product_detail_act_tabzone.animate().
-
         setStatusBarTransparent()
         setContentScrimImage()
 
         viewInit()
-
 
     }
 
@@ -92,7 +76,6 @@ class ProductDetailActivity : AppCompatActivity() {
                     collapsing_toolbar_product_detail_act.contentScrim = BitmapDrawable(resources, blurredImage)
                 }
             })
-
 
     private fun createBlurredImage(originalBitmap: Bitmap, radius: Int): Bitmap {
         // Create another bitmap that will hold the results of the filter.
@@ -145,7 +128,13 @@ class ProductDetailActivity : AppCompatActivity() {
     private fun viewInit() {
         setMainImageHeight()
 
-        appbar.addOnOffsetChangedListener(appbarListener)
+        setPreDrawListener2DetailImage()
+
+        moreDetailImageButtonConfig()
+
+        appbar_product_detail_act.addOnOffsetChangedListener(appbarListener)
+
+        scroll_product_detail_act.setOnScrollChangeListener(nestedScrollChangeListener)
     }
 
     private fun setMainImageHeight() {
@@ -158,15 +147,34 @@ class ProductDetailActivity : AppCompatActivity() {
         return (phoneWidth * 321 / 360)
     }
 
+    private fun setPreDrawListener2DetailImage() {
+        val vto = iv_product_detail_act_detail_image.viewTreeObserver
+        vto.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
+            override fun onPreDraw(): Boolean {
+                iv_product_detail_act_detail_image.viewTreeObserver.removeOnPreDrawListener(this)
+                val finalHeight = iv_product_detail_act_detail_image.measuredHeight
+                detailImageConfig(finalHeight)
+                Log.v("Malibin Debug", "onPreDraw() called")
+                return true
+            }
+        })
+    }
 
-//    private fun test() {
-//        val displayMetrics = resources.displayMetrics
-//        val phoneWidth = displayMetrics.widthPixels
-//        val phoneHeight = displayMetrics.heightPixels
-//        Log.v("Malibin Debug", "widthpx : $phoneWidth, heightPx: $phoneHeight")
-//
-//        val phoneWidthDp = px2dp(phoneWidth, this)
-//        val phoneHeightDp = px2dp(phoneHeight, this)
-//        Log.v("Malibin Debug", "widthDp : $phoneWidthDp, heightDp: $phoneHeightDp")
-//    }
+    private fun detailImageConfig(height: Int) {
+        originalDetailImageHeight = height
+
+        val lp = cl_product_detail_act_detail_zone.layoutParams
+        lp.height = 600
+        cl_product_detail_act_detail_zone.layoutParams = lp
+        Log.v("Malibin Debug", "detailImageConfig() called")
+    }
+
+    private fun moreDetailImageButtonConfig() {
+        btn_product_detail_act_more_detail.setOnClickListener {
+            cl_product_detail_act_detail_zone.layoutParams.height = originalDetailImageHeight
+            btn_product_detail_act_more_detail.visibility = View.INVISIBLE
+            Log.v("Malibin Debug", "moreDetailImageButtonConfig() called")
+        }
+    }
+
 }

@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
 import kotlinx.android.synthetic.main.activity_home.*
-import org.yamyamgoods.yamyam_android.Home.store.StoreMainFragment
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.home.best.goods.BestGoodsFragment
 import org.yamyamgoods.yamyam_android.home.store.ranking.StoreRankingFragment
