@@ -12,4 +12,8 @@
     <color name="darkgray">#3c3c3c</color>
     <color name="category_gray">#707070</color>
     <color name="colorBlack">#000000</color>
+    <color name="colorReview">#333333</color>
+    <color name="colorBrownishGray">#6e6e6e</color>
+    <color name="colorTabLightGray">#b4b3b8</color>
+    <color name="colorTabDarkGray">#3c3c3c</color>
 </resources>

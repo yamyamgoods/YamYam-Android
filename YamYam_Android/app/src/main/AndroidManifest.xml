@@ -14,6 +14,7 @@
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity android:name=".home.Goods.GoodsExhibitionDetailActivity"></activity>
+        <activity android:name=".review.ReviewActivity"></activity>
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"

@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="18dp"
+    app:cardElevation="0.3dp"
+    app:cardUseCompatPadding="true"
+    card_view:cardBackgroundColor="@android:color/white">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_rv_item_best_review_user_image"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:color/holo_orange_light" />
+
+        <TextView
+            android:id="@+id/tv_rv_item_best_review_user_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="10dp"
+            android:text="유저닉네임"
+            android:textColor="@color/colorReview"
+            android:textSize="14dp"
+            app:layout_constraintStart_toEndOf="@+id/iv_rv_item_best_review_user_image"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_rv_item_best_review_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="2019.06.24 날짜"
+            android:textColor="@color/colorBrownishGray"
+            app:layout_constraintStart_toStartOf="@+id/tv_rv_item_best_review_user_nickname"
+            app:layout_constraintTop_toBottomOf="@+id/tv_rv_item_best_review_user_nickname" />
+
+        <LinearLayout
+            android:id="@+id/ll_rv_item_best_review_star"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="31dp"
+            android:layout_marginEnd="15dp"
+            android:gravity="right"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_rv_item_best_review_star1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="2dp"
+                android:src="@drawable/icon_graystar" />
+
+            <ImageView
+                android:id="@+id/iv_rv_item_best_review_star2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="2dp"
+                android:src="@drawable/icon_graystar" />
+
+            <ImageView
+                android:id="@+id/iv_rv_item_best_review_star3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="2dp"
+                android:src="@drawable/icon_graystar" />
+
+            <ImageView
+                android:id="@+id/iv_rv_item_best_review_star4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="2dp"
+                android:src="@drawable/icon_graystar" />
+
+            <ImageView
+                android:id="@+id/iv_rv_item_best_review_star5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="2dp"
+                android:src="@drawable/icon_graystar" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="9dp"
+            android:background=" #f5f6f9"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_rv_item_best_review_date" />
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/btn_rv_item_best_review_detail_review"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@+id/view2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/view2">
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="visible"
+                android:weightSum="3"
+                app:layout_constraintStart_toStartOf="@+id/tv_rv_item_best_review_contents"
+                app:layout_constraintTop_toBottomOf="@+id/tv_rv_item_best_review_contents">
+
+                <ImageView
+                    android:id="@+id/iv_rv_item_best_review_image1"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    card_view:srcCompat="@tools:sample/avatars" />
+
+                <ImageView
+                    android:id="@+id/iv_rv_item_best_review_image2"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    card_view:srcCompat="@tools:sample/avatars" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@+id/iv_rv_item_best_review_image3"
+                        android:layout_width="96dp"
+                        android:layout_height="96dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="12dp"
+                        android:visibility="gone"
+                        card_view:srcCompat="@tools:sample/avatars" />
+
+                    <TextView
+                        android:id="@+id/tv_rv_item_best_review_etc_image_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="+1"
+                        android:textColor="@android:color/white"
+                        android:textSize="20dp"
+                        android:visibility="gone" />
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_rv_item_best_review_comments_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:layout_marginTop="13dp"
+                android:layout_marginBottom="22dp"
+                android:text="0"
+                android:textColor="@color/colorReview"
+                android:textSize="11dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/btn_rv_item_best_review_comments"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+                app:lineHeight="13dp" />
+
+            <ImageView
+                android:id="@+id/btn_rv_item_best_review_comments"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="48dp"
+                android:layout_marginTop="12dp"
+                app:layout_constraintStart_toStartOf="@+id/btn_rv_item_best_review_thumbs"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+                app:srcCompat="@drawable/icon_comment" />
+
+            <LinearLayout
+                android:id="@+id/btn_rv_item_best_review_thumbs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="@+id/tv_rv_item_best_review_contents"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+                <ImageView
+                    android:id="@+id/iv_rv_item_best_review_thumbs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/selector_review_thumb"
+                    app:layout_constraintStart_toStartOf="@+id/tv_rv_item_best_review_contents"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+                <TextView
+                    android:id="@+id/tv_rv_item_best_review_thumbs_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="9dp"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="0"
+                    android:textColor="@color/colorReview"
+                    android:textSize="11dp"
+                    app:layout_constraintStart_toEndOf="@+id/iv_rv_item_best_review_thumbs"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+                    app:lineHeight="13dp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_rv_item_best_review_contents"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="14dp"
+                android:layout_marginEnd="15dp"
+                android:ellipsize="end"
+                android:maxLines="4"
+                android:text="키링 소량제작 몇개 했는데 뫄뫄 좋다는 소리듣고 여기서 했거덩요~ 근데 괜찮네여. 배송은 얼마정도 걸렸는데 파본도 별로 없고 조와~ 엄마아빠 할머니가 조와해요 근데 주문할때 뫄뫄는 조심하세요"
+                android:textColor="@color/colorReview"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
+</android.support.v7.widget.CardView>

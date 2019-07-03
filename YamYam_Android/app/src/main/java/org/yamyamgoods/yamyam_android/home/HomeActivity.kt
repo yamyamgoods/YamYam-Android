@@ -4,11 +4,10 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
-import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_home.*
 import org.yamyamgoods.yamyam_android.R
+import org.yamyamgoods.yamyam_android.home.best.BestTabFragment
 import org.yamyamgoods.yamyam_android.home.Goods.GoodsFragment
-import org.yamyamgoods.yamyam_android.home.best.goods.BestGoodsFragment
 import org.yamyamgoods.yamyam_android.home.store.ranking.StoreRankingFragment
 
 class HomeActivity : AppCompatActivity() {
@@ -20,15 +19,17 @@ class HomeActivity : AppCompatActivity() {
 
         startView()
     }
-        fun startView(){
-        addFragment(BestGoodsFragment())
+    fun startView(){
+        //TODO 처음 뷰 넣어주세요
+        addFragment(BestTabFragment())
         iv_bottom_best_icon.isSelected=true
         tv_bottom_best_text.isSelected=true
         setOnClickListener()
     }
     fun setOnClickListener(){
         btn_bottom_best.setOnClickListener{
-            replaceFragment(BestGoodsFragment())
+            //TODO 프래그먼트 넣어주세요
+            replaceFragment(BestTabFragment())
             clearBtnSelect()
             iv_bottom_best_icon.isSelected=true
             tv_bottom_best_text.isSelected=true
