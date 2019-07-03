@@ -6,4 +6,10 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorTwitter">#41adff</color>
     <color name="colorKakao">#ffde00</color>
+    <color name="MainYellow">#ffce00</color>
+    <color name="MainGray">#f7f7f7</color>
+    <color name="brownish_gray">#6e6e6e</color>
+    <color name="darkgray">#3c3c3c</color>
+    <color name="category_gray">#707070</color>
+    <color name="colorBlack">#000000</color>
 </resources>
