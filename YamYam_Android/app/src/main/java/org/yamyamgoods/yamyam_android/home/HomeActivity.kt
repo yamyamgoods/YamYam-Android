@@ -20,8 +20,7 @@ class HomeActivity : AppCompatActivity() {
 
         startView()
     }
-    fun startView(){
-        //TODO 처음 뷰 넣어주세요
+        fun startView(){
         addFragment(BestGoodsFragment())
         iv_bottom_best_icon.isSelected=true
         tv_bottom_best_text.isSelected=true
@@ -29,7 +28,6 @@ class HomeActivity : AppCompatActivity() {
     }
     fun setOnClickListener(){
         btn_bottom_best.setOnClickListener{
-            //TODO 프래그먼트 넣어주세요
             replaceFragment(BestGoodsFragment())
             clearBtnSelect()
             iv_bottom_best_icon.isSelected=true
