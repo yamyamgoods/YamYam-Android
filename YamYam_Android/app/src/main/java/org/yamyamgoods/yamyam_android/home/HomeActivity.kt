@@ -4,9 +4,10 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_home.*
-import org.yamyamgoods.yamyam_android.Home.store.StoreMainFragment
 import org.yamyamgoods.yamyam_android.R
+import org.yamyamgoods.yamyam_android.home.Goods.GoodsFragment
 import org.yamyamgoods.yamyam_android.home.best.goods.BestGoodsFragment
 import org.yamyamgoods.yamyam_android.home.store.ranking.StoreRankingFragment
 
@@ -19,8 +20,7 @@ class HomeActivity : AppCompatActivity() {
 
         startView()
     }
-    fun startView(){
-        //TODO 처음 뷰 넣어주세요
+        fun startView(){
         addFragment(BestGoodsFragment())
         iv_bottom_best_icon.isSelected=true
         tv_bottom_best_text.isSelected=true
@@ -28,7 +28,6 @@ class HomeActivity : AppCompatActivity() {
     }
     fun setOnClickListener(){
         btn_bottom_best.setOnClickListener{
-            //TODO 프래그먼트 넣어주세요
             replaceFragment(BestGoodsFragment())
             clearBtnSelect()
             iv_bottom_best_icon.isSelected=true
@@ -42,7 +41,7 @@ class HomeActivity : AppCompatActivity() {
             tv_bottom_store_text.isSelected=true
         }
         btn_bottom_goods.setOnClickListener{
-//            replaceFragment()
+            replaceFragment(GoodsFragment())
             clearBtnSelect()
             iv_bottom_goods_icon.isSelected=true
             tv_bottom_goods_text.isSelected=true
@@ -76,4 +75,12 @@ class HomeActivity : AppCompatActivity() {
         iv_bottom_like_icon.isSelected=false
         tv_bottom_like_text.isSelected=false
     }
+
+    //액티비티에서는 Back버튼을 두번 눌렀을 때, 종료되도록
+//    override fun onBackPressed() {
+//        val fragment = this.supportFragmentManager.findFragmentById(R.id.fl_goods_fragment_frag)
+//        (fragment as? GoodsFragment.IOnBackPrssed)?.onBackPressed()?.not()?.let{
+//            super.onBackPressed()
+//        }
+//    }
 }

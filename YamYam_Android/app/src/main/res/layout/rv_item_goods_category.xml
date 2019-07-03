@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/btn_rv_item_goods_category"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="3dp">
+    <ImageView
+        android:id="@+id/iv_rv_item_goods_category"
+        android:layout_width="57dp"
+        android:layout_height="57dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/buttons_circleline"/>
+    <TextView
+        android:id="@+id/tv_rv_item_goods_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="카테고리"
+        android:textSize="14dp"
+        android:textColor="@color/category_gray"
+        android:layout_centerInParent="true"/>
+</RelativeLayout>
