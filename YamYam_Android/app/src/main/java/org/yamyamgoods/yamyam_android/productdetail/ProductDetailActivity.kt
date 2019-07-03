@@ -1,5 +1,6 @@
 package org.yamyamgoods.yamyam_android.productdetail
 
+import android.animation.Animator
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
@@ -10,14 +11,17 @@ import android.renderscript.Allocation
 import android.renderscript.Element
 import android.renderscript.RenderScript
 import android.renderscript.ScriptIntrinsicBlur
+import android.support.design.widget.AppBarLayout
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
+import android.view.animation.AnimationUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import kotlinx.android.synthetic.main.activity_product_detail.*
+import android.animation.AnimatorListenerAdapter
 import org.yamyamgoods.yamyam_android.R
 
 
@@ -28,9 +32,44 @@ import org.yamyamgoods.yamyam_android.R
 
 class ProductDetailActivity : AppCompatActivity() {
 
+    var isAppbarCollapsing = false
+
+    private val appbarListener = AppBarLayout.OnOffsetChangedListener { _, offset ->
+        val isCollapsed = (-900 == offset)
+
+        if (isCollapsed) {
+
+            cl_product_detail_act_tabzone.animate()
+                    .alpha(1.0f)
+                    .setDuration(500)
+                    .setListener(object : AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: Animator) {
+                            super.onAnimationEnd(animation)
+                            cl_product_detail_act_tabzone.visibility = View.VISIBLE
+                        }
+                    })
+//            cl_product_detail_act_tabzone.visibility = View.VISIBLE
+//            cl_product_detail_act_tabzone.animate().setDuration(1000)
+//            isAppbarCollapsing = false
+            return@OnOffsetChangedListener
+        }
+        isAppbarCollapsing = true
+
+        //if(isCollapsed && isAppbarCollapsing)
+
+        cl_product_detail_act_tabzone.visibility = View.INVISIBLE
+
+
+        Log.v("Malibin Debug", "isCollapsed : $isCollapsed, isAppbarCollapsing : $isAppbarCollapsing")
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_detail)
+
+        val slowly_appear = AnimationUtils.loadAnimation(this, R.anim.slowly_fadein)
+        cl_product_detail_act_tabzone.animation = slowly_appear
+        //cl_product_detail_act_tabzone.animate().
 
         setStatusBarTransparent()
         setContentScrimImage()
@@ -105,10 +144,12 @@ class ProductDetailActivity : AppCompatActivity() {
 
     private fun viewInit() {
         setMainImageHeight()
+
+        appbar.addOnOffsetChangedListener(appbarListener)
     }
 
     private fun setMainImageHeight() {
-        iv_product_detail_act_image.layoutParams.height = getDynamicImageHeight()
+        iv_product_detail_act_main_image.layoutParams.height = getDynamicImageHeight()
     }
 
     private fun getDynamicImageHeight(): Int {
@@ -116,6 +157,7 @@ class ProductDetailActivity : AppCompatActivity() {
         val phoneWidth = displayMetrics.widthPixels
         return (phoneWidth * 321 / 360)
     }
+
 
 //    private fun test() {
 //        val displayMetrics = resources.displayMetrics
