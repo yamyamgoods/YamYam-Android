@@ -7,4 +7,6 @@ import android.util.TypedValue
 
 fun dp2px(dp: Float, ctx: Context) = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, ctx.resources.displayMetrics).toInt()
 
-fun px2dp(px: Int, ctx: Context) = px / ((ctx.resources.displayMetrics.densityDpi.toFloat()) /  DisplayMetrics.DENSITY_DEFAULT)
+fun px2dp(px: Int, ctx: Context) = px / ((ctx.resources.displayMetrics.densityDpi.toFloat()) / DisplayMetrics.DENSITY_DEFAULT)
+
+fun getScreenWidth(ctx: Context) = ctx.resources.displayMetrics.widthPixels

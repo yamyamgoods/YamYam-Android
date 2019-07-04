@@ -9,32 +9,32 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textColor="#3c3c3c"
-            android:lineSpacingExtra="2sp"
-            android:gravity="center_horizontal"
-            android:text="스토어 랭킹"
             android:layout_centerInParent="true"
-            />
+            android:gravity="center_horizontal"
+            android:lineSpacingExtra="2sp"
+            android:text="스토어 랭킹"
+            android:textColor="#3c3c3c"
+            android:textSize="15dp" />
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/btn_customer_store"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textColor="#3c3c3c"
-            android:lineSpacingExtra="2sp"
-            android:gravity="center_horizontal"
-            android:text="단골 스토어"
             android:layout_centerInParent="true"
-            />
+            android:gravity="center_horizontal"
+            android:lineSpacingExtra="2sp"
+            android:text="단골 스토어"
+            android:textColor="#3c3c3c"
+            android:textSize="15dp" />
     </RelativeLayout>
 
 </LinearLayout>
