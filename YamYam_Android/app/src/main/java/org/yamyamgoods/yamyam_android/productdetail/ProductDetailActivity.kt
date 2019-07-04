@@ -17,11 +17,14 @@ import android.util.Log
 import android.view.View
 import android.view.ViewTreeObserver
 import android.view.WindowManager
+import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import kotlinx.android.synthetic.main.activity_product_detail.*
 import org.yamyamgoods.yamyam_android.R
+import org.yamyamgoods.yamyam_android.util.dp2px
+import org.yamyamgoods.yamyam_android.util.getScreenWidth
 
 
 /**
@@ -142,8 +145,7 @@ class ProductDetailActivity : AppCompatActivity() {
     }
 
     private fun getDynamicImageHeight(): Int {
-        val displayMetrics = resources.displayMetrics
-        val phoneWidth = displayMetrics.widthPixels
+        val phoneWidth = getScreenWidth(this)
         return (phoneWidth * 321 / 360)
     }
 
@@ -160,20 +162,39 @@ class ProductDetailActivity : AppCompatActivity() {
         })
     }
 
+    private fun detailImageTopCrop() {
+        val phoneWidth = getScreenWidth(this)
+        val imageWidth = iv_product_detail_act_detail_image.drawable.intrinsicWidth
+        val transX = ((phoneWidth - imageWidth) / 2 - dp2px(16f, this)).toFloat()
+
+        val matrix = iv_product_detail_act_detail_image.imageMatrix
+        matrix.postTranslate(transX, 0f)
+        iv_product_detail_act_detail_image.imageMatrix = matrix
+    }
+
     private fun detailImageConfig(height: Int) {
         originalDetailImageHeight = height
+        detailImageTopCrop()
+        cl_product_detail_act_detail_zone.apply {
+            val layoutParams = this.layoutParams
+            layoutParams.height = dp2px(288f, applicationContext)
+            this.layoutParams = layoutParams
+        }
+    }
 
-        val lp = cl_product_detail_act_detail_zone.layoutParams
-        lp.height = 600
-        cl_product_detail_act_detail_zone.layoutParams = lp
-        Log.v("Malibin Debug", "detailImageConfig() called")
+    private fun expandDetailImage() {
+        cl_product_detail_act_detail_zone.apply {
+            val layoutParams = this.layoutParams
+            layoutParams.height = originalDetailImageHeight
+            this.layoutParams = layoutParams
+        }
+        iv_product_detail_act_detail_image.scaleType = ImageView.ScaleType.CENTER_CROP
     }
 
     private fun moreDetailImageButtonConfig() {
         btn_product_detail_act_more_detail.setOnClickListener {
-            cl_product_detail_act_detail_zone.layoutParams.height = originalDetailImageHeight
-            btn_product_detail_act_more_detail.visibility = View.INVISIBLE
-            Log.v("Malibin Debug", "moreDetailImageButtonConfig() called")
+            expandDetailImage()
+            it.visibility = View.INVISIBLE
         }
     }
 
