@@ -1,6 +1,5 @@
-package org.yamyamgoods.yamyam_android.home.Goods.Adapter
+package org.yamyamgoods.yamyam_android.home.goods.adapter
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.support.v4.app.FragmentTransaction
@@ -11,14 +10,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
-import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.fragment_goods.*
-import org.jetbrains.anko.find
-import org.jetbrains.anko.sdk27.coroutines.onClick
 import org.yamyamgoods.yamyam_android.R
-import org.yamyamgoods.yamyam_android.home.Goods.Data.GoodsCategoryData
-import org.yamyamgoods.yamyam_android.home.Goods.GoodsCategoryDetailFragment
-import org.yamyamgoods.yamyam_android.home.Goods.GoodsFragment
+import org.yamyamgoods.yamyam_android.home.goods.data.GoodsCategoryData
+import org.yamyamgoods.yamyam_android.home.goods.GoodsCategoryDetailFragment
 import org.yamyamgoods.yamyam_android.home.HomeActivity
 
 class GoodsCategoryRecyclerViewAdapter (val ctx: Context, val dataList: ArrayList<GoodsCategoryData>): RecyclerView.Adapter<GoodsCategoryRecyclerViewAdapter.Holder>(){
@@ -45,7 +39,6 @@ class GoodsCategoryRecyclerViewAdapter (val ctx: Context, val dataList: ArrayLis
         }
 
         holder.category.setOnClickListener {
-
             try {
                 //선택된 카테고리의 position을 넘겨주고, 변하도록
                 selected_position = position

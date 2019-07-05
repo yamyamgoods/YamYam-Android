@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#00000000">
+    <com.github.chrisbanes.photoview.PhotoView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/pv_rv_item_photo_zoom_in"
+        android:layout_width="match_parent"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="84dp"
+        android:paddingBottom="91dp"
+        android:clipToPadding="false"
+        android:layout_height="match_parent" />
+</RelativeLayout>

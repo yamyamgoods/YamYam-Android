@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentTransaction
 import kotlinx.android.synthetic.main.activity_home.*
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.home.best.BestTabFragment
-import org.yamyamgoods.yamyam_android.home.Goods.GoodsFragment
+import org.yamyamgoods.yamyam_android.home.goods.GoodsFragment
 import org.yamyamgoods.yamyam_android.home.store.ranking.StoreRankingFragment
 
 class HomeActivity : AppCompatActivity() {

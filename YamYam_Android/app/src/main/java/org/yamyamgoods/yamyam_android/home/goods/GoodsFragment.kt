@@ -1,4 +1,4 @@
-package org.yamyamgoods.yamyam_android.home.Goods
+package org.yamyamgoods.yamyam_android.home.goods
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -11,8 +11,8 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.fragment_goods.*
 import org.yamyamgoods.yamyam_android.R
-import org.yamyamgoods.yamyam_android.home.Goods.Adapter.GoodsCategoryRecyclerViewAdapter
-import org.yamyamgoods.yamyam_android.home.Goods.Data.GoodsCategoryData
+import org.yamyamgoods.yamyam_android.home.goods.adapter.GoodsCategoryRecyclerViewAdapter
+import org.yamyamgoods.yamyam_android.home.goods.data.GoodsCategoryData
 import org.yamyamgoods.yamyam_android.home.HomeActivity
 
 class GoodsFragment : Fragment(){

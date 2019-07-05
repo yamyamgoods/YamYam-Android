@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".home.Goods.GoodsCategoryDetailFragment">
+    tools:context=".home.goods.GoodsCategoryDetailFragment">
     <RelativeLayout
         android:id="@+id/option"
         android:layout_width="match_parent"
@@ -71,10 +71,10 @@
                 android:src="@drawable/icon_align"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="2dp"/>
-            <TextView
+            <Spinner
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="인기순"
+                android:prompt="@string/goods_prompt"
                 android:textSize="14dp"
                 android:textColor="@color/colorBlack"
                 android:layout_gravity="center_vertical"/>

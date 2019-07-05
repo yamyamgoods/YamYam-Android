@@ -1,4 +1,4 @@
-package org.yamyamgoods.yamyam_android.home.Goods
+package org.yamyamgoods.yamyam_android.home.goods
 
 
 import android.os.Bundle
@@ -12,9 +12,9 @@ import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.fragment_goods_exhibition.*
 
 import org.yamyamgoods.yamyam_android.R
-import org.yamyamgoods.yamyam_android.home.Goods.Adapter.GoodsExhibitionRecyclerViewAdapter
-import org.yamyamgoods.yamyam_android.home.Goods.Data.GoodsExhibitionData
-import org.yamyamgoods.yamyam_android.home.Goods.Data.GoodsExhibitionDetailData
+import org.yamyamgoods.yamyam_android.home.goods.adapter.GoodsExhibitionRecyclerViewAdapter
+import org.yamyamgoods.yamyam_android.home.goods.data.GoodsExhibitionData
+import org.yamyamgoods.yamyam_android.home.goods.data.GoodsExhibitionDetailData
 
 class GoodsExhibitionFragment : Fragment() {
 

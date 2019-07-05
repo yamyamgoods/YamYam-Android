@@ -1,4 +1,4 @@
-package org.yamyamgoods.yamyam_android.home.Goods.Adapter
+package org.yamyamgoods.yamyam_android.home.goods.adapter
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
@@ -8,9 +8,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
-import org.w3c.dom.Text
 import org.yamyamgoods.yamyam_android.R
-import org.yamyamgoods.yamyam_android.home.Goods.Data.GoodsCategoryDetailData
+import org.yamyamgoods.yamyam_android.home.goods.data.GoodsCategoryDetailData
 
 class GoodsCategoryDetailRecyclerViewAdapter (val ctx: Context, val dataList: ArrayList<GoodsCategoryDetailData>): RecyclerView.Adapter<GoodsCategoryDetailRecyclerViewAdapter.Holder>() {
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): GoodsCategoryDetailRecyclerViewAdapter.Holder {
