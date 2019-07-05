@@ -24,8 +24,10 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import kotlinx.android.synthetic.main.activity_product_detail.*
+import org.jetbrains.anko.startActivity
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.productdetail.adapter.ProductDetailReviewRVAdatper
+import org.yamyamgoods.yamyam_android.storeweb.StoreWebActivity
 import org.yamyamgoods.yamyam_android.util.TempData
 import org.yamyamgoods.yamyam_android.util.dp2px
 import org.yamyamgoods.yamyam_android.util.getScreenWidth
@@ -42,11 +44,8 @@ class ProductDetailActivity : AppCompatActivity() {
     private var originalDetailImageHeight: Int = 0
     private var foldedDetailImageHeight: Int = 0
 
-    private val detailInfoYOffset = 0
     private var originalReviewInfoYOffset = 0
     private var currentReviewInfoYOffset = 0
-
-    private var tabToggle = true
 
     private var isDetailZone = true
     private var isReviewZone = false
@@ -80,7 +79,6 @@ class ProductDetailActivity : AppCompatActivity() {
             isDetailZone = false
             isReviewZone = true
         }
-        Log.v("Malibin Debug", "newY : $newY originalReviewInfoYOffset = $originalReviewInfoYOffset currentReviewInfoYOffset = $currentReviewInfoYOffset")
         isScrolled = false
     }
 
@@ -174,6 +172,10 @@ class ProductDetailActivity : AppCompatActivity() {
         }
 
         setTabBarClickListener()
+
+        btn_product_detail_act_visit_store.setOnClickListener {
+            startActivity<StoreWebActivity>()
+        }
     }
 
     private fun setMainImageHeight() {

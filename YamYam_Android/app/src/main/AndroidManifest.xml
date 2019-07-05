@@ -13,22 +13,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".home.Goods.GoodsExhibitionDetailActivity"></activity>
-        <activity android:name=".review.ReviewActivity"></activity>
+        <activity android:name=".storeweb.StoreWebActivity"></activity>
+        <activity android:name=".home.Goods.GoodsExhibitionDetailActivity" />
+        <activity android:name=".review.ReviewActivity" />
         <activity android:name=".productdetail.ProductDetailActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>z
+        </activity>
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".home.HomeActivity">
-
-        </activity>
+        <activity android:name=".home.HomeActivity"></activity>
     </application>
 
 </manifest>
