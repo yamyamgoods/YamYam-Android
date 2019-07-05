@@ -29,6 +29,9 @@ class StoreWebActivity : AppCompatActivity() {
     private val mWebChromeClient = object : WebChromeClient() {
         override fun onProgressChanged(view: WebView?, newProgress: Int) {
             pb_store_web_act_progressbar.progress = newProgress
+            if (newProgress == 100) {
+                pb_store_web_act_progressbar.visibility = View.GONE
+            }
         }
     }
 
