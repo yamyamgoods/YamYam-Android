@@ -1,4 +1,4 @@
-package org.yamyamgoods.yamyam_android.home.Goods.Data
+package org.yamyamgoods.yamyam_android.home.goods.data
 
 data class GoodsCategoryDetailData (
         var c_idx: Int,

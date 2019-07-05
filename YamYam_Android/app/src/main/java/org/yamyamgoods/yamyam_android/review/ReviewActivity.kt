@@ -1,22 +1,15 @@
 package org.yamyamgoods.yamyam_android.review
 
-import android.app.PendingIntent.getActivity
-import android.content.Context
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.design.widget.TabLayout
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import kotlinx.android.synthetic.main.activity_review.*
-import kotlinx.android.synthetic.main.fragment_review_all.*
 import kotlinx.android.synthetic.main.top_navigation_tab_review.*
 import org.yamyamgoods.yamyam_android.R
-import org.yamyamgoods.yamyam_android.home.best.review.adapter.BestReviewRVAdapter
 import org.yamyamgoods.yamyam_android.review.adapter.ReviewStatePagerAdapter
-import org.yamyamgoods.yamyam_android.review.all.adapter.ReviewAllRVAdapter
-import org.yamyamgoods.yamyam_android.util.TempData
 
 class ReviewActivity : AppCompatActivity() {
 

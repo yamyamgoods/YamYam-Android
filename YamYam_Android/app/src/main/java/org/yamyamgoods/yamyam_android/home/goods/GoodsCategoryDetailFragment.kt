@@ -1,4 +1,4 @@
-package org.yamyamgoods.yamyam_android.home.Goods
+package org.yamyamgoods.yamyam_android.home.goods
 
 
 import android.os.Bundle
@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.fragment_goods_category_detail.*
 
 import org.yamyamgoods.yamyam_android.R
 

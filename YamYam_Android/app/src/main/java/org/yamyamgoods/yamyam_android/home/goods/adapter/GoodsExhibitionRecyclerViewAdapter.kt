@@ -1,9 +1,6 @@
-package org.yamyamgoods.yamyam_android.home.Goods.Adapter
+package org.yamyamgoods.yamyam_android.home.goods.adapter
 
 import android.content.Context
-import android.graphics.drawable.shapes.RoundRectShape
-import android.support.design.shape.CornerTreatment
-import android.support.v7.view.menu.ActionMenuItemView
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -12,15 +9,13 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.BitmapTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import org.jetbrains.anko.startActivity
 import org.yamyamgoods.yamyam_android.R
-import org.yamyamgoods.yamyam_android.home.Goods.Data.GoodsExhibitionData
-import org.yamyamgoods.yamyam_android.home.Goods.Data.GoodsExhibitionDetailData
-import org.yamyamgoods.yamyam_android.home.Goods.GoodsExhibitionDetailActivity
+import org.yamyamgoods.yamyam_android.home.goods.data.GoodsExhibitionData
+import org.yamyamgoods.yamyam_android.home.goods.GoodsExhibitionDetailActivity
 
 class GoodsExhibitionRecyclerViewAdapter(val ctx: Context, val dataList: ArrayList<GoodsExhibitionData>):RecyclerView.Adapter<GoodsExhibitionRecyclerViewAdapter.Holder>() {
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): Holder {

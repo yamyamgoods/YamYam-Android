@@ -4,4 +4,11 @@
     <string name="text_underbar"><u><b><font color="#5c5c5c"> 로그인 없이 이용하기</font></b></u></string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="goods">굿즈</string>
+    <string name="goods_prompt">굿즈 선택</string>
+    <string-array name="goods_array">
+        <item>인기순</item>
+        <item>저가순</item>
+        <item>고가순</item>
+    </string-array>
 </resources>
