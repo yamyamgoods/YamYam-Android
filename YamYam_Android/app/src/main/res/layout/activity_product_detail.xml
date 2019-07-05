@@ -64,22 +64,19 @@
             app:layout_collapseMode="parallax"
             android:fillViewport="true">
 
-            <android.support.constraint.ConstraintLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="50dp"
                 android:background="@android:color/white"
-                tools:context=".productdetail.ProductDetailActivity">
+                android:orientation="vertical">
 
                 <android.support.constraint.ConstraintLayout
                     android:id="@+id/thumbnailList"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="37dp"
                     android:layout_marginTop="8dp"
-                    android:visibility="visible"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    android:visibility="visible">
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -159,14 +156,11 @@
 
                 <android.support.constraint.ConstraintLayout
                     android:id="@+id/infoZone"
-                    android:layout_width="0dp"
+                    android:layout_width="379dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
                     android:layout_marginTop="20dp"
-                    android:layout_marginEnd="16dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/thumbnailList">
+                    android:layout_marginRight="16dp">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -294,15 +288,12 @@
 
                 <LinearLayout
                     android:id="@+id/linearLayout"
-                    android:layout_width="0dp"
+                    android:layout_width="379dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
                     android:layout_marginTop="20dp"
-                    android:layout_marginEnd="16dp"
-                    android:orientation="vertical"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/infoZone">
+                    android:layout_marginRight="16dp"
+                    android:orientation="vertical">
 
                     <View
                         android:id="@+id/blackBar2"
@@ -416,12 +407,9 @@
 
                 <android.support.constraint.ConstraintLayout
                     android:id="@+id/cl_product_detail_act_detail_zone"
-                    android:layout_width="0dp"
+                    android:layout_width="411dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+                    android:layout_marginTop="12dp">
 
                     <android.support.constraint.ConstraintLayout
                         android:layout_width="match_parent"
@@ -436,7 +424,7 @@
                         <ImageView
                             android:id="@+id/iv_product_detail_act_detail_image"
                             android:layout_width="match_parent"
-                            android:layout_height="100dp"
+                            android:layout_height="wrap_content"
                             android:scaleType="matrix"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintLeft_toLeftOf="parent"
@@ -485,21 +473,14 @@
 
                 <View
                     android:id="@+id/grayBlankZone"
-                    android:layout_width="0dp"
+                    android:layout_width="411dp"
                     android:layout_height="12dp"
-                    android:background="#F5F6F9"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/cl_product_detail_act_detail_zone" />
+                    android:background="#F5F6F9" />
 
                 <android.support.constraint.ConstraintLayout
                     android:id="@+id/reviewZone"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/grayBlankZone">
+                    android:layout_width="411dp"
+                    android:layout_height="wrap_content">
 
                     <android.support.constraint.ConstraintLayout
                         android:id="@+id/constraintLayout2"
@@ -727,7 +708,7 @@
 
                 </android.support.constraint.ConstraintLayout>
 
-            </android.support.constraint.ConstraintLayout>
+            </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
 
     </android.support.design.widget.CoordinatorLayout>
