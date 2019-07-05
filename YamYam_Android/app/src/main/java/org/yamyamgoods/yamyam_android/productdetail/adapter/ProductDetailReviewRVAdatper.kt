@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import org.jetbrains.anko.imageResource
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.review.all.ReviewAllItem
@@ -63,8 +64,7 @@ class ProductDetailReviewRVAdatper(private val ctx: Context, private val dataLis
         }
         for (i in 0 until imageCount) {
             holder.ivImages[i].visibility = View.VISIBLE
-            Glide
-                    .with(ctx)
+            Glide.with(ctx)
                     .load(images[i])
                     .into(holder.ivImages[i])
         }
@@ -84,9 +84,9 @@ class ProductDetailReviewRVAdatper(private val ctx: Context, private val dataLis
     }
 
     private fun setProfile(url: String, imageView: ImageView) =
-            Glide
-                    .with(ctx)
+            Glide.with(ctx)
                     .load(url)
+                    .apply(RequestOptions.circleCropTransform())
                     .into(imageView)
 
     private fun setStarView(score: Int, stars: List<ImageView>) {
