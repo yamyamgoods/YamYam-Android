@@ -20,6 +20,9 @@ import org.yamyamgoods.yamyam_android.R
 
 class StoreWebActivity : AppCompatActivity() {
 
+    private lateinit var storeUrl: String
+    private lateinit var storeName: String
+
     private val mWebViewClient = object : WebViewClient() {
         override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
             pb_store_web_act_progressbar.visibility = View.VISIBLE
@@ -39,6 +42,7 @@ class StoreWebActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_store_web)
 
+        valueInit()
         viewInit()
     }
 
@@ -50,13 +54,17 @@ class StoreWebActivity : AppCompatActivity() {
         super.onBackPressed()
     }
 
+    private fun valueInit() {
+        storeUrl = intent.getStringExtra("storeUrl")
+        storeName = intent.getStringExtra("storeName")
+    }
 
     private fun viewInit() {
         wv_store_web_act_web.apply {
             webViewClient = mWebViewClient
             webChromeClient = mWebChromeClient
             applyWebViewSettings()
-            loadUrl("https://nightmare73.blog.me")
+            loadUrl(storeUrl)
         }
 
         btn_store_web_act_close.setOnClickListener {
@@ -66,6 +74,8 @@ class StoreWebActivity : AppCompatActivity() {
         val color = ContextCompat.getColor(this, R.color.MainYellow)
         pb_store_web_act_progressbar.progressDrawable.setColorFilter(
                 color, android.graphics.PorterDuff.Mode.SRC_IN)
+
+        tv_store_web_act_store_name.text = storeName
     }
 
     private fun applyWebViewSettings() {

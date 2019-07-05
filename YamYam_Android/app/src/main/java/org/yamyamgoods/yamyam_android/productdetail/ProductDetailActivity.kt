@@ -174,7 +174,10 @@ class ProductDetailActivity : AppCompatActivity() {
         setTabBarClickListener()
 
         btn_product_detail_act_visit_store.setOnClickListener {
-            startActivity<StoreWebActivity>()
+            startActivity<StoreWebActivity>(
+                    "storeUrl" to "https://nightmare73.blog.me",
+                    "storeName" to "스토어이름"
+            )
         }
     }
 
