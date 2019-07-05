@@ -13,6 +13,7 @@ import android.renderscript.ScriptIntrinsicBlur
 import android.support.design.widget.AppBarLayout
 import android.support.v4.widget.NestedScrollView
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
 import android.view.ViewTreeObserver
@@ -23,6 +24,8 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import kotlinx.android.synthetic.main.activity_product_detail.*
 import org.yamyamgoods.yamyam_android.R
+import org.yamyamgoods.yamyam_android.productdetail.adapter.ProductDetailReviewRVAdatper
+import org.yamyamgoods.yamyam_android.util.TempData
 import org.yamyamgoods.yamyam_android.util.dp2px
 import org.yamyamgoods.yamyam_android.util.getScreenWidth
 
@@ -138,6 +141,11 @@ class ProductDetailActivity : AppCompatActivity() {
         appbar_product_detail_act.addOnOffsetChangedListener(appbarListener)
 
         scroll_product_detail_act.setOnScrollChangeListener(nestedScrollChangeListener)
+
+        rv_product_detail_act_review_list.apply {
+            adapter = ProductDetailReviewRVAdatper(this@ProductDetailActivity, TempData.ReviewAll())
+            layoutManager = LinearLayoutManager(this@ProductDetailActivity)
+        }
     }
 
     private fun setMainImageHeight() {
@@ -156,7 +164,6 @@ class ProductDetailActivity : AppCompatActivity() {
                 iv_product_detail_act_detail_image.viewTreeObserver.removeOnPreDrawListener(this)
                 val finalHeight = iv_product_detail_act_detail_image.measuredHeight
                 detailImageConfig(finalHeight)
-                Log.v("Malibin Debug", "onPreDraw() called")
                 return true
             }
         })
