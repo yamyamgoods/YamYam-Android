@@ -11,10 +11,13 @@ import android.renderscript.Element
 import android.renderscript.RenderScript
 import android.renderscript.ScriptIntrinsicBlur
 import android.support.design.widget.AppBarLayout
+import android.support.design.widget.TabLayout
 import android.support.v4.widget.NestedScrollView
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.view.WindowManager
 import android.widget.ImageView
@@ -22,9 +25,15 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import kotlinx.android.synthetic.main.activity_product_detail.*
+import org.jetbrains.anko.startActivity
 import org.yamyamgoods.yamyam_android.R
+import org.yamyamgoods.yamyam_android.productdetail.adapter.ProductDetailReviewRVAdatper
+import org.yamyamgoods.yamyam_android.productdetail.dialog.ProductEstimateDialog
+import org.yamyamgoods.yamyam_android.storeweb.StoreWebActivity
+import org.yamyamgoods.yamyam_android.util.TempData
 import org.yamyamgoods.yamyam_android.util.dp2px
 import org.yamyamgoods.yamyam_android.util.getScreenWidth
+import kotlin.math.abs
 
 
 /**
@@ -35,6 +44,14 @@ import org.yamyamgoods.yamyam_android.util.getScreenWidth
 class ProductDetailActivity : AppCompatActivity() {
 
     private var originalDetailImageHeight: Int = 0
+    private var foldedDetailImageHeight: Int = 0
+
+    private var originalReviewInfoYOffset = 0
+    private var currentReviewInfoYOffset = 0
+
+    private var isDetailZone = true
+    private var isReviewZone = false
+    private var isScrolled = false
 
     private val appbarListener = AppBarLayout.OnOffsetChangedListener { _, offset ->
         val isCollapsed = (-900 == offset)
@@ -47,12 +64,24 @@ class ProductDetailActivity : AppCompatActivity() {
     }
 
     private val nestedScrollChangeListener = NestedScrollView.OnScrollChangeListener { _, _, newY, _, oldY ->
+        isScrolled = true
         if (newY > oldY) {
             cl_product_detail_act_bottom_bar.visibility = View.INVISIBLE
         }
         if (newY < oldY) {
             cl_product_detail_act_bottom_bar.visibility = View.VISIBLE
         }
+        if (newY <= currentReviewInfoYOffset && !isDetailZone) {
+            tl_product_detail_act_tab.getTabAt(0)!!.select()
+            isDetailZone = true
+            isReviewZone = false
+        }
+        if (newY >= currentReviewInfoYOffset && !isReviewZone) {
+            tl_product_detail_act_tab.getTabAt(1)!!.select()
+            isDetailZone = false
+            isReviewZone = true
+        }
+        isScrolled = false
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -138,6 +167,16 @@ class ProductDetailActivity : AppCompatActivity() {
         appbar_product_detail_act.addOnOffsetChangedListener(appbarListener)
 
         scroll_product_detail_act.setOnScrollChangeListener(nestedScrollChangeListener)
+
+        rv_product_detail_act_review_list.apply {
+            adapter = ProductDetailReviewRVAdatper(this@ProductDetailActivity, TempData.ReviewAll())
+            layoutManager = LinearLayoutManager(this@ProductDetailActivity)
+        }
+
+        setTabBarClickListener()
+
+        bottomBarInit()
+
     }
 
     private fun setMainImageHeight() {
@@ -149,6 +188,24 @@ class ProductDetailActivity : AppCompatActivity() {
         return (phoneWidth * 321 / 360)
     }
 
+    private fun setPreDrawListener2InfoZone() {
+        val vto = cl_product_detail_act_info_zone.viewTreeObserver
+        vto.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
+            override fun onPreDraw(): Boolean {
+                cl_product_detail_act_info_zone.viewTreeObserver.removeOnPreDrawListener(this)
+                val finalHeight = cl_product_detail_act_info_zone.measuredHeight
+                initReviewInfoYOffset(finalHeight)
+                return true
+            }
+        })
+    }
+
+    private fun initReviewInfoYOffset(infoZoneHeight: Int) {
+        currentReviewInfoYOffset = infoZoneHeight - dp2px(48f, this)
+        val imageHeightDiff = originalDetailImageHeight - foldedDetailImageHeight
+        originalReviewInfoYOffset = currentReviewInfoYOffset + imageHeightDiff
+    }
+
     private fun setPreDrawListener2DetailImage() {
         val vto = iv_product_detail_act_detail_image.viewTreeObserver
         vto.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
@@ -156,10 +213,21 @@ class ProductDetailActivity : AppCompatActivity() {
                 iv_product_detail_act_detail_image.viewTreeObserver.removeOnPreDrawListener(this)
                 val finalHeight = iv_product_detail_act_detail_image.measuredHeight
                 detailImageConfig(finalHeight)
-                Log.v("Malibin Debug", "onPreDraw() called")
                 return true
             }
         })
+    }
+
+    private fun detailImageConfig(height: Int) {
+        originalDetailImageHeight = height
+        foldedDetailImageHeight = dp2px(288f, applicationContext)
+        detailImageTopCrop()
+        cl_product_detail_act_detail_zone.apply {
+            val layoutParams = this.layoutParams
+            layoutParams.height = foldedDetailImageHeight
+            this.layoutParams = layoutParams
+        }
+        setPreDrawListener2InfoZone()
     }
 
     private fun detailImageTopCrop() {
@@ -170,16 +238,6 @@ class ProductDetailActivity : AppCompatActivity() {
         val matrix = iv_product_detail_act_detail_image.imageMatrix
         matrix.postTranslate(transX, 0f)
         iv_product_detail_act_detail_image.imageMatrix = matrix
-    }
-
-    private fun detailImageConfig(height: Int) {
-        originalDetailImageHeight = height
-        detailImageTopCrop()
-        cl_product_detail_act_detail_zone.apply {
-            val layoutParams = this.layoutParams
-            layoutParams.height = dp2px(288f, applicationContext)
-            this.layoutParams = layoutParams
-        }
     }
 
     private fun expandDetailImage() {
@@ -194,8 +252,46 @@ class ProductDetailActivity : AppCompatActivity() {
     private fun moreDetailImageButtonConfig() {
         btn_product_detail_act_more_detail.setOnClickListener {
             expandDetailImage()
+            currentReviewInfoYOffset = originalReviewInfoYOffset
             it.visibility = View.INVISIBLE
         }
     }
 
+    private fun setTabBarClickListener() {
+        val tabLayout = tl_product_detail_act_tab
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                if (!isScrolled) {
+                    when (tab) {
+                        tabLayout.getTabAt(0) ->
+                            scroll_product_detail_act.scrollTo(0, 0)
+                        tabLayout.getTabAt(1) ->
+                            scroll_product_detail_act.scrollTo(0, currentReviewInfoYOffset)
+                    }
+                }
+            }
+        })
+    }
+
+    private fun bottomBarInit(){
+        btn_product_detail_act_visit_store.setOnClickListener {
+            startActivity<StoreWebActivity>(
+                    "storeUrl" to "https://nightmare73.blog.me",
+                    "storeName" to "스토어이름"
+            )
+        }
+
+        btn_product_detail_act_estimate.setOnClickListener {
+            val productEstimateDialog = ProductEstimateDialog(this)
+            productEstimateDialog.show()
+            val window = productEstimateDialog.window
+            window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        }
+    }
 }

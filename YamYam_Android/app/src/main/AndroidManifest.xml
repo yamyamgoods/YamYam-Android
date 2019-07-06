@@ -15,6 +15,7 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".home.goods.GoodsExhibitionDetailActivity"></activity>
         <activity android:name=".review.ReviewActivity"></activity>
+        <activity android:name=".storeweb.StoreWebActivity"></activity>
         <activity android:name=".productdetail.ProductDetailActivity"/>
         <activity android:name=".review.PhotoZoomInActivity"></activity>
         <activity
