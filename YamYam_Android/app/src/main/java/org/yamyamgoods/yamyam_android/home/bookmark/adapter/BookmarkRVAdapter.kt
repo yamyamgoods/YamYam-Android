@@ -1,4 +1,4 @@
-package org.yamyamgoods.yamyam_android.home.best.goods.adapter
+package org.yamyamgoods.yamyam_android.home.bookmark.adapter
 
 import android.content.Context
 import android.support.constraint.ConstraintLayout
@@ -9,21 +9,27 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import org.jetbrains.anko.imageResource
-import org.yamyamgoods.yamyam_android.home.best.goods.BestGoodsItem
 import org.yamyamgoods.yamyam_android.R
+import org.yamyamgoods.yamyam_android.home.bookmark.BookmarkItem
 import org.yamyamgoods.yamyam_android.util.dp2px
 import org.yamyamgoods.yamyam_android.util.getScreenWidth
 
-class BestGoodsRVAdapter(private val ctx: Context, private val dataList: List<BestGoodsItem>) : RecyclerView.Adapter<BestGoodsRVAdapter.Holder>() {
+/**
+ * Created By Yun Hyeok
+ * on 7월 06, 2019
+ */
+
+class BookmarkRVAdapter(private val ctx: Context, private val dataList: List<BookmarkItem>)
+    : RecyclerView.Adapter<BookmarkRVAdapter.Holder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val view: View = LayoutInflater.from(ctx).inflate(R.layout.rv_item_best_goods, parent, false)
+        val view = LayoutInflater.from(ctx).inflate(R.layout.rv_item_bookmark, parent, false)
         return Holder(view)
     }
 
     override fun getItemCount(): Int = dataList.size
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-
         dataList[position].let { item ->
 
             //임시코드 string 으로 바꿀 것 다시
@@ -45,10 +51,6 @@ class BestGoodsRVAdapter(private val ctx: Context, private val dataList: List<Be
             holder.tvStoreName.text = item.storeName
             holder.tvProductName.text = item.productName
             holder.tvPrice.text = item.price.toString()
-
-            holder.tvStarRate.text = item.starRate.toString()
-            holder.tvMinQuantity.text = item.minQuantity.toString()
-            holder.tvReviewCount.text = item.reviewCount.toString()
         }
     }
 
@@ -66,16 +68,12 @@ class BestGoodsRVAdapter(private val ctx: Context, private val dataList: List<Be
     }
 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val clImageFrame: ConstraintLayout = itemView.findViewById(R.id.cl_rv_item_best_goods_image)
-        val ivImage: ImageView = itemView.findViewById(R.id.iv_rv_item_best_goods_picture)
-        val ivBookmark: ImageView = itemView.findViewById(R.id.iv_rv_item_best_goods_bookmark)
+        val clImageFrame: ConstraintLayout = itemView.findViewById(R.id.cl_rv_item_bookmark_image)
+        val ivImage: ImageView = itemView.findViewById(R.id.iv_rv_item_bookmark_picture)
+        val ivBookmark: ImageView = itemView.findViewById(R.id.iv_rv_item_bookmark_bookmark)
 
-        val tvStoreName: TextView = itemView.findViewById(R.id.tv_rv_item_best_goods_store_name)
-        val tvProductName: TextView = itemView.findViewById(R.id.tv_rv_item_best_goods_product_name)
-        val tvPrice: TextView = itemView.findViewById(R.id.tv_rv_item_best_goods_product_price)
-
-        val tvStarRate: TextView = itemView.findViewById(R.id.tv_rv_item_best_goods_rate)
-        val tvMinQuantity: TextView = itemView.findViewById(R.id.tv_rv_item_best_goods_minimum_quantity)
-        val tvReviewCount: TextView = itemView.findViewById(R.id.tv_rv_item_best_goods_review_num)
+        val tvStoreName: TextView = itemView.findViewById(R.id.tv_rv_item_bookmark_store_name)
+        val tvProductName: TextView = itemView.findViewById(R.id.tv_rv_item_bookmark_product_name)
+        val tvPrice: TextView = itemView.findViewById(R.id.tv_rv_item_bookmark_product_price)
     }
 }

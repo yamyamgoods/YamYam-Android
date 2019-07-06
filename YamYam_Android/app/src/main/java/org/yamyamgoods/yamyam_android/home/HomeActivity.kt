@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction
 import kotlinx.android.synthetic.main.activity_home.*
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.home.best.BestTabFragment
+import org.yamyamgoods.yamyam_android.home.bookmark.BookmarkFragment
 import org.yamyamgoods.yamyam_android.home.goods.GoodsFragment
 import org.yamyamgoods.yamyam_android.home.store.ranking.StoreRankingFragment
 
@@ -48,7 +49,7 @@ class HomeActivity : AppCompatActivity() {
             tv_bottom_goods_text.isSelected=true
         }
         btn_bottom_like.setOnClickListener{
-//            replaceFragment()
+            replaceFragment(BookmarkFragment())
             clearBtnSelect()
             iv_bottom_like_icon.isSelected=true
             tv_bottom_like_text.isSelected=true

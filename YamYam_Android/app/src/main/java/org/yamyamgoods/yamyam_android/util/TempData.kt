@@ -3,6 +3,7 @@ package org.yamyamgoods.yamyam_android.util
 import org.yamyamgoods.yamyam_android.home.best.goods.BestGoodsItem
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.home.best.review.BestReviewItem
+import org.yamyamgoods.yamyam_android.home.bookmark.BookmarkItem
 import org.yamyamgoods.yamyam_android.home.store.ranking.StoreRankingItem
 import org.yamyamgoods.yamyam_android.home.store.regular.RegularStoreItem
 import org.yamyamgoods.yamyam_android.review.all.ReviewAllItem
@@ -117,6 +118,7 @@ class TempData {
 
             return result
         }
+
         fun ReviewAll(): List<ReviewAllItem> {
             val result = ArrayList<ReviewAllItem>()
             result.add(
@@ -334,6 +336,53 @@ class TempData {
                             4.8f, 1300, true
                     ))
 
+            return result
+        }
+
+        fun bookmarks(): List<BookmarkItem> {
+            val result = ArrayList<BookmarkItem>()
+            result.add(
+                    BookmarkItem(
+                            0, false, R.drawable.img_goods1,
+                            "레드프린팅&프레스", "도무송 스티커",
+                            32900)
+            )
+            result.add(
+                    BookmarkItem(
+                            0, true, R.drawable.img_goods2,
+                            "레드프린팅&프레스", "도무송 스티커",
+                            32900)
+            )
+            result.add(
+                    BookmarkItem(
+                            0, true, R.drawable.img_goods3,
+                            "레드프린팅&프레스", "도무송 스티커",
+                            32900)
+            )
+            result.add(
+                    BookmarkItem(
+                            0, false, R.drawable.img_goods4,
+                            "레드프린팅&프레스", "도무송 스티커",
+                            32900)
+            )
+            result.add(
+                    BookmarkItem(
+                            0, false, R.drawable.img_goods1,
+                            "레드프린팅&프레스", "도무송 스티커",
+                            32900)
+            )
+            result.add(
+                    BookmarkItem(
+                            0, true, R.drawable.img_goods2,
+                            "레드프린팅&프레스", "도무송 스티커",
+                            32900)
+            )
+            result.add(
+                    BookmarkItem(
+                            0, false, R.drawable.img_goods3,
+                            "레드프린팅&프레스", "도무송 스티커",
+                            32900)
+            )
             return result
         }
     }
