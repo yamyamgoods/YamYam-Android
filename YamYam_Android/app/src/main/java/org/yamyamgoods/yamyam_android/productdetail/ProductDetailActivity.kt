@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.view.WindowManager
 import android.widget.ImageView
@@ -27,6 +28,7 @@ import kotlinx.android.synthetic.main.activity_product_detail.*
 import org.jetbrains.anko.startActivity
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.productdetail.adapter.ProductDetailReviewRVAdatper
+import org.yamyamgoods.yamyam_android.productdetail.dialog.ProductEstimateDialog
 import org.yamyamgoods.yamyam_android.storeweb.StoreWebActivity
 import org.yamyamgoods.yamyam_android.util.TempData
 import org.yamyamgoods.yamyam_android.util.dp2px
@@ -173,12 +175,8 @@ class ProductDetailActivity : AppCompatActivity() {
 
         setTabBarClickListener()
 
-        btn_product_detail_act_visit_store.setOnClickListener {
-            startActivity<StoreWebActivity>(
-                    "storeUrl" to "https://nightmare73.blog.me",
-                    "storeName" to "스토어이름"
-            )
-        }
+        bottomBarInit()
+
     }
 
     private fun setMainImageHeight() {
@@ -281,4 +279,19 @@ class ProductDetailActivity : AppCompatActivity() {
         })
     }
 
+    private fun bottomBarInit(){
+        btn_product_detail_act_visit_store.setOnClickListener {
+            startActivity<StoreWebActivity>(
+                    "storeUrl" to "https://nightmare73.blog.me",
+                    "storeName" to "스토어이름"
+            )
+        }
+
+        btn_product_detail_act_estimate.setOnClickListener {
+            val productEstimateDialog = ProductEstimateDialog(this)
+            productEstimateDialog.show()
+            val window = productEstimateDialog.window
+            window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        }
+    }
 }
