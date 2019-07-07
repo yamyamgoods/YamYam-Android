@@ -14,6 +14,7 @@ data class ReviewAllItem(
 
         var imageUrl: List<String>,
 
+        var thumbFlag: Int,
         var thumbCount: Int,
         var commentsCount: Int
 )

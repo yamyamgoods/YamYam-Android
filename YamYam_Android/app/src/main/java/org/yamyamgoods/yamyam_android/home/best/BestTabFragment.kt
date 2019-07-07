@@ -1,5 +1,6 @@
 package org.yamyamgoods.yamyam_android.home.best
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
@@ -10,8 +11,11 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_best_tab.*
 import kotlinx.android.synthetic.main.fragment_best_tab.view.*
 import kotlinx.android.synthetic.main.tab_best_fragment.*
+import org.jetbrains.anko.support.v4.ctx
+import org.jetbrains.anko.support.v4.startActivity
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.home.best.adpater.BestTabFragmentStatePagerAdapter
+import org.yamyamgoods.yamyam_android.mypage.MypageActivity
 
 class BestTabFragment : Fragment() {
     lateinit var inflater: LayoutInflater
@@ -23,7 +27,16 @@ class BestTabFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        openMypage()
         viewInit(view)
+
+    }
+
+    fun openMypage(){
+        btn_best_tab_frag_mypage.setOnClickListener{
+            val intent= Intent(ctx, MypageActivity::class.java)
+            this.startActivity(intent)
+        }
     }
 
     private fun viewInit(view: View) {
