@@ -28,7 +28,7 @@ class BookmarkFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        ctx = activity!!.applicationContext
+        ctx = activity!!
         viewInit()
     }
 

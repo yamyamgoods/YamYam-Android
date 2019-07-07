@@ -10,7 +10,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import org.jetbrains.anko.imageResource
 import org.yamyamgoods.yamyam_android.R
+import org.yamyamgoods.yamyam_android.home.HomeActivity
 import org.yamyamgoods.yamyam_android.home.bookmark.BookmarkItem
+import org.yamyamgoods.yamyam_android.home.bookmark.dialog.BookmarkEstimateDialog
 import org.yamyamgoods.yamyam_android.util.dp2px
 import org.yamyamgoods.yamyam_android.util.getScreenWidth
 
@@ -51,6 +53,12 @@ class BookmarkRVAdapter(private val ctx: Context, private val dataList: List<Boo
             holder.tvStoreName.text = item.storeName
             holder.tvProductName.text = item.productName
             holder.tvPrice.text = item.price.toString()
+
+            holder.clWholeView.setOnClickListener {
+                val bookmarkEstimateDialog = BookmarkEstimateDialog(ctx)
+                bookmarkEstimateDialog.show()
+                bookmarkEstimateDialog.window.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            }
         }
     }
 
@@ -68,6 +76,8 @@ class BookmarkRVAdapter(private val ctx: Context, private val dataList: List<Boo
     }
 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val clWholeView: ConstraintLayout = itemView.findViewById(R.id.cl_rv_item_bookmark_whole)
+
         val clImageFrame: ConstraintLayout = itemView.findViewById(R.id.cl_rv_item_bookmark_image)
         val ivImage: ImageView = itemView.findViewById(R.id.iv_rv_item_bookmark_picture)
         val ivBookmark: ImageView = itemView.findViewById(R.id.iv_rv_item_bookmark_bookmark)

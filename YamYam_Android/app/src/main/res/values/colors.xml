@@ -16,4 +16,5 @@
     <color name="colorBrownishGray">#6e6e6e</color>
     <color name="colorTabLightGray">#b4b3b8</color>
     <color name="colorTabDarkGray">#3c3c3c</color>
+    <color name="transparent">#00000000</color>
 </resources>
