@@ -15,25 +15,22 @@ import android.support.design.widget.TabLayout
 import android.support.v4.widget.NestedScrollView
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.View
-import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.view.WindowManager
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.activity_product_detail.*
 import org.jetbrains.anko.startActivity
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.productdetail.adapter.ProductDetailReviewRVAdatper
-import org.yamyamgoods.yamyam_android.productdetail.dialog.ProductEstimateDialog
 import org.yamyamgoods.yamyam_android.storeweb.StoreWebActivity
 import org.yamyamgoods.yamyam_android.util.TempData
 import org.yamyamgoods.yamyam_android.util.dp2px
 import org.yamyamgoods.yamyam_android.util.getScreenWidth
-import kotlin.math.abs
 
 
 /**
@@ -43,8 +40,8 @@ import kotlin.math.abs
 
 class ProductDetailActivity : AppCompatActivity() {
 
-    private var originalDetailImageHeight: Int = 0
-    private var foldedDetailImageHeight: Int = 0
+    private var originalDetailImageHeight = 0
+    private var foldedDetailImageHeight = 0
 
     private var originalReviewInfoYOffset = 0
     private var currentReviewInfoYOffset = 0
@@ -93,6 +90,17 @@ class ProductDetailActivity : AppCompatActivity() {
 
         viewInit()
 
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE or WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
+
+    }
+
+    override fun onBackPressed() {
+        val panelState = slide_product_detail_act_panel.panelState
+        if (panelState == SlidingUpPanelLayout.PanelState.EXPANDED) {
+            slide_product_detail_act_panel.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
+            return
+        }
+        super.onBackPressed()
     }
 
     private fun setContentScrimImage() = Glide
@@ -177,6 +185,7 @@ class ProductDetailActivity : AppCompatActivity() {
 
         bottomBarInit()
 
+        slideUpPanelLayoutConfig()
     }
 
     private fun setMainImageHeight() {
@@ -279,7 +288,7 @@ class ProductDetailActivity : AppCompatActivity() {
         })
     }
 
-    private fun bottomBarInit(){
+    private fun bottomBarInit() {
         btn_product_detail_act_visit_store.setOnClickListener {
             startActivity<StoreWebActivity>(
                     "storeUrl" to "https://nightmare73.blog.me",
@@ -288,10 +297,26 @@ class ProductDetailActivity : AppCompatActivity() {
         }
 
         btn_product_detail_act_estimate.setOnClickListener {
-            val productEstimateDialog = ProductEstimateDialog(this)
-            productEstimateDialog.show()
-            val window = productEstimateDialog.window
-            window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            slide_product_detail_act_panel.panelState = SlidingUpPanelLayout.PanelState.EXPANDED
+        }
+    }
+
+    private fun slideUpPanelLayoutConfig() {
+        cl_product_detail_act_slide_panel.setOnClickListener { return@setOnClickListener }
+
+        btn_product_detail_act_slide_close.setOnClickListener {
+            slide_product_detail_act_panel.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
+        }
+
+        et_product_detail_act_slide_amount.setOnClickListener {
+//            it.measure(0, 0)
+//            val etHeight = it.measuredHeight
+//            val lp = cl_product_detail_act_slide_panel.layoutParams
+//            lp.height += etHeight
+//            cl_product_detail_act_slide_panel.layoutParams = lp
+        }
+
+        btn_product_detail_act_slide_bookmark.setOnClickListener {
         }
     }
 }

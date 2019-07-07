@@ -58,7 +58,7 @@ class TempData {
             return result
         }
 
-        fun BestReview(): List<BestReviewItem>{
+        fun BestReview(): List<BestReviewItem> {
             val result = ArrayList<BestReviewItem>()
             result.add(
                     BestReviewItem(
@@ -111,7 +111,7 @@ class TempData {
                                     "https://scontent-icn1-1.xx.fbcdn.net/v/t1.0-9/58383648_1714122605401284_8261916106969579520_o.jpg?_nc_cat=107&_nc_ht=scontent-icn1-1.xx&oh=5685d155cc3622b1535485166619daff&oe=5D756045",
                                     "https://scontent-icn1-1.xx.fbcdn.net/v/t1.0-9/58383648_1714122605401284_8261916106969579520_o.jpg?_nc_cat=107&_nc_ht=scontent-icn1-1.xx&oh=5685d155cc3622b1535485166619daff&oe=5D756045",
                                     "https://scontent-icn1-1.xx.fbcdn.net/v/t1.0-9/58383648_1714122605401284_8261916106969579520_o.jpg?_nc_cat=107&_nc_ht=scontent-icn1-1.xx&oh=5685d155cc3622b1535485166619daff&oe=5D756045"
-                                    ,"https://scontent-icn1-1.xx.fbcdn.net/v/t1.0-9/58383648_1714122605401284_8261916106969579520_o.jpg?_nc_cat=107&_nc_ht=scontent-icn1-1.xx&oh=5685d155cc3622b1535485166619daff&oe=5D756045"),
+                                    , "https://scontent-icn1-1.xx.fbcdn.net/v/t1.0-9/58383648_1714122605401284_8261916106969579520_o.jpg?_nc_cat=107&_nc_ht=scontent-icn1-1.xx&oh=5685d155cc3622b1535485166619daff&oe=5D756045"),
                             3, 55
                     )
             )
@@ -385,5 +385,11 @@ class TempData {
             )
             return result
         }
+
+        fun imageUrls(): List<String> = listOf(
+                "https://k.kakaocdn.net/dn/VHnP0/btqwBPfPhu4/yh4dZTeJI54Djnesq6dDi0/img.jpg"
+                , "https://k.kakaocdn.net/dn/ctCi22/btqwARLUGue/Gl1ob3NZNujk9IhZky77a0/img.jpg"
+                , "https://k.kakaocdn.net/dn/H2iWy/btqwAzSwui4/Yni1bX62rClFspBK2Na9j0/img.jpg"
+        )
     }
 }

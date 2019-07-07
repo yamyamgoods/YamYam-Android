@@ -13,21 +13,25 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".home.goods.GoodsExhibitionDetailActivity"></activity>
-        <activity android:name=".review.ReviewActivity"></activity>
-        <activity android:name=".storeweb.StoreWebActivity"></activity>
-        <activity android:name=".productdetail.ProductDetailActivity"/>
-        <activity android:name=".review.PhotoZoomInActivity"></activity>
-        <activity
-            android:name=".LoginActivity"
-            android:label="@string/title_activity_login"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".home.HomeActivity">
+        <activity android:name=".TestActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".home.goods.GoodsExhibitionDetailActivity" />
+        <activity android:name=".review.ReviewActivity" />
+        <activity android:name=".storeweb.StoreWebActivity" />
+        <activity android:name=".productdetail.ProductDetailActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
+        <activity android:name=".review.PhotoZoomInActivity" />
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/title_activity_login"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".home.HomeActivity">
+
         </activity>
     </application>
 
