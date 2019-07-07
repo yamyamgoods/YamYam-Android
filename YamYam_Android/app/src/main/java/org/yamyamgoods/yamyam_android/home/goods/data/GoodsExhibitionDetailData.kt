@@ -7,5 +7,6 @@ data class GoodsExhibitionDetailData(
         var p_name: String,
         var p_price: String,
         var p_rate: Double,
-        var p_minQuantity: Int
+        var p_minQuantity: Int,
+        var p_reviewCount: Int
 )
