@@ -1,8 +1,10 @@
 package org.yamyamgoods.yamyam_android.review.all.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.PorterDuff
+import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +18,9 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.review.all.ReviewAllItem
+import org.yamyamgoods.yamyam_android.reviewdetail.ReviewBasicDTO
+import org.yamyamgoods.yamyam_android.reviewdetail.ReviewDetailActivity
+import java.lang.Exception
 
 class ReviewAllRVAdapter (private val ctx: Context, private val dataList: List<ReviewAllItem>): RecyclerView.Adapter<ReviewAllRVAdapter.Holder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewAllRVAdapter.Holder {
@@ -41,6 +46,23 @@ class ReviewAllRVAdapter (private val ctx: Context, private val dataList: List<R
             }
 
             holder.tvReviewContents.text = item.reviewContents
+            holder.btnDetailReview.setOnClickListener{
+                try {
+                    var dto = ReviewBasicDTO(item.userImageUrl,
+                            item.userNickname,
+                            item.date,
+                            item.starCount,
+                            item.reviewContents,
+                            item.imageUrl,
+                            item.thumbFlag,
+                            item.thumbCount,
+                            item.commentsCount)
+                    var intent = Intent(ctx, ReviewDetailActivity::class.java)
+                    intent.putExtra("dto", dto)
+                    ctx.startActivity(intent)
+                } catch (e: Exception) {
+                }
+            }
 
             var options: RequestOptions = RequestOptions().transform(CenterCrop(), RoundedCorners(10))
             var imageNum = item.imageUrl.size
@@ -60,6 +82,7 @@ class ReviewAllRVAdapter (private val ctx: Context, private val dataList: List<R
             }
 
             holder.btnThumb.setOnClickListener{
+                item.thumbFlag = Math.abs(item.thumbFlag - 1)
                 holder.ivThumb.isSelected  = !(holder.ivThumb.isSelected)
             }
             holder.tvThumbNum.text = item.thumbCount.toString()
@@ -93,6 +116,7 @@ class ReviewAllRVAdapter (private val ctx: Context, private val dataList: List<R
         var btnThumb: LinearLayout = itemView.findViewById(R.id.btn_rv_item_review_all_thumbs) as LinearLayout
         var ivThumb: ImageView = itemView.findViewById(R.id.iv_rv_item_review_all_thumbs) as ImageView
         var tvThumbNum: TextView = itemView.findViewById(R.id.tv_rv_item_review_all_thumbs_num) as TextView
+        var btnDetailReview: ConstraintLayout = itemView.findViewById(R.id.btn_rv_item_review_all_detail_review) as ConstraintLayout
         var btnComments: ImageView = itemView.findViewById(R.id.btn_rv_item_review_all_comments) as ImageView
         var tvCommentsNum: TextView = itemView.findViewById(R.id.tv_rv_item_best_review_all_comments_num) as TextView
     }

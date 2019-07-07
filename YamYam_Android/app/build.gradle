@@ -45,6 +45,12 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     implementation 'jp.wasabeef:glide-transformations:4.0.1'
 
+    //permission
+    implementation "gun0912.ted:tedpermission:2.1.0"
+
+    //crop
+    implementation 'com.soundcloud.android:android-crop:1.0.1@aar'
+
     //Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'

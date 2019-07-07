@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout3"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/cl_rv_item_mypage_alarm"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="17dp"
+            app:layout_constraintStart_toStartOf="@+id/cl_rv_item_mypage_alarm"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/icon_re_comment" />
+
+        <TextView
+            android:id="@+id/tv_rv_item_mypage_alarm_contents"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="17dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="리뷰에 댓글이 달렸습니다: 혹시 수량은 몇개 제작하셨나요?? 저도 할 수 있을까요????????????????????????????/"
+            android:textColor="#3c3c3c"
+            android:textSize="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView9"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lineHeight="19dp" />
+
+        <ImageView
+            android:id="@+id/iv_rv_item_mypage_alarm_reddot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="22dp"
+            app:layout_constraintStart_toStartOf="@+id/imageView9"
+            app:layout_constraintTop_toTopOf="@+id/tv_rv_item_mypage_alarm_contents"
+            app:srcCompat="@drawable/icon_reddot" />
+
+        <TextView
+            android:id="@+id/tv_rv_item_mypage_alarm_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:text="2019.06.24"
+            android:textColor="#a2a2a2"
+            android:textSize="13dp"
+            app:layout_constraintStart_toStartOf="@+id/tv_rv_item_mypage_alarm_contents"
+            app:layout_constraintTop_toBottomOf="@+id/tv_rv_item_mypage_alarm_contents"
+            app:lineHeight="16dp" />
+
+        <View
+            android:id="@+id/view18"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="#6e6e6e"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_rv_item_mypage_alarm_date" />
+
+    </android.support.constraint.ConstraintLayout>
+</android.support.constraint.ConstraintLayout>

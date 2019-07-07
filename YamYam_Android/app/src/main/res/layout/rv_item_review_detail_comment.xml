@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/cl_rv_item_reveiw_detail_comment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_rv_item_review_detail_comment_user_image"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_marginTop="13dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@android:color/holo_orange_dark" />
+
+        <TextView
+            android:id="@+id/tv_rv_item_review_detail_comment_user_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:textColor="#333333"
+            android:textSize="14dp"
+            app:layout_constraintStart_toEndOf="@+id/iv_rv_item_review_detail_comment_user_image"
+            app:layout_constraintTop_toTopOf="@+id/iv_rv_item_review_detail_comment_user_image"
+            app:lineHeight="17dp"
+            tools:text="유저닉네임" />
+
+        <TextView
+            android:id="@+id/tv_rv_item_review_detail_comment_contents"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            app:layout_constraintStart_toStartOf="@+id/tv_rv_item_review_detail_comment_user_nickname"
+            app:layout_constraintTop_toBottomOf="@+id/tv_rv_item_review_detail_comment_user_nickname"
+            tools:text="혹시 수량은 몇개정도 제작하셨나요??" />
+
+        <TextView
+            android:id="@+id/tv_rv_item_review_detail_comment_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:textColor="#6e6e6e"
+            android:textSize="13dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lineHeight="16dp"
+            tools:text="2019. 06. 24" />
+
+        <View
+            android:id="@+id/view8"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="15dp"
+            android:background="#f5f6f9"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_rv_item_review_detail_comment_contents" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.constraint.ConstraintLayout>

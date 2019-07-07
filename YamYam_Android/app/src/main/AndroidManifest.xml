@@ -4,6 +4,10 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!-- 갤러리 접근하기 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -18,6 +22,10 @@
         <activity android:name=".storeweb.StoreWebActivity"></activity>
         <activity android:name=".productdetail.ProductDetailActivity"/>
         <activity android:name=".review.PhotoZoomInActivity"></activity>
+        <activity android:name=".mypage.recent.RecentlyViewedProductsActivity" />
+        <activity android:name=".mypage.MypageActivity" />
+        <activity android:name=".reviewdetail.ReviewDetailActivity" />
+
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
