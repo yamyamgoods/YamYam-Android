@@ -62,7 +62,7 @@ class TempData {
             return result
         }
 
-        fun BestReview(): List<BestReviewItem>{
+        fun BestReview(): ArrayList<BestReviewItem> {
             val result = ArrayList<BestReviewItem>()
             result.add(
                     BestReviewItem(
@@ -115,6 +115,7 @@ class TempData {
                                     "https://scontent-icn1-1.xx.fbcdn.net/v/t1.0-9/58383648_1714122605401284_8261916106969579520_o.jpg?_nc_cat=107&_nc_ht=scontent-icn1-1.xx&oh=5685d155cc3622b1535485166619daff&oe=5D756045",
                                     "https://scontent-icn1-1.xx.fbcdn.net/v/t1.0-9/58383648_1714122605401284_8261916106969579520_o.jpg?_nc_cat=107&_nc_ht=scontent-icn1-1.xx&oh=5685d155cc3622b1535485166619daff&oe=5D756045",
                                     "https://scontent-icn1-1.xx.fbcdn.net/v/t1.0-9/58383648_1714122605401284_8261916106969579520_o.jpg?_nc_cat=107&_nc_ht=scontent-icn1-1.xx&oh=5685d155cc3622b1535485166619daff&oe=5D756045"
+
                                     ,"https://scontent-icn1-1.xx.fbcdn.net/v/t1.0-9/58383648_1714122605401284_8261916106969579520_o.jpg?_nc_cat=107&_nc_ht=scontent-icn1-1.xx&oh=5685d155cc3622b1535485166619daff&oe=5D756045"),
                             0, 3, 55
                     )
@@ -617,5 +618,30 @@ class TempData {
             )
             return result
         }
+
+        fun imageUrls(): List<String> = listOf(
+                "https://ae01.alicdn.com/kf/HTB10mgVXnwKL1JjSZFgq6z6aVXaF/Kawaii-Anime-Clothes-Acrylic-Badges-Pins-Icon-Decorating-Badge-Backpack-Pin-Button-Acrylic-Brooch-Un.jpg_640x640.jpg"
+                , "https://images-na.ssl-images-amazon.com/images/I/51eQv0pInHL.jpg"
+                , "https://pics.me.me/thumb_random-depressive-thoughts-me-just-chilling-with-the-bois-on-49748524.png"
+                , "https://media.mnn.com/assets/images/2014/08/snowy_owl.png.653x0_q80_crop-smart.jpg"
+                , "https://onlineimagetools.com/images/examples-onlineimagetools/color-grid.png"
+                , "https://conversationstartersworld.com/wp-content/uploads/2015/12/Random-questions-to-ask-a-girl.jpg"
+                , "http://www.mkyong.com/wp-content/uploads/2015/08/java-random-integer-in-range.jpg"
+                , "https://ichef.bbci.co.uk/news/660/cpsprodpb/37B5/production/_89716241_thinkstockphotos-523060154.jpg"
+                , "https://i0.wp.com/dataaspirant.com/wp-content/uploads/2017/04/Random-Forest-Applications.jpg?resize=500%2C500"
+        )
+        fun imageUrls2(): List<String> = listOf(
+                "https://ae01.alicdn.com/kf/HTB10mgVXnwKL1JjSZFgq6z6aVXaF/Kawaii-Anime-Clothes-Acrylic-Badges-Pins-Icon-Decorating-Badge-Backpack-Pin-Button-Acrylic-Brooch-Un.jpg_640x640.jpg"
+                , "https://images-na.ssl-images-amazon.com/images/I/51eQv0pInHL.jpg"
+                , "https://pics.me.me/thumb_random-depressive-thoughts-me-just-chilling-with-the-bois-on-49748524.png"
+                , "https://media.mnn.com/assets/images/2014/08/snowy_owl.png.653x0_q80_crop-smart.jpg"
+                , "https://onlineimagetools.com/images/examples-onlineimagetools/color-grid.png"
+                , "https://conversationstartersworld.com/wp-content/uploads/2015/12/Random-questions-to-ask-a-girl.jpg"
+        )
+        fun imageUrls3(): List<String> = listOf(
+                "https://ae01.alicdn.com/kf/HTB10mgVXnwKL1JjSZFgq6z6aVXaF/Kawaii-Anime-Clothes-Acrylic-Badges-Pins-Icon-Decorating-Badge-Backpack-Pin-Button-Acrylic-Brooch-Un.jpg_640x640.jpg"
+                , "https://images-na.ssl-images-amazon.com/images/I/51eQv0pInHL.jpg"
+                , "https://pics.me.me/thumb_random-depressive-thoughts-me-just-chilling-with-the-bois-on-49748524.png"
+        )
     }
 }

@@ -24,6 +24,7 @@ android {
 
 repositories {
     jcenter()
+    mavenCentral()
 }
 
 dependencies {
@@ -41,9 +42,11 @@ dependencies {
     implementation 'com.android.support:cardview-v7:28.0.0'
     implementation 'com.android.support:support-v4:28.0.0'
 
-
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     implementation 'jp.wasabeef:glide-transformations:4.0.1'
+
+    //slide up panel layout
+    implementation 'com.sothree.slidinguppanel:library:3.4.0'
 
     //permission
     implementation "gun0912.ted:tedpermission:2.1.0"

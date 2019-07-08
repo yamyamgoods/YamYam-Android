@@ -7,17 +7,13 @@ import org.yamyamgoods.yamyam_android.R
 
 /**
  * Created By Yun Hyeok
- * on 7월 06, 2019
+ * on 7월 07, 2019
  */
 
-class ProductEstimateDialog : Dialog {
-
-    constructor(ctx: Context) : super(ctx)
-
-    constructor(ctx: Context, themeResId: Int) : super(ctx, themeResId)
+class LoginRequestDialog(ctx: Context) : Dialog(ctx) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.dialog_product_detail_estimate)
+        setContentView(R.layout.dialog_login_request)
     }
 }
