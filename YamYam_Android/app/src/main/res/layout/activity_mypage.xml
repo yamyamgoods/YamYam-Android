@@ -113,6 +113,32 @@
                 app:layout_constraintStart_toStartOf="@+id/view9"
                 app:layout_constraintTop_toBottomOf="@+id/cl_mypage_top">
 
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="3dp"
+                    android:text="P"
+                    android:textColor=" #707070"
+                    android:textSize="16dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_mypage_point"
+                    app:layout_constraintStart_toEndOf="@+id/tv_mypage_point"
+                    app:layout_constraintTop_toTopOf="@+id/tv_mypage_point"
+                    app:lineHeight="27dp" />
+
+                <TextView
+                    android:id="@+id/tv_mypage_point"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="5,200"
+                    android:textColor="#ffce00"
+                    android:textSize="16dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_mypage_user_email"
+                    app:layout_constraintStart_toEndOf="@+id/tv_mypage_user_email"
+                    app:layout_constraintTop_toTopOf="@+id/tv_mypage_user_email"
+                    app:lineHeight="27dp" />
+
                 <android.support.constraint.ConstraintLayout
                     android:id="@+id/btn_mypage_user_image_edit"
                     android:layout_width="wrap_content"
@@ -152,12 +178,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="3dp"
-                    android:text="qwertyasdf@naver.com"
-                    android:textColor="#6e6e6e"
+                    android:text="포인트"
+                    android:textColor="#3e3e3e"
                     android:textSize="15dp"
                     app:layout_constraintStart_toStartOf="@+id/btn_mypage_user_name_edt"
                     app:layout_constraintTop_toBottomOf="@+id/btn_mypage_user_name_edt"
-                    app:lineHeight="19dp" />
+                    app:lineHeight="18dp" />
 
                 <android.support.constraint.ConstraintLayout
                     android:id="@+id/btn_mypage_user_name_edt"
@@ -210,10 +236,11 @@
                 <EditText
                     android:id="@+id/edt_mypage_user_name"
                     android:layout_width="wrap_content"
-                    android:layout_height="30dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
+                    android:maxLength="10"
                     android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="@+id/btn_mypage_user_name_edt"
                     app:layout_constraintStart_toStartOf="@+id/btn_mypage_user_name_edt"
@@ -224,6 +251,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="3dp"
+                    android:layout_marginTop="8dp"
                     android:visibility="gone"
                     app:layout_constraintStart_toEndOf="@+id/edt_mypage_user_name"
                     app:layout_constraintTop_toTopOf="@+id/btn_mypage_user_image_edit">
@@ -246,74 +274,13 @@
             </android.support.constraint.ConstraintLayout>
 
             <View
-                android:id="@+id/view12"
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_marginTop="1dp"
-                android:background="#a2a2a2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cl_mypage_user_info" />
-
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/cl_mypage_user_point"
-                android:layout_width="0dp"
-                android:layout_height="80dp"
-                app:layout_constraintEnd_toEndOf="@+id/view12"
-                app:layout_constraintStart_toStartOf="@+id/view12"
-                app:layout_constraintTop_toBottomOf="@+id/cl_mypage_user_info">
-
-                <TextView
-                    android:id="@+id/textView9"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="27dp"
-                    android:layout_marginBottom="23dp"
-                    android:text="얌얌 포인트"
-                    android:textColor="#3c3c3c"
-                    android:textSize="16dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:lineHeight="19dp" />
-
-                <TextView
-                    android:id="@+id/textView10"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="20dp"
-                    android:text="P"
-                    android:textColor=" #707070"
-                    android:textSize="20dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:lineHeight="24dp" />
-
-                <TextView
-                    android:id="@+id/textView11"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="3dp"
-                    android:text="0"
-                    android:textColor="#ffce00"
-                    android:textSize="20dp"
-                    app:layout_constraintEnd_toStartOf="@+id/textView10"
-                    app:layout_constraintTop_toTopOf="@+id/textView10"
-                    app:lineHeight="24dp" />
-            </android.support.constraint.ConstraintLayout>
-
-            <View
                 android:id="@+id/view13"
                 android:layout_width="0dp"
                 android:layout_height="15dp"
                 android:background="#f5f6f9"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cl_mypage_user_point" />
+                app:layout_constraintTop_toBottomOf="@+id/cl_mypage_user_info" />
 
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/btn_mypage_notice"

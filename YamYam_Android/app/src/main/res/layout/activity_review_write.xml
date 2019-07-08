@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".reviewwrite.ReviewWriteActivity"
+    android:background="@android:color/white">
+
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/cl_review_write_top"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:background="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_review_write_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="리뷰 작성"
+            android:textColor="#3c3c3c"
+            android:textSize="18dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lineHeight="21dp" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <View
+        android:id="@+id/view_review_write_1"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="56dp"
+        android:background="#6e6e6e"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/cl_review_write_top" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/cl_review_write_product_short_info"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="1dp"
+        android:background="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cl_review_write_top">
+
+        <ImageView
+            android:id="@+id/iv_review_write_product"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/tv_review_write_store_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="9dp"
+            android:textColor="#777777"
+            android:textSize="12dp"
+            app:layout_constraintStart_toEndOf="@+id/iv_review_write_product"
+            app:layout_constraintTop_toTopOf="@+id/iv_review_write_product"
+            app:lineHeight="15dp"
+            tools:text="레드프린팅&amp;프레스" />
+
+        <TextView
+            android:id="@+id/tv_review_write_product_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:textSize="19dp"
+            app:layout_constraintStart_toStartOf="@+id/tv_review_write_store_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_review_write_store_name"
+            app:lineHeight="23dp"
+            tools:text="캐릭터 키링 제작" />
+
+        <LinearLayout
+            android:id="@+id/ll_review_write_product_star"
+            android:layout_width="wrap_content"
+            android:layout_height="10dp"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="2dp"
+            android:gravity="right"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="@+id/tv_review_write_product_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_review_write_product_name">
+
+            <ImageView
+                android:id="@+id/iv_review_write_product_star1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="2dp"
+                android:src="@drawable/img_goods_stargray"
+                app:srcCompat="@drawable/img_goods_stargray" />
+
+            <ImageView
+                android:id="@+id/iv_review_write_product_star2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="2dp"
+                android:src="@drawable/img_goods_stargray"
+                app:srcCompat="@drawable/img_goods_stargray" />
+
+            <ImageView
+                android:id="@+id/iv_review_write_product_star3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="2dp"
+                android:src="@drawable/img_goods_stargray"
+                app:srcCompat="@drawable/img_goods_stargray" />
+
+            <ImageView
+                android:id="@+id/iv_review_write_product_star4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="2dp"
+                android:src="@drawable/img_goods_stargray"
+                app:srcCompat="@drawable/img_goods_stargray" />
+
+            <ImageView
+                android:id="@+id/iv_review_write_product_star5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="2dp"
+                android:src="@drawable/img_goods_stargray"
+                app:srcCompat="@drawable/img_goods_stargray" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_review_write_product_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:textSize="22dp"
+            app:layout_constraintStart_toStartOf="@+id/tv_review_write_product_name"
+            app:layout_constraintTop_toBottomOf="@+id/ll_review_write_product_star"
+            app:lineHeight="27dp"
+            tools:text="29,000" />
+
+        <TextView
+            android:id="@+id/tv_review_write_price_won"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="5dp"
+            android:text="원"
+            android:textColor="@android:color/black"
+            android:textSize="17dp"
+            app:layout_constraintStart_toEndOf="@+id/tv_review_write_product_price"
+            app:layout_constraintTop_toTopOf="@+id/tv_review_write_product_price"
+            app:lineHeight="20dp" />
+    </android.support.constraint.ConstraintLayout>
+
+    <View
+        android:id="@+id/view_review_write_2"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="#6e6e6e"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cl_review_write_product_short_info" />
+
+    <TextView
+        android:id="@+id/tv_review_write_star_rate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="별점"
+        android:textColor="#3c3c3c"
+        android:textSize="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_review_write_2"
+        app:lineHeight="19dp" />
+
+    <!--
+    <LinearLayout
+        android:id="@+id/ll_review_write_rating_star"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="8dp"
+        android:gravity="right"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_review_write_star_rate"
+        app:layout_constraintStart_toEndOf="@+id/tv_review_write_star_rate"
+        app:layout_constraintTop_toTopOf="@+id/tv_review_write_star_rate">
+
+        <ImageView
+            android:id="@+id/iv_review_write_rating_star1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="2dp"
+            android:src="@drawable/starg" />
+
+        <ImageView
+            android:id="@+id/iv_review_write_rating_star2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="2dp"
+            android:src="@drawable/starg" />
+
+        <ImageView
+            android:id="@+id/iv_review_write_rating_star3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="2dp"
+            android:src="@drawable/starg" />
+
+        <ImageView
+            android:id="@+id/iv_review_write_rating_star4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="2dp"
+            android:src="@drawable/starg" />
+
+        <ImageView
+            android:id="@+id/iv_review_write_rating_star5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="2dp"
+            android:src="@drawable/starg" />
+    </LinearLayout>
+-->
+    <RatingBar
+        android:id="@+id/rb_review_write_star_rate"
+        style="@style/customRatingBar_review_write"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_marginStart="5dp"
+        android:numStars="5"
+        android:rating="0"
+        android:stepSize="1"
+        app:layout_constraintStart_toEndOf="@+id/tv_review_write_star_rate"
+        app:layout_constraintTop_toTopOf="@+id/tv_review_write_star_rate" />
+
+    <View
+        android:id="@+id/view_review_write_edit"
+        android:layout_width="0dp"
+        android:layout_height="300dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="19dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/border_round_rect_gray_10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_review_write_star_rate" />
+
+    <EditText
+        android:id="@+id/edt_review_write"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginEnd="14dp"
+        android:background="@android:color/transparent"
+        android:hint="리뷰는 최대 1,000자까지 입력 가능합니다. 뫄뫄뫄뫄한 옵션을 입력해주세요."
+        android:maxLength="1000"
+        app:layout_constraintEnd_toEndOf="@+id/view_review_write_edit"
+        app:layout_constraintStart_toStartOf="@+id/view_review_write_edit"
+        app:layout_constraintTop_toTopOf="@+id/view_review_write_edit" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/btn_review_write_save"
+        android:layout_width="215dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="21dp"
+        android:background="@drawable/selector_review_write_save"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cl_rv_review_write_image">
+
+        <TextView
+            android:id="@+id/tv_review_write_store"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="리뷰 저장하기"
+            android:textColor="@android:color/white"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lineHeight="27dp" />
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/cl_rv_review_write_image"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_review_write_edit">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_review_write_image_list"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="8dp"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            android:paddingLeft="12dp"
+            android:paddingTop="3dp"
+            android:paddingRight="12dp"
+            android:scrollbars="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="gone" />
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/btn_review_write_upload_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="14dp"
+        app:layout_constraintBottom_toTopOf="@+id/view_review_write_edit"
+        app:layout_constraintEnd_toEndOf="@+id/view_review_write_2"
+        app:layout_constraintTop_toBottomOf="@+id/cl_review_write_product_short_info">
+
+        <ImageView
+            android:id="@+id/iv_review_write_upload_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_review_write_upload_image"
+            app:srcCompat="@drawable/icon_inpic" />
+
+        <View
+            android:id="@+id/view19"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="#3c3c3c"
+            app:layout_constraintEnd_toEndOf="@+id/tv_review_write_upload_image"
+            app:layout_constraintStart_toStartOf="@+id/tv_review_write_upload_image"
+            app:layout_constraintTop_toBottomOf="@+id/tv_review_write_upload_image" />
+
+        <TextView
+            android:id="@+id/tv_review_write_upload_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:text="사진넣기"
+            android:textColor="#3c3c3c"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/iv_review_write_upload_image"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+</android.support.constraint.ConstraintLayout>

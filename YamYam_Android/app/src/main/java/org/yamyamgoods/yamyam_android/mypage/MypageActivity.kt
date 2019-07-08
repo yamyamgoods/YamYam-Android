@@ -1,36 +1,33 @@
 package org.yamyamgoods.yamyam_android.mypage
 
+import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.MediaStore
 import android.support.v4.widget.DrawerLayout
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Gravity
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import com.bumptech.glide.Glide
+import com.gun0912.tedpermission.PermissionListener
+import com.gun0912.tedpermission.TedPermission
 import kotlinx.android.synthetic.main.activity_mypage.*
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.mypage.adapter.MypageProductRVAdapter
 import org.yamyamgoods.yamyam_android.mypage.alarm.adapter.MypageAlarmRVAdapter
+import org.yamyamgoods.yamyam_android.mypage.dialog.DialogMypageChangeProfileImage
 import org.yamyamgoods.yamyam_android.mypage.recent.RecentlyViewedProductsActivity
+import org.yamyamgoods.yamyam_android.reviewwrite.ReviewWriteActivity
 import org.yamyamgoods.yamyam_android.util.TempData
-import java.lang.Exception
-import com.bumptech.glide.Glide
-import android.content.Context
-import android.database.Cursor
-import android.graphics.Matrix
-import android.media.ExifInterface
-import android.util.Log
-import android.view.inputmethod.InputMethodManager
-import com.gun0912.tedpermission.PermissionListener
-import com.gun0912.tedpermission.TedPermission
-import java.io.IOException
 
 class MypageActivity : AppCompatActivity() {
     private val PICK_IMAGE_REQUEST: Int = 1
+    //public lateinit var mypageCtx: Context
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,8 +42,18 @@ class MypageActivity : AppCompatActivity() {
             openAlarmDrawer()
         }
         btn_mypage_user_image_edit.setOnClickListener {
-            getPermission()
+            changeProfileImage()
         }
+
+        // 리뷰 작성창 확인하기 위한 임시코드
+        // 나중에 지우기
+        btn_mypage_notice.setOnClickListener {
+            var intent = Intent(this@MypageActivity, ReviewWriteActivity::class.java)
+            startActivity(intent)
+        }
+
+        // ReviewWriteActivity에서 호출 가능하도록
+        //mypageCtx = this
     }
 
     private fun configureTitleBar() {
@@ -55,7 +62,21 @@ class MypageActivity : AppCompatActivity() {
         }
     }
 
-    private fun getPermission() {
+    private fun changeProfileImage() {
+        // 프로필 이미지 변경 다이얼로그 띄우기
+        btn_mypage_user_image_edit.setOnClickListener{
+            var imageBtnDialog = DialogMypageChangeProfileImage(this)
+            imageBtnDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            imageBtnDialog.setCanceledOnTouchOutside(false)
+            imageBtnDialog.show()
+        }
+    }
+
+    fun setProfileImageDefault(){
+        iv_mypage_user_image.setImageResource(R.drawable.img_myprofile)
+    }
+
+    fun getPermission() {
         val permissionListener = object : PermissionListener {
             override fun onPermissionGranted() {
                 // 권한 요청 성공
@@ -64,7 +85,7 @@ class MypageActivity : AppCompatActivity() {
 
             override fun onPermissionDenied(deniedPermissions: ArrayList<String>) {
                 // 권한 요청 실패
-                Toast.makeText(this@MypageActivity,"갤러리 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@MypageActivity, "갤러리 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show()
             }
         }
         TedPermission.with(this)
@@ -75,7 +96,7 @@ class MypageActivity : AppCompatActivity() {
                 .check()
     }
 
-    private fun openGallery() {
+    fun openGallery() {
         var intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.setType("image/*")
         startActivityForResult(Intent.createChooser(intent, "얌얌굿즈 : 프로필 사진을 선택해주세요!"), PICK_IMAGE_REQUEST)

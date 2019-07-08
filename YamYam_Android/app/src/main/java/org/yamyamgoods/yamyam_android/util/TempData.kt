@@ -11,6 +11,7 @@ import org.yamyamgoods.yamyam_android.mypage.alarm.MypageAlarmItem
 import org.yamyamgoods.yamyam_android.review.all.ReviewAllItem
 import org.yamyamgoods.yamyam_android.reviewdetail.ProductShortInfo
 import org.yamyamgoods.yamyam_android.reviewdetail.ReviewCommentItem
+import org.yamyamgoods.yamyam_android.reviewwrite.ReviewWriteUploadImagesItem
 
 class TempData {
     companion object {
