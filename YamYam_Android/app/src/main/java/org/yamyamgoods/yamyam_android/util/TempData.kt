@@ -62,7 +62,7 @@ class TempData {
             return result
         }
 
-        fun BestReview(): List<BestReviewItem>{
+        fun BestReview(): ArrayList<BestReviewItem>{
             val result = ArrayList<BestReviewItem>()
             result.add(
                     BestReviewItem(
