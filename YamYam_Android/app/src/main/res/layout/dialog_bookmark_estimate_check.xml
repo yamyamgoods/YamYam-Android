@@ -7,7 +7,7 @@
     android:background="@android:color/transparent">
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/top"
+        android:id="@+id/topInfo"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:background="@drawable/round_top_rect_yellow"
@@ -55,7 +55,7 @@
         android:background="@drawable/round_bottom_rect_white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/top">
+        app:layout_constraintTop_toBottomOf="@+id/topInfo">
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/constraintLayout5"
