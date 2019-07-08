@@ -59,6 +59,7 @@
                 android:layout_marginHorizontal="10dp"/>
         </RelativeLayout>
         <LinearLayout
+            android:id="@+id/btn_frag_goods_category_detail_sort"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -71,12 +72,13 @@
                 android:src="@drawable/icon_align"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="2dp"/>
-            <Spinner
+            <TextView
+                android:id="@+id/tv_frag_goods_category_detail_sort"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:prompt="@string/goods_prompt"
-                android:textSize="14dp"
-                android:textColor="@color/colorBlack"
+                android:text="인기순"
+                android:textSize="13dp"
+                android:textColor="@color/darkgray"
                 android:layout_gravity="center_vertical"/>
         </LinearLayout>
     </RelativeLayout>

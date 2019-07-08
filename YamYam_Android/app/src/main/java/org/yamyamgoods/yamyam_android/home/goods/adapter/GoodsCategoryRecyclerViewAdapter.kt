@@ -48,9 +48,6 @@ class GoodsCategoryRecyclerViewAdapter (val ctx: Context, val dataList: ArrayLis
                 val transaction: FragmentTransaction = (ctx as HomeActivity).supportFragmentManager.beginTransaction()
                 transaction.replace(R.id.fl_goods_fragment_frag, GoodsCategoryDetailFragment()).commit()
 
-                //선택된 카테고리의 이름을 넘겨줌. -> 나중에는 idx 넘겨줄 예정
-                GoodsCategoryDetailFragment.instance.c_name = dataList[position].c_name
-                //intent.putExtra("c_idx",dataList[position].c_name)
 
             } catch (e: Exception){
             }

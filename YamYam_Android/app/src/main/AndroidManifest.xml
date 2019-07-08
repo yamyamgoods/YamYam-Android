@@ -17,8 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
-
-        <activity android:name=".search.SearchActivity"></activity>
+        <activity android:name=".search.SearchResultActivity" />
+        <activity android:name=".search.SearchActivity" />
         <activity android:name=".home.goods.GoodsExhibitionDetailActivity" />
         <activity android:name=".review.ReviewActivity" />
         <activity
@@ -29,6 +29,7 @@
         <activity android:name=".mypage.recent.RecentlyViewedProductsActivity" />
         <activity android:name=".mypage.MypageActivity" />
         <activity android:name=".reviewdetail.ReviewDetailActivity" />
+
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="44dp"
+    android:orientation="horizontal">
+    <RelativeLayout
+        android:id="@+id/btn_tab_search_act_goods"
+        android:layout_width="75dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+        <TextView
+            android:id="@+id/tv_tab_search_act_goods"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="굿즈"
+            android:textStyle="bold"
+            android:includeFontPadding="false"
+            android:textColor="@color/colorTabDarkGray"
+            android:textSize="15dp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/btn_tab_search_act_store"
+        android:layout_width="75dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+        <TextView
+            android:id="@+id/tv_tab_search_act_store"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="스토어"
+            android:textStyle="bold"
+            android:includeFontPadding="false"
+            android:textColor="@color/colorTabLightGray"
+            android:textSize="15dp"/>
+    </RelativeLayout>
+
+</LinearLayout>

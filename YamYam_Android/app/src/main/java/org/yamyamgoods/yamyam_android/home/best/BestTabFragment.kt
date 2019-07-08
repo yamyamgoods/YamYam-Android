@@ -16,6 +16,8 @@ import org.jetbrains.anko.support.v4.startActivity
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.home.best.adpater.BestTabFragmentStatePagerAdapter
 import org.yamyamgoods.yamyam_android.mypage.MypageActivity
+import org.yamyamgoods.yamyam_android.search.SearchActivity
+import org.yamyamgoods.yamyam_android.search.SearchResultActivity
 
 class BestTabFragment : Fragment() {
     lateinit var inflater: LayoutInflater
@@ -26,12 +28,17 @@ class BestTabFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        setOnClickListener()
         openMypage()
         viewInit(view)
 
     }
 
+    private fun setOnClickListener(){
+        this.btn_best_tab_frag_search.setOnClickListener {
+            startActivity<SearchResultActivity>()
+        }
+    }
     fun openMypage(){
         btn_best_tab_frag_mypage.setOnClickListener{
             val intent= Intent(ctx, MypageActivity::class.java)

@@ -1,9 +1,12 @@
 package org.yamyamgoods.yamyam_android.home.goods
 
+import android.graphics.Color
+import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.view.View
+import android.view.WindowManager
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_goods_exhibition_detail.*
 import org.yamyamgoods.yamyam_android.R
@@ -23,8 +26,34 @@ class GoodsExhibitionDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_goods_exhibition_detail)
 
+        setStatusBarTransparent()
         setExhibitionTitle()
         setRecyclerView()
+
+    }
+
+    private fun setStatusBarTransparent() {
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        window.decorView.systemUiVisibility =
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+                        View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+
+        setWindowFlag(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false)
+        if (Build.VERSION.SDK_INT >= 21) {
+            window.statusBarColor = Color.TRANSPARENT
+        }
+    }
+
+    private fun setWindowFlag(bits: Int, on: Boolean) {
+        val win = window
+        val winParams = win.attributes
+        if (on) {
+            winParams.flags = winParams.flags or bits
+            return
+        }
+        winParams.flags = winParams.flags and bits.inv()
+        win.attributes = winParams
     }
 
     private fun setExhibitionTitle(){
