@@ -10,6 +10,7 @@ import android.renderscript.Allocation
 import android.renderscript.Element
 import android.renderscript.RenderScript
 import android.renderscript.ScriptIntrinsicBlur
+import android.support.constraint.ConstraintLayout
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.TabLayout
 import android.support.v4.view.ViewPager
@@ -33,6 +34,7 @@ import org.yamyamgoods.yamyam_android.storeweb.StoreWebActivity
 import org.yamyamgoods.yamyam_android.util.TempData
 import org.yamyamgoods.yamyam_android.util.dp2px
 import org.yamyamgoods.yamyam_android.util.getScreenWidth
+import java.lang.Exception
 
 
 /**
@@ -51,6 +53,13 @@ class ProductDetailActivity : AppCompatActivity() {
     private var isDetailZone = true
     private var isReviewZone = false
     private var isScrolled = false
+
+    private val blurredImages: MutableMap<String, BitmapDrawable> = mutableMapOf()
+    private lateinit var mainImageUrls: List<String>
+    private lateinit var thumbnailImages: List<ImageView>
+
+    private lateinit var currentIndicatorPosition: ConstraintLayout
+    private lateinit var thumbnailFrame: List<ConstraintLayout>
 
     private val appbarListener = AppBarLayout.OnOffsetChangedListener { _, offset ->
         val isCollapsed = (-900 == offset)
@@ -91,18 +100,23 @@ class ProductDetailActivity : AppCompatActivity() {
         }
 
         override fun onPageSelected(position: Int) {
+            setContentScrimImage(position)
+            selectIndicatorAt(position)
         }
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_detail)
 
+        mainImageUrls = TempData.imageUrls2()
+        getBlurredImageList(mainImageUrls)
+
         setStatusBarTransparent()
-        setContentScrimImage(TempData.imageUrls()[0])
+
 
         viewInit()
+
     }
 
     override fun onBackPressed() {
@@ -126,6 +140,27 @@ class ProductDetailActivity : AppCompatActivity() {
         }
     }
 
+    private fun getBlurredImageList(imageUrls: List<String>) {
+        for (imageUrl in imageUrls) {
+            Glide
+                    .with(this)
+                    .asBitmap()
+                    .load(imageUrl)
+                    .centerCrop()
+                    .into(object : CustomTarget<Bitmap>() {
+                        override fun onLoadCleared(placeholder: Drawable?) {
+                        }
+
+                        override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                            val blurredImage = createBlurredImage(resource, 25)
+                            val bitmapDrawable = BitmapDrawable(resources, blurredImage)
+                            blurredImages[imageUrl] = bitmapDrawable
+                            setContentScrimImage(0)
+                        }
+                    })
+        }
+    }
+
     private fun setContentScrimImage(imageUrl: String) = Glide
             .with(this)
             .asBitmap()
@@ -139,6 +174,11 @@ class ProductDetailActivity : AppCompatActivity() {
                     collapsing_toolbar_product_detail_act.contentScrim = BitmapDrawable(resources, blurredImage)
                 }
             })
+
+    private fun setContentScrimImage(position: Int) {
+        val imageUrl = mainImageUrls[position]
+        collapsing_toolbar_product_detail_act.contentScrim = blurredImages[imageUrl]
+    }
 
     private fun createBlurredImage(originalBitmap: Bitmap, radius: Int): Bitmap {
         // Create another bitmap that will hold the results of the filter.
@@ -202,6 +242,11 @@ class ProductDetailActivity : AppCompatActivity() {
 
         mainImagesViewPagerInit()
 
+        thumbnailImageViewBinding()
+        thumbnailFrameBinding()
+
+        thumbnailIndicatorInit()
+        setThumbnailIndicatorClickListener()
     }
 
     private fun detailImageZoneInit() {
@@ -351,14 +396,77 @@ class ProductDetailActivity : AppCompatActivity() {
     private fun mainImagesViewPagerInit() {
         vp_product_detail_act_main_image.apply {
             adapter = ProductDetailImageFragmentPagerAdapter(supportFragmentManager).apply {
-                addImages(TempData.imageUrls())
+                addImages(mainImageUrls)
                 addOnPageChangeListener(mainImagesPageChangeListener)
+                offscreenPageLimit = mainImageUrls.size
             }
         }
     }
 
-    private fun mainImagesIndicatorInit() {
+    private fun thumbnailImageViewBinding() {
+        thumbnailImages = listOf(
+                findViewById(R.id.iv_product_detail_act_thumbnail1),
+                findViewById(R.id.iv_product_detail_act_thumbnail2),
+                findViewById(R.id.iv_product_detail_act_thumbnail3),
+                findViewById(R.id.iv_product_detail_act_thumbnail4),
+                findViewById(R.id.iv_product_detail_act_thumbnail5),
+                findViewById(R.id.iv_product_detail_act_thumbnail6),
+                findViewById(R.id.iv_product_detail_act_thumbnail7),
+                findViewById(R.id.iv_product_detail_act_thumbnail8),
+                findViewById(R.id.iv_product_detail_act_thumbnail9)
+        )
+    }
 
+    private fun thumbnailFrameBinding() {
+        thumbnailFrame = listOf(
+                findViewById(R.id.cl_product_detail_act_thumbnail1),
+                findViewById(R.id.cl_product_detail_act_thumbnail2),
+                findViewById(R.id.cl_product_detail_act_thumbnail3),
+                findViewById(R.id.cl_product_detail_act_thumbnail4),
+                findViewById(R.id.cl_product_detail_act_thumbnail5),
+                findViewById(R.id.cl_product_detail_act_thumbnail6),
+                findViewById(R.id.cl_product_detail_act_thumbnail7),
+                findViewById(R.id.cl_product_detail_act_thumbnail8),
+                findViewById(R.id.cl_product_detail_act_thumbnail9)
+        )
+    }
+
+    private fun setThumbnailIndicatorClickListener() {
+
+        currentIndicatorPosition = thumbnailFrame[0].apply {
+            isSelected = true
+        }
+        thumbnailFrame.forEach {
+            it.setOnClickListener { indicator ->
+                val position = thumbnailFrame.indexOf(indicator)
+                selectViewPagerAt(position)
+                selectIndicatorAt(position)
+            }
+        }
+    }
+
+    private fun thumbnailIndicatorInit() {
+        for (i in 0 until 9) {
+            try {
+                Glide
+                        .with(this)
+                        .load(mainImageUrls[i])
+                        .into(thumbnailImages[i])
+
+            } catch (e: Exception) {
+                thumbnailFrame[i].visibility = View.GONE
+            }
+        }
+    }
+
+    private fun selectIndicatorAt(position: Int) {
+        currentIndicatorPosition.isSelected = false
+        currentIndicatorPosition = thumbnailFrame[position]
+        currentIndicatorPosition.isSelected = true
+    }
+
+    private fun selectViewPagerAt(position: Int){
+        vp_product_detail_act_main_image.currentItem = position
     }
 
 

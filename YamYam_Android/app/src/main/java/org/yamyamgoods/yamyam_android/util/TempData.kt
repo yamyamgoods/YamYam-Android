@@ -387,15 +387,28 @@ class TempData {
         }
 
         fun imageUrls(): List<String> = listOf(
-                "https://k.kakaocdn.net/dn/VHnP0/btqwBPfPhu4/yh4dZTeJI54Djnesq6dDi0/img.jpg"
-                , "https://k.kakaocdn.net/dn/ctCi22/btqwARLUGue/Gl1ob3NZNujk9IhZky77a0/img.jpg"
-                , "https://k.kakaocdn.net/dn/H2iWy/btqwAzSwui4/Yni1bX62rClFspBK2Na9j0/img.jpg"
-                , "https://k.kakaocdn.net/dn/VHnP0/btqwBPfPhu4/yh4dZTeJI54Djnesq6dDi0/img.jpg"
-                , "https://k.kakaocdn.net/dn/ctCi22/btqwARLUGue/Gl1ob3NZNujk9IhZky77a0/img.jpg"
-                , "https://k.kakaocdn.net/dn/H2iWy/btqwAzSwui4/Yni1bX62rClFspBK2Na9j0/img.jpg"
-                , "https://k.kakaocdn.net/dn/VHnP0/btqwBPfPhu4/yh4dZTeJI54Djnesq6dDi0/img.jpg"
-                , "https://k.kakaocdn.net/dn/ctCi22/btqwARLUGue/Gl1ob3NZNujk9IhZky77a0/img.jpg"
-                , "https://k.kakaocdn.net/dn/H2iWy/btqwAzSwui4/Yni1bX62rClFspBK2Na9j0/img.jpg"
+                "https://ae01.alicdn.com/kf/HTB10mgVXnwKL1JjSZFgq6z6aVXaF/Kawaii-Anime-Clothes-Acrylic-Badges-Pins-Icon-Decorating-Badge-Backpack-Pin-Button-Acrylic-Brooch-Un.jpg_640x640.jpg"
+                , "https://images-na.ssl-images-amazon.com/images/I/51eQv0pInHL.jpg"
+                , "https://pics.me.me/thumb_random-depressive-thoughts-me-just-chilling-with-the-bois-on-49748524.png"
+                , "https://media.mnn.com/assets/images/2014/08/snowy_owl.png.653x0_q80_crop-smart.jpg"
+                , "https://onlineimagetools.com/images/examples-onlineimagetools/color-grid.png"
+                , "https://conversationstartersworld.com/wp-content/uploads/2015/12/Random-questions-to-ask-a-girl.jpg"
+                , "http://www.mkyong.com/wp-content/uploads/2015/08/java-random-integer-in-range.jpg"
+                , "https://ichef.bbci.co.uk/news/660/cpsprodpb/37B5/production/_89716241_thinkstockphotos-523060154.jpg"
+                , "https://i0.wp.com/dataaspirant.com/wp-content/uploads/2017/04/Random-Forest-Applications.jpg?resize=500%2C500"
+        )
+        fun imageUrls2(): List<String> = listOf(
+                "https://ae01.alicdn.com/kf/HTB10mgVXnwKL1JjSZFgq6z6aVXaF/Kawaii-Anime-Clothes-Acrylic-Badges-Pins-Icon-Decorating-Badge-Backpack-Pin-Button-Acrylic-Brooch-Un.jpg_640x640.jpg"
+                , "https://images-na.ssl-images-amazon.com/images/I/51eQv0pInHL.jpg"
+                , "https://pics.me.me/thumb_random-depressive-thoughts-me-just-chilling-with-the-bois-on-49748524.png"
+                , "https://media.mnn.com/assets/images/2014/08/snowy_owl.png.653x0_q80_crop-smart.jpg"
+                , "https://onlineimagetools.com/images/examples-onlineimagetools/color-grid.png"
+                , "https://conversationstartersworld.com/wp-content/uploads/2015/12/Random-questions-to-ask-a-girl.jpg"
+        )
+        fun imageUrls3(): List<String> = listOf(
+                "https://ae01.alicdn.com/kf/HTB10mgVXnwKL1JjSZFgq6z6aVXaF/Kawaii-Anime-Clothes-Acrylic-Badges-Pins-Icon-Decorating-Badge-Backpack-Pin-Button-Acrylic-Brooch-Un.jpg_640x640.jpg"
+                , "https://images-na.ssl-images-amazon.com/images/I/51eQv0pInHL.jpg"
+                , "https://pics.me.me/thumb_random-depressive-thoughts-me-just-chilling-with-the-bois-on-49748524.png"
         )
     }
 }
