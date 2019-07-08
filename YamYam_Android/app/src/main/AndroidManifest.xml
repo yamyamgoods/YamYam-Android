@@ -24,7 +24,7 @@
         <activity android:name=".review.ReviewActivity" />
         <activity android:name=".storeweb.StoreWebActivity" />
         <activity android:name=".productdetail.ProductDetailActivity"
-            android:windowSoftInputMode="stateVisible|adjustResize"/>
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".review.PhotoZoomInActivity" />
         <activity
             android:name=".LoginActivity"

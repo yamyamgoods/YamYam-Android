@@ -390,6 +390,12 @@ class TempData {
                 "https://k.kakaocdn.net/dn/VHnP0/btqwBPfPhu4/yh4dZTeJI54Djnesq6dDi0/img.jpg"
                 , "https://k.kakaocdn.net/dn/ctCi22/btqwARLUGue/Gl1ob3NZNujk9IhZky77a0/img.jpg"
                 , "https://k.kakaocdn.net/dn/H2iWy/btqwAzSwui4/Yni1bX62rClFspBK2Na9j0/img.jpg"
+                , "https://k.kakaocdn.net/dn/VHnP0/btqwBPfPhu4/yh4dZTeJI54Djnesq6dDi0/img.jpg"
+                , "https://k.kakaocdn.net/dn/ctCi22/btqwARLUGue/Gl1ob3NZNujk9IhZky77a0/img.jpg"
+                , "https://k.kakaocdn.net/dn/H2iWy/btqwAzSwui4/Yni1bX62rClFspBK2Na9j0/img.jpg"
+                , "https://k.kakaocdn.net/dn/VHnP0/btqwBPfPhu4/yh4dZTeJI54Djnesq6dDi0/img.jpg"
+                , "https://k.kakaocdn.net/dn/ctCi22/btqwARLUGue/Gl1ob3NZNujk9IhZky77a0/img.jpg"
+                , "https://k.kakaocdn.net/dn/H2iWy/btqwAzSwui4/Yni1bX62rClFspBK2Na9j0/img.jpg"
         )
     }
 }

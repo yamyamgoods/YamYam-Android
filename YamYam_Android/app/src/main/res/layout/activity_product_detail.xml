@@ -57,19 +57,21 @@
                         <android.support.constraint.ConstraintLayout
                             android:id="@+id/cl_product_detail_act_main_image_frame"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             app:layout_collapseMode="pin">
 
                             <ImageView
                                 android:id="@+id/iv_product_detail_act_main_image"
                                 android:layout_width="0dp"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
                                 android:scaleType="centerCrop"
 
+                                android:visibility="gone"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
-                                app:srcCompat="@drawable/img_topthumbnail" />
+                                app:srcCompat="@drawable/img_topthumbnail"
+                                tools:visibility="gone" />
 
                             <android.support.v4.view.ViewPager
                                 android:id="@+id/vp_product_detail_act_main_image"
@@ -973,7 +975,6 @@
                         android:inputType="textPersonName"
                         android:maxLines="1"
                         android:text="캐릭터 키링 제작"
-                        android:windowSoftInputMode="adjustResize|stateVisible"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -1027,7 +1028,6 @@
                                 android:gravity="center"
                                 android:inputType="textPersonName"
                                 android:text="1"
-                                android:windowSoftInputMode="adjustResize|stateVisible"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
