@@ -109,14 +109,12 @@ class ProductDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_detail)
 
-        mainImageUrls = TempData.imageUrls2()
+        mainImageUrls = TempData.imageUrls3()
         getBlurredImageList(mainImageUrls)
 
         setStatusBarTransparent()
 
-
         viewInit()
-
     }
 
     override fun onBackPressed() {
@@ -160,20 +158,6 @@ class ProductDetailActivity : AppCompatActivity() {
                     })
         }
     }
-
-    private fun setContentScrimImage(imageUrl: String) = Glide
-            .with(this)
-            .asBitmap()
-            .load(imageUrl)
-            .into(object : CustomTarget<Bitmap>() {
-                override fun onLoadCleared(placeholder: Drawable?) { /* Nothing */
-                }
-
-                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                    val blurredImage = createBlurredImage(resource, 25)
-                    collapsing_toolbar_product_detail_act.contentScrim = BitmapDrawable(resources, blurredImage)
-                }
-            })
 
     private fun setContentScrimImage(position: Int) {
         val imageUrl = mainImageUrls[position]
