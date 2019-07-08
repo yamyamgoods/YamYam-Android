@@ -104,7 +104,7 @@
                 android:layout_height="45dp">
 
                 <TextView
-                    android:id="@+id/textView11"
+                    android:id="@+id/tv_mypage_point"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"

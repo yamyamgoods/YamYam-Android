@@ -49,7 +49,7 @@ class ReviewDetailRVAdapter(private val ctx: Context, private val dataList: List
 
     inner class Holder(ItemView: View): RecyclerView.ViewHolder(ItemView) {
 
-        var clCommentItem: ConstraintLayout = itemView.findViewById(R.id.cl_rv_item_reveiw_detail_comment)
+        var clCommentItem: ConstraintLayout = itemView.findViewById(R.id.cl_rv_item_reveiw_detail_comment) as ConstraintLayout
         var ivUserImage: ImageView = itemView.findViewById(R.id.iv_rv_item_review_detail_comment_user_image) as ImageView
         var tvUserNickName: TextView = itemView.findViewById(R.id.tv_rv_item_review_detail_comment_user_nickname) as TextView
         var tvDate: TextView = itemView.findViewById(R.id.tv_rv_item_review_detail_comment_date) as TextView

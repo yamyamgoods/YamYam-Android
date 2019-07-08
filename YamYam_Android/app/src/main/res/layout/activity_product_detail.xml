@@ -833,7 +833,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/textView3"
+                    android:id="@+id/tv_review_write_store"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="스토어 방문"

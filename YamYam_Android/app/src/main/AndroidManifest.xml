@@ -25,6 +25,7 @@
         <activity android:name=".mypage.recent.RecentlyViewedProductsActivity" />
         <activity android:name=".mypage.MypageActivity" />
         <activity android:name=".reviewdetail.ReviewDetailActivity" />
+        <activity android:name=".reviewwrite.ReviewWriteActivity" />
 
         <activity
             android:name=".LoginActivity"
