@@ -3,6 +3,7 @@ package org.yamyamgoods.yamyam_android.network
 import com.google.gson.JsonObject
 import org.yamyamgoods.yamyam_android.network.get.GetUserInfoResponse
 import org.yamyamgoods.yamyam_android.network.get.GetJWTtokenExpiredResponse
+import org.yamyamgoods.yamyam_android.network.get.GetMypageRecentlyViewedProductsResponse
 import org.yamyamgoods.yamyam_android.network.post.PostKakaoLoginResponse
 import org.yamyamgoods.yamyam_android.network.put.PutMypageEditNicknameRequest
 import retrofit2.Call
@@ -36,7 +37,15 @@ interface NetworkServiceUser {
     @PUT("/user/name")
     fun putMypageEditNicknameRequest(
             @Header("Content-Type") content_type: String,
-            @Header("authorization") token: String,
+            @Header("authorization") authorization: String,
             @Body body: PutMypageEditNicknameRequest
     ):Call<PutMypageEditNicknameRequest>
+
+    // 최근 본 상품
+    @GET("/user/goods/recent/{lastIndex}")
+    fun getMypageRecentlyViewedProductsResponse(
+        @Header("Content-Type") content_type: String,
+        @Header("Authorization") authorization: String,
+        @Path("lastIndex") flag:Int
+    ):Call<GetMypageRecentlyViewedProductsResponse>
 }

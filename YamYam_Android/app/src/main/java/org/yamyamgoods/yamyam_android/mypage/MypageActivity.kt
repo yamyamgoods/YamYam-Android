@@ -29,7 +29,9 @@ import org.yamyamgoods.yamyam_android.mypage.dialog.DialogMypageChangeProfileIma
 import org.yamyamgoods.yamyam_android.mypage.recent.RecentlyViewedProductsActivity
 import org.yamyamgoods.yamyam_android.network.ApplicationController
 import org.yamyamgoods.yamyam_android.network.NetworkServiceUser
+import org.yamyamgoods.yamyam_android.network.get.GetMypageRecentlyViewedProductsResponse
 import org.yamyamgoods.yamyam_android.network.get.GetUserInfoResponse
+import org.yamyamgoods.yamyam_android.network.get.RecentlyViewedProducts
 import org.yamyamgoods.yamyam_android.network.put.PutMypageEditNicknameRequest
 import org.yamyamgoods.yamyam_android.reviewwrite.ReviewWriteActivity
 import org.yamyamgoods.yamyam_android.util.TempData
@@ -40,11 +42,12 @@ import java.lang.reflect.Type
 
 class MypageActivity : AppCompatActivity() {
     private val PICK_IMAGE_REQUEST: Int = 1
-    //public lateinit var mypageCtx: Context
 
     val networkService: NetworkServiceUser by lazy {
         ApplicationController.networkServiceUser
     }
+
+    lateinit var mypageProductRVAdapter : MypageProductRVAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +57,7 @@ class MypageActivity : AppCompatActivity() {
 
         configureTitleBar()
         editUserNickName()
-        configureComments()
+        getMypageRecentlyReviewedProductsRequest()
         configureAlarmDrawer()
         openRecentActivity()
         btn_mypage_alarm.setOnClickListener {
@@ -75,7 +78,7 @@ class MypageActivity : AppCompatActivity() {
     fun getUserInfoResponse() {
         networkService.getUserInfoResponse(
                 "application/json",
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWR4IjozLCJpYXQiOjE1NjI2NTY3MTMsImV4cCI6MTU5NDE5MjcxM30.nfcJqImHl5XPMPigkka-wF09v8_ji67Vt4b0nOSX4KY")
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWR4IjoxLCJpYXQiOjE1NjIzMTUzNjYsImV4cCI6MTU2MzYyOTM2Nn0.ZkDGasoDPHTrGvy7yFOT9cPjTQ7gnnUOqekY_zYrAuc")
                 .enqueue(object : Callback<GetUserInfoResponse> {
                     override fun onFailure(call: Call<GetUserInfoResponse>, t: Throwable) {
                     }
@@ -88,14 +91,8 @@ class MypageActivity : AppCompatActivity() {
                                 tv_mypage_user_name.setText(it.data!!.user_name)
 
                                 //  포인트
-                                var strPoint: String = it.data!!.user_point.toString()
-                                if (strPoint.length > 3) {
-                                    var strAfter: String = strPoint.substring(strPoint.length - 3, strPoint.length)
-                                    var strBefore: String = strPoint.substring(0, strPoint.length - 3)
-                                    tv_mypage_point.setText(strBefore.plus(",").plus(strAfter))
-                                    Log.v("현주", strBefore.plus(",").plus(strAfter).toString())
-                                } else
-                                    tv_mypage_point.setText(strPoint.toString())
+                                var strPoint: String = addComma(it.data!!.user_point)
+                                tv_mypage_point.setText(strPoint)
 
                                 // 이미지
                                 Glide.with(this@MypageActivity)
@@ -173,11 +170,58 @@ class MypageActivity : AppCompatActivity() {
         startActivityForResult(Intent.createChooser(intent, "얌얌굿즈 : 프로필 사진을 선택해주세요!"), PICK_IMAGE_REQUEST)
     }
 
-    private fun configureComments() {
+    //지워도 됨
+    /*private fun configureList() {
+
+        var dataList: ArrayList<RecentlyViewedProducts> = ArrayList()
+
+        mypageProductRVAdapter = MypageProductRVAdapter(this@MypageActivity!!, dataList)
         rv_mypage_recently_viewed_product_list.apply {
-            adapter = MypageProductRVAdapter(this@MypageActivity, TempData.mypageProducts())
+            adapter = MypageProductRVAdapter (this@MypageActivity, dataList)
             layoutManager = LinearLayoutManager(this@MypageActivity, LinearLayoutManager.HORIZONTAL, false)
         }
+        getMypageRecentlyReviewedProductsRequest()
+    }*/
+
+    private fun getMypageRecentlyReviewedProductsRequest(){
+        networkService.getMypageRecentlyViewedProductsResponse(
+                "application/json",
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWR4IjoxLCJpYXQiOjE1NjIzMTUzNjYsImV4cCI6MTU2MzYyOTM2Nn0.ZkDGasoDPHTrGvy7yFOT9cPjTQ7gnnUOqekY_zYrAuc",
+                -1
+        ).enqueue(object:  Callback<GetMypageRecentlyViewedProductsResponse>{
+            override fun onFailure(call: Call<GetMypageRecentlyViewedProductsResponse>, t: Throwable) {
+                Log.e("현주", t.toString())
+            }
+
+            override fun onResponse(call: Call<GetMypageRecentlyViewedProductsResponse>, response: Response<GetMypageRecentlyViewedProductsResponse>) {
+                if (response.isSuccessful){
+                    Log.v("현주", "최근 본 상품 response : ${response.body()}")
+                    response.body()?.let{
+                        var tmp: ArrayList<RecentlyViewedProducts> = response.body()!!.data!!
+                        mypageProductRVAdapter = MypageProductRVAdapter(this@MypageActivity!!, tmp)
+                        rv_mypage_recently_viewed_product_list.apply {
+                            adapter = MypageProductRVAdapter (this@MypageActivity, tmp)
+                            layoutManager = LinearLayoutManager(this@MypageActivity, LinearLayoutManager.HORIZONTAL, false)
+                        }
+                        //mypageProductRVAdapter.dataList = tmp
+                        mypageProductRVAdapter.notifyDataSetChanged()
+                    }
+                }
+
+                response.errorBody()?.let{
+                    val type: Type = object : TypeToken<GetMypageRecentlyViewedProductsResponse>() {}.type
+                    val gson: Gson = GsonBuilder().create()
+                    val responseJson: GetMypageRecentlyViewedProductsResponse = gson.fromJson(it.string().toString(), type)
+
+                    if (response.code() == 401) {
+                        if (responseJson.message == "jwt must be provided")
+                            toast("로그인을 해주세요.")
+                        if (responseJson.message == "jwt expired")
+                            toast("로그인이 만료되었습니다.")
+                    }
+                }
+            }
+        })
     }
 
     private fun openRecentActivity() {
@@ -230,7 +274,7 @@ class MypageActivity : AppCompatActivity() {
         }
     }
 
-    fun putMypageEditNickNameResponse(changedName: String) {
+    private fun putMypageEditNickNameResponse(changedName: String) {
         networkService.putMypageEditNicknameRequest(
                 "application/json",
                 "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWR4IjozLCJpYXQiOjE1NjI2NTY3MTMsImV4cCI6MTU5NDE5MjcxM30.nfcJqImHl5XPMPigkka-wF09v8_ji67Vt4b0nOSX4KY",
@@ -249,7 +293,6 @@ class MypageActivity : AppCompatActivity() {
                     }
                 })
     }
-
 
     private fun setInvisible(view: View) {
         view.visibility = View.INVISIBLE
@@ -278,5 +321,16 @@ class MypageActivity : AppCompatActivity() {
             Toast.makeText(this, "사진 로딩에 오류가 있습니다.", Toast.LENGTH_LONG).show()
             e.printStackTrace();
         }
+    }
+
+    fun addComma(number: Int):String{
+        var str: String = number.toString()
+        if (str.length > 3){
+            var strAfter: String = str.substring(str.length-3, str.length)
+            var strBefore: String = str.substring(0, str.length -3)
+            return strBefore.plus(",").plus(strAfter)
+        }
+        else
+            return str
     }
 }
