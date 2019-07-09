@@ -3,7 +3,7 @@ package org.yamyamgoods.yamyam_android.network
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object ApplicationController {
+object ApplicationController{
     private val baseURL = "http://13.209.245.84:3000/"
     lateinit var networkServiceGoods: NetworkServiceGoods
     lateinit var networkServiceStore: NetworkServiceStore
@@ -23,3 +23,4 @@ object ApplicationController {
         networkServiceUser = retrofit.create(NetworkServiceUser::class.java)
     }
 }
+
