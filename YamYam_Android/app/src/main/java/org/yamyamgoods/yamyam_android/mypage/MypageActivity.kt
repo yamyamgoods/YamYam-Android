@@ -1,6 +1,5 @@
 package org.yamyamgoods.yamyam_android.mypage
 
-import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -23,7 +22,6 @@ import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import kotlinx.android.synthetic.main.activity_mypage.*
 import org.jetbrains.anko.toast
-import org.json.JSONObject
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.mypage.adapter.MypageProductRVAdapter
 import org.yamyamgoods.yamyam_android.mypage.alarm.adapter.MypageAlarmRVAdapter
@@ -32,6 +30,7 @@ import org.yamyamgoods.yamyam_android.mypage.recent.RecentlyViewedProductsActivi
 import org.yamyamgoods.yamyam_android.network.ApplicationController
 import org.yamyamgoods.yamyam_android.network.NetworkServiceUser
 import org.yamyamgoods.yamyam_android.network.get.GetUserInfoResponse
+import org.yamyamgoods.yamyam_android.network.put.PutMypageEditNicknameRequest
 import org.yamyamgoods.yamyam_android.reviewwrite.ReviewWriteActivity
 import org.yamyamgoods.yamyam_android.util.TempData
 import retrofit2.Call
@@ -95,10 +94,8 @@ class MypageActivity : AppCompatActivity() {
                                     var strBefore: String = strPoint.substring(0, strPoint.length - 3)
                                     tv_mypage_point.setText(strBefore.plus(",").plus(strAfter))
                                     Log.v("현주", strBefore.plus(",").plus(strAfter).toString())
-                                }
-                                else
+                                } else
                                     tv_mypage_point.setText(strPoint.toString())
-
 
                                 // 이미지
                                 Glide.with(this@MypageActivity)
@@ -129,7 +126,6 @@ class MypageActivity : AppCompatActivity() {
                     }
                 })
     }
-
 
     private fun configureTitleBar() {
         btn_mypage_close.setOnClickListener {
@@ -228,11 +224,32 @@ class MypageActivity : AppCompatActivity() {
                 setInvisible(btn_mypage_user_name_check)
                 var changedName: String = edt_mypage_user_name.text.toString()
                 tv_mypage_user_name.setText(changedName)
-                //바뀐 닉네임 통신.
+                putMypageEditNickNameResponse(changedName)
             } catch (e: Exception) {
             }
         }
     }
+
+    fun putMypageEditNickNameResponse(changedName: String) {
+        networkService.putMypageEditNicknameRequest(
+                "application/json",
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWR4IjozLCJpYXQiOjE1NjI2NTY3MTMsImV4cCI6MTU5NDE5MjcxM30.nfcJqImHl5XPMPigkka-wF09v8_ji67Vt4b0nOSX4KY",
+                PutMypageEditNicknameRequest(changedName))
+                .enqueue(object : Callback<PutMypageEditNicknameRequest> {
+                    override fun onFailure(call: Call<PutMypageEditNicknameRequest>, t: Throwable) {
+                    }
+
+                    override fun onResponse(call: Call<PutMypageEditNicknameRequest>, response: Response<PutMypageEditNicknameRequest>) {
+
+                        if (response.isSuccessful) {
+                            response.body()?.let {
+                                Log.v("현주", "마이페이지 서버 통신 성공  response : ${response.body()}")
+                            }
+                        }
+                    }
+                })
+    }
+
 
     private fun setInvisible(view: View) {
         view.visibility = View.INVISIBLE

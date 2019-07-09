@@ -27,9 +27,10 @@ import org.yamyamgoods.yamyam_android.reviewwrite.dialog.DialogReviewWriteSave
 import java.io.InputStream
 
 class ReviewWriteActivity : AppCompatActivity() {
-    companion object{
+    companion object {
         var reviewWriteCtx: ReviewWriteActivity? = null
     }
+
     private var PICTURE_REQUEST_CODE: Int = 100
 
     lateinit var clipData: ClipData
@@ -98,14 +99,13 @@ class ReviewWriteActivity : AppCompatActivity() {
         try {
             if (requestCode == PICTURE_REQUEST_CODE && resultCode == RESULT_OK && null != data) {
 
-               // clipData = data.clipData
                 val uri = data?.data
-                if(uri==null){
+                if (uri == null) {
                     clipData = data?.clipData
                     if (data.clipData.itemCount > 9)
                         Toast.makeText(this, "사진은 9장까지 선택 가능합니다.", Toast.LENGTH_LONG).show()
 
-                    if(clipData!=null){
+                    if (clipData != null) {
                         for (i in 0 until data.clipData.itemCount) {
                             var item: ClipData.Item = data.clipData.getItemAt(i)
 
@@ -116,33 +116,7 @@ class ReviewWriteActivity : AppCompatActivity() {
                 } else {
                     uploadImageList.add(ReviewWriteUploadImagesItem(1, 0, uri.toString()))
                 }
-//            if (clipData.itemCount == 1) {
-//                //var dataStr:String = clipData.getItemAt(0).uri.toString()
-////                    try{
-////                        Log.e("TAG", "한개만~~!!")
-////                        uploadImageList.add(ReviewWriteUploadImagesItem(1, 0, clipData.getItemAt(0).uri.toString()))
-////                    } catch (e:Exception){
-////                        Log.e("TAG","오류오류")
-////                        Toast.makeText(this, "오류야오류~",Toast.LENGTH_LONG).show()
-////                    }
-//                //val inputStream:InputStream = contentResolver.openInputStream(intent.data)
-//                //val imagePath1 = getFileStreamPath(clipData.getItemAt(0).uri.toString())
-//                uploadImageList.add(ReviewWriteUploadImagesItem(1,0, data?.data.toString()))
-//                //uploadImageList.add(ReviewWriteUploadImagesItem(1,0,clipData.getItemAt(0).uri.toString()))
-//            }
-//
-//            else if (clipData.itemCount > 1 && clipData.itemCount <=  9) {
-//                for (i in 0 ..clipData.itemCount) {
-//                    var item: ClipData.Item = clipData.getItemAt(i)
-//
-//                    // 클립데이터의 uri을 리사이클러뷰 데이터 클래스에 추가하기.
-//                    uploadImageList.add(ReviewWriteUploadImagesItem(1, i, item.uri.toString()))
-//
-//                    // 절대 경로가 필요한 경우
-//                    //var path:String = getRealPathFromURI(getActivity(), uri)
-//                }
-//            }
-        }
+            }
         } catch (e: Exception) {
         }
     }
@@ -176,8 +150,10 @@ class ReviewWriteActivity : AppCompatActivity() {
                 else
                     btn_review_write_save.isEnabled = false
             }
+
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
+
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
         })

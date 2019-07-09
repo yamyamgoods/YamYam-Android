@@ -1,12 +1,12 @@
 package org.yamyamgoods.yamyam_android.network
 
+import com.google.gson.JsonObject
 import org.yamyamgoods.yamyam_android.network.get.GetUserInfoResponse
 import org.yamyamgoods.yamyam_android.network.get.GetJWTtokenExpiredResponse
 import org.yamyamgoods.yamyam_android.network.post.PostKakaoLoginResponse
+import org.yamyamgoods.yamyam_android.network.put.PutMypageEditNicknameRequest
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface NetworkServiceUser {
 
@@ -31,4 +31,12 @@ interface NetworkServiceUser {
             @Header("Content-Type") content_type: String,
             @Header("authorization") token: String
     ): Call<GetUserInfoResponse>
+
+    // 닉네임 수정
+    @PUT("/user/name")
+    fun putMypageEditNicknameRequest(
+            @Header("Content-Type") content_type: String,
+            @Header("authorization") token: String,
+            @Body body: PutMypageEditNicknameRequest
+    ):Call<PutMypageEditNicknameRequest>
 }
