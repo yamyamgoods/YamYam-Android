@@ -3,10 +3,10 @@ package org.yamyamgoods.yamyam_android.network.get
 
 data class GetSearchStoreResponse (
         val message: String,
-        val data: store
+        val data: StoreSearchResultList
 )
 
-data class store(
+data class StoreSearchResultList(
         val data: ArrayList<SearchStoreData>
 )
 

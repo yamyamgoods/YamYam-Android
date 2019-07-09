@@ -5,10 +5,10 @@ import org.yamyamgoods.yamyam_android.home.goods.data.GoodsExhibitionData
 data class GetGoodsTabResponse(
         val status: Int,
         val message: String,
-        val data: GoodsData
+        val data: GoodsTabData
 )
 
-data class GoodsData(
+data class GoodsTabData(
         val goods_category_data: ArrayList<GoodsCategoryData>,
         val exhibition_data: ArrayList<ExhibitionData>
 )
