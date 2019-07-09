@@ -16,8 +16,9 @@ import org.jetbrains.anko.startActivity
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.home.goods.GoodsExhibitionDetailActivity
 import org.yamyamgoods.yamyam_android.home.goods.data.GoodsExhibitionData
+import org.yamyamgoods.yamyam_android.network.get.ExhibitionData
 
-class GoodsExhibitionRecyclerViewAdapter(val dataList: ArrayList<GoodsExhibitionData>):RecyclerView.Adapter<GoodsExhibitionRecyclerViewAdapter.Holder>() {
+class GoodsExhibitionRecyclerViewAdapter(val dataList: ArrayList<ExhibitionData>):RecyclerView.Adapter<GoodsExhibitionRecyclerViewAdapter.Holder>() {
     lateinit var ctx: Context
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): Holder {
         ctx = p0.context
@@ -31,11 +32,11 @@ class GoodsExhibitionRecyclerViewAdapter(val dataList: ArrayList<GoodsExhibition
         var options: RequestOptions = RequestOptions().transform(CenterCrop(), RoundedCorners(10))
 //        //통신할때
         Glide.with(ctx)
-                .load(dataList[position].e_img_thumnail)
+                .load(dataList[position].exhibition_img)
                 .apply(options)
                 .into(holder.img_thumnail)
 
-        var title: String= dataList[position].e_title
+        var title: String= dataList[position].exhibition_name
         val seperate_title= title.split("/")
 
         holder.title1.text = seperate_title[0]
@@ -46,9 +47,10 @@ class GoodsExhibitionRecyclerViewAdapter(val dataList: ArrayList<GoodsExhibition
         holder.btn.setOnClickListener {
             //try{
             ctx.startActivity<GoodsExhibitionDetailActivity>(
-                    "e_idx" to dataList[position].e_idx,
-                    "title" to dataList[position].e_title,
-                    "subtitle" to dataList[position].e_subtitle)
+                    "e_idx" to dataList[position].exhibition_idx,
+                    "title" to dataList[position].exhibition_name,
+                    "subtitle" to dataList[position].exhibition_sub_name,
+                    "gradation_img" to dataList[position].exhibition_gradation_img)
 //            } catch (e:Exception){
 //            }
 

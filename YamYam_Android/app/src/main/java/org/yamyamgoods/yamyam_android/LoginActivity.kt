@@ -42,6 +42,7 @@ class LoginActivity : AppCompatActivity() {
         btn_login_act_without_login.setOnClickListener {
             //로그인 없이
             //그냥 바로 HomeActivity로 가도록
+
             startActivity<HomeActivity>()
         }
     }

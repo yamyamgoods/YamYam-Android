@@ -12,10 +12,11 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import org.yamyamgoods.yamyam_android.R
+import org.yamyamgoods.yamyam_android.dataclass.GoodsData
 import org.yamyamgoods.yamyam_android.home.goods.data.GoodsExhibitionDetailData
 
 
-class GoodsExhibitionDetailRecyclerViewAdapter(val ctx: Context, val dataList: ArrayList<GoodsExhibitionDetailData>): RecyclerView.Adapter<GoodsExhibitionDetailRecyclerViewAdapter.Holder>(){
+class GoodsExhibitionDetailRecyclerViewAdapter(val ctx: Context, var dataList: ArrayList<GoodsData>): RecyclerView.Adapter<GoodsExhibitionDetailRecyclerViewAdapter.Holder>(){
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): Holder {
         val view: View = LayoutInflater.from(ctx).inflate(R.layout.rv_item_goods_exhibtion_detail, viewGroup,false)
         return Holder(view)
@@ -26,18 +27,18 @@ class GoodsExhibitionDetailRecyclerViewAdapter(val ctx: Context, val dataList: A
     override fun onBindViewHolder(holder: Holder, position: Int) {
         var options: RequestOptions = RequestOptions().transform(CenterCrop(), RoundedCorners(10))
         Glide.with(ctx)
-                .load(dataList[position].p_img)
+                .load(dataList[position].goods_img)
                 .apply(options)
                 .into(holder.img)
 
-        holder.store.text = dataList[position].p_store
-        holder.name.text = dataList[position].p_name
-        holder.price.text = dataList[position].p_price
-        val rate: String = String.format("%.1f",dataList[position].p_rate)
+        holder.store.text = dataList[position].store_name
+        holder.name.text = dataList[position].goods_name
+        holder.price.text = dataList[position].goods_price
+        val rate: String = String.format("%.1f",dataList[position].goods_rating)
         holder.rate.text = rate
-        val minQuantity: String = String.format("%d",dataList[position].p_minQuantity)
+        val minQuantity: String = String.format("%d",dataList[position].goods_minimum_amount)
         holder.min.text = minQuantity
-        val reviewNum: String = String.format("%d",dataList[position].p_reviewCount)
+        val reviewNum: String = String.format("%d",dataList[position].goods_review_cnt)
         holder.reviewNum.text = reviewNum
     }
 

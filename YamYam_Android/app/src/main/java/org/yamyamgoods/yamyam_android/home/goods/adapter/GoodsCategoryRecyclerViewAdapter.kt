@@ -11,9 +11,9 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import org.yamyamgoods.yamyam_android.R
-import org.yamyamgoods.yamyam_android.home.goods.data.GoodsCategoryData
 import org.yamyamgoods.yamyam_android.home.goods.GoodsCategoryDetailFragment
 import org.yamyamgoods.yamyam_android.home.HomeActivity
+import org.yamyamgoods.yamyam_android.network.get.GoodsCategoryData
 
 class GoodsCategoryRecyclerViewAdapter (val ctx: Context, val dataList: ArrayList<GoodsCategoryData>): RecyclerView.Adapter<GoodsCategoryRecyclerViewAdapter.Holder>(){
     var selected_position:Int = -1
@@ -27,7 +27,7 @@ class GoodsCategoryRecyclerViewAdapter (val ctx: Context, val dataList: ArrayLis
     override fun onBindViewHolder(holder: Holder, position: Int) {
         var intent = Intent(ctx, GoodsCategoryDetailFragment::class.java)
 
-        holder.category_name.text = dataList[position].c_name
+        holder.category_name.text = dataList[position].goods_category_name
 
         if(position==selected_position){
             holder.category_name.setTextColor(ctx.resources.getColor(R.color.colorWhite))

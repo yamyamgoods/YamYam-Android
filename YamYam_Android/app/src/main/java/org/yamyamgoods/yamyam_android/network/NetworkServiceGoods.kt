@@ -11,16 +11,16 @@ interface NetworkServiceGoods {
 
     //굿즈탭 전체보기
     @GET("/goods")
-    fun getGoodsResponse(
-            @Header("Content-Type") content_type: String,
-            @Header("Authorization") token: String
+    fun getGoodsTabResponse(
+            @Header("Content-Type") content_type: String?,
+            @Header("authorization") token: String?
     ): Call<GetGoodsTabResponse>
 
     //굿즈탭 카테고리 페이징
     @GET("/goods/category/{lastIndex}")
     fun getGoodsCategoryPagingResponse(
             @Header("Content-Type") content_type: String,
-            @Header("Authorization") token: String,
+            @Header("authorization") token: String,
             @Path("lastIndex") lastIndex: Int
     ): Call<GetGoodsCategoryPagingResponse>
 
@@ -28,7 +28,7 @@ interface NetworkServiceGoods {
     @GET("/goods/exhibition/{exhibitionIdx}/{lastIndex}")
     fun getExhibitionDetailResponse(
             @Header("Content-Type") content_type: String,
-            @Header("Authorization") token: String,
+            @Header("authorization") token: String?,
             @Path("exhibitionIdx") exhibitionIdx: Int,
             @Path("lastIndex") lastIndex: Int
     ): Call<GetExhibitionDetailResponse>
@@ -37,7 +37,7 @@ interface NetworkServiceGoods {
     @GET("/goods/category/{goodsCategoryIdx}/{order}/{lastIdx}")
     fun getCategoryDetailResponse(
             @Header("Content-Type") content_type: String,
-            @Header("Authorization") token: String,
+            @Header("authorization") token: String,
             @Path("goodsCategoryIdx") goodsCategoryIdx: Int,
             @Path("order") order: Int,
             @Path("lastIndex") lastIndex: Int,
