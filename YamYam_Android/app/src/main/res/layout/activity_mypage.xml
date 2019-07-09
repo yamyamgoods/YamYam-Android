@@ -83,7 +83,7 @@
                         app:srcCompat="@drawable/icon_ring" />
 
                     <ImageView
-                        android:id="@+id/imageView8"
+                        android:id="@+id/iv_mypage_redddot"
                         android:layout_width="7dp"
                         android:layout_height="7dp"
                         android:layout_marginTop="10dp"
@@ -131,7 +131,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="5,200"
+                    tools:text="5,200"
                     android:textColor="#ffce00"
                     android:textSize="16dp"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_mypage_user_email"

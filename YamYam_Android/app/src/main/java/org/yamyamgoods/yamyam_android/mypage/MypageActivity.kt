@@ -1,5 +1,6 @@
 package org.yamyamgoods.yamyam_android.mypage
 
+import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -9,29 +10,48 @@ import android.os.Bundle
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.bumptech.glide.Glide
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import kotlinx.android.synthetic.main.activity_mypage.*
+import org.jetbrains.anko.toast
+import org.json.JSONObject
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.mypage.adapter.MypageProductRVAdapter
 import org.yamyamgoods.yamyam_android.mypage.alarm.adapter.MypageAlarmRVAdapter
 import org.yamyamgoods.yamyam_android.mypage.dialog.DialogMypageChangeProfileImage
 import org.yamyamgoods.yamyam_android.mypage.recent.RecentlyViewedProductsActivity
+import org.yamyamgoods.yamyam_android.network.ApplicationController
+import org.yamyamgoods.yamyam_android.network.NetworkServiceUser
+import org.yamyamgoods.yamyam_android.network.get.GetUserInfoResponse
 import org.yamyamgoods.yamyam_android.reviewwrite.ReviewWriteActivity
 import org.yamyamgoods.yamyam_android.util.TempData
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.lang.reflect.Type
 
 class MypageActivity : AppCompatActivity() {
     private val PICK_IMAGE_REQUEST: Int = 1
     //public lateinit var mypageCtx: Context
 
+    val networkService: NetworkServiceUser by lazy {
+        ApplicationController.networkServiceUser
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mypage)
+
+        getUserInfoResponse()
 
         configureTitleBar()
         editUserNickName()
@@ -51,10 +71,65 @@ class MypageActivity : AppCompatActivity() {
             var intent = Intent(this@MypageActivity, ReviewWriteActivity::class.java)
             startActivity(intent)
         }
-
-        // ReviewWriteActivity에서 호출 가능하도록
-        //mypageCtx = this
     }
+
+    fun getUserInfoResponse() {
+        networkService.getUserInfoResponse(
+                "application/json",
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWR4IjozLCJpYXQiOjE1NjI2NTY3MTMsImV4cCI6MTU5NDE5MjcxM30.nfcJqImHl5XPMPigkka-wF09v8_ji67Vt4b0nOSX4KY")
+                .enqueue(object : Callback<GetUserInfoResponse> {
+                    override fun onFailure(call: Call<GetUserInfoResponse>, t: Throwable) {
+                    }
+
+                    override fun onResponse(call: Call<GetUserInfoResponse>, response: Response<GetUserInfoResponse>) {
+                        Log.v("현주", "마이페이지 서버 통신 성공  response : ${response.body()}")
+                        if (response.code() == 200) {
+                            response.body()?.let {
+                                // 닉네임
+                                tv_mypage_user_name.setText(it.data!!.user_name)
+
+                                //  포인트
+                                var strPoint: String = it.data!!.user_point.toString()
+                                if (strPoint.length > 3) {
+                                    var strAfter: String = strPoint.substring(strPoint.length - 3, strPoint.length)
+                                    var strBefore: String = strPoint.substring(0, strPoint.length - 3)
+                                    tv_mypage_point.setText(strBefore.plus(",").plus(strAfter))
+                                    Log.v("현주", strBefore.plus(",").plus(strAfter).toString())
+                                }
+                                else
+                                    tv_mypage_point.setText(strPoint.toString())
+
+
+                                // 이미지
+                                Glide.with(this@MypageActivity)
+                                        .load(it.data!!.user_img)
+                                        .circleCrop()
+                                        .into(iv_mypage_user_image)
+
+                                // 알람 표시
+                                if (it.data!!.alarm_flag == 0)
+                                    setInvisible(iv_mypage_redddot)
+                                if (it.data!!.alarm_flag == 1)
+                                    setVisible(iv_mypage_redddot)
+                            }
+                        }
+
+                        response.errorBody()?.let {
+                            val type: Type = object : TypeToken<GetUserInfoResponse>() {}.type
+                            val gson: Gson = GsonBuilder().create()
+                            val responseJson: GetUserInfoResponse = gson.fromJson(it.string().toString(), type)
+
+                            if (response.code() == 401) {
+                                if (responseJson.message == "jwt must be provided")
+                                    toast("로그인을 해주세요.")
+                                if (responseJson.message == "jwt expired")
+                                    toast("로그인이 만료되었습니다.")
+                            }
+                        }
+                    }
+                })
+    }
+
 
     private fun configureTitleBar() {
         btn_mypage_close.setOnClickListener {
@@ -64,7 +139,7 @@ class MypageActivity : AppCompatActivity() {
 
     private fun changeProfileImage() {
         // 프로필 이미지 변경 다이얼로그 띄우기
-        btn_mypage_user_image_edit.setOnClickListener{
+        btn_mypage_user_image_edit.setOnClickListener {
             var imageBtnDialog = DialogMypageChangeProfileImage(this)
             imageBtnDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             imageBtnDialog.setCanceledOnTouchOutside(false)
@@ -72,7 +147,7 @@ class MypageActivity : AppCompatActivity() {
         }
     }
 
-    fun setProfileImageDefault(){
+    fun setProfileImageDefault() {
         iv_mypage_user_image.setImageResource(R.drawable.img_myprofile)
     }
 
