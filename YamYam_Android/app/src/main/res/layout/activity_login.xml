@@ -98,13 +98,13 @@
         android:id="@+id/btn_login_act_without_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginTop="22dp">
         <TextView
             android:id="@+id/login_without_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/text_underbar"
-            android:layout_marginTop="22dp"
             android:layout_marginBottom="-2dp"
             android:textStyle="normal"/>
         <View

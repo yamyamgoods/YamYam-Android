@@ -35,7 +35,17 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    //Firebase
+    implementation 'com.google.firebase:firebase-database:16.0.5'
+    implementation 'com.google.firebase:firebase-auth:16.0.5'
+    implementation 'com.twitter.sdk.android:twitter:3.1.1'
     implementation 'org.jetbrains.anko:anko:0.10.8'
+
+    //Kakao
+    implementation group: project.KAKAO_SDK_GROUP, name: 'usermgmt', version: project.KAKAO_SDK_VERSION
+    implementation 'com.kakao.sdk:kakaotalk:1.13.0'
+
     //Design, Layout, etc.
     implementation 'com.android.support:design:28.0.0'
     implementation 'com.android.support:recyclerview-v7:28.0.0'
@@ -61,3 +71,4 @@ dependencies {
     //photo zoom-in
     implementation 'com.github.chrisbanes:PhotoView:2.0.0'
 }
+apply plugin: 'com.google.gms.google-services'

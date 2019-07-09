@@ -14,15 +14,15 @@ interface NetworkServiceUser {
     //카카오 로그인
     @POST("/user/signin/kakao")
     fun postKakaoLoginResponse(
-            @Header("Content-Type") content_type: String,
-            @Header("Authorization") token: String
+            @Header("Content-Type") content_type: String?,
+            @Header("accesstoken") token: String?
     ): Call<PostKakaoLoginResponse>
 
     //JWT Token 만료시 요청
     @GET("/user/jwttoken")
     fun getJWTtokenExpiredResponse(
             @Header("Content-Type") content_type: String,
-            @Header("Authorization") token: String,
+            @Header("authorization") token: String,
             @Header("refreshtoken") rfToken: String
     ): Call<GetJWTtokenExpiredResponse>
 
