@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,43 +15,56 @@ import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.home.goods.adapter.GoodsCategoryRecyclerViewAdapter
 import org.yamyamgoods.yamyam_android.home.goods.data.GoodsCategoryData
 import org.yamyamgoods.yamyam_android.home.HomeActivity
+import org.yamyamgoods.yamyam_android.network.ApplicationController
+import org.yamyamgoods.yamyam_android.network.get.GetGoodsTabResponse
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class GoodsTabFragment : Fragment(){
-    var dataList: ArrayList<GoodsCategoryData> = ArrayList()
+    var dataList: ArrayList<org.yamyamgoods.yamyam_android.network.get.GoodsCategoryData> = ArrayList()
     lateinit var goodsCategoryRecyclerViewAdapter: GoodsCategoryRecyclerViewAdapter
+    val networkServiceGoods = ApplicationController.networkServiceGoods
 
-//    interface IOnBackPressed{
-//        fun onBackPressed():Boolean
-//    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_goods, container, false)
+        val view:View =  inflater.inflate(R.layout.fragment_goods, container, false)
+        goodsTabResponse()
+        return view
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        setRecyclerView()
+
         //Goods탭 처음에 기획전 화면을 띄우도록
         val transaction: FragmentTransaction = (context as HomeActivity).supportFragmentManager.beginTransaction()
         transaction.add(R.id.fl_goods_fragment_frag, GoodsExhibitionFragment()).commit()
     }
 
+    private fun goodsTabResponse(){
+        val getGoodsTabResponse = networkServiceGoods.getGoodsTabResponse("application/json", org.yamyamgoods.yamyam_android.util.User.authorization)
+        getGoodsTabResponse.enqueue(object: Callback<GetGoodsTabResponse> {
+            override fun onFailure(call: Call<GetGoodsTabResponse>, t:Throwable) {
+                Log.e("GoodsTab-Category fail", t.toString())
+            }
+
+            override fun onResponse(call: Call<GetGoodsTabResponse>, response: Response<GetGoodsTabResponse>) {
+                if(response.isSuccessful){
+                    dataList = response.body()!!.data.goods_category_data
+                    setRecyclerView()
+
+                }
+            }
+        })
+    }
+
     private fun setRecyclerView(){
-        dataList.add(GoodsCategoryData(1,"스티커"))
-        dataList.add(GoodsCategoryData(2,"명함"))
-        dataList.add(GoodsCategoryData(3,"팬시"))
-        dataList.add(GoodsCategoryData(4,"포스터"))
-        dataList.add(GoodsCategoryData(5,"버튼"))
-        dataList.add(GoodsCategoryData(6,"카드"))
         goodsCategoryRecyclerViewAdapter = GoodsCategoryRecyclerViewAdapter(context!!,dataList)
         rv_goods_frag_category.adapter = goodsCategoryRecyclerViewAdapter
         rv_goods_frag_category.layoutManager = LinearLayoutManager(context, LinearLayout.HORIZONTAL,false) as RecyclerView.LayoutManager?
     }
 
-//    override fun onBackPressed() {
-//        (context as HomeActivity).onBackPressed()
-//    }
 }

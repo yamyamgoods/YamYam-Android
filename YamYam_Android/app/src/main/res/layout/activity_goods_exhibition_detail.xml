@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nsv_goods_exhibition_detail_act"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/colorWhite"
     tools:context=".home.goods.GoodsExhibitionDetailActivity">
     <RelativeLayout
@@ -18,7 +19,7 @@
             <ImageView
                 android:id="@+id/iv_goods_exhibition_detail_act_background"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="320dp"
                 tools:src="@drawable/img_keyrop"
                 android:layout_alignParentTop="true"
                 android:scaleType="centerCrop"/>
