@@ -1,5 +1,6 @@
 package org.yamyamgoods.yamyam_android.network
 
+import org.yamyamgoods.yamyam_android.network.delete.DeleteBookmarkResponseData
 import org.yamyamgoods.yamyam_android.network.get.*
 import org.yamyamgoods.yamyam_android.network.post.PostBookmarkRequestDTO
 import org.yamyamgoods.yamyam_android.network.post.PostBookmarkResponseData
@@ -87,5 +88,12 @@ interface NetworkServiceGoods {
             @Body body: PostBookmarkRequestDTO
     ): Call<PostBookmarkResponseData>
 
+    //베스트 굿즈 북마크 해제 요청
+    @DELETE("/goods/{goodsIdx}/scrap")
+    fun deleteBookmarkRequest(
+            @Header("Content-Type") contentType: String = "application/json",
+            @Header("Authorization") token: String?,
+            @Path("goodsIdx") goodsIdx: Int
+    ): Call<DeleteBookmarkResponseData>
 
 }

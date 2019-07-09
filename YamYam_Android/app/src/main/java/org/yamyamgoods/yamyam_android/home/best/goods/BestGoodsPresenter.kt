@@ -3,6 +3,7 @@ package org.yamyamgoods.yamyam_android.home.best.goods
 import android.util.Log
 import org.yamyamgoods.yamyam_android.dataclass.GoodsData
 import org.yamyamgoods.yamyam_android.network.NetworkServiceGoods
+import org.yamyamgoods.yamyam_android.network.delete.DeleteBookmarkResponseData
 import org.yamyamgoods.yamyam_android.network.get.GetBestGoodsItemResponseData
 import org.yamyamgoods.yamyam_android.network.post.PostBookmarkRequestDTO
 import org.yamyamgoods.yamyam_android.network.post.PostBookmarkResponseData
@@ -67,6 +68,21 @@ class BestGoodsPresenter : BestGoodsContract.Presenter {
     }
 
     override fun bookmarkCancelRequest(goodsIdx: Int) {
+        goodsRepository.deleteBookmarkRequest(token = userToken, goodsIdx = goodsIdx).enqueue(
+                object : Callback<DeleteBookmarkResponseData>{
+                    override fun onFailure(call: Call<DeleteBookmarkResponseData>, t: Throwable) {
+                        view.showServerFailToast("서버 통신에 실패하였습니다. 인터넷 연결을 확인해주세요.", t)
+                    }
 
+                    override fun onResponse(call: Call<DeleteBookmarkResponseData>, response: Response<DeleteBookmarkResponseData>) {
+                        if (response.isSuccessful) {
+                            Log.v("Malibin Debug", "북마크 해제 성공")
+                            return
+                        }
+                        Log.v("Malibin Debug", "북마크 해제 실패")
+                    }
+                }
+
+        )
     }
 }
