@@ -1,5 +1,6 @@
 package org.yamyamgoods.yamyam_android.home.best.goods
 
+import org.yamyamgoods.yamyam_android.dataclass.GoodsData
 import org.yamyamgoods.yamyam_android.util.BasePresenter
 import org.yamyamgoods.yamyam_android.util.BaseView
 
@@ -12,9 +13,17 @@ interface BestGoodsContract {
 
     interface View : BaseView<Presenter> {
 
+        fun showServerFailToast(message: String, t: Throwable)
+
+        fun showInvalidAccessToast(errorJson : String)
+
+        fun addBestGoodsList(newData: List<GoodsData>)
+
     }
 
     interface Presenter : BasePresenter {
+
+        fun getBestGoodsData(token: String?, lastIndex: Int)
 
     }
 }
