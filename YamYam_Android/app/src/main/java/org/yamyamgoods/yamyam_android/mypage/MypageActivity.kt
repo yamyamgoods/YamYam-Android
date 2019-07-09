@@ -2,6 +2,8 @@ package org.yamyamgoods.yamyam_android.mypage
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
@@ -21,6 +23,9 @@ import com.google.gson.reflect.TypeToken
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import kotlinx.android.synthetic.main.activity_mypage.*
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import org.jetbrains.anko.toast
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.mypage.adapter.MypageProductRVAdapter
@@ -33,11 +38,15 @@ import org.yamyamgoods.yamyam_android.network.get.GetMypageRecentlyViewedProduct
 import org.yamyamgoods.yamyam_android.network.get.GetUserInfoResponse
 import org.yamyamgoods.yamyam_android.network.get.RecentlyViewedProducts
 import org.yamyamgoods.yamyam_android.network.put.PutMypageEditNicknameRequest
+import org.yamyamgoods.yamyam_android.network.put.PutMypageEditProfileImageRequest
 import org.yamyamgoods.yamyam_android.reviewwrite.ReviewWriteActivity
 import org.yamyamgoods.yamyam_android.util.TempData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.InputStream
 import java.lang.reflect.Type
 
 class MypageActivity : AppCompatActivity() {
@@ -48,6 +57,7 @@ class MypageActivity : AppCompatActivity() {
     }
 
     lateinit var mypageProductRVAdapter : MypageProductRVAdapter
+    lateinit var input_profile_img: MultipartBody.Part
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -166,22 +176,35 @@ class MypageActivity : AppCompatActivity() {
 
     fun openGallery() {
         var intent = Intent(Intent.ACTION_GET_CONTENT)
-        intent.setType("image/*")
-        startActivityForResult(Intent.createChooser(intent, "얌얌굿즈 : 프로필 사진을 선택해주세요!"), PICK_IMAGE_REQUEST)
+        //intent.setType("image/*")
+        intent.type = android.provider.MediaStore.Images.Media.CONTENT_TYPE
+        intent.data = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        startActivityForResult(intent, PICK_IMAGE_REQUEST)//(Intent.createChooser(intent, "얌얌굿즈 : 프로필 사진을 선택해주세요!"), PICK_IMAGE_REQUEST)
     }
 
-    //지워도 됨
-    /*private fun configureList() {
+    private fun putMypageEditProfileImageRequest(img: MultipartBody.Part){
+        Log.v("현주", "put함수에 들어옴")
+        if (img !=null) {
+            networkService.putMypageProfileImageRequest("multipart/form-data",
+                    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWR4IjoxLCJpYXQiOjE1NjIzMTUzNjYsImV4cCI6MTU2MzYyOTM2Nn0.ZkDGasoDPHTrGvy7yFOT9cPjTQ7gnnUOqekY_zYrAuc",
+                    img!!
+            ).enqueue(object: Callback<PutMypageEditProfileImageRequest>{
+                override fun onFailure(call: Call<PutMypageEditProfileImageRequest>, t: Throwable) {
+                }
+                override fun onResponse(call: Call<PutMypageEditProfileImageRequest>, response: Response<PutMypageEditProfileImageRequest>) {
+                  if (response.isSuccessful)
+                      Log.v("현주", response.body()!!.toString())
+                    else{
+                      if(response.code()== 404)
+                          Log.v("현주", "실패")
+                      else
+                          Log.v("현주", "401이 아닌 실패")
+                  }
 
-        var dataList: ArrayList<RecentlyViewedProducts> = ArrayList()
-
-        mypageProductRVAdapter = MypageProductRVAdapter(this@MypageActivity!!, dataList)
-        rv_mypage_recently_viewed_product_list.apply {
-            adapter = MypageProductRVAdapter (this@MypageActivity, dataList)
-            layoutManager = LinearLayoutManager(this@MypageActivity, LinearLayoutManager.HORIZONTAL, false)
+                }
+            })
         }
-        getMypageRecentlyReviewedProductsRequest()
-    }*/
+    }
 
     private fun getMypageRecentlyReviewedProductsRequest(){
         networkService.getMypageRecentlyViewedProductsResponse(
@@ -287,19 +310,11 @@ class MypageActivity : AppCompatActivity() {
 
                         if (response.isSuccessful) {
                             response.body()?.let {
-                                Log.v("현주", "마이페이지 서버 통신 성공  response : ${response.body()}")
+                                Log.v("현주", "닉네임 변경 통신 성공  response : ${response.body()}")
                             }
                         }
                     }
                 })
-    }
-
-    private fun setInvisible(view: View) {
-        view.visibility = View.INVISIBLE
-    }
-
-    private fun setVisible(view: View) {
-        view.visibility = View.VISIBLE
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -307,19 +322,34 @@ class MypageActivity : AppCompatActivity() {
         try {
             if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && null != data) {
                 //data에서 절대경로로 이미지를 가져옴
-                var uri: Uri = data.data!!
+                var selectedPictureUri: Uri = data.data!!
+                val options = BitmapFactory.Options()
+                val inputStream: InputStream = contentResolver!!.openInputStream(selectedPictureUri)
+                val bitmap = BitmapFactory.decodeStream(inputStream, null, options)
+                val byteArrayOutputStream = ByteArrayOutputStream()
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 20, byteArrayOutputStream)
+                val photoBody = RequestBody.create(MediaType.parse("image/jpg"), byteArrayOutputStream.toByteArray())
 
-                Glide.with(this)
-                        .load(uri)
+                input_profile_img = MultipartBody.Part.createFormData(
+                        "img",
+                        File(selectedPictureUri.toString()).name + ".jpg",
+                        photoBody
+                )
+
+                Log.d("사진주소확인",selectedPictureUri.toString());
+
+                Glide.with(this@MypageActivity)
+                        .load(selectedPictureUri)
                         .circleCrop()
                         .into(iv_mypage_user_image)
 
+                putMypageEditProfileImageRequest(input_profile_img)
             } else {
                 Toast.makeText(this, "취소 되었습니다.", Toast.LENGTH_LONG).show()
             }
         } catch (e: Exception) {
             Toast.makeText(this, "사진 로딩에 오류가 있습니다.", Toast.LENGTH_LONG).show()
-            e.printStackTrace();
+            e.printStackTrace()
         }
     }
 
@@ -332,5 +362,14 @@ class MypageActivity : AppCompatActivity() {
         }
         else
             return str
+    }
+
+
+    private fun setInvisible(view: View) {
+        view.visibility = View.INVISIBLE
+    }
+
+    private fun setVisible(view: View) {
+        view.visibility = View.VISIBLE
     }
 }

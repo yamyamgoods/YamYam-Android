@@ -30,45 +30,33 @@ class MypageProductRVAdapter(private val ctx: Context, var dataList: ArrayList<R
     override fun onBindViewHolder(holder: Holder, position: Int) {
         var options: RequestOptions = RequestOptions().transform(CenterCrop(), RoundedCorners(10))
 
-            dataList[position].let { item ->
-                Glide.with(ctx)
-                        .load(item.goods_img)
-                        .apply(options)
-                        .into(holder.ivImage)
+        dataList[position].let { item ->
+            Glide.with(ctx)
+                    .load(item.goods_img)
+                    .apply(options)
+                    .into(holder.ivImage)
 
-                if (item.scrap_flag ==0)
-                    holder.ivBookmark.isSelected = false
-                if (item.scrap_flag ==1)
-                    holder.ivBookmark.isSelected = true
+            if (item.scrap_flag == 0)
+                holder.ivBookmark.isSelected = false
+            if (item.scrap_flag == 1)
+                holder.ivBookmark.isSelected = true
 
-                holder.ivBookmark.setOnClickListener {
-                    holder.ivBookmark.isSelected = !(holder.ivBookmark.isSelected)
-                }
-
-                holder.tvStoreName.text = item.store_name
-                holder.tvProductName.text = item.goods_name
-                holder.tvPrice.text = addComma(item.goods_price)
+            holder.ivBookmark.setOnClickListener {
+                holder.ivBookmark.isSelected = !(holder.ivBookmark.isSelected)
             }
+
+            holder.tvStoreName.text = item.store_name
+            holder.tvProductName.text = item.goods_name
+            holder.tvPrice.text = item.goods_price
         }
-
-        inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-            val ivImage: ImageView = itemView.findViewById(R.id.iv_rv_item_mypage_recently_viewed_product_image)
-            val ivBookmark: ImageView = itemView.findViewById(R.id.iv_rv_item_mypage_recently_viewed_product_bookmark)
-
-            val tvStoreName: TextView = itemView.findViewById(R.id.tv_rv_item_mypage_recently_viewed_store_name)
-            val tvProductName: TextView = itemView.findViewById(R.id.tv_rv_item_mypage_recently_viewed_product_name)
-            val tvPrice: TextView = itemView.findViewById(R.id.tv_rv_item_mypage_recently_viewed_product_price)
-        }
-
-
-    fun addComma(number: Int):String{
-        var str: String = number.toString()
-        if (str.length > 3){
-            var strAfter: String = str.substring(str.length-3, str.length)
-            var strBefore: String = str.substring(0, str.length -3)
-            return strBefore.plus(",").plus(strAfter)
-        }
-        else
-            return str
     }
+
+    inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val ivImage: ImageView = itemView.findViewById(R.id.iv_rv_item_mypage_recently_viewed_product_image)
+        val ivBookmark: ImageView = itemView.findViewById(R.id.iv_rv_item_mypage_recently_viewed_product_bookmark)
+
+        val tvStoreName: TextView = itemView.findViewById(R.id.tv_rv_item_mypage_recently_viewed_store_name)
+        val tvProductName: TextView = itemView.findViewById(R.id.tv_rv_item_mypage_recently_viewed_product_name)
+        val tvPrice: TextView = itemView.findViewById(R.id.tv_rv_item_mypage_recently_viewed_product_price)
     }
+}
