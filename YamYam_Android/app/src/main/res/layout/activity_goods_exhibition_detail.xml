@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <RelativeLayout
-            android:id="@+id/top"
+            android:id="@+id/topInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="2dp">
@@ -74,7 +74,7 @@
         </RelativeLayout>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_goods_exhibition_detail_act_list"
-            android:layout_below="@id/top"
+            android:layout_below="@id/topInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="11dp">

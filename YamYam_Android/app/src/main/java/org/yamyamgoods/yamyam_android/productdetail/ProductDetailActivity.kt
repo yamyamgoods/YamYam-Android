@@ -36,7 +36,6 @@ import org.yamyamgoods.yamyam_android.util.dp2px
 import org.yamyamgoods.yamyam_android.util.getScreenWidth
 import java.lang.Exception
 
-
 /**
  * Created By Yun Hyeok
  * on 7월 01, 2019

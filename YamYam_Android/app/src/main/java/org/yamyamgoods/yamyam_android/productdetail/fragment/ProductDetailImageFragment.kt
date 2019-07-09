@@ -24,7 +24,7 @@ class ProductDetailImageFragment : Fragment() {
         fun getInstance(imageUrl: String) =
                 ProductDetailImageFragment().apply {
                     arguments = Bundle().apply {
-                        putString("imageUrl", imageUrl)
+                        putString("goods_review_img", imageUrl)
                     }
                 }
     }
@@ -42,7 +42,7 @@ class ProductDetailImageFragment : Fragment() {
 
     private fun variableInit(view: View){
         arguments?.let{
-            imageUrl = it.getString("imageUrl")!!
+            imageUrl = it.getString("goods_review_img")!!
         }
         imageView = view.findViewById(R.id.iv_product_detail_frag_image)
     }

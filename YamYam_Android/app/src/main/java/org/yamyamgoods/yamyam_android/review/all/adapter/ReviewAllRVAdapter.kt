@@ -34,29 +34,29 @@ class ReviewAllRVAdapter (private val ctx: Context, private val dataList: List<R
     override fun onBindViewHolder(holder: Holder, position: Int) {
         dataList[position].let{ item->
             Glide.with(ctx)
-                    .load(item.userImageUrl)
+                    .load(item.user_img)
                     .centerCrop()
                     .circleCrop()
                     .into(holder.ivUserImage)
-            holder.tvUserNickname.text  = item.userNickname
-            holder.tvReviewDate.text = item.date
+            holder.tvUserNickname.text  = item.user_name
+            holder.tvReviewDate.text = item.goods_review_date
 
-            for (i in 0 until  item.starCount){
+            for (i in 0 until  item.goods_review_rating){
                 holder.starRate[i].setImageResource(R.drawable.icon_colorstar)
             }
 
-            holder.tvReviewContents.text = item.reviewContents
+            holder.tvReviewContents.text = item.goods_review_content
             holder.btnDetailReview.setOnClickListener{
                 try {
-                    var dto = ReviewBasicDTO(item.userImageUrl,
-                            item.userNickname,
-                            item.date,
-                            item.starCount,
-                            item.reviewContents,
-                            item.imageUrl,
-                            item.thumbFlag,
-                            item.thumbCount,
-                            item.commentsCount)
+                    var dto = ReviewBasicDTO(item.user_img,
+                            item.user_name,
+                            item.goods_review_date,
+                            item.goods_review_rating,
+                            item.goods_review_content,
+                            item.goods_review_img,
+                            item.review_like_flag,
+                            item.goods_review_like_count,
+                            item.goods_review_cmt_count)
                     var intent = Intent(ctx, ReviewDetailActivity::class.java)
                     intent.putExtra("dto", dto)
                     ctx.startActivity(intent)
@@ -65,29 +65,29 @@ class ReviewAllRVAdapter (private val ctx: Context, private val dataList: List<R
             }
 
             var options: RequestOptions = RequestOptions().transform(CenterCrop(), RoundedCorners(10))
-            var imageNum = item.imageUrl.size
+            var imageNum = item.goods_review_img.size
             if (imageNum >3){
-                holder.etcImageNum.text = (item.imageUrl.size-3).toString()
+                holder.etcImageNum.text = (item.goods_review_img.size-3).toString()
                 setVisible(holder.etcImageNum)
                 holder.reviewImage[2].setColorFilter(Color.parseColor("#777777"), PorterDuff.Mode.MULTIPLY)
-                holder.etcImageNum.text = "+" + (item.imageUrl.size-3).toString()
+                holder.etcImageNum.text = "+" + (item.goods_review_img.size-3).toString()
                 imageNum = 3
             }
             for (i in 0 until  imageNum){
                 setVisible(holder.reviewImage[i])
                 Glide.with(ctx)
-                        .load(item.imageUrl[i])
+                        .load(item.goods_review_img[i])
                         .apply(options)
                         .into(holder.reviewImage[i])
             }
 
             holder.btnThumb.setOnClickListener{
-                item.thumbFlag = Math.abs(item.thumbFlag - 1)
+                item.review_like_flag = Math.abs(item.review_like_flag - 1)
                 holder.ivThumb.isSelected  = !(holder.ivThumb.isSelected)
             }
-            holder.tvThumbNum.text = item.thumbCount.toString()
+            holder.tvThumbNum.text = item.goods_review_like_count.toString()
             holder.btnComments.setImageResource(R.drawable.icon_comment)
-            holder.tvCommentsNum.text = item.commentsCount.toString()
+            holder.tvCommentsNum.text = item.goods_review_cmt_count.toString()
         }
     }
 

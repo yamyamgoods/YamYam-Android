@@ -33,16 +33,16 @@ class ProductDetailReviewRVAdatper(private val ctx: Context, private val dataLis
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
         dataList[position].let { data ->
-            setProfile(data.userImageUrl, holder.ivProfile)
-            setImageViewList(data.imageUrl, holder)
-            setStarView(data.starCount, holder.ivStars)
+            setProfile(data.user_img, holder.ivProfile)
+            setImageViewList(data.goods_review_img, holder)
+            setStarView(data.goods_review_rating, holder.ivStars)
 
-            holder.tvNickname.text = data.userNickname
-            holder.tvDate.text = data.date
-            holder.tvContent.text = data.reviewContents
+            holder.tvNickname.text = data.user_name
+            holder.tvDate.text = data.goods_review_date
+            holder.tvContent.text = data.goods_review_content
 
-            holder.tvLikeCount.text = data.thumbCount.toString()
-            holder.tvCommentsCount.text = data.commentsCount.toString()
+            holder.tvLikeCount.text = data.goods_review_like_count.toString()
+            holder.tvCommentsCount.text = data.goods_review_cmt_count.toString()
 
             holder.btnLike.setOnClickListener {
                 //버튼눌리면 노래지는 것

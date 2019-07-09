@@ -9,7 +9,7 @@
     android:background="@drawable/category_detail_product">
 
     <RelativeLayout
-        android:id="@+id/top"
+        android:id="@+id/topInfo"
         android:layout_width="match_parent"
         android:layout_height="98dp">
         <ImageView
@@ -32,7 +32,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_below="@id/top"
+        android:layout_below="@id/topInfo"
         android:orientation="vertical"
         android:layout_marginTop="6dp"
         android:layout_marginLeft="11dp"

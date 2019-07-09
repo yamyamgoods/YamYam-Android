@@ -9,9 +9,13 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_best_goods.*
 import org.yamyamgoods.yamyam_android.home.best.goods.adapter.BestGoodsRVAdapter
 import org.yamyamgoods.yamyam_android.R
+import org.yamyamgoods.yamyam_android.home.best.goods.adapter.BestGoodsPresenter
 import org.yamyamgoods.yamyam_android.util.TempData
 
-class BestGoodsFragment : Fragment() {
+class BestGoodsFragment : Fragment(), BestGoodsContract.View {
+
+    override lateinit var presenter: BestGoodsContract.Presenter
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_best_goods, container, false)
     }
@@ -19,7 +23,14 @@ class BestGoodsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        presenterInit()
         viewInit()
+    }
+
+    private fun presenterInit(){
+        presenter = BestGoodsPresenter().apply{
+            view = this@BestGoodsFragment
+        }
     }
 
     private fun viewInit() {
