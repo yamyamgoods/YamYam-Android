@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "901720508035",
+    "firebase_url": "https://twitter-login-sample.firebaseio.com",
+    "project_id": "twitter-login-sample",
+    "storage_bucket": "twitter-login-sample.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:901720508035:android:1ae61bc2910c3368",
+        "android_client_info": {
+          "package_name": "org.yamyamgoods.twitterlogin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "901720508035-77mdlcga4lkubem2qj8335tu59hif5kp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3Qw0FqHGU6U4R2VS4b0KanM4A-Ir4UJE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "901720508035-77mdlcga4lkubem2qj8335tu59hif5kp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:901720508035:android:425d78888aeb77fb",
+        "android_client_info": {
+          "package_name": "org.yamyamgoods.yamyam_android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "901720508035-77mdlcga4lkubem2qj8335tu59hif5kp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3Qw0FqHGU6U4R2VS4b0KanM4A-Ir4UJE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "901720508035-77mdlcga4lkubem2qj8335tu59hif5kp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
