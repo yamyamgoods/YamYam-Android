@@ -14,8 +14,11 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.mypage.MypageProductItem
+import org.yamyamgoods.yamyam_android.network.get.RecentlyViewedProducts
 
-class MypageProductRVAdapter(private val ctx: Context, private val dataList: List<MypageProductItem>) : RecyclerView.Adapter<MypageProductRVAdapter.Holder>() {
+class MypageProductRVAdapter(private val ctx: Context, var dataList: ArrayList<RecentlyViewedProducts>)
+    : RecyclerView.Adapter<MypageProductRVAdapter.Holder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): Holder {
         val view: View = LayoutInflater.from(ctx).inflate(R.layout.rv_item_recently_viewed_product, parent, false)
 
@@ -29,17 +32,22 @@ class MypageProductRVAdapter(private val ctx: Context, private val dataList: Lis
 
             dataList[position].let { item ->
                 Glide.with(ctx)
-                        .load(item.imageUrl)
+                        .load(item.goods_img)
                         .apply(options)
                         .into(holder.ivImage)
+
+                if (item.scrap_flag ==0)
+                    holder.ivBookmark.isSelected = false
+                if (item.scrap_flag ==1)
+                    holder.ivBookmark.isSelected = true
 
                 holder.ivBookmark.setOnClickListener {
                     holder.ivBookmark.isSelected = !(holder.ivBookmark.isSelected)
                 }
 
-                holder.tvStoreName.text = item.storeName
-                holder.tvProductName.text = item.productName
-                holder.tvPrice.text = item.price.toString()
+                holder.tvStoreName.text = item.store_name
+                holder.tvProductName.text = item.goods_name
+                holder.tvPrice.text = addComma(item.goods_price)
             }
         }
 
@@ -51,4 +59,16 @@ class MypageProductRVAdapter(private val ctx: Context, private val dataList: Lis
             val tvProductName: TextView = itemView.findViewById(R.id.tv_rv_item_mypage_recently_viewed_product_name)
             val tvPrice: TextView = itemView.findViewById(R.id.tv_rv_item_mypage_recently_viewed_product_price)
         }
+
+
+    fun addComma(number: Int):String{
+        var str: String = number.toString()
+        if (str.length > 3){
+            var strAfter: String = str.substring(str.length-3, str.length)
+            var strBefore: String = str.substring(0, str.length -3)
+            return strBefore.plus(",").plus(strAfter)
+        }
+        else
+            return str
+    }
     }
