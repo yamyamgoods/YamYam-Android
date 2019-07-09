@@ -23,7 +23,7 @@ import org.yamyamgoods.yamyam_android.util.getScreenWidth
 class StoreDetailRVAdapter(private val ctx: Context, private val dataList: List<StoreDetailItem>, private val storeName: String) : RecyclerView.Adapter<StoreDetailRVAdapter.Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val view: View = LayoutInflater.from(ctx).inflate(R.layout.rv_item_best_goods, parent, false)
+        val view: View = LayoutInflater.from(ctx).inflate(R.layout.rv_item_store_detail_goods, parent, false)
         return Holder(view)
     }
 

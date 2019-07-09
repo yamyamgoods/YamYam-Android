@@ -11,6 +11,7 @@ import org.yamyamgoods.yamyam_android.mypage.alarm.MypageAlarmItem
 import org.yamyamgoods.yamyam_android.review.all.ReviewAllItem
 import org.yamyamgoods.yamyam_android.reviewdetail.ProductShortInfo
 import org.yamyamgoods.yamyam_android.reviewdetail.ReviewCommentItem
+import org.yamyamgoods.yamyam_android.storedetail.StoreDetailItem
 
 class TempData {
     companion object {
@@ -116,7 +117,7 @@ class TempData {
                                     "https://scontent-icn1-1.xx.fbcdn.net/v/t1.0-9/58383648_1714122605401284_8261916106969579520_o.jpg?_nc_cat=107&_nc_ht=scontent-icn1-1.xx&oh=5685d155cc3622b1535485166619daff&oe=5D756045",
                                     "https://scontent-icn1-1.xx.fbcdn.net/v/t1.0-9/58383648_1714122605401284_8261916106969579520_o.jpg?_nc_cat=107&_nc_ht=scontent-icn1-1.xx&oh=5685d155cc3622b1535485166619daff&oe=5D756045"
 
-                                    ,"https://scontent-icn1-1.xx.fbcdn.net/v/t1.0-9/58383648_1714122605401284_8261916106969579520_o.jpg?_nc_cat=107&_nc_ht=scontent-icn1-1.xx&oh=5685d155cc3622b1535485166619daff&oe=5D756045"),
+                                    , "https://scontent-icn1-1.xx.fbcdn.net/v/t1.0-9/58383648_1714122605401284_8261916106969579520_o.jpg?_nc_cat=107&_nc_ht=scontent-icn1-1.xx&oh=5685d155cc3622b1535485166619daff&oe=5D756045"),
                             0, 3, 55
                     )
             )
@@ -182,21 +183,21 @@ class TempData {
                                     "https://scontent-icn1-1.xx.fbcdn.net/v/t1.0-9/58383648_1714122605401284_8261916106969579520_o.jpg?_nc_cat=107&_nc_ht=scontent-icn1-1.xx&oh=5685d155cc3622b1535485166619daff&oe=5D756045",
                                     "https://scontent-icn1-1.xx.fbcdn.net/v/t1.0-9/58383648_1714122605401284_8261916106969579520_o.jpg?_nc_cat=107&_nc_ht=scontent-icn1-1.xx&oh=5685d155cc3622b1535485166619daff&oe=5D756045",
                                     "https://scontent-icn1-1.xx.fbcdn.net/v/t1.0-9/58383648_1714122605401284_8261916106969579520_o.jpg?_nc_cat=107&_nc_ht=scontent-icn1-1.xx&oh=5685d155cc3622b1535485166619daff&oe=5D756045",
-                                     "https://scontent-icn1-1.xx.fbcdn.net/v/t1.0-9/58383648_1714122605401284_8261916106969579520_o.jpg?_nc_cat=107&_nc_ht=scontent-icn1-1.xx&oh=5685d155cc3622b1535485166619daff&oe=5D756045"),
+                                    "https://scontent-icn1-1.xx.fbcdn.net/v/t1.0-9/58383648_1714122605401284_8261916106969579520_o.jpg?_nc_cat=107&_nc_ht=scontent-icn1-1.xx&oh=5685d155cc3622b1535485166619daff&oe=5D756045"),
                             0, 3, 55
                     )
             )
             return result
         }
 
-        fun ReviewComments(): List<ReviewCommentItem>{
+        fun ReviewComments(): List<ReviewCommentItem> {
             val result = ArrayList<ReviewCommentItem>()
             result.add(
                     ReviewCommentItem(
                             1, 0,
                             "https://scontent-icn1-1.xx.fbcdn.net/v/t1.0-9/58383648_1714122605401284_8261916106969579520_o.jpg?_nc_cat=107&_nc_ht=scontent-icn1-1.xx&oh=5685d155cc3622b1535485166619daff&oe=5D756045",
                             "고웽이", "2019.06.24", "혹시 수량은 몇개정도 제작하셨나요??")
-                    )
+            )
             result.add(
                     ReviewCommentItem(
                             1, 1,
@@ -290,7 +291,7 @@ class TempData {
             return result
         }
 
-        fun ReviewDetailProducts(): List<ProductShortInfo>{
+        fun ReviewDetailProducts(): List<ProductShortInfo> {
             var result = ArrayList<ProductShortInfo>()
             result.add(
                     ProductShortInfo(
@@ -525,7 +526,7 @@ class TempData {
             return result
         }
 
-        fun mypageProducts(): List<MypageProductItem>{
+        fun mypageProducts(): List<MypageProductItem> {
             val result = ArrayList<MypageProductItem>()
             result.add(
                     MypageProductItem(
@@ -562,7 +563,7 @@ class TempData {
                             0, false,
                             "https://scontent-icn1-1.xx.fbcdn.net/v/t1.0-9/57336208_1714122562067955_3478487248456908800_o.jpg?_nc_cat=110&_nc_ht=scontent-icn1-1.xx&oh=37e2d4b1ab1e6797ae00db0b61ba8c1c&oe=5D2A80BE",
                             "레드프린팅&프레스", "도무송 스티커", 32900)
-                    )
+            )
             result.add(
                     MypageProductItem(
                             0, false,
@@ -572,8 +573,8 @@ class TempData {
             return result
         }
 
-        fun mypageAlarms(): List<MypageAlarmItem>{
-            val result= ArrayList<MypageAlarmItem>()
+        fun mypageAlarms(): List<MypageAlarmItem> {
+            val result = ArrayList<MypageAlarmItem>()
             result.add(
                     MypageAlarmItem(
                             0, 0, 0, true,
@@ -630,6 +631,7 @@ class TempData {
                 , "https://ichef.bbci.co.uk/news/660/cpsprodpb/37B5/production/_89716241_thinkstockphotos-523060154.jpg"
                 , "https://i0.wp.com/dataaspirant.com/wp-content/uploads/2017/04/Random-Forest-Applications.jpg?resize=500%2C500"
         )
+
         fun imageUrls2(): List<String> = listOf(
                 "https://ae01.alicdn.com/kf/HTB10mgVXnwKL1JjSZFgq6z6aVXaF/Kawaii-Anime-Clothes-Acrylic-Badges-Pins-Icon-Decorating-Badge-Backpack-Pin-Button-Acrylic-Brooch-Un.jpg_640x640.jpg"
                 , "https://images-na.ssl-images-amazon.com/images/I/51eQv0pInHL.jpg"
@@ -638,10 +640,59 @@ class TempData {
                 , "https://onlineimagetools.com/images/examples-onlineimagetools/color-grid.png"
                 , "https://conversationstartersworld.com/wp-content/uploads/2015/12/Random-questions-to-ask-a-girl.jpg"
         )
+
         fun imageUrls3(): List<String> = listOf(
                 "https://ae01.alicdn.com/kf/HTB10mgVXnwKL1JjSZFgq6z6aVXaF/Kawaii-Anime-Clothes-Acrylic-Badges-Pins-Icon-Decorating-Badge-Backpack-Pin-Button-Acrylic-Brooch-Un.jpg_640x640.jpg"
                 , "https://images-na.ssl-images-amazon.com/images/I/51eQv0pInHL.jpg"
                 , "https://pics.me.me/thumb_random-depressive-thoughts-me-just-chilling-with-the-bois-on-49748524.png"
         )
+
+        fun storeGoods(): List<StoreDetailItem> {
+            val result = ArrayList<StoreDetailItem>()
+            result.add(
+                    StoreDetailItem(
+                            0, false, R.drawable.img_goods1,
+                            "도무송 스티커",
+                            "32900", 4.8, 10, 300)
+            )
+            result.add(
+                    StoreDetailItem(
+                            0, true, R.drawable.img_goods2,
+                            "도무송 스티커",
+                            "32900", 4.8, 10, 300)
+            )
+            result.add(
+                    StoreDetailItem(
+                            0, true, R.drawable.img_goods3,
+                            "도무송 스티커",
+                            "32900", 4.8, 10, 300)
+            )
+            result.add(
+                    StoreDetailItem(
+                            0, false, R.drawable.img_goods4,
+                            "도무송 스티커",
+                            "32900", 4.8, 10, 300)
+            )
+            result.add(
+                    StoreDetailItem(
+                            0, false, R.drawable.img_goods1,
+                            "도무송 스티커",
+                            "32900", 4.8, 10, 300)
+            )
+            result.add(
+                    StoreDetailItem(
+                            0, true, R.drawable.img_goods2,
+                            "도무송 스티커",
+                            "32900", 4.8, 10, 300)
+            )
+            result.add(
+                    StoreDetailItem(
+                            0, false, R.drawable.img_goods3,
+                            "도무송 스티커",
+                            "32900", 4.8, 10, 300)
+            )
+            return result
+        }
+
     }
 }
