@@ -1,6 +1,7 @@
 package org.yamyamgoods.yamyam_android.home.best.goods
 
 import org.yamyamgoods.yamyam_android.dataclass.GoodsData
+import org.yamyamgoods.yamyam_android.network.post.PostBookmarkRequestDTO
 import org.yamyamgoods.yamyam_android.util.BasePresenter
 import org.yamyamgoods.yamyam_android.util.BaseView
 
@@ -23,7 +24,10 @@ interface BestGoodsContract {
 
     interface Presenter : BasePresenter {
 
-        fun getBestGoodsData(token: String?, lastIndex: Int)
+        fun getBestGoodsData(lastIndex: Int)
 
+        fun bookmarkRequest(body: PostBookmarkRequestDTO)
+
+        fun bookmarkCancelRequest(goodsIdx: Int)
     }
 }
