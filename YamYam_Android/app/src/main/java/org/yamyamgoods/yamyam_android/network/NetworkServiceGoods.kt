@@ -14,14 +14,14 @@ interface NetworkServiceGoods {
     fun getGoodsResponse(
             @Header("Content-Type") content_type: String,
             @Header("Authorization") token: String
-            ): Call<GetGoodsTabResponse>
+    ): Call<GetGoodsTabResponse>
 
     //굿즈탭 카테고리 페이징
     @GET("/goods/category/{lastIndex}")
     fun getGoodsCategoryPagingResponse(
             @Header("Content-Type") content_type: String,
             @Header("Authorization") token: String,
-            @Path("lastIndex") lastIndex:Int
+            @Path("lastIndex") lastIndex: Int
     ): Call<GetGoodsCategoryPagingResponse>
 
     //얌얌추천 기획전 굿즈 모두보기
@@ -67,8 +67,16 @@ interface NetworkServiceGoods {
     fun getSearchGoodsResponse(
             @Header("Content-Type") content_type: String,
             @Header("Authorization") token: String,
-            @Path("goodsName") goodsName:String,
+            @Path("goodsName") goodsName: String,
             @Path("order") order: Int,
             @Query("searchAfter") searchAfter: List<Int>
     ): Call<GetSearchGoodsResponse>
+
+    //베스트 굿즈 리스트 요청
+    @GET("/goods/best/{lastIndex}")
+    fun getBestGoodsItemRequest(
+            @Header("Content-Type") contentType: String = "application/json",
+            @Header("Authorization") token: String,
+            @Path("lastIndex") lastIndex: Int
+    )
 }
