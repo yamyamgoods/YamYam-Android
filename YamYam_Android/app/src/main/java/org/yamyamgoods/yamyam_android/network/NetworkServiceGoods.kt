@@ -1,11 +1,10 @@
 package org.yamyamgoods.yamyam_android.network
 
 import org.yamyamgoods.yamyam_android.network.get.*
+import org.yamyamgoods.yamyam_android.network.post.PostBookmarkRequestDTO
+import org.yamyamgoods.yamyam_android.network.post.PostBookmarkResponseData
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface NetworkServiceGoods {
 
@@ -79,4 +78,14 @@ interface NetworkServiceGoods {
             @Header("Authorization") token: String?,
             @Path("lastIndex") lastIndex: Int
     ): Call<GetBestGoodsItemResponseData>
+
+    //베스트 굿즈 북마크 요청
+    @POST("/goods/scrap")
+    fun postBookmarkRequest(
+            @Header("Content-Type") contentType: String = "application/json",
+            @Header("Authorization") token: String?,
+            @Body body: PostBookmarkRequestDTO
+    ): Call<PostBookmarkResponseData>
+
+
 }

@@ -13,10 +13,12 @@ import org.jetbrains.anko.imageResource
 import org.yamyamgoods.yamyam_android.home.best.goods.BestGoodsItem
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.dataclass.GoodsData
+import org.yamyamgoods.yamyam_android.home.best.goods.BestGoodsFragment
 import org.yamyamgoods.yamyam_android.util.dp2px
 import org.yamyamgoods.yamyam_android.util.getScreenWidth
 
-class BestGoodsRVAdapter(private val ctx: Context) : RecyclerView.Adapter<BestGoodsRVAdapter.Holder>() {
+class BestGoodsRVAdapter(private val ctx: Context, private val listener: BestGoodsFragment.BookmarkClickListener)
+    : RecyclerView.Adapter<BestGoodsRVAdapter.Holder>() {
 
     val dataList = ArrayList<GoodsData>()
 
@@ -44,6 +46,10 @@ class BestGoodsRVAdapter(private val ctx: Context) : RecyclerView.Adapter<BestGo
                 val isBookMarked = (item.scrap_flag == 1)
                 imageResource = R.drawable.selector_bookmark_heart
                 isSelected = isBookMarked
+                setOnClickListener{
+                    listener.onClick(item)
+                    notifyItemChanged(position)
+                }
             }
 
             holder.tvStoreName.text = item.store_name
