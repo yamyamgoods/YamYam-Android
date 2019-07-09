@@ -58,8 +58,8 @@ class BestReviewFragment : Fragment() {
 //            when (requestCode){
 //                3000 -> {
 //                    //iv_review_detail_review_thumbs.isSelected  = !(iv_review_detail_review_thumbs.isSelected)
-//                    //thumbFlag = Math.abs(thumbFlag - 1)
-//                    dataList[0].thumbFlag = 1
+//                    //review_like_flag = Math.abs(review_like_flag - 1)
+//                    dataList[0].review_like_flag = 1
 //                }
 //            }
 //        }
