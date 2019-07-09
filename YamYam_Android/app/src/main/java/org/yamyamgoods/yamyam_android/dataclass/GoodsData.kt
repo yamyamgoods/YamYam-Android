@@ -1,4 +1,4 @@
-package org.yamyamgoods.yamyam_android.network
+package org.yamyamgoods.yamyam_android.dataclass
 
 //검색은 따로 만듦
 data class GoodsData (

@@ -1,4 +1,4 @@
-package org.yamyamgoods.yamyam_android.network
+package org.yamyamgoods.yamyam_android.dataclass
 
 data class LoginData(
         val authorization: String,

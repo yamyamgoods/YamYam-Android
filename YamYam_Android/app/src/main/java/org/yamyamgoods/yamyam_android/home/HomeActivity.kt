@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.activity_home.*
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.home.best.BestTabFragment
 import org.yamyamgoods.yamyam_android.home.bookmark.BookmarkFragment
-import org.yamyamgoods.yamyam_android.home.goods.GoodsFragment
+import org.yamyamgoods.yamyam_android.home.goods.GoodsTabFragment
 import org.yamyamgoods.yamyam_android.home.store.ranking.StoreRankingFragment
 
 class HomeActivity : AppCompatActivity() {
@@ -72,7 +72,7 @@ class HomeActivity : AppCompatActivity() {
             tv_bottom_store_text.isSelected=true
         }
         btn_bottom_goods.setOnClickListener{
-            replaceFragment(GoodsFragment())
+            replaceFragment(GoodsTabFragment())
             clearBtnSelect()
             iv_bottom_goods_icon.isSelected=true
             tv_bottom_goods_text.isSelected=true
@@ -110,7 +110,7 @@ class HomeActivity : AppCompatActivity() {
     //액티비티에서는 Back버튼을 두번 눌렀을 때, 종료되도록
 //    override fun onBackPressed() {
 //        val fragment = this.supportFragmentManager.findFragmentById(R.id.fl_goods_fragment_frag)
-//        (fragment as? GoodsFragment.IOnBackPrssed)?.onBackPressed()?.not()?.let{
+//        (fragment as? GoodsTabFragment.IOnBackPrssed)?.onBackPressed()?.not()?.let{
 //            super.onBackPressed()
 //        }
 //    }

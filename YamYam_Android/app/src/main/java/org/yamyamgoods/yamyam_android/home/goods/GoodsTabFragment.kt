@@ -15,7 +15,7 @@ import org.yamyamgoods.yamyam_android.home.goods.adapter.GoodsCategoryRecyclerVi
 import org.yamyamgoods.yamyam_android.home.goods.data.GoodsCategoryData
 import org.yamyamgoods.yamyam_android.home.HomeActivity
 
-class GoodsFragment : Fragment(){
+class GoodsTabFragment : Fragment(){
     var dataList: ArrayList<GoodsCategoryData> = ArrayList()
     lateinit var goodsCategoryRecyclerViewAdapter: GoodsCategoryRecyclerViewAdapter
 
