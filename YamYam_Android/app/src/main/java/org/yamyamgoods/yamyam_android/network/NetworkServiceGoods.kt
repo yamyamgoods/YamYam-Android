@@ -76,7 +76,7 @@ interface NetworkServiceGoods {
     @GET("/goods/best/{lastIndex}")
     fun getBestGoodsItemRequest(
             @Header("Content-Type") contentType: String = "application/json",
-            @Header("Authorization") token: String,
+            @Header("Authorization") token: String?,
             @Path("lastIndex") lastIndex: Int
-    )
+    ): Call<GetBestGoodsItemResponseData>
 }

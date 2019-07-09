@@ -8,13 +8,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import org.jetbrains.anko.imageResource
 import org.yamyamgoods.yamyam_android.home.best.goods.BestGoodsItem
 import org.yamyamgoods.yamyam_android.R
+import org.yamyamgoods.yamyam_android.dataclass.GoodsData
 import org.yamyamgoods.yamyam_android.util.dp2px
 import org.yamyamgoods.yamyam_android.util.getScreenWidth
 
-class BestGoodsRVAdapter(private val ctx: Context, private val dataList: List<BestGoodsItem>) : RecyclerView.Adapter<BestGoodsRVAdapter.Holder>() {
+class BestGoodsRVAdapter(private val ctx: Context) : RecyclerView.Adapter<BestGoodsRVAdapter.Holder>() {
+
+    val dataList = ArrayList<GoodsData>()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val view: View = LayoutInflater.from(ctx).inflate(R.layout.rv_item_best_goods, parent, false)
         return Holder(view)
@@ -26,9 +31,7 @@ class BestGoodsRVAdapter(private val ctx: Context, private val dataList: List<Be
 
         dataList[position].let { item ->
 
-            //임시코드 string 으로 바꿀 것 다시
-            holder.ivImage.imageResource = item.imageUrl
-            //임시코드
+            Glide.with(ctx).load(item.goods_img).into(holder.ivImage)
 
             val imageHeight = getDynamicImageHeight()
 
@@ -38,18 +41,26 @@ class BestGoodsRVAdapter(private val ctx: Context, private val dataList: List<Be
             holder.clImageFrame.layoutParams = imageParams
 
             holder.ivBookmark.apply {
+                val isBookMarked = (item.scrap_flag == 1)
                 imageResource = R.drawable.selector_bookmark_heart
-                isSelected = item.isBookMarked
+                isSelected = isBookMarked
             }
 
-            holder.tvStoreName.text = item.storeName
-            holder.tvProductName.text = item.productName
-            holder.tvPrice.text = item.price.toString()
+            holder.tvStoreName.text = item.store_name
+            holder.tvProductName.text = item.goods_name
+            holder.tvPrice.text = item.goods_price
 
-            holder.tvStarRate.text = item.starRate.toString()
-            holder.tvMinQuantity.text = item.minQuantity.toString()
-            holder.tvReviewCount.text = item.reviewCount.toString()
+            holder.ivStarView.imageResource = R.drawable.star
+            holder.tvStarRate.text = item.goods_rating.toString()
+            holder.tvMinQuantity.text = item.goods_minimum_amount.toString()
+            holder.tvReviewCount.text = item.goods_review_cnt.toString()
         }
+    }
+
+    fun addData(newData: List<GoodsData>) {
+        val previousSize = itemCount
+        dataList.addAll(newData)
+        notifyItemRangeInserted(previousSize, itemCount)
     }
 
     private fun getDynamicImageWidth(): Int {
@@ -74,6 +85,7 @@ class BestGoodsRVAdapter(private val ctx: Context, private val dataList: List<Be
         val tvProductName: TextView = itemView.findViewById(R.id.tv_rv_item_best_goods_product_name)
         val tvPrice: TextView = itemView.findViewById(R.id.tv_rv_item_best_goods_product_price)
 
+        val ivStarView: ImageView = itemView.findViewById(R.id.iv_rv_item_best_goods_star)
         val tvStarRate: TextView = itemView.findViewById(R.id.tv_rv_item_best_goods_rate)
         val tvMinQuantity: TextView = itemView.findViewById(R.id.tv_rv_item_best_goods_minimum_quantity)
         val tvReviewCount: TextView = itemView.findViewById(R.id.tv_rv_item_best_goods_review_num)
