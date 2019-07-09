@@ -105,7 +105,7 @@ class ReviewDetailActivity : AppCompatActivity() {
 
     private fun configureReview() {
         Glide.with(this)
-                .load(intent.getStringExtra("userImageUrl"))
+                .load(intent.getStringExtra("user_img"))
                 .centerCrop()
                 .circleCrop()
                 .into(findViewById(R.id.iv_review_detail_review_user_img))
