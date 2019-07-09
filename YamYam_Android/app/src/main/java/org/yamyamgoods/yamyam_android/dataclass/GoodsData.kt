@@ -6,7 +6,7 @@ data class GoodsData (
         val goods_idx: Int,
         val goods_category_idx: Int?,
         val goods_img: String,
-        val store_idx: Int,
+        val store_idx: Int?,
         val store_name: String,
         val goods_name: String,
         val goods_price: String,
