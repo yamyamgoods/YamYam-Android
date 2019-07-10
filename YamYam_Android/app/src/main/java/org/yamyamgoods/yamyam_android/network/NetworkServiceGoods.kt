@@ -96,4 +96,10 @@ interface NetworkServiceGoods {
             @Path("goodsIdx") goodsIdx: Int
     ): Call<DeleteBookmarkResponseData>
 
+    @GET("goods/{goodsIdx}/detail")
+    fun getProductDetailRequest(
+        @Header("Content-Type") contentType: String = "application/json",
+        @Header("Authorization") token: String?,
+        @Path("goodsIdx") goodsIdx: Int
+    ): Call<GetProductDetailResponseData>
 }

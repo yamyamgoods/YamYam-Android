@@ -5,7 +5,7 @@ package org.yamyamgoods.yamyam_android.storedetail
  * on 7월 09, 2019
  */
 
-data class StoreDetailItem(
+data class StoreDetailItem( //애를 GoodsData 쓰는애로 바꾸고 삭제할것
         val goods_idx : Int,
 
         val goods_like_flag: Boolean,

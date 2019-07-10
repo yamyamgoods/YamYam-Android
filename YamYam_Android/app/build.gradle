@@ -13,6 +13,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -70,5 +71,8 @@ dependencies {
 
     //photo zoom-in
     implementation 'com.github.chrisbanes:PhotoView:2.0.0'
+
+    //to solve over single dex file issue
+    implementation 'com.android.support:multidex:1.0.3'
 }
 apply plugin: 'com.google.gms.google-services'
