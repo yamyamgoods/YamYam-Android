@@ -41,7 +41,7 @@ class StoreRankingFragment : Fragment(), StoreRankingContract.View {
     }
 
     override fun setStoreCategory(data: List<StoreCategory>) {
-        categorySpinnerInit()
+        categorySpinnerInit(data)
     }
 
     private fun presenterInit() {
@@ -57,10 +57,19 @@ class StoreRankingFragment : Fragment(), StoreRankingContract.View {
         presenter.getStoreCategory()
     }
 
-    private fun categorySpinnerInit() {
-        //spinner_rv_item_store_ranking_frag.adapter = ArrayAdapter(this,)
+    private fun categorySpinnerInit(data: List<StoreCategory>) {
+        val categories = getCategoryList(data)
+        spinner_rv_item_store_ranking_frag.adapter =
+            ArrayAdapter(activity!!, R.layout.spinner_item_category, R.id.tv_spinner_category, categories)
     }
 
+    private fun getCategoryList(data: List<StoreCategory>): List<String> {
+        val result = ArrayList<String>()
+        for (category in data) {
+            result.add(category.store_category_name)
+        }
+        return result
+    }
 
     private fun viewInit() {
         rv_item_store_ranking_frag_list.apply {
