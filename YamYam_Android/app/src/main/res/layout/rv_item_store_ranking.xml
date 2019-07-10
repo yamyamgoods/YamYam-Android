@@ -1,35 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="12dp"
-    android:layout_marginBottom="12dp">
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="wrap_content"
+                                             android:layout_marginTop="16dp"
+                                             android:layout_marginBottom="16dp">
 
     <TextView
-        android:id="@+id/tv_rv_item_store_ranking_idx"
-        android:layout_width="16dp"
-        android:layout_height="wrap_content"
-        android:text="0"
-        android:textColor="#3C3C3C"
-        android:textSize="14dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            android:id="@+id/tv_rv_item_store_ranking_idx"
+            android:layout_width="18dp"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textColor="#3C3C3C"
+            android:textSize="14dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageView
-        android:id="@+id/iv_rv_item_store_ranking_image"
-        android:layout_width="57dp"
-        android:layout_height="57dp"
-        android:layout_marginStart="2dp"
-        app:layout_constraintStart_toEndOf="@+id/tv_rv_item_store_ranking_idx"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/img_store1" />
+            android:id="@+id/iv_rv_item_store_ranking_image"
+            android:layout_width="57dp"
+            android:layout_height="57dp"
+            app:layout_constraintStart_toEndOf="@+id/tv_rv_item_store_ranking_idx"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/img_store1"/>
 
     <android.support.constraint.ConstraintLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="10dp"
             android:layout_marginEnd="8dp"
             app:layout_constraintBottom_toBottomOf="@+id/iv_rv_item_store_ranking_image"
             app:layout_constraintEnd_toStartOf="@+id/btn_rv_item_store_ranking_like"
@@ -60,11 +59,11 @@
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/btn_rv_item_store_ranking_like"
-        android:layout_width="38dp"
-        android:layout_height="38dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+            android:id="@+id/btn_rv_item_store_ranking_like"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
                 android:id="@+id/iv_rv_item_store_ranking_like"
