@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+              android:layout_height="match_parent" android:orientation="horizontal">
+    <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" tools:layout_editor_absoluteX="396dp" android:layout_weight="1"
+            android:id="@+id/btn_tab_home_act_best">
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" android:gravity="center">
+            <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" app:srcCompat="@drawable/selector_bottom_navi_best_icon"
+                    android:id="@+id/imageView"/>
+            <TextView
+                    android:text="베스트"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/textView36" android:textSize="10dp"
+                    android:textColor="@color/selector_text_color_yellow_gray" android:gravity="center"
+                    android:layout_marginTop="1dp"/>
+        </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
+    <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:layout_weight="1" android:id="@+id/btn_tab_home_act_store">
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" android:gravity="center">
+            <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" app:srcCompat="@drawable/selector_bottom_navi_store_icon"
+                    android:id="@+id/imageView1"/>
+            <TextView
+                    android:text="업체"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/textView361" android:textSize="10dp"
+                    android:textColor="@color/selector_text_color_yellow_gray" android:gravity="center"
+                    android:layout_marginTop="4dp"/>
+        </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
+    <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:layout_weight="1" android:id="@+id/btn_tab_home_act_goods">
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" android:gravity="center">
+            <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" app:srcCompat="@drawable/selector_bottom_navi_goods_icon"
+                    android:id="@+id/imageView2"/>
+            <TextView
+                    android:text="굿즈"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/textView362" android:textSize="10dp"
+                    android:textColor="@color/selector_text_color_yellow_gray" android:gravity="center"
+                    android:layout_marginTop="4dp"/>
+        </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
+    <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" tools:layout_editor_absoluteY="8dp" tools:layout_editor_absoluteX="8dp"
+            android:layout_weight="1" android:id="@+id/btn_tab_home_act_bookmark">
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" android:gravity="center">
+            <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" app:srcCompat="@drawable/selector_bottom_navi_like_icon"
+                    android:id="@+id/imageView3"/>
+            <TextView
+                    android:text="찜"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/textView363" android:textSize="10dp"
+                    android:textColor="@color/selector_text_color_yellow_gray" android:gravity="center"
+                    android:layout_marginTop="4dp"/>
+        </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
+</LinearLayout>

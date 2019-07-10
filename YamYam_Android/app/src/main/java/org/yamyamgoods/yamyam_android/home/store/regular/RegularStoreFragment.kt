@@ -27,7 +27,7 @@ class RegularStoreFragment : Fragment() {
     private fun viewInit() {
         rv_regular_store_frag_list.apply {
             val ctx = activity!!.applicationContext
-            adapter = RegularStoreRVAdapter(ctx, TempData.regularStores())
+            adapter = RegularStoreRVAdapter(ctx, TempData.storeRankings())
             layoutManager = LinearLayoutManager(ctx)
             addItemDecoration(DividerItemDecoration(ctx, DividerItemDecoration.VERTICAL))
         }
