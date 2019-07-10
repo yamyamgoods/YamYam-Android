@@ -30,13 +30,12 @@ class ReviewDetailRVAdapter(private val ctx: Context, private val dataList: List
                     .circleCrop()
                     .into(holder.ivUserImage)
 
-
             holder.tvUserNickName.text = item.user_name
             holder.tvDate.text = item.goods_review_cmt_date
             holder.tvContents.text = item.goods_review_cmt_content
 
             holder.clCommentItem.setOnClickListener{
-                (ctx as ReviewDetailActivity).editTextTag(item.user_name)
+                (ctx as ReviewDetailActivity).editTextTag(item.user_name, item.goods_review_cmt_idx)
             }
         }
     }

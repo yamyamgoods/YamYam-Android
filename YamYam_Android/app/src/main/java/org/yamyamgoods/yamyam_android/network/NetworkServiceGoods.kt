@@ -4,6 +4,7 @@ import org.yamyamgoods.yamyam_android.network.delete.DeleteBookmarkResponseData
 import org.yamyamgoods.yamyam_android.network.get.*
 import org.yamyamgoods.yamyam_android.network.post.PostBookmarkRequestDTO
 import org.yamyamgoods.yamyam_android.network.post.PostBookmarkResponseData
+import org.yamyamgoods.yamyam_android.network.post.PostCommentWriteRequestData
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -128,4 +129,11 @@ interface NetworkServiceGoods {
         @Path("lastIndex") lastIndex: Int
     ): Call<GetReviewResponse>
 
+    // 댓글 작성하기
+    @POST("/goods/review/comment")
+    fun postCommentWriteRequest(
+        @Header("Content-Type") content_type: String,
+        @Header("Authorization") authroization: String?,
+        @Body requestBody: PostCommentWriteRequestData
+    ): Call<PostCommentWriteRequestData>
 }

@@ -36,7 +36,7 @@ import org.yamyamgoods.yamyam_android.network.ApplicationController
 import org.yamyamgoods.yamyam_android.network.NetworkServiceUser
 import org.yamyamgoods.yamyam_android.network.get.*
 import org.yamyamgoods.yamyam_android.network.put.PutMypageEditNicknameRequest
-import org.yamyamgoods.yamyam_android.network.put.PostMypageEditProfileImageRequest
+import org.yamyamgoods.yamyam_android.network.post.PostMypageEditProfileImageRequest
 import org.yamyamgoods.yamyam_android.reviewdetail.ReviewDetailActivity
 import org.yamyamgoods.yamyam_android.reviewwrite.ReviewWriteActivity
 import retrofit2.Call
@@ -202,7 +202,14 @@ class MypageActivity : AppCompatActivity() {
 
     fun setProfileImageDefault() {
         iv_mypage_user_image.setImageResource(R.drawable.img_myprofile)
-        networkService.postMypageEditProfileImageRequest(token, null)
+
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        val photoBody = RequestBody.create(MediaType.parse("image/jpg"), byteArrayOutputStream.toByteArray())
+        var nullImg : MultipartBody.Part = MultipartBody.Part.createFormData(
+            "img",null, photoBody
+        )
+
+        postMypageEditProfileImageRequest(nullImg)
     }
 
     // 최근 본 상품 서버 통신

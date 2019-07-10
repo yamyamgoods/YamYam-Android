@@ -1,4 +1,4 @@
-package org.yamyamgoods.yamyam_android.network.put
+package org.yamyamgoods.yamyam_android.network.post
 
 import okhttp3.MultipartBody
 

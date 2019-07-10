@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.PorterDuff
 import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -66,6 +67,7 @@ class BestReviewRVAdapter(private val ctx: Context, var dataList: List<ReviewDat
                 imageNum = 3
             }
             for (i in 0 until imageNum) {
+                Log.v("현주", item.goods_review_img[i].toString())
                 setVisible(holder.reviewImage[i])
                 Glide.with(ctx)
                         .load(item.goods_review_img[i])
