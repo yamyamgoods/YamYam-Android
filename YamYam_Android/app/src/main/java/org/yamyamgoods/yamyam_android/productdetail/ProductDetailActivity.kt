@@ -46,7 +46,7 @@ import org.yamyamgoods.yamyam_android.productdetail.adapter.ProductDetailImageFr
 import org.yamyamgoods.yamyam_android.productdetail.adapter.ProductDetailReviewRVAdatper
 import org.yamyamgoods.yamyam_android.productdetail.adapter.ProductOptionsRVAdatper
 import org.yamyamgoods.yamyam_android.review.ReviewActivity
-import org.yamyamgoods.yamyam_android.review.all.ReviewAllItem
+import org.yamyamgoods.yamyam_android.dataclass.ReviewData
 import org.yamyamgoods.yamyam_android.reviewwrite.ReviewWriteActivity
 import org.yamyamgoods.yamyam_android.storeweb.StoreWebActivity
 import org.yamyamgoods.yamyam_android.util.dp2px
@@ -385,7 +385,7 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailContract.View {
         }
     }
 
-    private fun reviewZoneInit(dataList: List<ReviewAllItem>) {
+    private fun reviewZoneInit(dataList: List<ReviewData>) {
         rv_product_detail_act_review_list.apply {
             adapter = ProductDetailReviewRVAdatper(this@ProductDetailActivity, dataList)
             layoutManager = LinearLayoutManager(this@ProductDetailActivity)
@@ -396,7 +396,7 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailContract.View {
             btn_product_detail_act_review_more
         ).forEach {
             it.setOnClickListener {
-                startActivity<ReviewActivity>()
+                startActivity<ReviewActivity>("goodsIdx" to goodsIdx)
             }
         }
         btn_product_detail_act_review_write.setOnClickListener {

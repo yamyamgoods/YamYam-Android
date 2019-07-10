@@ -17,12 +17,12 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import org.yamyamgoods.yamyam_android.R
-import org.yamyamgoods.yamyam_android.review.all.ReviewAllItem
+import org.yamyamgoods.yamyam_android.dataclass.ReviewData
 import org.yamyamgoods.yamyam_android.reviewdetail.ReviewBasicDTO
 import org.yamyamgoods.yamyam_android.reviewdetail.ReviewDetailActivity
 import java.lang.Exception
 
-class ReviewAllRVAdapter (private val ctx: Context, private val dataList: List<ReviewAllItem>): RecyclerView.Adapter<ReviewAllRVAdapter.Holder>(){
+class ReviewAllRVAdapter (private val ctx: Context, private val dataList: List<ReviewData>): RecyclerView.Adapter<ReviewAllRVAdapter.Holder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewAllRVAdapter.Holder {
         val view: View = LayoutInflater.from(ctx).inflate(R.layout.rv_item_review_all, parent, false)
 

@@ -1,7 +1,7 @@
 package org.yamyamgoods.yamyam_android.network.get
 
 import org.yamyamgoods.yamyam_android.dataclass.StoreDetail
-import org.yamyamgoods.yamyam_android.review.all.ReviewAllItem
+import org.yamyamgoods.yamyam_android.dataclass.ReviewData
 
 /**
  * Created By Yun Hyeok
@@ -16,7 +16,7 @@ data class GetProductDetailResponseData(
 data class ProductDetailData(
     val goods: GoodsDetail,
     val store: StoreDetail,
-    val reviews: List<ReviewAllItem>
+    val reviews: List<ReviewData>
 )
 
 data class GoodsDetail(

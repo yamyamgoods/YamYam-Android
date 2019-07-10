@@ -20,6 +20,16 @@ import org.yamyamgoods.yamyam_android.search.SearchActivity
 import org.yamyamgoods.yamyam_android.search.SearchResultActivity
 
 class BestTabFragment : Fragment() {
+//
+//    companion object {
+//        val instance: BestTabFragment? = null
+//
+//        @JvmStatic
+//        fun getInstance(): BestTabFragment{
+//            return instance ?:
+//        }
+//    }
+
     lateinit var inflater: LayoutInflater
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         this.inflater = inflater
@@ -34,14 +44,15 @@ class BestTabFragment : Fragment() {
 
     }
 
-    private fun setOnClickListener(){
+    private fun setOnClickListener() {
         this.btn_best_tab_frag_search.setOnClickListener {
             startActivity<SearchResultActivity>()
         }
     }
-    fun openMypage(){
-        btn_best_tab_frag_mypage.setOnClickListener{
-            val intent= Intent(ctx, MypageActivity::class.java)
+
+    fun openMypage() {
+        btn_best_tab_frag_mypage.setOnClickListener {
+            val intent = Intent(ctx, MypageActivity::class.java)
             this.startActivity(intent)
         }
     }
@@ -50,19 +61,21 @@ class BestTabFragment : Fragment() {
 
         //Best Tab
         view.vp_best_tab_frag_vp.adapter = BestTabFragmentStatePagerAdapter(childFragmentManager, 2)
-        view. vp_best_tab_frag_vp.offscreenPageLimit = 2
+        view.vp_best_tab_frag_vp.offscreenPageLimit = 2
         view.tl_best_tab_frag_tab.setupWithViewPager(vp_best_tab_frag_vp)
 
-        val navBestLayout : View = inflater.inflate(R.layout.tab_best_fragment, null, false)
+        val navBestLayout: View = inflater.inflate(R.layout.tab_best_fragment, null, false)
         view.tl_best_tab_frag_tab.getTabAt(0)!!.customView = navBestLayout.findViewById(R.id.btn_best_tab_best_goods)
         view.tl_best_tab_frag_tab.getTabAt(1)!!.customView = navBestLayout.findViewById(R.id.btn_best_tab_best_review)
-        view.tl_best_tab_frag_tab.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
+        view.tl_best_tab_frag_tab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabReselected(tab: TabLayout.Tab?) {
                 selectedBestTab(position = tab!!.position)
             }
+
             override fun onTabUnselected(tab: TabLayout.Tab?) {
                 selectedBestTab(position = tab!!.position)
             }
+
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 selectedBestTab(position = tab!!.position)
             }
