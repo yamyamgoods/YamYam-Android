@@ -36,9 +36,9 @@ class MypageProductRVAdapter(private val ctx: Context, var dataList: ArrayList<R
                     .apply(options)
                     .into(holder.ivImage)
 
-            if (item.scrap_flag == 0)
+            if (item.scrap_flag == 0)   //읽음
                 holder.ivBookmark.isSelected = false
-            if (item.scrap_flag == 1)
+            if (item.scrap_flag == 1)   //읽지 않음
                 holder.ivBookmark.isSelected = true
 
             holder.ivBookmark.setOnClickListener {
