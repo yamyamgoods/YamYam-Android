@@ -96,4 +96,11 @@ interface NetworkServiceGoods {
             @Path("goodsIdx") goodsIdx: Int
     ): Call<DeleteBookmarkResponseData>
 
+    //리뷰 상세보기
+    @GET("/goods/review/{reviewIdx}/detail")
+    fun getReviewDetailResponse(
+        @Header("Content-Type") content_type: String,
+        @Header("Authorization") authorization: String,
+        @Path("reviewIdx") reviewIdx:Int
+    ): Call<GetReviewDetailResponse>
 }

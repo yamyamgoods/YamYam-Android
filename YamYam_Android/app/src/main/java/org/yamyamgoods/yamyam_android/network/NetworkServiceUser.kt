@@ -3,10 +3,7 @@ package org.yamyamgoods.yamyam_android.network
 import com.google.gson.JsonObject
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import org.yamyamgoods.yamyam_android.network.get.GetAlarmListResponse
-import org.yamyamgoods.yamyam_android.network.get.GetUserInfoResponse
-import org.yamyamgoods.yamyam_android.network.get.GetJWTtokenExpiredResponse
-import org.yamyamgoods.yamyam_android.network.get.GetMypageRecentlyViewedProductsResponse
+import org.yamyamgoods.yamyam_android.network.get.*
 import org.yamyamgoods.yamyam_android.network.post.PostKakaoLoginResponse
 import org.yamyamgoods.yamyam_android.network.put.PutMypageEditNicknameRequest
 import org.yamyamgoods.yamyam_android.network.put.PutMypageEditProfileImageRequest
@@ -69,4 +66,13 @@ interface NetworkServiceUser {
             @Header("Authorization") authorization: String,
             @Path("lastIndex") flag: Int
     ): Call<GetAlarmListResponse>
+
+    // 알람 목록에서 리뷰 상세보기
+    @GET("/user/alarm/{alarmIdx}/review/{reviewIdx}")
+    fun getAlarmReviewDetail(
+        @Header("Content-Type") content_type: String,
+        @Header("Authorization") authorization: String,
+        @Path("alarmIdx") alarmIdx: Int,
+        @Path("reviewIdx") reviewIdx: Int
+    ): Call<GetReviewDetailResponse>
 }
