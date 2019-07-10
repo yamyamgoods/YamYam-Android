@@ -9,10 +9,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import org.yamyamgoods.yamyam_android.R
-import org.yamyamgoods.yamyam_android.home.goods.data.GoodsCategoryDetailData
+import org.yamyamgoods.yamyam_android.dataclass.GoodsData
 
-class GoodsCategoryDetailRecyclerViewAdapter (val ctx: Context, val dataList: ArrayList<GoodsCategoryDetailData>): RecyclerView.Adapter<GoodsCategoryDetailRecyclerViewAdapter.Holder>() {
-    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): GoodsCategoryDetailRecyclerViewAdapter.Holder {
+class GoodsCategoryDetailRecyclerViewAdapter (val ctx: Context, var dataList: ArrayList<GoodsData>): RecyclerView.Adapter<GoodsCategoryDetailRecyclerViewAdapter.Holder>() {
+    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): Holder {
         val view: View = LayoutInflater.from(ctx).inflate(R.layout.rv_item_goods_category, p0, false)
         return Holder(view)
     }
@@ -22,16 +22,17 @@ class GoodsCategoryDetailRecyclerViewAdapter (val ctx: Context, val dataList: Ar
     override fun onBindViewHolder(holder: Holder, position: Int) {
 
         Glide.with(ctx)
-                .load(dataList[position].p_img)
+                .load(dataList[position].goods_img)
                 .into(holder.image)
-        holder.store.text = dataList[position].p_store
-        holder.name.text = dataList[position].p_name
-        holder.price.text = dataList[position].p_price
-        val rate: String = String.format("%.1f",dataList[position].p_rate)
+        holder.store.text = dataList[position].store_name
+        holder.name.text = dataList[position].goods_name
+        holder.price.text = dataList[position].goods_price
+        val rate: String = String.format("%.1f",dataList[position].goods_rating)
         holder.rate.text = rate
-        val minQuantity: String = String.format("%d",dataList[position].p_minQuantity)
-        holder.minQuantity.text = minQuantity
-        val reviewNum: String = String.format("%d",dataList[position].p_reviewNum)
+        //val minQuantity: String = String.format("%d",dataList[position].goods_minimum_amount)
+        //holder.minQuantity.text = minQuantity
+        holder.minQuantity.text = dataList[position].goods_minimum_amount
+        val reviewNum: String = String.format("%d",dataList[position].goods_review_cnt)
         holder.reviewCount.text = reviewNum
     }
 

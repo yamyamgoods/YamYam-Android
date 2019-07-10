@@ -13,7 +13,6 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.dataclass.GoodsData
-import org.yamyamgoods.yamyam_android.home.goods.data.GoodsExhibitionDetailData
 
 
 class GoodsExhibitionDetailRecyclerViewAdapter(val ctx: Context, var dataList: ArrayList<GoodsData>): RecyclerView.Adapter<GoodsExhibitionDetailRecyclerViewAdapter.Holder>(){

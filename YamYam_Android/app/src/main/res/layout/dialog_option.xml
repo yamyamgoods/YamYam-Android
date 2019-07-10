@@ -6,14 +6,13 @@
         android:layout_width="match_parent"
         android:layout_height="300dp"
         tools:context=".home.goods.OptionDialog"
-        android:layout_marginHorizontal="16dp"
         android:background="@drawable/border_dialog">
     <ImageView
             android:id="@+id/btn_dialog_option_close"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/path_close"
-            android:layout_marginTop="22dp"
+            android:layout_marginTop="27dp"
             android:layout_marginLeft="20dp"/>
     <LinearLayout
             android:id="@+id/ll_dialog_option_top"
@@ -21,7 +20,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="22dp">
+            android:layout_marginTop="22dp"
+            android:layout_marginRight="15dp">
         <TextView
                 android:id="@+id/btn_dialog_option_price"
                 android:layout_width="wrap_content"
@@ -94,17 +94,19 @@
         <com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
                 android:id="@+id/range_seekbar"
                 android:layout_width="match_parent"
-                android:layout_marginHorizontal="50dp"
+                android:layout_marginHorizontal="20dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="50dp"
                 app:bar_highlight_color="@color/MainYellow"
+                app:right_thumb_image="@drawable/icon_range_unselected"
+                app:left_thumb_image="@drawable/icon_range_unselected"
+                app:right_thumb_image_pressed="@drawable/icon_range_selected"
+                app:left_thumb_image_pressed="@drawable/icon_range_selected"
                 app:corner_radius="10"
-                app:min_value="0"
-                app:max_value="1000"
                 app:bar_color="#bcbcbc"
                 app:data_type="_integer"
-                app:steps="100"/>
+                app:steps="500"/>
     </RelativeLayout>
     <RelativeLayout
             android:id="@+id/rl_dialog_option_min_amount"
@@ -139,19 +141,217 @@
                     android:layout_centerVertical="true"/>
         </RelativeLayout>
     </RelativeLayout>
-    <ScrollView
+    <RelativeLayout
             android:id="@+id/rl_dialog_option_variety"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/ll_dialog_option_top"
             android:layout_above="@id/btn_dialog_option_confirm"
-            android:visibility="visible">
-        <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_dialog_option_variety"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-        </android.support.v7.widget.RecyclerView>
-    </ScrollView>
+            android:visibility="visible"
+            android:paddingHorizontal="16dp">
+        <RelativeLayout
+                android:id="@+id/btn_dialog_option_variety1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_round_rect_gray_17dp"
+                android:layout_margin="4dp"
+                android:visibility="invisible">
+            <TextView
+                    android:id="@+id/tv_dialog_option_variety1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="정음스티커"
+                    android:textColor="@color/darkgray"
+                    android:textSize="14dp"
+                    android:layout_marginHorizontal="11dp"
+                    android:layout_marginVertical="7dp"/>
+        </RelativeLayout>
+        <RelativeLayout
+                android:id="@+id/btn_dialog_option_variety2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_round_rect_gray_17dp"
+                android:layout_toRightOf="@id/btn_dialog_option_variety1"
+                android:layout_margin="4dp"
+                android:visibility="invisible">
+            <TextView
+                    android:id="@+id/tv_dialog_option_variety2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="정음스티커"
+                    android:textColor="@color/darkgray"
+                    android:textSize="14dp"
+                    android:layout_marginHorizontal="11dp"
+                    android:layout_marginVertical="7dp"/>
+        </RelativeLayout>
+        <RelativeLayout
+                android:id="@+id/btn_dialog_option_variety3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_round_rect_gray_17dp"
+                android:layout_toRightOf="@id/btn_dialog_option_variety2"
+                android:layout_margin="4dp"
+                android:visibility="invisible">
+            <TextView
+                    android:id="@+id/tv_dialog_option_variety3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="정음스티커"
+                    android:textColor="@color/darkgray"
+                    android:textSize="14dp"
+                    android:layout_marginHorizontal="11dp"
+                    android:layout_marginVertical="7dp"/>
+        </RelativeLayout>
+        <RelativeLayout
+                android:id="@+id/btn_dialog_option_variety4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_round_rect_gray_17dp"
+                android:layout_below="@id/btn_dialog_option_variety1"
+                android:layout_margin="4dp"
+                android:visibility="invisible">
+            <TextView
+                    android:id="@+id/tv_dialog_option_variety4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="정음스티커"
+                    android:textColor="@color/darkgray"
+                    android:textSize="14dp"
+                    android:layout_marginHorizontal="11dp"
+                    android:layout_marginVertical="7dp"/>
+        </RelativeLayout>
+        <RelativeLayout
+                android:id="@+id/btn_dialog_option_variety5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_round_rect_gray_17dp"
+                android:layout_below="@id/btn_dialog_option_variety1"
+                android:layout_toRightOf="@id/btn_dialog_option_variety4"
+                android:layout_margin="4dp"
+                android:visibility="invisible">
+            <TextView
+                    android:id="@+id/tv_dialog_option_variety5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="정음스티커"
+                    android:textColor="@color/darkgray"
+                    android:textSize="14dp"
+                    android:layout_marginHorizontal="11dp"
+                    android:layout_marginVertical="7dp"/>
+        </RelativeLayout>
+        <RelativeLayout
+                android:id="@+id/btn_dialog_option_variety6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_round_rect_gray_17dp"
+                android:layout_below="@id/btn_dialog_option_variety1"
+                android:layout_toRightOf="@id/btn_dialog_option_variety5"
+                android:layout_margin="4dp"
+                android:visibility="invisible">
+            <TextView
+                    android:id="@+id/tv_dialog_option_variety6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="정음스티커"
+                    android:textColor="@color/darkgray"
+                    android:textSize="14dp"
+                    android:layout_marginHorizontal="11dp"
+                    android:layout_marginVertical="7dp"/>
+        </RelativeLayout>
+        <RelativeLayout
+                android:id="@+id/btn_dialog_option_variety7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_round_rect_gray_17dp"
+                android:layout_below="@id/btn_dialog_option_variety4"
+                android:layout_margin="4dp"
+                android:visibility="invisible">
+            <TextView
+                    android:id="@+id/tv_dialog_option_variety7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="정음스티커"
+                    android:textColor="@color/darkgray"
+                    android:textSize="14dp"
+                    android:layout_marginHorizontal="11dp"
+                    android:layout_marginVertical="7dp"/>
+        </RelativeLayout>
+        <RelativeLayout
+                android:id="@+id/btn_dialog_option_variety8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_round_rect_gray_17dp"
+                android:layout_below="@id/btn_dialog_option_variety4"
+                android:layout_toRightOf="@id/btn_dialog_option_variety7"
+                android:layout_margin="4dp"
+                android:visibility="invisible">
+            <TextView
+                    android:id="@+id/tv_dialog_option_variety8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="정음스티커"
+                    android:textColor="@color/darkgray"
+                    android:textSize="14dp"
+                    android:layout_marginHorizontal="11dp"
+                    android:layout_marginVertical="7dp"/>
+        </RelativeLayout>
+        <RelativeLayout
+                android:id="@+id/btn_dialog_option_variety9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_round_rect_gray_17dp"
+                android:layout_below="@id/btn_dialog_option_variety4"
+                android:layout_toRightOf="@id/btn_dialog_option_variety8"
+                android:layout_margin="4dp"
+                android:visibility="invisible">
+            <TextView
+                    android:id="@+id/tv_dialog_option_variety9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="정음스티커"
+                    android:textColor="@color/darkgray"
+                    android:textSize="14dp"
+                    android:layout_marginHorizontal="11dp"
+                    android:layout_marginVertical="7dp"/>
+        </RelativeLayout>
+        <RelativeLayout
+                android:id="@+id/btn_dialog_option_variety10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_round_rect_gray_17dp"
+                android:layout_below="@id/btn_dialog_option_variety7"
+                android:layout_margin="4dp"
+                android:visibility="invisible">
+            <TextView
+                    android:id="@+id/tv_dialog_option_variety10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="정음스티커"
+                    android:textColor="@color/darkgray"
+                    android:textSize="14dp"
+                    android:layout_marginHorizontal="11dp"
+                    android:layout_marginVertical="7dp"/>
+        </RelativeLayout>
+        <RelativeLayout
+                android:id="@+id/btn_dialog_option_variety11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_round_rect_gray_17dp"
+                android:layout_below="@id/btn_dialog_option_variety7"
+                android:layout_toRightOf="@id/btn_dialog_option_variety10"
+                android:layout_margin="4dp"
+                android:visibility="invisible">
+            <TextView
+                    android:id="@+id/tv_dialog_option_variety11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="정음스티커"
+                    android:textColor="@color/darkgray"
+                    android:textSize="14dp"
+                    android:layout_marginHorizontal="11dp"
+                    android:layout_marginVertical="7dp"/>
+        </RelativeLayout>
+    </RelativeLayout>
     <RelativeLayout
             android:id="@+id/btn_dialog_option_confirm"
             android:layout_width="match_parent"

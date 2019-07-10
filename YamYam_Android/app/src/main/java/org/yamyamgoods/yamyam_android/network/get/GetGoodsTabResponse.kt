@@ -1,6 +1,5 @@
 package org.yamyamgoods.yamyam_android.network.get
 
-import org.yamyamgoods.yamyam_android.home.goods.data.GoodsExhibitionData
 
 data class GetGoodsTabResponse(
         val status: Int,

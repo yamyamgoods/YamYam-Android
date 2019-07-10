@@ -13,16 +13,17 @@ import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.fragment_goods.*
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.home.goods.adapter.GoodsCategoryRecyclerViewAdapter
-import org.yamyamgoods.yamyam_android.home.goods.data.GoodsCategoryData
 import org.yamyamgoods.yamyam_android.home.HomeActivity
 import org.yamyamgoods.yamyam_android.network.ApplicationController
 import org.yamyamgoods.yamyam_android.network.get.GetGoodsTabResponse
+import org.yamyamgoods.yamyam_android.network.get.GoodsCategoryData
+import org.yamyamgoods.yamyam_android.util.User
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class GoodsTabFragment : Fragment(){
-    var dataList: ArrayList<org.yamyamgoods.yamyam_android.network.get.GoodsCategoryData> = ArrayList()
+    var dataList: ArrayList<GoodsCategoryData> = ArrayList()
     lateinit var goodsCategoryRecyclerViewAdapter: GoodsCategoryRecyclerViewAdapter
     val networkServiceGoods = ApplicationController.networkServiceGoods
 
@@ -45,7 +46,7 @@ class GoodsTabFragment : Fragment(){
     }
 
     private fun goodsTabResponse(){
-        val getGoodsTabResponse = networkServiceGoods.getGoodsTabResponse("application/json", org.yamyamgoods.yamyam_android.util.User.authorization)
+        val getGoodsTabResponse = networkServiceGoods.getGoodsTabResponse("application/json", User.authorization)
         getGoodsTabResponse.enqueue(object: Callback<GetGoodsTabResponse> {
             override fun onFailure(call: Call<GetGoodsTabResponse>, t:Throwable) {
                 Log.e("GoodsTab-Category fail", t.toString())

@@ -34,17 +34,17 @@ interface NetworkServiceGoods {
     ): Call<GetExhibitionDetailResponse>
 
     //카테고리에 따른 굿즈 모두보기
-    @GET("/goods/category/{goodsCategoryIdx}/{order}/{lastIdx}")
+    @GET("/goods/category/{goodsCategoryIdx}/{order}/{lastIndex}")
     fun getCategoryDetailResponse(
             @Header("Content-Type") content_type: String,
-            @Header("authorization") token: String,
+            @Header("Authorization") token: String?,
             @Path("goodsCategoryIdx") goodsCategoryIdx: Int,
             @Path("order") order: Int,
             @Path("lastIndex") lastIndex: Int,
-            @Query("priceStart") priceStart: Int,
-            @Query("priceEnd") priceEnd: Int,
-            @Query("minAmount") minAmount: Int,
-            @Query("options") options: List<Int>
+            @Query("priceStart") priceStart: Int?,
+            @Query("priceEnd") priceEnd: Int?,
+            @Query("minAmount") minAmount: Int?,
+            @Query("options") options: List<Int>?
     ): Call<GetCategoryDetailResponse>
 
     //가격 범위 보기

@@ -15,7 +15,6 @@ import com.bumptech.glide.request.RequestOptions
 import org.jetbrains.anko.startActivity
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.home.goods.GoodsExhibitionDetailActivity
-import org.yamyamgoods.yamyam_android.home.goods.data.GoodsExhibitionData
 import org.yamyamgoods.yamyam_android.network.get.ExhibitionData
 
 class GoodsExhibitionRecyclerViewAdapter(val dataList: ArrayList<ExhibitionData>):RecyclerView.Adapter<GoodsExhibitionRecyclerViewAdapter.Holder>() {

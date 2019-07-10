@@ -19,7 +19,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="#가격"
+                android:text="#가격 범위"
                 android:textSize="13dp"
                 android:layout_marginVertical="4dp"
                 android:layout_marginHorizontal="10dp"/>
@@ -83,15 +83,15 @@
         </LinearLayout>
     </RelativeLayout>
     <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/option"
-        android:background="#eff0f2">
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_frag_goods_category_detail"
+            android:id="@+id/nsv_goods_category_detail_frag"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
+            android:layout_height="match_parent"
+            android:layout_below="@id/option"
+            android:background="#eff0f2">
+        <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_frag_goods_category_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
         </android.support.v7.widget.RecyclerView>
     </android.support.v4.widget.NestedScrollView>
 

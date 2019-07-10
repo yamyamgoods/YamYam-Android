@@ -2,11 +2,9 @@ package org.yamyamgoods.yamyam_android
 
 import android.app.Dialog
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import kotlinx.android.synthetic.main.dialog_sort.*
-import org.yamyamgoods.yamyam_android.home.HomeActivity
 import org.yamyamgoods.yamyam_android.home.goods.GoodsCategoryDetailFragment
 
 class SortDialog(context:Context) : Dialog(context), View.OnClickListener {

@@ -15,7 +15,6 @@ import kotlinx.android.synthetic.main.activity_goods_exhibition_detail.*
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.dataclass.GoodsData
 import org.yamyamgoods.yamyam_android.home.goods.adapter.GoodsExhibitionDetailRecyclerViewAdapter
-import org.yamyamgoods.yamyam_android.home.goods.data.GoodsExhibitionDetailData
 import org.yamyamgoods.yamyam_android.network.ApplicationController
 import org.yamyamgoods.yamyam_android.network.get.GetExhibitionDetailResponse
 import org.yamyamgoods.yamyam_android.util.User
@@ -44,6 +43,13 @@ class GoodsExhibitionDetailActivity : AppCompatActivity() {
         subtitle = intent.getStringExtra("subtitle")
         background_img = intent.getStringExtra("gradation_img")
         setExhibitionTitle()
+        setOnScrollChange()
+        setRecyclerView()
+        goodsExhibitionDetailResponse(e_idx)
+        setStatusBarTransparent()
+    }
+
+    private fun setOnScrollChange(){
         if(Build.VERSION.SDK_INT >=23){
             nsv_goods_exhibition_detail_act.setOnScrollChangeListener(object: View.OnScrollChangeListener{
                 override fun onScrollChange(v: View?, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int) {
@@ -54,11 +60,7 @@ class GoodsExhibitionDetailActivity : AppCompatActivity() {
                 }
             })
         }
-        setRecyclerView()
-        goodsExhibitionDetailResponse(e_idx)
-        setStatusBarTransparent()
     }
-
 
     private fun setStatusBarTransparent() {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
@@ -103,7 +105,7 @@ class GoodsExhibitionDetailActivity : AppCompatActivity() {
     }
 
     private fun goodsExhibitionDetailResponse(exhibition_idx:Int){
-        val getExhibitionDetailResponse = networkServiceGoods.getExhibitionDetailResponse("application/json",User.authorization,1,lastIndex)
+        val getExhibitionDetailResponse = networkServiceGoods.getExhibitionDetailResponse("application/json",User.authorization,exhibition_idx,lastIndex)
         getExhibitionDetailResponse.enqueue(object: Callback<GetExhibitionDetailResponse>{
             override fun onFailure(call: Call<GetExhibitionDetailResponse>, t: Throwable) {
                 Log.e("ExhibitionDetail Fail", t.toString())

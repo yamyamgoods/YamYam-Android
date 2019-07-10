@@ -14,8 +14,6 @@ import kotlinx.android.synthetic.main.fragment_goods_exhibition.*
 
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.home.goods.adapter.GoodsExhibitionRecyclerViewAdapter
-import org.yamyamgoods.yamyam_android.home.goods.data.GoodsExhibitionData
-import org.yamyamgoods.yamyam_android.home.goods.data.GoodsExhibitionDetailData
 import org.yamyamgoods.yamyam_android.network.ApplicationController
 import org.yamyamgoods.yamyam_android.network.get.ExhibitionData
 import org.yamyamgoods.yamyam_android.network.get.GetGoodsTabResponse
@@ -37,8 +35,6 @@ class GoodsExhibitionFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        //setRecyclerView()
-        //getGoodsExhibitionResponse()
     }
 
     private fun setRecyclerView(){

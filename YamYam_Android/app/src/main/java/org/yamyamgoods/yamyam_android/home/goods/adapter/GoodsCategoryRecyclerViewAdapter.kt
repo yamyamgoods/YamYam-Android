@@ -25,7 +25,6 @@ class GoodsCategoryRecyclerViewAdapter (val ctx: Context, val dataList: ArrayLis
     override fun getItemCount(): Int = dataList.size
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        var intent = Intent(ctx, GoodsCategoryDetailFragment::class.java)
 
         holder.category_name.text = dataList[position].goods_category_name
 

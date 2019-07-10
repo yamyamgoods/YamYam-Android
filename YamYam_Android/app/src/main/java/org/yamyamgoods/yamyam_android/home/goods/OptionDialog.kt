@@ -5,13 +5,14 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener
-import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarFinalValueListener
+import android.widget.RelativeLayout
+import android.widget.TextView
 import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
 import kotlinx.android.synthetic.main.dialog_option.*
 import org.yamyamgoods.yamyam_android.R
-import org.yamyamgoods.yamyam_android.home.goods.adapter.GoodsCategoryOptionRecyclerViewAdapter
 import org.yamyamgoods.yamyam_android.network.ApplicationController
+import org.yamyamgoods.yamyam_android.network.get.CategoryOptionData
+import org.yamyamgoods.yamyam_android.network.get.GetGoodsCategoryOptionsResponse
 import org.yamyamgoods.yamyam_android.network.get.GetPriceRangeResponse
 import retrofit2.Call
 import retrofit2.Callback
@@ -19,14 +20,12 @@ import retrofit2.Response
 
 class OptionDialog(context:Context) : Dialog(context), View.OnClickListener {
 
-    lateinit var goodsCategoryOptionRecyclerViewAdapter: GoodsCategoryOptionRecyclerViewAdapter
-    lateinit var getPriceRangeResponse: GetPriceRangeResponse
     var c_idx: Int = -1
-    //var dataList: ArrayList<GoodsCategoryOptionData> = ArrayList()
+    var dataList: ArrayList<CategoryOptionData> = ArrayList()
     val networkServiceGoods = ApplicationController.networkServiceGoods
-    val choiceflag:Int = -1
-    lateinit var min: String
-    lateinit var max: String
+    var min: String = "10000"
+    var max: String = "30000"
+
     override fun onClick(v: View?) {
         try{
             dismiss()
@@ -38,27 +37,28 @@ class OptionDialog(context:Context) : Dialog(context), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dialog_option)
         c_idx = GoodsCategoryDetailFragment.instance.categoryIdx
+        setView(0)
+
         priceRangeResponse(c_idx)
+        goodsCategoryOptionsResponse(c_idx)
+        setRangeSeekbar()
         setOnClickListener()
+
     }
 
     private fun setRangeSeekbar() {
         val rangeSeekBar: CrystalRangeSeekbar = findViewById(R.id.range_seekbar)
-        val minv: Float = min.toFloat()
-        val maxv: Float = max.toFloat()
-        rangeSeekBar.setMinStartValue(minv)
-        rangeSeekBar.setMaxStartValue(maxv)
+        min = min.replace(",0","0")
+        val minv: Float = Integer.parseInt(min).toFloat()
+        max = max.replace(",0","0")
+        val maxv: Float = Integer.parseInt(max).toFloat()
+        rangeSeekBar.setMinValue(minv)
+        rangeSeekBar.setMaxValue(maxv)
 
-        rangeSeekBar.setOnRangeSeekbarChangeListener (object :OnRangeSeekbarFinalValueListener,OnRangeSeekbarChangeListener{
-            override fun finalValue(minValue: Number?, maxValue: Number?) {
-                tv_dialog_option_price_min.text = min
-                tv_dialog_option_price_max.text = max
-            }
-
-            override fun valueChanged(minValue: Number?, maxValue: Number?) {
-            }
-
-        })
+        rangeSeekBar.setOnRangeSeekbarChangeListener { minValue, maxValue ->
+            tv_dialog_option_price_min.text = minValue.toString()
+            tv_dialog_option_price_max.text = maxValue.toString()
+        }
     }
 
     private fun setOnClickListener(){
@@ -107,30 +107,72 @@ class OptionDialog(context:Context) : Dialog(context), View.OnClickListener {
         }
     }
 
-//    private fun optionDialogVarietyResponse(category_idx:Int){
-//        val optionDialogResponse = networkServiceGoods.getOptionDialog
-//    }
-
     private fun priceRangeResponse(category_idx:Int){
-        val getPriceRangeResponse = networkServiceGoods.getPriceRangeResponse("application/json",1,null)
+        val getPriceRangeResponse = networkServiceGoods.getPriceRangeResponse("application/json",category_idx,null)
         getPriceRangeResponse.enqueue(object: Callback<GetPriceRangeResponse>{
             override fun onFailure(call: Call<GetPriceRangeResponse>, t: Throwable) {
                 Log.e("OptionPriceRange fail", t.toString())
             }
             override fun onResponse(call: Call<GetPriceRangeResponse>, response: Response<GetPriceRangeResponse>) {
                 if(response.isSuccessful){
+
                     min = response.body()!!.data.price_start
                     max = response.body()!!.data.price_end
+                    Log.e("OptionPrice Success", "성고옹$min$max")
                     setRangeSeekbar()
                 }
             }
         })
     }
 
-//    private fun setRecyclerView(){
-//        goodsCategoryOptionRecyclerViewAdapter = GoodsCategoryOptionRecyclerViewAdapter(context, dataList)
-//        rv_dialog_option_variety.adapter = goodsCategoryOptionRecyclerViewAdapter
-//        rv_dialog_option_variety.layoutManager = GridLayoutManager(context, 3)
-//    }
+    private fun goodsCategoryOptionsResponse(category_idx:Int){
+        val getGoodsCategoryOptionsResponse = networkServiceGoods.getGoodsCategoryOptionsResponse("application/json",category_idx)
+        getGoodsCategoryOptionsResponse.enqueue(object: Callback<GetGoodsCategoryOptionsResponse>{
+            override fun onFailure(call: Call<GetGoodsCategoryOptionsResponse>, t: Throwable) {
+                Log.e("CategoryOptions fail", t.toString())
+            }
+            override fun onResponse(call: Call<GetGoodsCategoryOptionsResponse>, response: Response<GetGoodsCategoryOptionsResponse>) {
+                if(response.isSuccessful){
+                    dataList = response.body()!!.data
 
+                    Log.e("CategoryOptions Success","성고옹")
+                    setVarieties()
+                }
+            }
+        })
+    }
+
+    private fun setVarieties(){
+
+        val variety = ArrayList<TextView>()
+        variety.add(tv_dialog_option_variety1)
+        variety.add(tv_dialog_option_variety2)
+        variety.add(tv_dialog_option_variety3)
+        variety.add(tv_dialog_option_variety4)
+        variety.add(tv_dialog_option_variety5)
+        variety.add(tv_dialog_option_variety6)
+        variety.add(tv_dialog_option_variety7)
+        variety.add(tv_dialog_option_variety8)
+        variety.add(tv_dialog_option_variety9)
+        variety.add(tv_dialog_option_variety10)
+        variety.add(tv_dialog_option_variety11)
+
+        val rl_variety = ArrayList<RelativeLayout>()
+        rl_variety.add(btn_dialog_option_variety1)
+        rl_variety.add(btn_dialog_option_variety2)
+        rl_variety.add(btn_dialog_option_variety3)
+        rl_variety.add(btn_dialog_option_variety4)
+        rl_variety.add(btn_dialog_option_variety5)
+        rl_variety.add(btn_dialog_option_variety6)
+        rl_variety.add(btn_dialog_option_variety7)
+        rl_variety.add(btn_dialog_option_variety8)
+        rl_variety.add(btn_dialog_option_variety9)
+        rl_variety.add(btn_dialog_option_variety10)
+        rl_variety.add(btn_dialog_option_variety11)
+
+        for(i in 0 until dataList.size){
+            rl_variety[i].visibility = View.VISIBLE
+            variety[i].text = dataList[i].category_option_name
+        }
+    }
 }
