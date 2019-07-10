@@ -37,7 +37,6 @@ class SortDialog(context:Context) : Dialog(context), View.OnClickListener {
             iv_dialog_sort_popular.setImageDrawable(context.resources.getDrawable(R.drawable.icon_checkkky))
             iv_dialog_sort_price_high.setImageDrawable(context.resources.getDrawable(R.drawable.icon_checkkk))
             iv_dialog_sort_price_low.setImageDrawable(context.resources.getDrawable(R.drawable.icon_checkkk))
-            tv_dialog_sort_popular.text = "아진짜조같네"
             sort_flag="인기순"
         } else if(sort=="고가순") {
             tv_dialog_sort_popular.setTextColor(context.resources.getColor(R.color.darkgray))
@@ -90,7 +89,7 @@ class SortDialog(context:Context) : Dialog(context), View.OnClickListener {
             sort_flag="저가순"
         }
 
-        btn_dialog_sort_save.setOnClickListener {
+        btn_dialog_sort_confirm.setOnClickListener {
             GoodsCategoryDetailFragment.instance.sort_flag = sort_flag
             dismiss()
         }

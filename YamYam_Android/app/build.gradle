@@ -70,5 +70,8 @@ dependencies {
 
     //photo zoom-in
     implementation 'com.github.chrisbanes:PhotoView:2.0.0'
+
+    //range seekbar
+    implementation 'com.crystal:crystalrangeseekbar:1.1.3'
 }
 apply plugin: 'com.google.gms.google-services'

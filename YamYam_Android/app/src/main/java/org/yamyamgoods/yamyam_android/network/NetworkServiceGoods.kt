@@ -51,8 +51,8 @@ interface NetworkServiceGoods {
     @GET("/goods/category/{goodsCategoryIdx}/priceRange")
     fun getPriceRangeResponse(
             @Header("Content-Type") content_type: String,
-            @Path("goodsCategoryIdX") goodsCategoryIdx: Int,
-            @Query("minAmount") minAmount: Int
+            @Path("goodsCategoryIdx") goodsCategoryIdx: Int,
+            @Query("minAmount") minAmount: Int?
     ): Call<GetPriceRangeResponse>
 
     //굿즈 카테고리 하위 옵션 보기

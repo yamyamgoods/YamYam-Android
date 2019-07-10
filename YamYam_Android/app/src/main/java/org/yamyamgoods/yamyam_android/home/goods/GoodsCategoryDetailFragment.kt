@@ -16,6 +16,7 @@ import org.yamyamgoods.yamyam_android.home.HomeActivity
 class GoodsCategoryDetailFragment : Fragment() {
 
     var sort:String? = null
+    var categoryIdx:Int = -1
     var sort_flag: String? = null
     companion object {
         var instance : GoodsCategoryDetailFragment = GoodsCategoryDetailFragment()
@@ -35,13 +36,23 @@ class GoodsCategoryDetailFragment : Fragment() {
         btn_frag_goods_category_detail_sort.setOnClickListener {
             try{
                 instance.sort = sort
-                successfulDialog()
+                setSortDialog()
             } catch(e:Exception){
             }
         }
+        btn_frag_goods_category_detail_price.setOnClickListener {
+            categoryIdx = instance.categoryIdx
+            setOptionDialog()
+        }
+        btn_frag_goods_category_detail_minQuantity.setOnClickListener {
+            setOptionDialog()
+        }
+        btn_frag_goods_category_detail_variety.setOnClickListener {
+            setOptionDialog()
+        }
     }
 
-    fun successfulDialog(){
+    fun setSortDialog(){
         var sortDialog = SortDialog(context as HomeActivity)
         sortDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         sortDialog.setCanceledOnTouchOutside(false)
@@ -60,6 +71,17 @@ class GoodsCategoryDetailFragment : Fragment() {
             sort = instance.sort_flag
         }
         //updateDataList()
+    }
+
+    fun setOptionDialog(){
+        var optionDialog = OptionDialog(context as HomeActivity)
+        optionDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        optionDialog.setCanceledOnTouchOutside(false)
+        optionDialog.show()
+
+//        optionDialog.setOnDismissListener {
+//            setSortFlag()
+//        }
     }
 
     fun updateDataList(){
