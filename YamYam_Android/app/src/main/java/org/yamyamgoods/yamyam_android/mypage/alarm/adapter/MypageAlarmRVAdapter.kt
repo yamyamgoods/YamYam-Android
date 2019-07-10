@@ -10,8 +10,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.mypage.alarm.MypageAlarmItem
+import org.yamyamgoods.yamyam_android.network.get.AlarmListData
 
-class MypageAlarmRVAdapter(private val ctx: Context, val dataList: List<MypageAlarmItem>): RecyclerView.Adapter<MypageAlarmRVAdapter.Holder>(){
+class MypageAlarmRVAdapter(private val ctx: Context, var dataList: List<AlarmListData>) :
+    RecyclerView.Adapter<MypageAlarmRVAdapter.Holder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MypageAlarmRVAdapter.Holder {
         val view: View = LayoutInflater.from(ctx).inflate(R.layout.rv_item_mypage_alarm, parent, false)
         return Holder(view)
@@ -19,28 +22,31 @@ class MypageAlarmRVAdapter(private val ctx: Context, val dataList: List<MypageAl
 
     override fun getItemCount(): Int = dataList.size
 
-    override fun onBindViewHolder(holder: Holder, position: Int) {
-        dataList[position].let { item->
-            if (item.isRead == true)
+    override fun onBindViewHolder(holder: MypageAlarmRVAdapter.Holder, position: Int) {
+        dataList[position].let { item ->
+            //알람 목록에 있는 빨간 색
+            /*if (item.isRead == true)
                 setInvisible(holder.ivReddot)
 
             holder.clAlarm.setOnClickListener{
                 item.isRead = true
                 setInvisible(holder.ivReddot)
+            }*/
+
+            if (item.alarm_check_flag == 0)   //읽지 않음
+                holder.ivReddot.isSelected = true
+            if (item.alarm_check_flag == 1)   //읽음
+            {
+                holder.ivReddot.isSelected = false
+                setInvisible(holder.ivReddot)
             }
 
-//            var startText: String = ""
-//            if (item.reviewFlag == 0)
-//                startText = "리뷰에 댓글이 달렸습니다: "
-//            if (item.reviewFlag == 1)
-//                startText = "댓글에 답글이 달렸습니다: "
-            holder.alarmContents.text = item.contents
-
-            holder.date.text = item.date
+            holder.alarmContents.text = item.alarm_message
+            holder.date.text = item.alarm_date_time
         }
     }
 
-    inner class Holder(itemView: View): RecyclerView.ViewHolder(itemView){
+    inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var clAlarm: ConstraintLayout = itemView.findViewById(R.id.cl_rv_item_mypage_alarm)
         var ivReddot: ImageView = itemView.findViewById(R.id.iv_rv_item_mypage_alarm_reddot)
         var alarmContents: TextView = itemView.findViewById(R.id.tv_rv_item_mypage_alarm_contents)

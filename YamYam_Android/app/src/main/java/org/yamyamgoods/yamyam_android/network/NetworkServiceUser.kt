@@ -2,6 +2,8 @@ package org.yamyamgoods.yamyam_android.network
 
 import com.google.gson.JsonObject
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import org.yamyamgoods.yamyam_android.network.get.GetAlarmListResponse
 import org.yamyamgoods.yamyam_android.network.get.GetUserInfoResponse
 import org.yamyamgoods.yamyam_android.network.get.GetJWTtokenExpiredResponse
 import org.yamyamgoods.yamyam_android.network.get.GetMypageRecentlyViewedProductsResponse
@@ -52,11 +54,19 @@ interface NetworkServiceUser {
     ): Call<GetMypageRecentlyViewedProductsResponse>
 
     // 프로필 사진 수정
-
+    @Multipart
     @PUT("/user/profile")
-    fun putMypageProfileImageRequest(
+    fun putMypageEditProfileImageRequest(
             @Header("Content-Type") content_type: String,
             @Header("Authorization") authorization: String,
-            @Body img: MultipartBody.Part
+            @Part img: MultipartBody.Part
     ): Call<PutMypageEditProfileImageRequest>
+
+    //유저 알람 목록보기
+    @GET("/user/alarm/list/{lastIndex}")
+    fun getAlarmListResponse(
+            @Header("Content-Type") content_type: String,
+            @Header("Authorization") authorization: String,
+            @Path("lastIndex") flag: Int
+    ): Call<GetAlarmListResponse>
 }

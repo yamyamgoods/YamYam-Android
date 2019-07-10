@@ -34,13 +34,10 @@ import org.yamyamgoods.yamyam_android.mypage.dialog.DialogMypageChangeProfileIma
 import org.yamyamgoods.yamyam_android.mypage.recent.RecentlyViewedProductsActivity
 import org.yamyamgoods.yamyam_android.network.ApplicationController
 import org.yamyamgoods.yamyam_android.network.NetworkServiceUser
-import org.yamyamgoods.yamyam_android.network.get.GetMypageRecentlyViewedProductsResponse
-import org.yamyamgoods.yamyam_android.network.get.GetUserInfoResponse
-import org.yamyamgoods.yamyam_android.network.get.RecentlyViewedProducts
+import org.yamyamgoods.yamyam_android.network.get.*
 import org.yamyamgoods.yamyam_android.network.put.PutMypageEditNicknameRequest
 import org.yamyamgoods.yamyam_android.network.put.PutMypageEditProfileImageRequest
 import org.yamyamgoods.yamyam_android.reviewwrite.ReviewWriteActivity
-import org.yamyamgoods.yamyam_android.util.TempData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -52,11 +49,14 @@ import java.lang.reflect.Type
 class MypageActivity : AppCompatActivity() {
     private val PICK_IMAGE_REQUEST: Int = 1
 
+    val token: String = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWR4IjoxLCJpYXQiOjE1NjIzMTUzNjYsImV4cCI6MTU2MzYyOTM2Nn0.ZkDGasoDPHTrGvy7yFOT9cPjTQ7gnnUOqekY_zYrAuc"
+
     val networkService: NetworkServiceUser by lazy {
         ApplicationController.networkServiceUser
     }
 
     lateinit var mypageProductRVAdapter : MypageProductRVAdapter
+    lateinit var mypageAlarmRVAdapter: MypageAlarmRVAdapter
     lateinit var input_profile_img: MultipartBody.Part
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,7 +68,7 @@ class MypageActivity : AppCompatActivity() {
         configureTitleBar()
         editUserNickName()
         getMypageRecentlyReviewedProductsRequest()
-        configureAlarmDrawer()
+        getAlarmListResponse()
         openRecentActivity()
         btn_mypage_alarm.setOnClickListener {
             openAlarmDrawer()
@@ -85,10 +85,12 @@ class MypageActivity : AppCompatActivity() {
         }
     }
 
+
+    // 유저 정보 서버 통신
     fun getUserInfoResponse() {
         networkService.getUserInfoResponse(
                 "application/json",
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWR4IjoxLCJpYXQiOjE1NjIzMTUzNjYsImV4cCI6MTU2MzYyOTM2Nn0.ZkDGasoDPHTrGvy7yFOT9cPjTQ7gnnUOqekY_zYrAuc")
+                token)
                 .enqueue(object : Callback<GetUserInfoResponse> {
                     override fun onFailure(call: Call<GetUserInfoResponse>, t: Throwable) {
                     }
@@ -154,6 +156,7 @@ class MypageActivity : AppCompatActivity() {
         iv_mypage_user_image.setImageResource(R.drawable.img_myprofile)
     }
 
+    // 권한 요청
     fun getPermission() {
         val permissionListener = object : PermissionListener {
             override fun onPermissionGranted() {
@@ -182,11 +185,12 @@ class MypageActivity : AppCompatActivity() {
         startActivityForResult(intent, PICK_IMAGE_REQUEST)//(Intent.createChooser(intent, "얌얌굿즈 : 프로필 사진을 선택해주세요!"), PICK_IMAGE_REQUEST)
     }
 
+    // 프로필 사진 변경 서버 통신
     private fun putMypageEditProfileImageRequest(img: MultipartBody.Part){
-        Log.v("현주", "put함수에 들어옴")
+        Log.v("현주", "put 함수에 들어옴")
         if (img !=null) {
-            networkService.putMypageProfileImageRequest("multipart/form-data",
-                    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWR4IjoxLCJpYXQiOjE1NjIzMTUzNjYsImV4cCI6MTU2MzYyOTM2Nn0.ZkDGasoDPHTrGvy7yFOT9cPjTQ7gnnUOqekY_zYrAuc",
+            networkService.putMypageEditProfileImageRequest("multipart/form-data",
+                    token,
                     img!!
             ).enqueue(object: Callback<PutMypageEditProfileImageRequest>{
                 override fun onFailure(call: Call<PutMypageEditProfileImageRequest>, t: Throwable) {
@@ -195,21 +199,21 @@ class MypageActivity : AppCompatActivity() {
                   if (response.isSuccessful)
                       Log.v("현주", response.body()!!.toString())
                     else{
-                      if(response.code()== 404)
+                      if(response.code()== 401)
                           Log.v("현주", "실패")
                       else
                           Log.v("현주", "401이 아닌 실패")
                   }
-
                 }
             })
         }
     }
 
+    // 최근 본 상품 서버 통신
     private fun getMypageRecentlyReviewedProductsRequest(){
         networkService.getMypageRecentlyViewedProductsResponse(
                 "application/json",
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWR4IjoxLCJpYXQiOjE1NjIzMTUzNjYsImV4cCI6MTU2MzYyOTM2Nn0.ZkDGasoDPHTrGvy7yFOT9cPjTQ7gnnUOqekY_zYrAuc",
+                token,
                 -1
         ).enqueue(object:  Callback<GetMypageRecentlyViewedProductsResponse>{
             override fun onFailure(call: Call<GetMypageRecentlyViewedProductsResponse>, t: Throwable) {
@@ -247,6 +251,7 @@ class MypageActivity : AppCompatActivity() {
         })
     }
 
+    // 최근 본 상품 액티비티 열기
     private fun openRecentActivity() {
         btn_mypage_recently_viewed_product.setOnClickListener {
             val intent = Intent(this, RecentlyViewedProductsActivity::class.java)
@@ -261,11 +266,44 @@ class MypageActivity : AppCompatActivity() {
         }
     }
 
-    private fun configureAlarmDrawer() {
-        rv_mypage_alarm_list.apply {
-            adapter = MypageAlarmRVAdapter(this@MypageActivity, TempData.mypageAlarms())
-            layoutManager = LinearLayoutManager(this@MypageActivity)
-        }
+    // 알림 목록 서버 통신
+    private fun getAlarmListResponse(){
+      networkService.getAlarmListResponse("application/json",
+              token,
+              -1)  .enqueue(object: Callback<GetAlarmListResponse>{
+          override fun onFailure(call: Call<GetAlarmListResponse>, t: Throwable) {
+              Log.e("현주", t.toString())
+          }
+
+          override fun onResponse(call: Call<GetAlarmListResponse>, response: Response<GetAlarmListResponse>) {
+              if (response.isSuccessful){
+                  Log.v("현주", "알람 목록 response: ${response.body()}")
+                  response.body()?.let{
+                      var tmp: ArrayList<AlarmListData> = response.body()!!.data!!
+                      rv_mypage_alarm_list.apply{
+                          adapter = MypageAlarmRVAdapter(this@MypageActivity, tmp)
+                          layoutManager = LinearLayoutManager(this@MypageActivity)
+                      }
+                      mypageAlarmRVAdapter = MypageAlarmRVAdapter(this@MypageActivity, tmp)
+                      //mypageProductRVAdapter.notifyDataSetChanged()
+                  }
+              }
+
+              response.errorBody()?.let{
+                  Log.v("현주", "알람 목록에서 에러났어요")
+                  val type:Type = object: TypeToken<GetAlarmListResponse>() {}.type
+                  val gson: Gson = GsonBuilder().create()
+                  val responseJson: GetMypageRecentlyViewedProductsResponse = gson.fromJson(it.string().toString(), type)
+
+                  if (response.code() == 401) {
+                      if (responseJson.message == "jwt must be provided")
+                          toast("로그인을 해주세요.")
+                      if (responseJson.message == "jwt expired")
+                          toast("로그인이 만료되었습니다.")
+                  }
+              }
+          }
+      })
     }
 
     private fun editUserNickName() {
@@ -291,23 +329,25 @@ class MypageActivity : AppCompatActivity() {
                 setInvisible(btn_mypage_user_name_check)
                 var changedName: String = edt_mypage_user_name.text.toString()
                 tv_mypage_user_name.setText(changedName)
-                putMypageEditNickNameResponse(changedName)
-            } catch (e: Exception) {
+                putMypageEditNicknameResponse(changedName)
+                Log.v("현주-바뀐 닉네임",changedName)
+            }
+            catch (e: Exception) {
             }
         }
     }
 
-    private fun putMypageEditNickNameResponse(changedName: String) {
+    // 닉네임 변경 서버 통신
+    private fun putMypageEditNicknameResponse(changedName: String) {
         networkService.putMypageEditNicknameRequest(
                 "application/json",
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWR4IjozLCJpYXQiOjE1NjI2NTY3MTMsImV4cCI6MTU5NDE5MjcxM30.nfcJqImHl5XPMPigkka-wF09v8_ji67Vt4b0nOSX4KY",
-                PutMypageEditNicknameRequest(changedName))
+                token,
+            PutMypageEditNicknameRequest(changedName))
                 .enqueue(object : Callback<PutMypageEditNicknameRequest> {
                     override fun onFailure(call: Call<PutMypageEditNicknameRequest>, t: Throwable) {
                     }
 
                     override fun onResponse(call: Call<PutMypageEditNicknameRequest>, response: Response<PutMypageEditNicknameRequest>) {
-
                         if (response.isSuccessful) {
                             response.body()?.let {
                                 Log.v("현주", "닉네임 변경 통신 성공  response : ${response.body()}")
@@ -336,14 +376,14 @@ class MypageActivity : AppCompatActivity() {
                         photoBody
                 )
 
-                Log.d("사진주소확인",selectedPictureUri.toString());
+                Log.v("현주: 사진 주소 확인", selectedPictureUri.toString()+ ".jpg")
 
                 Glide.with(this@MypageActivity)
                         .load(selectedPictureUri)
                         .circleCrop()
                         .into(iv_mypage_user_image)
 
-                putMypageEditProfileImageRequest(input_profile_img)
+                putMypageEditProfileImageRequest(input_profile_img!!)
             } else {
                 Toast.makeText(this, "취소 되었습니다.", Toast.LENGTH_LONG).show()
             }
@@ -363,7 +403,6 @@ class MypageActivity : AppCompatActivity() {
         else
             return str
     }
-
 
     private fun setInvisible(view: View) {
         view.visibility = View.INVISIBLE
