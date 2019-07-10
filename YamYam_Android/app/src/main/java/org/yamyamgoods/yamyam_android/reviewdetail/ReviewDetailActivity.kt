@@ -17,6 +17,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_review_detail.*
 import org.yamyamgoods.yamyam_android.R
+import org.yamyamgoods.yamyam_android.dataclass.ReviewData
 import org.yamyamgoods.yamyam_android.home.best.review.BestReviewFragment
 import org.yamyamgoods.yamyam_android.network.ApplicationController
 import org.yamyamgoods.yamyam_android.network.NetworkServiceGoods
@@ -32,7 +33,6 @@ import retrofit2.Response
 
 class ReviewDetailActivity : AppCompatActivity() {
 
-    val reviewIdx: Int = 0  // 리뷰 Idx
     val token: String = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWR4IjoxLCJpYXQiOjE1NjIzMTUzNjYsImV4cCI6MTU2MzYyOTM2Nn0.ZkDGasoDPHTrGvy7yFOT9cPjTQ7gnnUOqekY_zYrAuc"
 
     val networkService: NetworkServiceGoods by lazy {
@@ -44,6 +44,7 @@ class ReviewDetailActivity : AppCompatActivity() {
 
     var options: RequestOptions = RequestOptions().transform(CenterCrop(), RoundedCorners(10))
 
+    var reviewIdx: Int = 0
     var starCount: Int = 0
     var thumbCount: Int = 0
     var commentCount: Int = 0
@@ -65,16 +66,17 @@ class ReviewDetailActivity : AppCompatActivity() {
 
     private fun getVariables() {
         setResult(Activity.RESULT_OK, intent)
-        var rvDTO: ReviewBasicDTO = intent.getParcelableExtra("dto")
-        userNickname = rvDTO.userNickname
-        date = rvDTO.date
-        reviewContents = rvDTO.reviewContents
+        var rvDTO: ReviewData = intent.getParcelableExtra("dto")
+        reviewIdx = rvDTO.goods_review_idx
+        userNickname = rvDTO.user_name
+        date = rvDTO.goods_review_date
+        reviewContents = rvDTO.goods_review_content
 
-        starCount = rvDTO.starCount
-        imageUrl = rvDTO.imageUrl
-        thumbFlag = rvDTO.thumbFlag
-        thumbCount = rvDTO.thumbCount
-        commentCount = rvDTO.commentsCount
+        starCount = rvDTO.goods_review_rating
+        imageUrl = rvDTO.goods_review_img
+        thumbFlag = rvDTO.review_like_flag
+        thumbCount = rvDTO.goods_review_like_count
+        commentCount = rvDTO.goods_review_cmt_count
     }
 
     fun getReviewDetailResponse(){
@@ -230,12 +232,14 @@ class ReviewDetailActivity : AppCompatActivity() {
         tv_rv_item_best_review_all_comments_num.text = commentCount.toString()
     }
 
-//    private fun configureComments() {
-//        rv_review_detail_comment_list.apply {
-//            adapter = ReviewDetailRVAdapter(this@ReviewDetailActivity, TempData.ReviewComments())
-//            layoutManager = LinearLayoutManager(this@ReviewDetailActivity)
-//        }
-//    }
+    // comments 부분
+    /*
+    private fun configureComments() {
+        rv_review_detail_comment_list.apply {
+            adapter = ReviewDetailRVAdapter(this@ReviewDetailActivity, TempData.ReviewComments())
+            layoutManager = LinearLayoutManager(this@ReviewDetailActivity)
+        }
+    }*/
 
     fun editTextTag(nickname: String){
         edtComment =  findViewById(R.id.edt_review_detail_input_comment)

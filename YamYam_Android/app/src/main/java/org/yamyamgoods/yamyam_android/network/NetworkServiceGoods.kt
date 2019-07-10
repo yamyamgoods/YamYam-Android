@@ -100,7 +100,7 @@ interface NetworkServiceGoods {
     @GET("/goods/review/{reviewIdx}/detail")
     fun getReviewDetailResponse(
         @Header("Content-Type") content_type: String,
-        @Header("Authorization") authorization: String,
+        @Header("Authorization") authorization: String?,
         @Path("reviewIdx") reviewIdx:Int
     ): Call<GetReviewDetailResponse>
 
@@ -119,4 +119,13 @@ interface NetworkServiceGoods {
         @Header("Authorization") token: String?,
         @Path("goodsIdx") goodsIdx: Int
     ): Call<GetProductOptionsResponseData>
+
+    //베스트 리뷰
+    @GET("/goods/reviews/best/{lastIndex}")
+    fun getBestReviewItemRequest(
+        @Header("Content-Type") content_type: String,
+        @Header("Authorization") authorization: String?,
+        @Path("lastIndex") lastIndex: Int
+    ): Call<GetReviewResponse>
+
 }

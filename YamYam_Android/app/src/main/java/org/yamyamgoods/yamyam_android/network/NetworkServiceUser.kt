@@ -53,7 +53,7 @@ interface NetworkServiceUser {
     @POST("/user/profile")
     fun postMypageEditProfileImageRequest(
             @Header("Authorization") authorization: String,
-            @Part img: MultipartBody.Part
+            @Part img: MultipartBody.Part?
     ): Call<PostMypageEditProfileImageRequest>
 
     //유저 알람 목록보기

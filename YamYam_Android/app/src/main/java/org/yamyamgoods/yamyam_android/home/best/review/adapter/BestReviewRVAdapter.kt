@@ -17,12 +17,12 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import org.yamyamgoods.yamyam_android.R
-import org.yamyamgoods.yamyam_android.home.best.review.BestReviewItem
+import org.yamyamgoods.yamyam_android.dataclass.ReviewData
 import org.yamyamgoods.yamyam_android.reviewdetail.ReviewBasicDTO
 import org.yamyamgoods.yamyam_android.reviewdetail.ReviewDetailActivity
 import java.lang.Math.abs
 
-class BestReviewRVAdapter(private val ctx: Context, var dataList: List<BestReviewItem>) : RecyclerView.Adapter<BestReviewRVAdapter.Holder>() {
+class BestReviewRVAdapter(private val ctx: Context, var dataList: List<ReviewData>) : RecyclerView.Adapter<BestReviewRVAdapter.Holder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BestReviewRVAdapter.Holder {
         val view: View = LayoutInflater.from(ctx).inflate(R.layout.rv_item_best_review, parent, false)
 
@@ -35,61 +35,51 @@ class BestReviewRVAdapter(private val ctx: Context, var dataList: List<BestRevie
 
         dataList[position].let { item ->
             Glide.with(ctx)
-                    .load(item.userImageUrl)
+                    .load(item.user_img)
                     .centerCrop()
                     .circleCrop()
                     .into(holder.ivUserImage)
 
-            holder.tvUserNickname.text = item.userNickname
-            holder.tvReviewDate.text = item.date
+            holder.tvUserNickname.text = item.user_name
+            holder.tvReviewDate.text = item.goods_review_date
 
-
-            for (i in 0 until (item.starCount)) {
+            for (i in 0 until (item.goods_review_rating)) {
                 holder.starRate[i].setImageResource(R.drawable.icon_colorstar)
             }
 
-            holder.tvReviewContents.text = item.reviewContents
+            holder.tvReviewContents.text = item.goods_review_content
             holder.btnDetailReview.setOnClickListener {
                 try {
-                    var dto = ReviewBasicDTO(item.userImageUrl,
-                            item.userNickname,
-                            item.date,
-                            item.starCount,
-                            item.reviewContents,
-                            item.imageUrl,
-                            item.thumbFlag,
-                            item.thumbCount,
-                            item.commentsCount)
                     var intent = Intent(ctx, ReviewDetailActivity::class.java)
-                    intent.putExtra("dto", dto)
+                    intent.putExtra("dto", item)
                     ctx.startActivity(intent)
                 } catch (e: Exception) {
                 }
             }
 
             var options: RequestOptions = RequestOptions().transform(CenterCrop(), RoundedCorners(10))
-            var imageNum = item.imageUrl.size
-            if (item.imageUrl.size > 3) {
+            var imageNum = item.goods_review_img.size
+            if (item.goods_review_img.size > 3) {
                 setVisible(holder.etcImageNum)
                 holder.reviewImage[2].setColorFilter(Color.parseColor("#333333"), PorterDuff.Mode.MULTIPLY)
-                holder.etcImageNum.text = "+" + (item.imageUrl.size - 3).toString()
+                holder.etcImageNum.text = "+" + (item.goods_review_img.size - 3).toString()
                 imageNum = 3
             }
             for (i in 0 until imageNum) {
                 setVisible(holder.reviewImage[i])
                 Glide.with(ctx)
-                        .load(item.imageUrl[i])
+                        .load(item.goods_review_img[i])
                         .apply(options)
                         .into(holder.reviewImage[i])
             }
 
             holder.btnThumb.setOnClickListener {
-                item.thumbFlag = abs(item.thumbFlag - 1)
+                item.review_like_flag = abs(item.review_like_flag - 1)
                 holder.ivThumb.isSelected = !(holder.ivThumb.isSelected)
             }
-            holder.tvThumbNum.text = item.thumbCount.toString()
+            holder.tvThumbNum.text = item.goods_review_like_count.toString()
             holder.btnComments.setImageResource(R.drawable.icon_comment)
-            holder.tvCommentsNum.text = item.commentsCount.toString()
+            holder.tvCommentsNum.text = item.goods_review_cmt_count.toString()
         }
     }
 
