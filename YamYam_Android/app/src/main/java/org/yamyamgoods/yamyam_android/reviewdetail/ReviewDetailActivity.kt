@@ -53,7 +53,6 @@ class ReviewDetailActivity : AppCompatActivity() {
     lateinit var reviewContents: String
     lateinit var imageUrl: List<String>
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_review_detail)
