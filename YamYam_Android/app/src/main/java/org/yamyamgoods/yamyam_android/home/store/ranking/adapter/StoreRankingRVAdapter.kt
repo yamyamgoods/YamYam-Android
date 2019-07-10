@@ -34,7 +34,7 @@ class StoreRankingRVAdapter(private val ctx: Context, private val dataList: List
             holder.tvHashTag.text = item.getOneLineHashTags()
 
             holder.ivLike.apply{
-                imageResource = R.drawable.selector_store_list_like
+                imageResource = R.drawable.selector_bookmark_flag
                 isSelected = item.store_scrap_flag
             }
         }
