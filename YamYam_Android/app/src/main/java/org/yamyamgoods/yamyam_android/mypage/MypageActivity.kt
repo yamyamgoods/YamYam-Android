@@ -37,6 +37,7 @@ import org.yamyamgoods.yamyam_android.network.NetworkServiceUser
 import org.yamyamgoods.yamyam_android.network.get.*
 import org.yamyamgoods.yamyam_android.network.put.PutMypageEditNicknameRequest
 import org.yamyamgoods.yamyam_android.network.put.PutMypageEditProfileImageRequest
+import org.yamyamgoods.yamyam_android.reviewdetail.ReviewDetailActivity
 import org.yamyamgoods.yamyam_android.reviewwrite.ReviewWriteActivity
 import retrofit2.Call
 import retrofit2.Callback
@@ -259,6 +260,7 @@ class MypageActivity : AppCompatActivity() {
         }
     }
 
+    // 알람 드로어 열기
     private fun openAlarmDrawer() {
         val drawer: DrawerLayout = findViewById(R.id.drawer_mypage_alarm)
         if (!drawer.isDrawerOpen(Gravity.RIGHT)) {
@@ -266,11 +268,11 @@ class MypageActivity : AppCompatActivity() {
         }
     }
 
-    // 알림 목록 서버 통신
+    // 알람 목록 서버 통신
     private fun getAlarmListResponse(){
       networkService.getAlarmListResponse("application/json",
               token,
-              -1)  .enqueue(object: Callback<GetAlarmListResponse>{
+              -1) .enqueue(object: Callback<GetAlarmListResponse>{
           override fun onFailure(call: Call<GetAlarmListResponse>, t: Throwable) {
               Log.e("현주", t.toString())
           }
@@ -306,6 +308,30 @@ class MypageActivity : AppCompatActivity() {
       })
     }
 
+    // 알람 목록에서 리뷰 상세보기
+    fun getAlarmReviewDetailResponse(){
+        networkService.getAlarmReviewDetail("application/json", token,
+            -1, -1).enqueue(object: Callback<GetReviewDetailResponse>{
+            override fun onFailure(call: Call<GetReviewDetailResponse>, t: Throwable) {
+                Log.e("현주", t.toString())
+            }
+
+            override fun onResponse(
+                call: Call<GetReviewDetailResponse>,
+                response: Response<GetReviewDetailResponse>) {
+                if (response.isSuccessful){
+                    Log.v("현주", "알람 목록 response: ${response.body()}")
+                    response.body()?.let{
+                        val intent = Intent(this@MypageActivity, ReviewDetailActivity::class.java)
+                        startActivity(intent)
+                        // 어떻게 그 리뷰 아이디로 받아오지????....????...???
+                    }
+                }
+            }
+        })
+    }
+
+    // 닉네임 변경
     private fun editUserNickName() {
         btn_mypage_user_name_edt.setOnClickListener {
             try {
@@ -340,8 +366,7 @@ class MypageActivity : AppCompatActivity() {
     // 닉네임 변경 서버 통신
     private fun putMypageEditNicknameResponse(changedName: String) {
         networkService.putMypageEditNicknameRequest(
-                "application/json",
-                token,
+                "application/json", token,
             PutMypageEditNicknameRequest(changedName))
                 .enqueue(object : Callback<PutMypageEditNicknameRequest> {
                     override fun onFailure(call: Call<PutMypageEditNicknameRequest>, t: Throwable) {

@@ -1,38 +1,45 @@
 package org.yamyamgoods.yamyam_android.reviewdetail
 
 import android.app.Activity
-import android.app.PendingIntent.getActivity
 import android.graphics.Color
 import android.graphics.PorterDuff
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Parcelable
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.util.Log
-import android.view.MotionEvent
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_review_detail.*
-import kotlinx.android.synthetic.main.rv_item_review_detail_comment.*
-import org.jetbrains.anko.ctx
-import org.w3c.dom.Text
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.home.best.review.BestReviewFragment
+import org.yamyamgoods.yamyam_android.network.ApplicationController
+import org.yamyamgoods.yamyam_android.network.NetworkServiceGoods
+import org.yamyamgoods.yamyam_android.network.get.GetReviewDetailResponse
+import org.yamyamgoods.yamyam_android.network.get.ReviewCommentData
+import org.yamyamgoods.yamyam_android.network.get.ReviewDetailGoodsData
 import org.yamyamgoods.yamyam_android.reviewdetail.adapter.ReviewDetailRVAdapter
 import org.yamyamgoods.yamyam_android.util.TempData
-import java.io.Serializable
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class ReviewDetailActivity : AppCompatActivity() {
 
+    val reviewIdx: Int = 0  // 리뷰 Idx
+    val token: String = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWR4IjoxLCJpYXQiOjE1NjIzMTUzNjYsImV4cCI6MTU2MzYyOTM2Nn0.ZkDGasoDPHTrGvy7yFOT9cPjTQ7gnnUOqekY_zYrAuc"
+
+    val networkService: NetworkServiceGoods by lazy {
+        ApplicationController.networkServiceGoods
+    }
+
+    lateinit var reviewDetailRVAdapter: ReviewDetailRVAdapter
     lateinit var edtComment: EditText;
 
     var options: RequestOptions = RequestOptions().transform(CenterCrop(), RoundedCorners(10))
@@ -51,9 +58,10 @@ class ReviewDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_review_detail)
         getVariables()
-        configureProduct(TempData.ReviewDetailProducts(), 2)
+        getReviewDetailResponse()
+        //configureProduct(TempData.ReviewDetailProducts(), 2)
         configureReview()
-        configureComments()
+        //configureComments()
     }
 
     private fun getVariables() {
@@ -70,6 +78,67 @@ class ReviewDetailActivity : AppCompatActivity() {
         commentCount = rvDTO.commentsCount
     }
 
+    fun getReviewDetailResponse(){
+        networkService.getReviewDetailResponse(
+            "application/json", token, reviewIdx).enqueue(object: Callback<GetReviewDetailResponse> {
+            override fun onFailure(call: Call<GetReviewDetailResponse>, t: Throwable) {
+                Log.e("현주", t.toString())
+            }
+
+            override fun onResponse(call: Call<GetReviewDetailResponse>, response: Response<GetReviewDetailResponse>) {
+
+                var productStarRate: List<ImageView> = listOf(
+                    findViewById(R.id.iv_review_detail_poduct_star1),
+                    findViewById(R.id.iv_review_detail_poduct_star2),
+                    findViewById(R.id.iv_review_detail_poduct_star3),
+                    findViewById(R.id.iv_review_detail_poduct_star4),
+                    findViewById(R.id.iv_review_detail_poduct_star5)
+                )
+
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        /* 굿즈  */
+                        it.data!!.goods.let { goods ->
+                            Glide.with(this@ReviewDetailActivity)
+                                .load(goods.goods_img)
+                                .apply(options)
+                                .into(iv_review_detail_product)
+
+                            tv_review_detail_store_name.text = goods.store_name
+                            tv_review_detail_product_name.text = goods.goods_name
+                            tv_review_detail_product_price.text = goods.goods_price
+
+                            tv_review_detail_product_star_rate.text = roundString(goods.goods_rating)
+                            var productStarCount = goods.goods_rating
+                            var intStarCount: Int = productStarCount.toInt()
+                            var remainder: Float = goods.goods_rating - intStarCount.toFloat()
+
+                            for (i in 0 until (intStarCount)) {
+                                productStarRate[i].setImageResource(R.drawable.img_goods_star)
+                                if (0.5 > remainder && remainder >= 0)
+                                    continue
+                                if (1 > remainder && remainder >= 0.5)
+                                    productStarRate[i + 1].setImageResource(R.drawable.img_goods_star_half)
+                            }
+                        }
+
+                        /* 대댓글:comment 부분*/
+                        it.data!!.review_comment.let { comment ->
+                            var tmp: ArrayList<ReviewCommentData> = comment
+                            rv_review_detail_comment_list.apply{
+                                adapter = ReviewDetailRVAdapter(this@ReviewDetailActivity, tmp)
+                                layoutManager = LinearLayoutManager(this@ReviewDetailActivity)
+                            }
+                            reviewDetailRVAdapter = ReviewDetailRVAdapter(this@ReviewDetailActivity, tmp)
+                        }
+                    }
+                }
+            }
+        })
+    }
+
+    // 굿즈 + 상점 부분
+    /*
     private fun configureProduct(dataList: List<ProductShortInfo>, position: Int) {
         dataList[position].let { item ->
             Glide.with(this)
@@ -102,6 +171,7 @@ class ReviewDetailActivity : AppCompatActivity() {
             }
         }
     }
+    */
 
     private fun configureReview() {
         Glide.with(this)
@@ -161,12 +231,12 @@ class ReviewDetailActivity : AppCompatActivity() {
         tv_rv_item_best_review_all_comments_num.text = commentCount.toString()
     }
 
-    private fun configureComments() {
-        rv_review_detail_comment_list.apply {
-            adapter = ReviewDetailRVAdapter(this@ReviewDetailActivity, TempData.ReviewComments())
-            layoutManager = LinearLayoutManager(this@ReviewDetailActivity)
-        }
-    }
+//    private fun configureComments() {
+//        rv_review_detail_comment_list.apply {
+//            adapter = ReviewDetailRVAdapter(this@ReviewDetailActivity, TempData.ReviewComments())
+//            layoutManager = LinearLayoutManager(this@ReviewDetailActivity)
+//        }
+//    }
 
     fun editTextTag(nickname: String){
         edtComment =  findViewById(R.id.edt_review_detail_input_comment)
@@ -179,5 +249,11 @@ class ReviewDetailActivity : AppCompatActivity() {
 
    fun setVisible(view: View) {
         view.visibility = View.VISIBLE
+    }
+
+    // 소수점 첫째자리까지만 표현하기
+    fun roundString(value: Float): String{
+        var strFloat: String= String.format("%.1f ", value)
+        return strFloat
     }
 }
