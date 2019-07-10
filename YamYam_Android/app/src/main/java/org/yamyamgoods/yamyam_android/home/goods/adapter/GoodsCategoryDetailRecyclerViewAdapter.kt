@@ -13,7 +13,7 @@ import org.yamyamgoods.yamyam_android.dataclass.GoodsData
 
 class GoodsCategoryDetailRecyclerViewAdapter (val ctx: Context, var dataList: ArrayList<GoodsData>): RecyclerView.Adapter<GoodsCategoryDetailRecyclerViewAdapter.Holder>() {
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): Holder {
-        val view: View = LayoutInflater.from(ctx).inflate(R.layout.rv_item_goods_category, p0, false)
+        val view: View = LayoutInflater.from(ctx).inflate(R.layout.rv_item_goods_category_detail, p0, false)
         return Holder(view)
     }
 

@@ -21,6 +21,7 @@ import org.yamyamgoods.yamyam_android.util.User
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.lang.Exception
 
 class GoodsTabFragment : Fragment(){
     var dataList: ArrayList<GoodsCategoryData> = ArrayList()
@@ -54,9 +55,11 @@ class GoodsTabFragment : Fragment(){
 
             override fun onResponse(call: Call<GetGoodsTabResponse>, response: Response<GetGoodsTabResponse>) {
                 if(response.isSuccessful){
-                    dataList = response.body()!!.data.goods_category_data
-                    setRecyclerView()
-
+                    try{
+                        dataList = response.body()!!.data.goods_category_data
+                        setRecyclerView()
+                    } catch (e:Exception){
+                    }
                 }
             }
         })

@@ -17,8 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="98dp"
             android:scaleType="centerCrop"
-            android:background="@drawable/rounded_corner_top"
-            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+            android:background="@drawable/rounded_corner_top"/>
         <ImageView
             android:id="@+id/iv_rv_item_goods_category_detail_like"
             android:layout_width="wrap_content"
