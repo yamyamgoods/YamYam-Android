@@ -1,87 +1,35 @@
 package org.yamyamgoods.yamyam_android.home
 
-import android.graphics.Color
-import android.os.Build
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentTransaction
+import android.support.v7.app.AppCompatActivity
 import android.view.View
-import android.view.WindowManager
 import kotlinx.android.synthetic.main.activity_home.*
 import org.yamyamgoods.yamyam_android.R
-import org.yamyamgoods.yamyam_android.home.best.BestTabFragment
-import org.yamyamgoods.yamyam_android.home.bookmark.BookmarkFragment
-import org.yamyamgoods.yamyam_android.home.goods.GoodsTabFragment
-import org.yamyamgoods.yamyam_android.home.store.StoreFragment
-import org.yamyamgoods.yamyam_android.home.store.ranking.StoreRankingFragment
 
 class HomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        setOnClickListener()
-        startView()
+
+        viewInit()
     }
 
-    fun startView(){
-        //TODO 처음 뷰 넣어주세요
-        addFragment(BestTabFragment())
-        iv_bottom_best_icon.isSelected=true
-        tv_bottom_best_text.isSelected=true
-        setOnClickListener()
-    }
+    private fun viewInit() {
 
-    fun setOnClickListener(){
-        btn_bottom_best.setOnClickListener{
-            //TODO 프래그먼트 넣어주세요
-            replaceFragment(BestTabFragment())
-            clearBtnSelect()
-            iv_bottom_best_icon.isSelected=true
-            tv_bottom_best_text.isSelected=true
+        vp_home_act_pager.apply {
+            adapter = HomeTabFragmentStatePagerAdapter(supportFragmentManager, 4)
+            offscreenPageLimit = 4
         }
-        btn_bottom_store.setOnClickListener{
-            replaceFragment(StoreFragment.getInstance())
 
-            clearBtnSelect()
-            iv_bottom_store_icon.isSelected=true
-            tv_bottom_store_text.isSelected=true
-        }
-        btn_bottom_goods.setOnClickListener{
-            replaceFragment(GoodsTabFragment())
-            clearBtnSelect()
-            iv_bottom_goods_icon.isSelected=true
-            tv_bottom_goods_text.isSelected=true
-        }
-        btn_bottom_like.setOnClickListener{
-            replaceFragment(BookmarkFragment())
-            clearBtnSelect()
-            iv_bottom_like_icon.isSelected=true
-            tv_bottom_like_text.isSelected=true
-        }
-    }
+        tl_home_act_bottom_bar.setupWithViewPager(vp_home_act_pager)
 
-    fun replaceFragment(fragment:Fragment){
-        val transaction:FragmentTransaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.fl_main_fragment,fragment)
-        transaction.commit()
-    }
-    fun addFragment(fragment: Fragment){
-        val transaction:FragmentTransaction = supportFragmentManager.beginTransaction()
-        transaction.add(R.id.fl_main_fragment,fragment)
-        transaction.commit()
-    }
+        val tabLayout: View = this.layoutInflater.inflate(R.layout.tab_home_activity, null, false)
+        tl_home_act_bottom_bar.getTabAt(0)!!.customView = tabLayout.findViewById(R.id.btn_tab_home_act_best)
+        tl_home_act_bottom_bar.getTabAt(1)!!.customView = tabLayout.findViewById(R.id.btn_tab_home_act_store)
+        tl_home_act_bottom_bar.getTabAt(2)!!.customView = tabLayout.findViewById(R.id.btn_tab_home_act_goods)
+        tl_home_act_bottom_bar.getTabAt(3)!!.customView = tabLayout.findViewById(R.id.btn_tab_home_act_bookmark)
 
-    fun clearBtnSelect(){
-        iv_bottom_best_icon.isSelected=false
-        tv_bottom_best_text.isSelected=false
-        iv_bottom_store_icon.isSelected=false
-        tv_bottom_store_text.isSelected=false
-        iv_bottom_goods_icon.isSelected=false
-        tv_bottom_goods_text.isSelected=false
-        iv_bottom_like_icon.isSelected=false
-        tv_bottom_like_text.isSelected=false
     }
 
     //액티비티에서는 Back버튼을 두번 눌렀을 때, 종료되도록

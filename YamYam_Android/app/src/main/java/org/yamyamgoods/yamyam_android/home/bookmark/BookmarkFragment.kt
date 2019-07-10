@@ -19,6 +19,15 @@ import org.yamyamgoods.yamyam_android.util.TempData
 
 class BookmarkFragment : Fragment() {
 
+    companion object {
+        private var instance: BookmarkFragment? = null
+
+        @JvmStatic
+        fun getInstance() = instance
+            ?: BookmarkFragment().apply { instance = this }
+
+    }
+
     private lateinit var ctx: Context
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
