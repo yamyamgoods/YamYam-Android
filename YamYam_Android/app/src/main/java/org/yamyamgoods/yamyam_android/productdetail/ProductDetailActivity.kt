@@ -13,25 +13,42 @@ import android.renderscript.ScriptIntrinsicBlur
 import android.support.constraint.ConstraintLayout
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.TabLayout
+import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewPager
 import android.support.v4.widget.NestedScrollView
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.view.ViewTreeObserver
 import android.view.WindowManager
 import android.widget.ImageView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.activity_product_detail.*
+import org.jetbrains.anko.imageResource
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.toast
 import org.yamyamgoods.yamyam_android.R
+import org.yamyamgoods.yamyam_android.dataclass.ProductOption
+import org.yamyamgoods.yamyam_android.dataclass.SelectedOption
+import org.yamyamgoods.yamyam_android.network.ApplicationController
+import org.yamyamgoods.yamyam_android.network.get.GoodsDetail
+import org.yamyamgoods.yamyam_android.network.get.ProductDetailData
 import org.yamyamgoods.yamyam_android.productdetail.adapter.ProductDetailImageFragmentPagerAdapter
 import org.yamyamgoods.yamyam_android.productdetail.adapter.ProductDetailReviewRVAdatper
+import org.yamyamgoods.yamyam_android.productdetail.adapter.ProductOptionsRVAdatper
+import org.yamyamgoods.yamyam_android.review.ReviewActivity
+import org.yamyamgoods.yamyam_android.review.all.ReviewAllItem
+import org.yamyamgoods.yamyam_android.reviewwrite.ReviewWriteActivity
 import org.yamyamgoods.yamyam_android.storeweb.StoreWebActivity
-import org.yamyamgoods.yamyam_android.util.TempData
 import org.yamyamgoods.yamyam_android.util.dp2px
 import org.yamyamgoods.yamyam_android.util.getScreenWidth
 import java.lang.Exception
@@ -39,9 +56,14 @@ import java.lang.Exception
 /**
  * Created By Yun Hyeok
  * on 7월 01, 2019
+ *
+ * StartActivity 로 호출 시
+ * storeIdx 를 intent 로 반드시 넘겨야 합니다.
  */
 
-class ProductDetailActivity : AppCompatActivity() {
+class ProductDetailActivity : AppCompatActivity(), ProductDetailContract.View {
+
+    override lateinit var presenter: ProductDetailContract.Presenter
 
     private var originalDetailImageHeight = 0
     private var foldedDetailImageHeight = 0
@@ -52,13 +74,19 @@ class ProductDetailActivity : AppCompatActivity() {
     private var isDetailZone = true
     private var isReviewZone = false
     private var isScrolled = false
+    private var isBookmarked = false
+
+    private var goodsIdx = -1
+    private var seletedOptions: List<SelectedOption>? = null
 
     private val blurredImages: MutableMap<String, BitmapDrawable> = mutableMapOf()
     private lateinit var mainImageUrls: List<String>
     private lateinit var thumbnailImages: List<ImageView>
-
+    private lateinit var starImages: List<ImageView>
     private lateinit var currentIndicatorPosition: ConstraintLayout
     private lateinit var thumbnailFrame: List<ConstraintLayout>
+
+    private lateinit var integrateData: ProductDetailData
 
     private val appbarListener = AppBarLayout.OnOffsetChangedListener { _, offset ->
         val isCollapsed = (-900 == offset)
@@ -104,16 +132,40 @@ class ProductDetailActivity : AppCompatActivity() {
         }
     }
 
+    private val detailImageRequestListener = object : RequestListener<Drawable> {
+        override fun onLoadFailed(
+            e: GlideException?,
+            model: Any?,
+            target: Target<Drawable>?,
+            isFirstResource: Boolean
+        ): Boolean {
+            return false
+        }
+
+        override fun onResourceReady(
+            resource: Drawable?,
+            model: Any?,
+            target: Target<Drawable>?,
+            dataSource: DataSource?,
+            isFirstResource: Boolean
+        ): Boolean {
+            iv_product_detail_act_detail_image.setImageDrawable(resource)
+            setPreDrawListener2DetailImageForHeight()
+            moreDetailImageButtonConfig()
+            return true
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_detail)
 
-        mainImageUrls = TempData.imageUrls3()
-        getBlurredImageList(mainImageUrls)
+        progressBarOn()
+
+        presenterInit()
+        getServerData()
 
         setStatusBarTransparent()
-
-        viewInit()
     }
 
     override fun onBackPressed() {
@@ -125,11 +177,58 @@ class ProductDetailActivity : AppCompatActivity() {
         super.onBackPressed()
     }
 
+    override fun showServerFailToast(message: String, t: Throwable) {
+        toast(message)
+        Log.v("Malibin Debug", "t : ${t.message}, stack : ${TextUtils.join("\n", t.stackTrace)}")
+    }
+
+    override fun setProductDetailData(response: ProductDetailData) {
+        integrateData = response
+        mainImageUrls = integrateData.goods.goods_img
+        getBlurredImageList(mainImageUrls)
+        viewInit()
+    }
+
+    override fun setProductOptionData(response: List<ProductOption>) {
+        rv_product_detail_act_slide_option_list.apply {
+            adapter = ProductOptionsRVAdatper(this@ProductDetailActivity, response)
+            layoutManager = LinearLayoutManager(this@ProductDetailActivity)
+        }
+        Log.v("Malibin Debug", response.toString())
+    }
+
+    private fun progressBarOn() {
+        val color = ContextCompat.getColor(this, R.color.MainYellow)
+        progressBar_product_detail_act.visibility = View.VISIBLE
+        progressBar_product_detail_act.indeterminateDrawable
+            .setColorFilter(color, android.graphics.PorterDuff.Mode.SRC_IN)
+    }
+
+    private fun progressBarOff() {
+        progressBar_product_detail_act.visibility = View.GONE
+        slide_product_detail_act_panel.visibility = View.VISIBLE
+    }
+
+    private fun presenterInit() {
+        presenter = ProductDetailPresenter().apply {
+            view = this@ProductDetailActivity
+            goodsRepository = ApplicationController.networkServiceGoods
+            userToken =
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWR4IjoxLCJpYXQiOjE1NjIzMTUzNjYsImV4cCI6MTU2MzYyOTM2Nn0.ZkDGasoDPHTrGvy7yFOT9cPjTQ7gnnUOqekY_zYrAuc"
+        }
+    }
+
+    private fun getServerData() {
+        goodsIdx = intent.getIntExtra("goodsIdx", -1)
+        presenter.getProductDetailData(goodsIdx)
+        presenter.getProductOptionData(goodsIdx)
+    }
+
     private fun setStatusBarTransparent() {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.decorView.systemUiVisibility =
-                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
-                        View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+                    View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
 
         setWindowFlag(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false)
         if (Build.VERSION.SDK_INT >= 21) {
@@ -140,21 +239,21 @@ class ProductDetailActivity : AppCompatActivity() {
     private fun getBlurredImageList(imageUrls: List<String>) {
         for (imageUrl in imageUrls) {
             Glide
-                    .with(this)
-                    .asBitmap()
-                    .load(imageUrl)
-                    .centerCrop()
-                    .into(object : CustomTarget<Bitmap>() {
-                        override fun onLoadCleared(placeholder: Drawable?) {
-                        }
+                .with(this)
+                .asBitmap()
+                .load(imageUrl)
+                .centerCrop()
+                .into(object : CustomTarget<Bitmap>() {
+                    override fun onLoadCleared(placeholder: Drawable?) {
+                    }
 
-                        override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                            val blurredImage = createBlurredImage(resource, 25)
-                            val bitmapDrawable = BitmapDrawable(resources, blurredImage)
-                            blurredImages[imageUrl] = bitmapDrawable
-                            setContentScrimImage(0)
-                        }
-                    })
+                    override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                        val blurredImage = createBlurredImage(resource, 25)
+                        val bitmapDrawable = BitmapDrawable(resources, blurredImage)
+                        blurredImages[imageUrl] = bitmapDrawable
+                        setContentScrimImage(0)
+                    }
+                })
         }
     }
 
@@ -172,7 +271,8 @@ class ProductDetailActivity : AppCompatActivity() {
 
         // Allocate memory for Renderscript to work with
         val input = Allocation.createFromBitmap(
-                rs, originalBitmap, Allocation.MipmapControl.MIPMAP_FULL, Allocation.USAGE_SCRIPT)
+            rs, originalBitmap, Allocation.MipmapControl.MIPMAP_FULL, Allocation.USAGE_SCRIPT
+        )
         val output = Allocation.createTyped(rs, input.type)
 
         // Load up an instance of the specific script that we want to use.
@@ -205,7 +305,9 @@ class ProductDetailActivity : AppCompatActivity() {
 
         detailImageZoneInit()
 
-        reviewZoneInit()
+        infoZoneInit(integrateData.goods)
+
+        reviewZoneInit(integrateData.reviews)
 
         setTabBarClickListener()
 
@@ -215,6 +317,7 @@ class ProductDetailActivity : AppCompatActivity() {
 
         slideUpPanelLayoutConfig()
 
+        progressBarOff()
     }
 
     private fun mainImagesZoneInit() {
@@ -233,17 +336,71 @@ class ProductDetailActivity : AppCompatActivity() {
     }
 
     private fun detailImageZoneInit() {
+        setDetailImage(integrateData.goods.goods_detail)
+    }
 
-        setPreDrawListener2DetailImageForHeight()
+    private fun infoZoneInit(data: GoodsDetail) {
+        tv_product_detail_act_store_name.text = data.store_name
+        tv_product_detail_act_goods_name.text = data.goods_name
+        setStarRate(data.goods_rating)
+        tv_product_detail_act_price.text = data.goods_price
+        tv_product_detail_act_deliver_cost.text = data.goods_delivery_charge
+        tv_product_detail_act_deliver_deadline.text = data.goods_delivery_period
+        tv_product_detail_act_min_amount.text = data.goods_minimum_amount.toString()
 
-        moreDetailImageButtonConfig()
+        isBookmarked = (data.scrap_flag == 1)
+        bookmarkInit()
 
     }
 
-    private fun reviewZoneInit() {
+    private fun setStarRate(rate: Float) {
+        val fullStarNum: Int = rate.toInt()
+        val halfStarNum: Int = ((rate - fullStarNum) * 2).toInt()
+
+        starImageBinding()
+        tv_product_detail_act_star_rate.text = rate.toString()
+
+        for (i in 0 until fullStarNum) {
+            starImages[i].imageResource = R.drawable.img_goods_star
+        }
+        if (halfStarNum == 1)
+            starImages[fullStarNum].imageResource = R.drawable.img_goods_star_half
+
+    }
+
+    private fun bookmarkInit() {
+        if (isBookmarked)
+            iv_product_detail_act_bookmark.isSelected = true
+        iv_product_detail_act_bookmark.setOnClickListener {
+            toast("북마크통신해야함 눌렀을 때의 불린 :  $isBookmarked")
+            if (isBookmarked) {
+                it.isSelected = false
+                isBookmarked = false
+                //북마크 취소통신
+                return@setOnClickListener
+            }
+            it.isSelected = true
+            isBookmarked = true
+            //북마크 요청통신
+        }
+    }
+
+    private fun reviewZoneInit(dataList: List<ReviewAllItem>) {
         rv_product_detail_act_review_list.apply {
-            adapter = ProductDetailReviewRVAdatper(this@ProductDetailActivity, TempData.ReviewAll())
+            adapter = ProductDetailReviewRVAdatper(this@ProductDetailActivity, dataList)
             layoutManager = LinearLayoutManager(this@ProductDetailActivity)
+        }
+
+        listOf(
+            btn_product_detail_act_review_count,
+            btn_product_detail_act_review_more
+        ).forEach {
+            it.setOnClickListener {
+                startActivity<ReviewActivity>()
+            }
+        }
+        btn_product_detail_act_review_write.setOnClickListener {
+            startActivity<ReviewWriteActivity>("goodsIdx" to goodsIdx)
         }
     }
 
@@ -255,6 +412,10 @@ class ProductDetailActivity : AppCompatActivity() {
     private fun getDynamicImageHeight(): Int {
         val phoneWidth = getScreenWidth(this)
         return (phoneWidth * 321 / 360)
+    }
+
+    private fun setDetailImage(imageUrl: String) {
+        Glide.with(this).load(imageUrl).listener(detailImageRequestListener).into(iv_product_detail_act_detail_image)
     }
 
     private fun setPreDrawListener2DetailImageForHeight() {
@@ -351,8 +512,8 @@ class ProductDetailActivity : AppCompatActivity() {
     private fun bottomBarInit() {
         btn_product_detail_act_visit_store.setOnClickListener {
             startActivity<StoreWebActivity>(
-                    "storeUrl" to "https://nightmare73.blog.me",
-                    "storeName" to "스토어이름"
+                "storeUrl" to integrateData.store.store_url,
+                "storeName" to integrateData.goods.store_name
             )
         }
 
@@ -373,6 +534,7 @@ class ProductDetailActivity : AppCompatActivity() {
         }
 
         btn_product_detail_act_slide_bookmark.setOnClickListener {
+            slide_product_detail_act_panel.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
         }
     }
 
@@ -388,29 +550,39 @@ class ProductDetailActivity : AppCompatActivity() {
 
     private fun thumbnailImageViewBinding() {
         thumbnailImages = listOf(
-                findViewById(R.id.iv_product_detail_act_thumbnail1),
-                findViewById(R.id.iv_product_detail_act_thumbnail2),
-                findViewById(R.id.iv_product_detail_act_thumbnail3),
-                findViewById(R.id.iv_product_detail_act_thumbnail4),
-                findViewById(R.id.iv_product_detail_act_thumbnail5),
-                findViewById(R.id.iv_product_detail_act_thumbnail6),
-                findViewById(R.id.iv_product_detail_act_thumbnail7),
-                findViewById(R.id.iv_product_detail_act_thumbnail8),
-                findViewById(R.id.iv_product_detail_act_thumbnail9)
+            findViewById(R.id.iv_product_detail_act_thumbnail1),
+            findViewById(R.id.iv_product_detail_act_thumbnail2),
+            findViewById(R.id.iv_product_detail_act_thumbnail3),
+            findViewById(R.id.iv_product_detail_act_thumbnail4),
+            findViewById(R.id.iv_product_detail_act_thumbnail5),
+            findViewById(R.id.iv_product_detail_act_thumbnail6),
+            findViewById(R.id.iv_product_detail_act_thumbnail7),
+            findViewById(R.id.iv_product_detail_act_thumbnail8),
+            findViewById(R.id.iv_product_detail_act_thumbnail9)
         )
     }
 
     private fun thumbnailFrameBinding() {
         thumbnailFrame = listOf(
-                findViewById(R.id.cl_product_detail_act_thumbnail1),
-                findViewById(R.id.cl_product_detail_act_thumbnail2),
-                findViewById(R.id.cl_product_detail_act_thumbnail3),
-                findViewById(R.id.cl_product_detail_act_thumbnail4),
-                findViewById(R.id.cl_product_detail_act_thumbnail5),
-                findViewById(R.id.cl_product_detail_act_thumbnail6),
-                findViewById(R.id.cl_product_detail_act_thumbnail7),
-                findViewById(R.id.cl_product_detail_act_thumbnail8),
-                findViewById(R.id.cl_product_detail_act_thumbnail9)
+            findViewById(R.id.cl_product_detail_act_thumbnail1),
+            findViewById(R.id.cl_product_detail_act_thumbnail2),
+            findViewById(R.id.cl_product_detail_act_thumbnail3),
+            findViewById(R.id.cl_product_detail_act_thumbnail4),
+            findViewById(R.id.cl_product_detail_act_thumbnail5),
+            findViewById(R.id.cl_product_detail_act_thumbnail6),
+            findViewById(R.id.cl_product_detail_act_thumbnail7),
+            findViewById(R.id.cl_product_detail_act_thumbnail8),
+            findViewById(R.id.cl_product_detail_act_thumbnail9)
+        )
+    }
+
+    private fun starImageBinding() {
+        starImages = listOf(
+            findViewById(R.id.iv_product_detail_act_star1),
+            findViewById(R.id.iv_product_detail_act_star2),
+            findViewById(R.id.iv_product_detail_act_star3),
+            findViewById(R.id.iv_product_detail_act_star4),
+            findViewById(R.id.iv_product_detail_act_star5)
         )
     }
 
@@ -432,9 +604,9 @@ class ProductDetailActivity : AppCompatActivity() {
         for (i in 0 until 9) {
             try {
                 Glide
-                        .with(this)
-                        .load(mainImageUrls[i])
-                        .into(thumbnailImages[i])
+                    .with(this)
+                    .load(mainImageUrls[i])
+                    .into(thumbnailImages[i])
 
             } catch (e: Exception) {
                 thumbnailFrame[i].visibility = View.GONE
@@ -448,9 +620,7 @@ class ProductDetailActivity : AppCompatActivity() {
         currentIndicatorPosition.isSelected = true
     }
 
-    private fun selectViewPagerAt(position: Int){
+    private fun selectViewPagerAt(position: Int) {
         vp_product_detail_act_main_image.currentItem = position
     }
-
-
 }
