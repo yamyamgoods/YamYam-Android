@@ -36,7 +36,7 @@ import org.yamyamgoods.yamyam_android.network.ApplicationController
 import org.yamyamgoods.yamyam_android.network.NetworkServiceUser
 import org.yamyamgoods.yamyam_android.network.get.*
 import org.yamyamgoods.yamyam_android.network.put.PutMypageEditNicknameRequest
-import org.yamyamgoods.yamyam_android.network.put.PutMypageEditProfileImageRequest
+import org.yamyamgoods.yamyam_android.network.put.PostMypageEditProfileImageRequest
 import org.yamyamgoods.yamyam_android.reviewdetail.ReviewDetailActivity
 import org.yamyamgoods.yamyam_android.reviewwrite.ReviewWriteActivity
 import retrofit2.Call
@@ -49,7 +49,7 @@ import java.lang.reflect.Type
 
 class MypageActivity : AppCompatActivity() {
     private val PICK_IMAGE_REQUEST: Int = 1
-
+    var flag = 0
     val token: String = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWR4IjoxLCJpYXQiOjE1NjIzMTUzNjYsImV4cCI6MTU2MzYyOTM2Nn0.ZkDGasoDPHTrGvy7yFOT9cPjTQ7gnnUOqekY_zYrAuc"
 
     val networkService: NetworkServiceUser by lazy {
@@ -90,7 +90,7 @@ class MypageActivity : AppCompatActivity() {
     // 유저 정보 서버 통신
     fun getUserInfoResponse() {
         networkService.getUserInfoResponse(
-                "application/json",
+            "application/json",
                 token)
                 .enqueue(object : Callback<GetUserInfoResponse> {
                     override fun onFailure(call: Call<GetUserInfoResponse>, t: Throwable) {
@@ -153,10 +153,6 @@ class MypageActivity : AppCompatActivity() {
         }
     }
 
-    fun setProfileImageDefault() {
-        iv_mypage_user_image.setImageResource(R.drawable.img_myprofile)
-    }
-
     // 권한 요청
     fun getPermission() {
         val permissionListener = object : PermissionListener {
@@ -187,16 +183,14 @@ class MypageActivity : AppCompatActivity() {
     }
 
     // 프로필 사진 변경 서버 통신
-    private fun putMypageEditProfileImageRequest(img: MultipartBody.Part){
+    private fun postMypageEditProfileImageRequest(img: MultipartBody.Part){
         Log.v("현주", "put 함수에 들어옴")
         if (img !=null) {
-            networkService.putMypageEditProfileImageRequest("multipart/form-data",
-                    token,
-                    img!!
-            ).enqueue(object: Callback<PutMypageEditProfileImageRequest>{
-                override fun onFailure(call: Call<PutMypageEditProfileImageRequest>, t: Throwable) {
+            networkService.postMypageEditProfileImageRequest( token, img!!).
+                enqueue(object: Callback<PostMypageEditProfileImageRequest>{
+                override fun onFailure(call: Call<PostMypageEditProfileImageRequest>, t: Throwable) {
                 }
-                override fun onResponse(call: Call<PutMypageEditProfileImageRequest>, response: Response<PutMypageEditProfileImageRequest>) {
+                override fun onResponse(call: Call<PostMypageEditProfileImageRequest>, response: Response<PostMypageEditProfileImageRequest>) {
                   if (response.isSuccessful)
                       Log.v("현주", response.body()!!.toString())
                     else{
@@ -208,6 +202,10 @@ class MypageActivity : AppCompatActivity() {
                 }
             })
         }
+    }
+
+    fun setProfileImageDefault() {
+        iv_mypage_user_image.setImageResource(R.drawable.img_myprofile)
     }
 
     // 최근 본 상품 서버 통신
@@ -401,14 +399,14 @@ class MypageActivity : AppCompatActivity() {
                         photoBody
                 )
 
-                Log.v("현주: 사진 주소 확인", selectedPictureUri.toString()+ ".jpg")
+                Log.v("현주: 사진 주소 확인", selectedPictureUri.toString())
 
                 Glide.with(this@MypageActivity)
                         .load(selectedPictureUri)
                         .circleCrop()
                         .into(iv_mypage_user_image)
 
-                putMypageEditProfileImageRequest(input_profile_img!!)
+                postMypageEditProfileImageRequest(input_profile_img!!)
             } else {
                 Toast.makeText(this, "취소 되었습니다.", Toast.LENGTH_LONG).show()
             }

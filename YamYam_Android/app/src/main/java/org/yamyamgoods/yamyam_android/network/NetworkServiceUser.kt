@@ -1,12 +1,10 @@
 package org.yamyamgoods.yamyam_android.network
 
-import com.google.gson.JsonObject
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import org.yamyamgoods.yamyam_android.network.get.*
 import org.yamyamgoods.yamyam_android.network.post.PostKakaoLoginResponse
 import org.yamyamgoods.yamyam_android.network.put.PutMypageEditNicknameRequest
-import org.yamyamgoods.yamyam_android.network.put.PutMypageEditProfileImageRequest
+import org.yamyamgoods.yamyam_android.network.put.PostMypageEditProfileImageRequest
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -52,12 +50,11 @@ interface NetworkServiceUser {
 
     // 프로필 사진 수정
     @Multipart
-    @PUT("/user/profile")
-    fun putMypageEditProfileImageRequest(
-            @Header("Content-Type") content_type: String,
+    @POST("/user/profile")
+    fun postMypageEditProfileImageRequest(
             @Header("Authorization") authorization: String,
             @Part img: MultipartBody.Part
-    ): Call<PutMypageEditProfileImageRequest>
+    ): Call<PostMypageEditProfileImageRequest>
 
     //유저 알람 목록보기
     @GET("/user/alarm/list/{lastIndex}")
