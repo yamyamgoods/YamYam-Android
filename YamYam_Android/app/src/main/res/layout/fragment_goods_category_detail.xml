@@ -91,7 +91,8 @@
         <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_frag_goods_category_detail"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp">
         </android.support.v7.widget.RecyclerView>
     </android.support.v4.widget.NestedScrollView>
 

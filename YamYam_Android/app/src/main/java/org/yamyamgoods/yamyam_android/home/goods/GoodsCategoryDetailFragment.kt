@@ -42,7 +42,7 @@ class GoodsCategoryDetailFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view: View = inflater.inflate(R.layout.fragment_goods_category_detail, container, false)
-
+        categoryIdx = instance.categoryIdx
         return view
     }
 
@@ -51,10 +51,7 @@ class GoodsCategoryDetailFragment : Fragment() {
         setOnScrollChange()
         setOnClickListener()
         setRecyclerView()
-        categoryIdx = instance.categoryIdx
         categoryDetailResponse(categoryIdx)
-
-
     }
 
     private fun setOnScrollChange(){
@@ -97,18 +94,11 @@ class GoodsCategoryDetailFragment : Fragment() {
         sortDialog.show()
 
         sortDialog.setOnDismissListener {
+            lastIndex = -1
             setSortFlag()
+            setRecyclerView()
+            categoryDetailResponse(categoryIdx)
         }
-    }
-
-    fun setSortFlag(){
-        if(instance.sort_flag==null){
-            tv_frag_goods_category_detail_sort.text = "ayay"
-        } else {
-            tv_frag_goods_category_detail_sort.text = instance.sort_flag
-            sort = instance.sort_flag
-        }
-        //updateDataList()
     }
 
     fun setOptionDialog(){
@@ -118,37 +108,60 @@ class GoodsCategoryDetailFragment : Fragment() {
         optionDialog.show()
 
         optionDialog.setOnDismissListener {
-            setSortFlag()
+            lastIndex = -1
+            setOptionFlag()
         }
+    }
+
+    fun setSortFlag(){
+        if(instance.sort_flag==null){
+            tv_frag_goods_category_detail_sort.text = "인기순"
+        } else {
+            tv_frag_goods_category_detail_sort.text = instance.sort_flag
+            sort = instance.sort_flag
+        }
+        when (sort) {
+            "인기순" -> order=0
+            "고가순" -> order=1
+            "저가순" -> order=2
+        }
+    }
+
+    fun setOptionFlag(){
+
     }
 
     fun categoryDetailResponse(category_idx: Int) {
         val getCategoryDetailResponse = networkServiceGoods.getCategoryDetailResponse(
-            "application/json", User.authorization, 5, 0, lastIndex,
+            "application/json", User.authorization, category_idx, order, lastIndex,
             null, null, null, null)
         getCategoryDetailResponse.enqueue(object: Callback<GetCategoryDetailResponse>{
             override fun onFailure(call: Call<GetCategoryDetailResponse>, t: Throwable) {
-                Log.e("Category-datil fail", t.toString())
+                Log.e("Category-detail fail", t.toString())
             }
 
             override fun onResponse(call: Call<GetCategoryDetailResponse>, response: Response<GetCategoryDetailResponse>) {
                 if(response.isSuccessful){
-                    Log.e("category-detail success", dataList[0].goods_name)
+
                     if(lastIndex!=-1){
                         var prev_cnt = dataList.size
                         dataList.addAll(response.body()!!.data)
                         goodsCategoryDetailRecyclerViewAdapter.dataList = dataList
                         goodsCategoryDetailRecyclerViewAdapter.notifyItemRangeInserted(prev_cnt, dataList.size-prev_cnt)
+                        Log.e("**GCDF, li -1",dataList[0].goods_name+order)
                     } else {
                         dataList = response.body()!!.data
                         goodsCategoryDetailRecyclerViewAdapter.dataList = dataList
                         goodsCategoryDetailRecyclerViewAdapter.notifyDataSetChanged()
                         nsv_goods_category_detail_frag.fullScroll(NestedScrollView.FOCUS_UP)
-
+                        Log.e("**GCDF, li else",dataList[0].goods_name+order)
                     }
+
                     isRequested = false
                     if(dataList.size ==0) lastIndex = -1
                     else lastIndex = dataList[dataList.size-1].goods_idx
+                    Log.e("**GCDF", dataList[0].goods_name+order)
+                    Log.e("**GCDF",response.body()!!.data.toString())
                 }
             }
         })
