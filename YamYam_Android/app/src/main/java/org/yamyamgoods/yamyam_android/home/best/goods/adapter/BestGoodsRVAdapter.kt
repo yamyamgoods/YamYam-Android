@@ -11,7 +11,6 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import org.jetbrains.anko.imageResource
 import org.jetbrains.anko.startActivity
-import org.yamyamgoods.yamyam_android.home.best.goods.BestGoodsItem
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.dataclass.GoodsData
 import org.yamyamgoods.yamyam_android.home.best.goods.BestGoodsFragment
