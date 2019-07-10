@@ -45,7 +45,9 @@ import org.yamyamgoods.yamyam_android.network.get.ProductDetailData
 import org.yamyamgoods.yamyam_android.productdetail.adapter.ProductDetailImageFragmentPagerAdapter
 import org.yamyamgoods.yamyam_android.productdetail.adapter.ProductDetailReviewRVAdatper
 import org.yamyamgoods.yamyam_android.productdetail.adapter.ProductOptionsRVAdatper
+import org.yamyamgoods.yamyam_android.review.ReviewActivity
 import org.yamyamgoods.yamyam_android.review.all.ReviewAllItem
+import org.yamyamgoods.yamyam_android.reviewwrite.ReviewWriteActivity
 import org.yamyamgoods.yamyam_android.storeweb.StoreWebActivity
 import org.yamyamgoods.yamyam_android.util.dp2px
 import org.yamyamgoods.yamyam_android.util.getScreenWidth
@@ -74,6 +76,7 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailContract.View {
     private var isScrolled = false
     private var isBookmarked = false
 
+    private var goodsIdx = -1
     private var seletedOptions: List<SelectedOption>? = null
 
     private val blurredImages: MutableMap<String, BitmapDrawable> = mutableMapOf()
@@ -216,7 +219,7 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailContract.View {
     }
 
     private fun getServerData() {
-        val goodsIdx = intent.getIntExtra("goodsIdx", -1)
+        goodsIdx = intent.getIntExtra("goodsIdx", -1)
         presenter.getProductDetailData(goodsIdx)
         presenter.getProductOptionData(goodsIdx)
     }
@@ -387,6 +390,18 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailContract.View {
             adapter = ProductDetailReviewRVAdatper(this@ProductDetailActivity, dataList)
             layoutManager = LinearLayoutManager(this@ProductDetailActivity)
         }
+
+        listOf(
+            btn_product_detail_act_review_count,
+            btn_product_detail_act_review_more
+        ).forEach {
+            it.setOnClickListener {
+                startActivity<ReviewActivity>()
+            }
+        }
+        btn_product_detail_act_review_write.setOnClickListener {
+            startActivity<ReviewWriteActivity>("goodsIdx" to goodsIdx)
+        }
     }
 
     private fun setMainImagesHeight() {
@@ -519,6 +534,7 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailContract.View {
         }
 
         btn_product_detail_act_slide_bookmark.setOnClickListener {
+            slide_product_detail_act_panel.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
         }
     }
 
