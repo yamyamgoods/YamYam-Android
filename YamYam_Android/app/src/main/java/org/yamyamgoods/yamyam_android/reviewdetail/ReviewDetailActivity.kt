@@ -24,6 +24,7 @@ import org.yamyamgoods.yamyam_android.network.NetworkServiceGoods
 import org.yamyamgoods.yamyam_android.network.get.GetReviewDetailResponse
 import org.yamyamgoods.yamyam_android.network.get.ReviewCommentData
 import org.yamyamgoods.yamyam_android.network.get.ReviewDetailGoodsData
+import org.yamyamgoods.yamyam_android.network.post.PostCommentWriteRequestData
 import org.yamyamgoods.yamyam_android.reviewdetail.adapter.ReviewDetailRVAdapter
 import org.yamyamgoods.yamyam_android.util.TempData
 import retrofit2.Call
@@ -44,11 +45,13 @@ class ReviewDetailActivity : AppCompatActivity() {
 
     var options: RequestOptions = RequestOptions().transform(CenterCrop(), RoundedCorners(10))
 
-    var reviewIdx: Int = 0
+    var reviewIndex: Int = 0
     var starCount: Int = 0
     var thumbCount: Int = 0
     var commentCount: Int = 0
     var thumbFlag: Int = 0
+    var userIndex: Int = 0
+    lateinit var userImage: String
     lateinit var userNickname: String
     lateinit var date: String
     lateinit var reviewContents: String
@@ -62,16 +65,23 @@ class ReviewDetailActivity : AppCompatActivity() {
         //configureProduct(TempData.ReviewDetailProducts(), 2)
         configureReview()
         //configureComments()
+
+
+
+        // 알람보내기
+//        btn_review_detail_comment_input.setOnClickListener{
+//            makeAlarm()
+//        }
     }
 
     private fun getVariables() {
         setResult(Activity.RESULT_OK, intent)
         var rvDTO: ReviewData = intent.getParcelableExtra("dto")
-        reviewIdx = rvDTO.goods_review_idx
+        reviewIndex = rvDTO.goods_review_idx
         userNickname = rvDTO.user_name
         date = rvDTO.goods_review_date
         reviewContents = rvDTO.goods_review_content
-
+        userImage = rvDTO.user_img
         starCount = rvDTO.goods_review_rating
         imageUrl = rvDTO.goods_review_img
         thumbFlag = rvDTO.review_like_flag
@@ -81,7 +91,7 @@ class ReviewDetailActivity : AppCompatActivity() {
 
     fun getReviewDetailResponse(){
         networkService.getReviewDetailResponse(
-            "application/json", token, reviewIdx).enqueue(object: Callback<GetReviewDetailResponse> {
+            "application/json", token, reviewIndex).enqueue(object: Callback<GetReviewDetailResponse> {
             override fun onFailure(call: Call<GetReviewDetailResponse>, t: Throwable) {
                 Log.e("현주", t.toString())
             }
@@ -174,12 +184,13 @@ class ReviewDetailActivity : AppCompatActivity() {
     }
     */
 
+    // 리뷰 부분
     private fun configureReview() {
         Glide.with(this)
-                .load(intent.getStringExtra("user_img"))
+                .load(userImage)
                 .centerCrop()
                 .circleCrop()
-                .into(findViewById(R.id.iv_review_detail_review_user_img))
+                .into(iv_review_detail_review_user_img)
 
         tv_review_detail_review_user_nickname.text = userNickname
         tv_review_detail_review_date.text = date
@@ -199,20 +210,21 @@ class ReviewDetailActivity : AppCompatActivity() {
                 findViewById(R.id.iv_review_detail_review_image3)
         )
 
-        var imageNum = imageUrl.size
-
         for (i in 0 until (starCount)) {
             starRate[i].setImageResource(R.drawable.icon_colorstar)
         }
 
+        var imageNum = imageUrl.size
         var etcImageNum: TextView = findViewById(R.id.tv_review_detail_review_etc_image_num) as TextView
-        if (imageUrl.size > 3) {
+        if (imageNum > 3) {
             setVisible(etcImageNum)
             reviewImage[2].setColorFilter(Color.parseColor("#333333"), PorterDuff.Mode.MULTIPLY)
-            etcImageNum.text = "+" + (imageUrl.size - 3).toString()
+            etcImageNum.text = "+" + (imageNum - 3).toString()
             imageNum = 3
+            Log.v("현주", "이미지 3 초과")
         }
         for (i in 0 until imageNum) {
+            Log.v("현주", "이미지 3 이하")
             setVisible(reviewImage[i])
             Glide.with(this)
                     .load(imageUrl[i])
@@ -232,22 +244,56 @@ class ReviewDetailActivity : AppCompatActivity() {
         tv_rv_item_best_review_all_comments_num.text = commentCount.toString()
     }
 
-    // comments 부분
     /*
-    private fun configureComments() {
-        rv_review_detail_comment_list.apply {
-            adapter = ReviewDetailRVAdapter(this@ReviewDetailActivity, TempData.ReviewComments())
-            layoutManager = LinearLayoutManager(this@ReviewDetailActivity)
-        }
+        val reviewIdx: Int,
+    val contents: String,
+    val userIdxForAlarm: Int,
+    val recommentFlag: Int  //0: 댓글, 1: 대댓글
+     */
+
+    // 댓글 작성 서버 통신 : 대댓글 아님 : 0
+    private fun postCommentWriteResponse
+                (reviewIdx: Int, contents: String, userIdxForAlarm: Int, recommentFlag: Int){
+        networkService.postCommentWriteRequest("application/json", token,
+            PostCommentWriteRequestData(reviewIdx, contents, userIdxForAlarm, recommentFlag))
+            .enqueue(object: Callback<PostCommentWriteRequestData>{
+                override fun onFailure(call: Call<PostCommentWriteRequestData>, t: Throwable) {
+                    Log.e("현주", t.toString())
+                }
+
+                override fun onResponse(
+                    call: Call<PostCommentWriteRequestData>,
+                    response: Response<PostCommentWriteRequestData>
+                ) {
+                    if (response.isSuccessful){
+                        response.body()?.let{
+                            Log.v("현주", "댓글 작성 통신 성공  response : ${response.body()}")
+                        }
+                    }
+                }
+            })
+    }
+
+    // 댓글 작성자에게 알람 보내기
+    /*
+    private fun makeAlarm(){
+        var content : String = edt_review_detail_input_comment.text.toString()
+        PostCommentWriteRequestData(reviewIndex, content, user_idx, 0)  //user_idx를 받아올 수 없다.
     }*/
 
-    fun editTextTag(nickname: String){
+    // 태그 기능
+    fun editTextTag(nickname: String, cmtIdx: Int){
         edtComment =  findViewById(R.id.edt_review_detail_input_comment)
         var originText: String = edtComment.getText().toString()
 
         var tagUser: String = originText.plus("@").plus(nickname).plus(" ")
         edt_review_detail_input_comment.setText(tagUser)
         edt_review_detail_input_comment.setSelection(edt_review_detail_input_comment.length())
+        // 댓글을 입력했을 때
+        var content : String = edt_review_detail_input_comment.text.toString()
+        btn_review_detail_comment_input.setOnClickListener{
+            PostCommentWriteRequestData(reviewIndex, content, cmtIdx, 1)
+        }
     }
 
    fun setVisible(view: View) {

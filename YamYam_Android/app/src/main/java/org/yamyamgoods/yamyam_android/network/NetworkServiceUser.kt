@@ -4,7 +4,7 @@ import okhttp3.MultipartBody
 import org.yamyamgoods.yamyam_android.network.get.*
 import org.yamyamgoods.yamyam_android.network.post.PostKakaoLoginResponse
 import org.yamyamgoods.yamyam_android.network.put.PutMypageEditNicknameRequest
-import org.yamyamgoods.yamyam_android.network.put.PostMypageEditProfileImageRequest
+import org.yamyamgoods.yamyam_android.network.post.PostMypageEditProfileImageRequest
 import retrofit2.Call
 import retrofit2.http.*
 
