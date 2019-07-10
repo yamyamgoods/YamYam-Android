@@ -396,7 +396,7 @@
 
                             <android.support.constraint.ConstraintLayout
                                     android:id="@+id/infoZone"
-                                    android:layout_width="379dp"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="16dp"
                                     android:layout_marginTop="20dp"
@@ -528,7 +528,7 @@
 
                             <LinearLayout
                                     android:id="@+id/linearLayout"
-                                    android:layout_width="379dp"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="16dp"
                                     android:layout_marginTop="20dp"
@@ -713,7 +713,7 @@
 
                             <View
                                     android:id="@+id/grayBlankZone"
-                                    android:layout_width="411dp"
+                                    android:layout_width="match_parent"
                                     android:layout_height="12dp"
                                     android:background="#F5F6F9"/>
 
