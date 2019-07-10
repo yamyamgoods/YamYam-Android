@@ -25,10 +25,9 @@ class BestTabFragment : Fragment() {
         private var instance: BestTabFragment? = null
 
         @JvmStatic
-        fun getInstance(): BestTabFragment {
-            return instance ?: BestTabFragment()
-                .apply { instance = this }
-        }
+        fun getInstance(): BestTabFragment = instance
+            ?: BestTabFragment().apply { instance = this }
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
