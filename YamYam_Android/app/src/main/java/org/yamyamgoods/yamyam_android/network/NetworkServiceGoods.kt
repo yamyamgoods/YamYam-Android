@@ -96,10 +96,19 @@ interface NetworkServiceGoods {
             @Path("goodsIdx") goodsIdx: Int
     ): Call<DeleteBookmarkResponseData>
 
+    //상품 상세보기 데이터 요청
     @GET("goods/{goodsIdx}/detail")
     fun getProductDetailRequest(
         @Header("Content-Type") contentType: String = "application/json",
         @Header("Authorization") token: String?,
         @Path("goodsIdx") goodsIdx: Int
     ): Call<GetProductDetailResponseData>
+
+    //상품 견적 데이터 요청
+    @GET("/goods/{goodsIdx}/options")
+    fun getProductOptionsRequest(
+        @Header("Content-Type") contentType: String = "application/json",
+        @Header("Authorization") token: String?,
+        @Path("goodsIdx") goodsIdx: Int
+    ): Call<GetProductOptionsResponseData>
 }

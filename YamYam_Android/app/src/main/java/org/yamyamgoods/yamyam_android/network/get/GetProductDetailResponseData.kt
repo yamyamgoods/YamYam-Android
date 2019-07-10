@@ -22,8 +22,10 @@ data class ProductDetailData(
 data class GoodsDetail(
     val goods_idx: Int,
     val goods_name: String,
+    val goods_rating: Float,
     val store_name: String,
     val goods_price: String,
+    val goods_delivery_charge: String,
     val goods_delivery_period: String,
     val goods_minimum_amount: Int,
     val goods_detail: String,

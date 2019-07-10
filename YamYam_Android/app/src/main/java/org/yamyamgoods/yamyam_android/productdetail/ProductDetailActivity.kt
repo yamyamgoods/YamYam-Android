@@ -33,14 +33,18 @@ import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.activity_product_detail.*
+import org.jetbrains.anko.imageResource
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import org.yamyamgoods.yamyam_android.R
+import org.yamyamgoods.yamyam_android.dataclass.ProductOption
+import org.yamyamgoods.yamyam_android.dataclass.SelectedOption
 import org.yamyamgoods.yamyam_android.network.ApplicationController
 import org.yamyamgoods.yamyam_android.network.get.GoodsDetail
 import org.yamyamgoods.yamyam_android.network.get.ProductDetailData
 import org.yamyamgoods.yamyam_android.productdetail.adapter.ProductDetailImageFragmentPagerAdapter
 import org.yamyamgoods.yamyam_android.productdetail.adapter.ProductDetailReviewRVAdatper
+import org.yamyamgoods.yamyam_android.productdetail.adapter.ProductOptionsRVAdatper
 import org.yamyamgoods.yamyam_android.review.all.ReviewAllItem
 import org.yamyamgoods.yamyam_android.storeweb.StoreWebActivity
 import org.yamyamgoods.yamyam_android.util.dp2px
@@ -68,13 +72,14 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailContract.View {
     private var isDetailZone = true
     private var isReviewZone = false
     private var isScrolled = false
-
     private var isBookmarked = false
+
+    private var seletedOptions: List<SelectedOption>? = null
 
     private val blurredImages: MutableMap<String, BitmapDrawable> = mutableMapOf()
     private lateinit var mainImageUrls: List<String>
     private lateinit var thumbnailImages: List<ImageView>
-
+    private lateinit var starImages: List<ImageView>
     private lateinit var currentIndicatorPosition: ConstraintLayout
     private lateinit var thumbnailFrame: List<ConstraintLayout>
 
@@ -141,16 +146,11 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailContract.View {
             dataSource: DataSource?,
             isFirstResource: Boolean
         ): Boolean {
-            Log.v("Malibin Debug","RequestListener<Drawable> Called : ${iv_product_detail_act_detail_image.drawable}")
-
             iv_product_detail_act_detail_image.setImageDrawable(resource)
-
-            Log.v("Malibin Debug","RequestListener<Drawable> Called After Set: ${iv_product_detail_act_detail_image.drawable}")
             setPreDrawListener2DetailImageForHeight()
             moreDetailImageButtonConfig()
             return true
         }
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -159,17 +159,10 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailContract.View {
 
         progressBarOn()
 
-
-        Log.v("Malibin Debug", "After onCreate : drawable ${iv_product_detail_act_detail_image.drawable}")
-
         presenterInit()
         getServerData()
 
-        //mainImageUrls = TempData.imageUrls3()
-        //getBlurredImageList(mainImageUrls)
-
         setStatusBarTransparent()
-
     }
 
     override fun onBackPressed() {
@@ -191,6 +184,14 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailContract.View {
         mainImageUrls = integrateData.goods.goods_img
         getBlurredImageList(mainImageUrls)
         viewInit()
+    }
+
+    override fun setProductOptionData(response: List<ProductOption>) {
+        rv_product_detail_act_slide_option_list.apply {
+            adapter = ProductOptionsRVAdatper(this@ProductDetailActivity, response)
+            layoutManager = LinearLayoutManager(this@ProductDetailActivity)
+        }
+        Log.v("Malibin Debug", response.toString())
     }
 
     private fun progressBarOn() {
@@ -216,8 +217,8 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailContract.View {
 
     private fun getServerData() {
         val goodsIdx = intent.getIntExtra("goodsIdx", -1)
-        Log.v("Malibin Debug", "goodsIdx : $goodsIdx")
         presenter.getProductDetailData(goodsIdx)
+        presenter.getProductOptionData(goodsIdx)
     }
 
     private fun setStatusBarTransparent() {
@@ -332,22 +333,35 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailContract.View {
     }
 
     private fun detailImageZoneInit() {
-
         setDetailImage(integrateData.goods.goods_detail)
-
     }
 
     private fun infoZoneInit(data: GoodsDetail) {
         tv_product_detail_act_store_name.text = data.store_name
         tv_product_detail_act_goods_name.text = data.goods_name
-        //setStarRate(data.)
+        setStarRate(data.goods_rating)
         tv_product_detail_act_price.text = data.goods_price
-        //tv_product_detail_act_deliver_cost.text
+        tv_product_detail_act_deliver_cost.text = data.goods_delivery_charge
         tv_product_detail_act_deliver_deadline.text = data.goods_delivery_period
         tv_product_detail_act_min_amount.text = data.goods_minimum_amount.toString()
 
         isBookmarked = (data.scrap_flag == 1)
         bookmarkInit()
+
+    }
+
+    private fun setStarRate(rate: Float) {
+        val fullStarNum: Int = rate.toInt()
+        val halfStarNum: Int = ((rate - fullStarNum) * 2).toInt()
+
+        starImageBinding()
+        tv_product_detail_act_star_rate.text = rate.toString()
+
+        for (i in 0 until fullStarNum) {
+            starImages[i].imageResource = R.drawable.img_goods_star
+        }
+        if (halfStarNum == 1)
+            starImages[fullStarNum].imageResource = R.drawable.img_goods_star_half
 
     }
 
@@ -386,13 +400,7 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailContract.View {
     }
 
     private fun setDetailImage(imageUrl: String) {
-        Log.v("Malibin Debug", " url : $imageUrl")
-        Log.v(
-            "Malibin Debug",
-            "Before setDetailImage() : drawable ${iv_product_detail_act_detail_image.drawable} / ${iv_product_detail_act_detail_image}"
-        )
         Glide.with(this).load(imageUrl).listener(detailImageRequestListener).into(iv_product_detail_act_detail_image)
-        Log.v("Malibin Debug", "After setDetailImage() : drawable ${iv_product_detail_act_detail_image.drawable}")
     }
 
     private fun setPreDrawListener2DetailImageForHeight() {
@@ -489,8 +497,8 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailContract.View {
     private fun bottomBarInit() {
         btn_product_detail_act_visit_store.setOnClickListener {
             startActivity<StoreWebActivity>(
-                "storeUrl" to "https://nightmare73.blog.me",
-                "storeName" to "스토어이름"
+                "storeUrl" to integrateData.store.store_url,
+                "storeName" to integrateData.goods.store_name
             )
         }
 
@@ -549,6 +557,16 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailContract.View {
             findViewById(R.id.cl_product_detail_act_thumbnail7),
             findViewById(R.id.cl_product_detail_act_thumbnail8),
             findViewById(R.id.cl_product_detail_act_thumbnail9)
+        )
+    }
+
+    private fun starImageBinding() {
+        starImages = listOf(
+            findViewById(R.id.iv_product_detail_act_star1),
+            findViewById(R.id.iv_product_detail_act_star2),
+            findViewById(R.id.iv_product_detail_act_star3),
+            findViewById(R.id.iv_product_detail_act_star4),
+            findViewById(R.id.iv_product_detail_act_star5)
         )
     }
 
