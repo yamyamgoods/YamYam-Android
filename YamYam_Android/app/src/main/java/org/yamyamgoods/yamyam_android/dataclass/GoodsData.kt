@@ -11,7 +11,7 @@ data class GoodsData (
         val goods_name: String,
         val goods_price: String,
         val goods_rating: Float?,
-        val goods_minimum_amount: Int?,
+        val goods_minimum_amount: String?,
         val goods_review_cnt: Int?,
         var scrap_flag: Int
 )
