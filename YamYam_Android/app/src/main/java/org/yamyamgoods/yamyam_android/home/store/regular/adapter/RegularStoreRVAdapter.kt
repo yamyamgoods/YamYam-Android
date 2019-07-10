@@ -12,9 +12,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import org.jetbrains.anko.imageResource
 import org.yamyamgoods.yamyam_android.R
-import org.yamyamgoods.yamyam_android.home.store.regular.RegularStoreItem
+import org.yamyamgoods.yamyam_android.dataclass.StoreData
 
-class RegularStoreRVAdapter(private val ctx: Context, private val dataList: List<RegularStoreItem>)
+class RegularStoreRVAdapter(private val ctx: Context, private val dataList: List<StoreData>)
     : RecyclerView.Adapter<RegularStoreRVAdapter.Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -27,23 +27,19 @@ class RegularStoreRVAdapter(private val ctx: Context, private val dataList: List
     override fun onBindViewHolder(holder: Holder, position: Int) {
 
         dataList[position].let { item ->
-            setCircleImage(holder.ivImage, item.imageUrl)
+            setCircleImage(holder.ivImage, item.store_img)
 
-            holder.tvStoreName.text = item.storeName
+            holder.tvStoreName.text = item.store_name
             holder.tvHashTag.text = item.getOneLineHashTags()
-
-            holder.ivStar.imageResource = R.drawable.star
-            holder.tvStarRate.text = item.starRate.toString()
-            holder.tvReviewCount.text = item.reviewCount.toString()
 
             holder.ivLike.apply{
                 imageResource = R.drawable.selector_store_list_like
-                isSelected = item.isLiked
+                isSelected = item.store_scrap_flag
             }
         }
     }
 
-    private fun setCircleImage(view: ImageView, imageUrl: Int) =
+    private fun setCircleImage(view: ImageView, imageUrl: String) =
             Glide.with(ctx)
                     .load(imageUrl)
                     .apply(RequestOptions.circleCropTransform())
@@ -54,10 +50,6 @@ class RegularStoreRVAdapter(private val ctx: Context, private val dataList: List
 
         val tvStoreName: TextView = itemView.findViewById(R.id.tv_rv_item_regular_store_name)
         val tvHashTag: TextView = itemView.findViewById(R.id.tv_rv_item_regular_store_tags)
-
-        val ivStar: ImageView = itemView.findViewById(R.id.iv_rv_item_regular_store_star)
-        val tvStarRate: TextView = itemView.findViewById(R.id.tv_rv_item_regular_store_star_rate)
-        val tvReviewCount: TextView = itemView.findViewById(R.id.tv_rv_item_regular_store_review_count)
 
         val btnLike: ConstraintLayout = itemView.findViewById(R.id.btn_rv_item_regular_store_like)
         val ivLike: ImageView = itemView.findViewById(R.id.iv_rv_item_regular_store_like)
