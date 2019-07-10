@@ -1,5 +1,6 @@
 package org.yamyamgoods.yamyam_android.network
 
+import org.yamyamgoods.yamyam_android.network.get.GetRegularStoreResponseData
 import org.yamyamgoods.yamyam_android.network.get.GetSearchStoreResponse
 import org.yamyamgoods.yamyam_android.network.get.GetStoreCategoryListResponseData
 import org.yamyamgoods.yamyam_android.network.get.GetStoreRankingResponseData
@@ -33,4 +34,12 @@ interface NetworkServiceStore {
         @Path("lastIndex") lastIndex: Int,
         @Query("storeCategoryIdx") storeCategoryIdx: Int
     ): Call<GetStoreRankingResponseData>
+
+    // 단골 스토어 리스트 요청
+    @GET("/store/scrap/{lastIndex}")
+    fun getRegularStoreRequest(
+        @Header("Content-Type") contentType: String = "application/json",
+        @Header("Authorization") token: String?,
+        @Path("lastIndex") lastIndex: Int
+    ): Call<GetRegularStoreResponseData>
 }

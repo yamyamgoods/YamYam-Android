@@ -14,8 +14,9 @@ import org.jetbrains.anko.imageResource
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.dataclass.StoreData
 
-class RegularStoreRVAdapter(private val ctx: Context, private val dataList: List<StoreData>)
-    : RecyclerView.Adapter<RegularStoreRVAdapter.Holder>() {
+class RegularStoreRVAdapter(private val ctx: Context) : RecyclerView.Adapter<RegularStoreRVAdapter.Holder>() {
+
+    private val dataList = ArrayList<StoreData>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val view: View = LayoutInflater.from(ctx).inflate(R.layout.rv_item_regular_store, parent, false)
@@ -32,18 +33,24 @@ class RegularStoreRVAdapter(private val ctx: Context, private val dataList: List
             holder.tvStoreName.text = item.store_name
             holder.tvHashTag.text = item.getOneLineHashTags()
 
-            holder.ivLike.apply{
+            holder.ivLike.apply {
                 imageResource = R.drawable.selector_bookmark_flag
                 isSelected = item.store_scrap_flag
             }
         }
     }
 
+    fun addData(newData: List<StoreData>) {
+        val previousSize = itemCount
+        dataList.addAll(newData)
+        notifyItemRangeInserted(previousSize, itemCount)
+    }
+
     private fun setCircleImage(view: ImageView, imageUrl: String) =
-            Glide.with(ctx)
-                    .load(imageUrl)
-                    .apply(RequestOptions.circleCropTransform())
-                    .into(view)
+        Glide.with(ctx)
+            .load(imageUrl)
+            .apply(RequestOptions.circleCropTransform())
+            .into(view)
 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val ivImage: ImageView = itemView.findViewById(R.id.iv_rv_item_regular_store_image)
