@@ -1,243 +1,244 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@android:color/white">
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="wrap_content"
+                                             android:background="@android:color/white"
+                                             android:id="@+id/cl_rv_item_product_detail_review_whole">
 
     <View
-        android:id="@+id/grayLine"
-        android:layout_width="0dp"
-        android:layout_height="0.5dp"
-        android:background="#A2A2A2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            android:id="@+id/grayLine"
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"
+            android:background="#A2A2A2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageView
-        android:id="@+id/iv_rv_item_product_detail_review_profile"
-        android:layout_width="33dp"
-        android:layout_height="33dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/ic_launcher_round" />
+            android:id="@+id/iv_rv_item_product_detail_review_profile"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@mipmap/ic_launcher_round"/>
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/constraintLayout3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/iv_rv_item_product_detail_review_profile"
-        app:layout_constraintTop_toTopOf="@+id/iv_rv_item_product_detail_review_profile">
+            android:id="@+id/constraintLayout3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_rv_item_product_detail_review_profile"
+            app:layout_constraintTop_toTopOf="@+id/iv_rv_item_product_detail_review_profile">
 
         <LinearLayout
-            android:id="@+id/starBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:id="@+id/iv_rv_item_product_detail_review_star1"
+                android:id="@+id/starBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0"
-                app:srcCompat="@drawable/img_goods_stargray" />
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/iv_rv_item_product_detail_review_star2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="1dp"
-                android:layout_weight="0"
-                app:srcCompat="@drawable/img_goods_stargray" />
+                    android:id="@+id/iv_rv_item_product_detail_review_star1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    app:srcCompat="@drawable/img_goods_stargray"/>
 
             <ImageView
-                android:id="@+id/iv_rv_item_product_detail_review_star3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="1dp"
-                android:layout_weight="0"
-                app:srcCompat="@drawable/img_goods_stargray" />
+                    android:id="@+id/iv_rv_item_product_detail_review_star2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1dp"
+                    android:layout_weight="0"
+                    app:srcCompat="@drawable/img_goods_stargray"/>
 
             <ImageView
-                android:id="@+id/iv_rv_item_product_detail_review_star4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="1dp"
-                android:layout_weight="0"
-                app:srcCompat="@drawable/img_goods_stargray" />
+                    android:id="@+id/iv_rv_item_product_detail_review_star3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1dp"
+                    android:layout_weight="0"
+                    app:srcCompat="@drawable/img_goods_stargray"/>
 
             <ImageView
-                android:id="@+id/iv_rv_item_product_detail_review_star5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="1dp"
-                android:layout_weight="0"
-                app:srcCompat="@drawable/img_goods_stargray" />
+                    android:id="@+id/iv_rv_item_product_detail_review_star4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1dp"
+                    android:layout_weight="0"
+                    app:srcCompat="@drawable/img_goods_stargray"/>
+
+            <ImageView
+                    android:id="@+id/iv_rv_item_product_detail_review_star5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1dp"
+                    android:layout_weight="0"
+                    app:srcCompat="@drawable/img_goods_stargray"/>
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tv_rv_item_product_detail_review_nickname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="닉네임"
-            android:textSize="14dp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+                android:id="@+id/tv_rv_item_product_detail_review_nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="닉네임"
+                android:textSize="14dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
-            android:id="@+id/tv_rv_item_product_detail_review_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:text="0000.00.00"
-            android:textSize="14dp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_rv_item_product_detail_review_nickname" />
+                android:id="@+id/tv_rv_item_product_detail_review_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:text="0000.00.00"
+                android:textSize="14dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_rv_item_product_detail_review_nickname"/>
 
         <TextView
-            android:id="@+id/tv_rv_item_product_detail_review_content"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:ellipsize="end"
-            android:lineSpacingExtra="6dp"
-            android:maxLines="3"
-            android:text="소량제작 몇개 했는데 뫄뫄가 좋다는 소리듣고 여기서  했거덩요~ 근데 괜찮네여 배송은 얼마정도 걸렸는데  파본도 별로 없고 조와요 조와~ 엄마 아빠 할머니 나야뭐 그렇게 어려운게 아니니까 ㅎㅎ"
-            android:textSize="14dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_rv_item_product_detail_review_date" />
+                android:id="@+id/tv_rv_item_product_detail_review_content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:ellipsize="end"
+                android:lineSpacingExtra="6dp"
+                android:maxLines="3"
+                android:text="소량제작 몇개 했는데 뫄뫄가 좋다는 소리듣고 여기서  했거덩요~ 근데 괜찮네여 배송은 얼마정도 걸렸는데  파본도 별로 없고 조와요 조와~ 엄마 아빠 할머니 나야뭐 그렇게 어려운게 아니니까 ㅎㅎ"
+                android:textSize="14dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_rv_item_product_detail_review_date"/>
 
         <android.support.constraint.ConstraintLayout
-            android:id="@+id/cl_rv_item_product_detail_review_image_zone"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_rv_item_product_detail_review_content">
-
-            <android.support.v7.widget.CardView
+                android:id="@+id/cl_rv_item_product_detail_review_image_zone"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginEnd="4dp"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/space"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/iv_rv_item_product_detail_review_image1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleType="centerCrop"
-                    android:visibility="gone"
-                    app:srcCompat="@drawable/img_aiasfmskld" />
-            </android.support.v7.widget.CardView>
-
-            <Space
-                android:id="@+id/space"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.33"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_rv_item_product_detail_review_content">
 
             <android.support.v7.widget.CardView
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="4dp"
-                android:layout_marginEnd="4dp"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/space2"
-                app:layout_constraintStart_toEndOf="@+id/space"
-                app:layout_constraintTop_toTopOf="parent">
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="4dp"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/space"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
-                    android:id="@+id/iv_rv_item_product_detail_review_image2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleType="centerCrop"
-                    android:visibility="gone"
-                    app:srcCompat="@drawable/img_aiasfmskld" />
-            </android.support.v7.widget.CardView>
-
-            <Space
-                android:id="@+id/space2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/space"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <android.support.v7.widget.CardView
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="4dp"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/space2"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/iv_rv_item_product_detail_review_image3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleType="centerCrop"
-                    android:visibility="gone"
-                    app:srcCompat="@drawable/img_aiasfmskld" />
-
-                <android.support.constraint.ConstraintLayout
-                    android:id="@+id/cl_rv_item_product_detail_review_image_mask"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="#99000000"
-                    android:visibility="gone">
-
-                    <LinearLayout
+                        android:id="@+id/iv_rv_item_product_detail_review_image1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        android:scaleType="centerCrop"
+                        android:visibility="gone"
+                        app:srcCompat="@drawable/img_aiasfmskld"/>
+            </android.support.v7.widget.CardView>
 
-                        <TextView
-                            android:id="@+id/textView23"
+            <Space
+                    android:id="@+id/space"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.33"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+            <android.support.v7.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/space2"
+                    app:layout_constraintStart_toEndOf="@+id/space"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                        android:id="@+id/iv_rv_item_product_detail_review_image2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="centerCrop"
+                        android:visibility="gone"
+                        app:srcCompat="@drawable/img_aiasfmskld"/>
+            </android.support.v7.widget.CardView>
+
+            <Space
+                    android:id="@+id/space2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/space"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+            <android.support.v7.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="4dp"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/space2"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                        android:id="@+id/iv_rv_item_product_detail_review_image3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="centerCrop"
+                        android:visibility="gone"
+                        app:srcCompat="@drawable/img_aiasfmskld"/>
+
+                <android.support.constraint.ConstraintLayout
+                        android:id="@+id/cl_rv_item_product_detail_review_image_mask"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#99000000"
+                        android:visibility="gone">
+
+                    <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="+"
-                            android:textColor="@android:color/white"
-                            android:textSize="20dp"
-                            android:textStyle="bold" />
+                            android:orientation="horizontal"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
 
                         <TextView
-                            android:id="@+id/tv_rv_item_product_detail_review_image_more_count"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="0"
-                            android:textColor="@android:color/white"
-                            android:textSize="20dp"
-                            android:textStyle="bold" />
+                                android:id="@+id/textView23"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="+"
+                                android:textColor="@android:color/white"
+                                android:textSize="20dp"
+                                android:textStyle="bold"/>
+
+                        <TextView
+                                android:id="@+id/tv_rv_item_product_detail_review_image_more_count"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0"
+                                android:textColor="@android:color/white"
+                                android:textSize="20dp"
+                                android:textStyle="bold"/>
                     </LinearLayout>
                 </android.support.constraint.ConstraintLayout>
             </android.support.v7.widget.CardView>
@@ -246,74 +247,74 @@
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/likeCommentZone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="21dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/iv_rv_item_product_detail_review_profile"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
-
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/btn_rv_item_product_detail_review_like"
+            android:id="@+id/likeCommentZone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="21dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintStart_toEndOf="@+id/iv_rv_item_product_detail_review_profile"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
 
-            <ImageView
-                android:id="@+id/iv_rv_item_product_detail_review_like"
+        <android.support.constraint.ConstraintLayout
+                android:id="@+id/btn_rv_item_product_detail_review_like"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/selector_review_thumb" />
+                app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                    android:id="@+id/iv_rv_item_product_detail_review_like"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/selector_review_thumb"/>
 
             <TextView
-                android:id="@+id/tv_rv_item_product_detail_review_like_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="0"
-                android:textColor="@android:color/black"
-                android:textSize="11dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/iv_rv_item_product_detail_review_like" />
+                    android:id="@+id/tv_rv_item_product_detail_review_like_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="0"
+                    android:textColor="@android:color/black"
+                    android:textSize="11dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/iv_rv_item_product_detail_review_like"/>
         </android.support.constraint.ConstraintLayout>
 
         <android.support.constraint.ConstraintLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            app:layout_constraintBottom_toBottomOf="@+id/btn_rv_item_product_detail_review_like"
-            app:layout_constraintStart_toEndOf="@+id/btn_rv_item_product_detail_review_like">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_rv_item_product_detail_review_like"
+                app:layout_constraintStart_toEndOf="@+id/btn_rv_item_product_detail_review_like">
 
             <ImageView
-                android:id="@+id/imageView18"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/icon_comment" />
+                    android:id="@+id/imageView18"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/icon_comment"/>
 
             <TextView
-                android:id="@+id/tv_rv_item_product_detail_review_comments_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="0"
-                android:textColor="@android:color/black"
-                android:textSize="11dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView18"
-                app:layout_constraintTop_toTopOf="parent" />
+                    android:id="@+id/tv_rv_item_product_detail_review_comments_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="0"
+                    android:textColor="@android:color/black"
+                    android:textSize="11dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imageView18"
+                    app:layout_constraintTop_toTopOf="parent"/>
         </android.support.constraint.ConstraintLayout>
     </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>

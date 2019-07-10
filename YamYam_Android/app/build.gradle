@@ -13,6 +13,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -73,5 +74,8 @@ dependencies {
 
     //range seekbar
     implementation 'com.crystal:crystalrangeseekbar:1.1.3'
+
+    //to solve over single dex file issue
+    implementation 'com.android.support:multidex:1.0.3'
 }
 apply plugin: 'com.google.gms.google-services'

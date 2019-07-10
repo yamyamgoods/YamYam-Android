@@ -11,8 +11,10 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import org.jetbrains.anko.imageResource
+import org.jetbrains.anko.startActivity
 import org.yamyamgoods.yamyam_android.R
-import org.yamyamgoods.yamyam_android.review.all.ReviewAllItem
+import org.yamyamgoods.yamyam_android.dataclass.ReviewData
+import org.yamyamgoods.yamyam_android.reviewdetail.ReviewDetailActivity
 import org.yamyamgoods.yamyam_android.util.dp2px
 import org.yamyamgoods.yamyam_android.util.getScreenWidth
 
@@ -21,8 +23,8 @@ import org.yamyamgoods.yamyam_android.util.getScreenWidth
  * on 7월 04, 2019
  */
 
-class ProductDetailReviewRVAdatper(private val ctx: Context, private val dataList: List<ReviewAllItem>)
-    : RecyclerView.Adapter<ProductDetailReviewRVAdatper.Holder>() {
+class ProductDetailReviewRVAdatper(private val ctx: Context, private val dataList: List<ReviewData>) :
+    RecyclerView.Adapter<ProductDetailReviewRVAdatper.Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val view = LayoutInflater.from(ctx).inflate(R.layout.rv_item_product_detail_act_review, parent, false)
@@ -48,6 +50,9 @@ class ProductDetailReviewRVAdatper(private val ctx: Context, private val dataLis
                 //버튼눌리면 노래지는 것
             }
 
+            holder.btnWhole.setOnClickListener {
+                ctx.startActivity<ReviewDetailActivity>("reviewData" to data)
+            }
         }
     }
 
@@ -65,8 +70,8 @@ class ProductDetailReviewRVAdatper(private val ctx: Context, private val dataLis
         for (i in 0 until imageCount) {
             holder.ivImages[i].visibility = View.VISIBLE
             Glide.with(ctx)
-                    .load(images[i])
-                    .into(holder.ivImages[i])
+                .load(images[i])
+                .into(holder.ivImages[i])
         }
     }
 
@@ -84,10 +89,10 @@ class ProductDetailReviewRVAdatper(private val ctx: Context, private val dataLis
     }
 
     private fun setProfile(url: String, imageView: ImageView) =
-            Glide.with(ctx)
-                    .load(url)
-                    .apply(RequestOptions.circleCropTransform())
-                    .into(imageView)
+        Glide.with(ctx)
+            .load(url)
+            .apply(RequestOptions.circleCropTransform())
+            .into(imageView)
 
     private fun setStarView(score: Int, stars: List<ImageView>) {
         if (score == 0) {
@@ -99,6 +104,7 @@ class ProductDetailReviewRVAdatper(private val ctx: Context, private val dataLis
     }
 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val btnWhole: ConstraintLayout = itemView.findViewById(R.id.cl_rv_item_product_detail_review_whole)
         val ivProfile: ImageView = itemView.findViewById(R.id.iv_rv_item_product_detail_review_profile)
 
         val tvNickname: TextView = itemView.findViewById(R.id.tv_rv_item_product_detail_review_nickname)
@@ -106,17 +112,17 @@ class ProductDetailReviewRVAdatper(private val ctx: Context, private val dataLis
         val tvContent: TextView = itemView.findViewById(R.id.tv_rv_item_product_detail_review_content)
 
         val ivStars: List<ImageView> = listOf(
-                itemView.findViewById(R.id.iv_rv_item_product_detail_review_star1),
-                itemView.findViewById(R.id.iv_rv_item_product_detail_review_star2),
-                itemView.findViewById(R.id.iv_rv_item_product_detail_review_star3),
-                itemView.findViewById(R.id.iv_rv_item_product_detail_review_star4),
-                itemView.findViewById(R.id.iv_rv_item_product_detail_review_star5)
+            itemView.findViewById(R.id.iv_rv_item_product_detail_review_star1),
+            itemView.findViewById(R.id.iv_rv_item_product_detail_review_star2),
+            itemView.findViewById(R.id.iv_rv_item_product_detail_review_star3),
+            itemView.findViewById(R.id.iv_rv_item_product_detail_review_star4),
+            itemView.findViewById(R.id.iv_rv_item_product_detail_review_star5)
         )
 
         val ivImages: List<ImageView> = listOf(
-                itemView.findViewById(R.id.iv_rv_item_product_detail_review_image1),
-                itemView.findViewById(R.id.iv_rv_item_product_detail_review_image2),
-                itemView.findViewById(R.id.iv_rv_item_product_detail_review_image3)
+            itemView.findViewById(R.id.iv_rv_item_product_detail_review_image1),
+            itemView.findViewById(R.id.iv_rv_item_product_detail_review_image2),
+            itemView.findViewById(R.id.iv_rv_item_product_detail_review_image3)
         )
 
         val clImageZone: ConstraintLayout = itemView.findViewById(R.id.cl_rv_item_product_detail_review_image_zone)

@@ -10,15 +10,17 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import org.jetbrains.anko.imageResource
+import org.jetbrains.anko.startActivity
 import org.yamyamgoods.yamyam_android.home.best.goods.BestGoodsItem
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.dataclass.GoodsData
 import org.yamyamgoods.yamyam_android.home.best.goods.BestGoodsFragment
+import org.yamyamgoods.yamyam_android.productdetail.ProductDetailActivity
 import org.yamyamgoods.yamyam_android.util.dp2px
 import org.yamyamgoods.yamyam_android.util.getScreenWidth
 
-class BestGoodsRVAdapter(private val ctx: Context, private val listener: BestGoodsFragment.BookmarkClickListener)
-    : RecyclerView.Adapter<BestGoodsRVAdapter.Holder>() {
+class BestGoodsRVAdapter(private val ctx: Context, private val listener: BestGoodsFragment.BookmarkClickListener) :
+    RecyclerView.Adapter<BestGoodsRVAdapter.Holder>() {
 
     val dataList = ArrayList<GoodsData>()
 
@@ -46,7 +48,7 @@ class BestGoodsRVAdapter(private val ctx: Context, private val listener: BestGoo
                 val isBookMarked = (item.scrap_flag == 1)
                 imageResource = R.drawable.selector_bookmark_heart
                 isSelected = isBookMarked
-                setOnClickListener{
+                setOnClickListener {
                     listener.onClick(item)
                     notifyItemChanged(position)
                 }
@@ -60,6 +62,10 @@ class BestGoodsRVAdapter(private val ctx: Context, private val listener: BestGoo
             holder.tvStarRate.text = item.goods_rating.toString()
             holder.tvMinQuantity.text = item.goods_minimum_amount.toString()
             holder.tvReviewCount.text = item.goods_review_cnt.toString()
+
+            holder.clWhole.setOnClickListener {
+                ctx.startActivity<ProductDetailActivity>("goodsIdx" to item.goods_idx)
+            }
         }
     }
 
@@ -83,6 +89,7 @@ class BestGoodsRVAdapter(private val ctx: Context, private val listener: BestGoo
     }
 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val clWhole: ConstraintLayout = itemView.findViewById(R.id.cl_rv_item_best_goods_whole)
         val clImageFrame: ConstraintLayout = itemView.findViewById(R.id.cl_rv_item_best_goods_image)
         val ivImage: ImageView = itemView.findViewById(R.id.iv_rv_item_best_goods_picture)
         val ivBookmark: ImageView = itemView.findViewById(R.id.iv_rv_item_best_goods_bookmark)

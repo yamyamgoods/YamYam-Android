@@ -13,6 +13,7 @@ import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.home.best.BestTabFragment
 import org.yamyamgoods.yamyam_android.home.bookmark.BookmarkFragment
 import org.yamyamgoods.yamyam_android.home.goods.GoodsTabFragment
+import org.yamyamgoods.yamyam_android.home.store.StoreFragment
 import org.yamyamgoods.yamyam_android.home.store.ranking.StoreRankingFragment
 
 class HomeActivity : AppCompatActivity() {
@@ -41,7 +42,7 @@ class HomeActivity : AppCompatActivity() {
             tv_bottom_best_text.isSelected=true
         }
         btn_bottom_store.setOnClickListener{
-            replaceFragment(StoreRankingFragment())
+            replaceFragment(StoreFragment.getInstance())
 
             clearBtnSelect()
             iv_bottom_store_icon.isSelected=true

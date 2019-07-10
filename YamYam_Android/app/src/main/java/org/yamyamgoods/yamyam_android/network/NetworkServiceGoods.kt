@@ -96,4 +96,36 @@ interface NetworkServiceGoods {
             @Path("goodsIdx") goodsIdx: Int
     ): Call<DeleteBookmarkResponseData>
 
+    //리뷰 상세보기
+    @GET("/goods/review/{reviewIdx}/detail")
+    fun getReviewDetailResponse(
+        @Header("Content-Type") content_type: String,
+        @Header("Authorization") authorization: String?,
+        @Path("reviewIdx") reviewIdx:Int
+    ): Call<GetReviewDetailResponse>
+
+    //상품 상세보기 데이터 요청
+    @GET("goods/{goodsIdx}/detail")
+    fun getProductDetailRequest(
+        @Header("Content-Type") contentType: String = "application/json",
+        @Header("Authorization") token: String?,
+        @Path("goodsIdx") goodsIdx: Int
+    ): Call<GetProductDetailResponseData>
+
+    //상품 견적 데이터 요청
+    @GET("/goods/{goodsIdx}/options")
+    fun getProductOptionsRequest(
+        @Header("Content-Type") contentType: String = "application/json",
+        @Header("Authorization") token: String?,
+        @Path("goodsIdx") goodsIdx: Int
+    ): Call<GetProductOptionsResponseData>
+
+    //베스트 리뷰
+    @GET("/goods/reviews/best/{lastIndex}")
+    fun getBestReviewItemRequest(
+        @Header("Content-Type") content_type: String,
+        @Header("Authorization") authorization: String?,
+        @Path("lastIndex") lastIndex: Int
+    ): Call<GetReviewResponse>
+
 }

@@ -166,10 +166,9 @@
                         android:layout_height="22dp"
                         android:layout_marginStart="46dp"
                         android:layout_marginTop="44dp"
-                        android:src="@android:color/background_light"
+                        android:src="@drawable/icon_picup"
                         app:layout_constraintStart_toStartOf="@+id/iv_mypage_user_image"
-                        app:layout_constraintTop_toTopOf="@+id/iv_mypage_user_image"
-                        app:srcCompat="@drawable/icon_picup" />
+                        app:layout_constraintTop_toTopOf="@+id/iv_mypage_user_image"/>
                 </android.support.constraint.ConstraintLayout>
 
                 <TextView

@@ -36,7 +36,8 @@ import org.yamyamgoods.yamyam_android.network.ApplicationController
 import org.yamyamgoods.yamyam_android.network.NetworkServiceUser
 import org.yamyamgoods.yamyam_android.network.get.*
 import org.yamyamgoods.yamyam_android.network.put.PutMypageEditNicknameRequest
-import org.yamyamgoods.yamyam_android.network.put.PutMypageEditProfileImageRequest
+import org.yamyamgoods.yamyam_android.network.put.PostMypageEditProfileImageRequest
+import org.yamyamgoods.yamyam_android.reviewdetail.ReviewDetailActivity
 import org.yamyamgoods.yamyam_android.reviewwrite.ReviewWriteActivity
 import retrofit2.Call
 import retrofit2.Callback
@@ -48,14 +49,14 @@ import java.lang.reflect.Type
 
 class MypageActivity : AppCompatActivity() {
     private val PICK_IMAGE_REQUEST: Int = 1
-
-    val token: String = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWR4IjoxLCJpYXQiOjE1NjIzMTUzNjYsImV4cCI6MTU2MzYyOTM2Nn0.ZkDGasoDPHTrGvy7yFOT9cPjTQ7gnnUOqekY_zYrAuc"
+    val token: String =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWR4IjoxLCJpYXQiOjE1NjIzMTUzNjYsImV4cCI6MTU2MzYyOTM2Nn0.ZkDGasoDPHTrGvy7yFOT9cPjTQ7gnnUOqekY_zYrAuc"
 
     val networkService: NetworkServiceUser by lazy {
         ApplicationController.networkServiceUser
     }
 
-    lateinit var mypageProductRVAdapter : MypageProductRVAdapter
+    lateinit var mypageProductRVAdapter: MypageProductRVAdapter
     lateinit var mypageAlarmRVAdapter: MypageAlarmRVAdapter
     lateinit var input_profile_img: MultipartBody.Part
 
@@ -89,51 +90,52 @@ class MypageActivity : AppCompatActivity() {
     // 유저 정보 서버 통신
     fun getUserInfoResponse() {
         networkService.getUserInfoResponse(
-                "application/json",
-                token)
-                .enqueue(object : Callback<GetUserInfoResponse> {
-                    override fun onFailure(call: Call<GetUserInfoResponse>, t: Throwable) {
-                    }
+            "application/json",
+            token
+        )
+            .enqueue(object : Callback<GetUserInfoResponse> {
+                override fun onFailure(call: Call<GetUserInfoResponse>, t: Throwable) {
+                }
 
-                    override fun onResponse(call: Call<GetUserInfoResponse>, response: Response<GetUserInfoResponse>) {
-                        Log.v("현주", "마이페이지 서버 통신 성공  response : ${response.body()}")
-                        if (response.code() == 200) {
-                            response.body()?.let {
-                                // 닉네임
-                                tv_mypage_user_name.setText(it.data!!.user_name)
+                override fun onResponse(call: Call<GetUserInfoResponse>, response: Response<GetUserInfoResponse>) {
+                    Log.v("현주", "마이페이지 서버 통신 성공  response : ${response.body()}")
+                    if (response.code() == 200) {
+                        response.body()?.let {
+                            // 닉네임
+                            tv_mypage_user_name.setText(it.data!!.user_name)
 
-                                //  포인트
-                                var strPoint: String = addComma(it.data!!.user_point)
-                                tv_mypage_point.setText(strPoint)
+                            //  포인트
+                            var strPoint: String = addComma(it.data!!.user_point)
+                            tv_mypage_point.setText(strPoint)
 
-                                // 이미지
-                                Glide.with(this@MypageActivity)
-                                        .load(it.data!!.user_img)
-                                        .circleCrop()
-                                        .into(iv_mypage_user_image)
+                            // 이미지
+                            Glide.with(this@MypageActivity)
+                                .load(it.data!!.user_img)
+                                .circleCrop()
+                                .into(iv_mypage_user_image)
 
-                                // 알람 표시
-                                if (it.data!!.alarm_flag == 0)
-                                    setInvisible(iv_mypage_redddot)
-                                if (it.data!!.alarm_flag == 1)
-                                    setVisible(iv_mypage_redddot)
-                            }
-                        }
-
-                        response.errorBody()?.let {
-                            val type: Type = object : TypeToken<GetUserInfoResponse>() {}.type
-                            val gson: Gson = GsonBuilder().create()
-                            val responseJson: GetUserInfoResponse = gson.fromJson(it.string().toString(), type)
-
-                            if (response.code() == 401) {
-                                if (responseJson.message == "jwt must be provided")
-                                    toast("로그인을 해주세요.")
-                                if (responseJson.message == "jwt expired")
-                                    toast("로그인이 만료되었습니다.")
-                            }
+                            // 알람 표시
+                            if (it.data!!.alarm_flag == 0)
+                                setInvisible(iv_mypage_redddot)
+                            if (it.data!!.alarm_flag == 1)
+                                setVisible(iv_mypage_redddot)
                         }
                     }
-                })
+
+                    response.errorBody()?.let {
+                        val type: Type = object : TypeToken<GetUserInfoResponse>() {}.type
+                        val gson: Gson = GsonBuilder().create()
+                        val responseJson: GetUserInfoResponse = gson.fromJson(it.string().toString(), type)
+
+                        if (response.code() == 401) {
+                            if (responseJson.message == "jwt must be provided")
+                                toast("로그인을 해주세요.")
+                            if (responseJson.message == "jwt expired")
+                                toast("로그인이 만료되었습니다.")
+                        }
+                    }
+                }
+            })
     }
 
     private fun configureTitleBar() {
@@ -147,13 +149,9 @@ class MypageActivity : AppCompatActivity() {
         btn_mypage_user_image_edit.setOnClickListener {
             var imageBtnDialog = DialogMypageChangeProfileImage(this)
             imageBtnDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            imageBtnDialog.setCanceledOnTouchOutside(false)
+            imageBtnDialog.setCanceledOnTouchOutside(true)
             imageBtnDialog.show()
         }
-    }
-
-    fun setProfileImageDefault() {
-        iv_mypage_user_image.setImageResource(R.drawable.img_myprofile)
     }
 
     // 권한 요청
@@ -170,11 +168,11 @@ class MypageActivity : AppCompatActivity() {
             }
         }
         TedPermission.with(this)
-                .setPermissionListener(permissionListener)
-                .setRationaleMessage(getString(R.string.txt_permission2))
-                .setDeniedMessage(getString(R.string.txt_permission1))
-                .setPermissions(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.CAMERA)
-                .check()
+            .setPermissionListener(permissionListener)
+            .setRationaleMessage(getString(R.string.txt_permission2))
+            .setDeniedMessage(getString(R.string.txt_permission1))
+            .setPermissions(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.CAMERA)
+            .check()
     }
 
     fun openGallery() {
@@ -182,63 +180,64 @@ class MypageActivity : AppCompatActivity() {
         //intent.setType("image/*")
         intent.type = android.provider.MediaStore.Images.Media.CONTENT_TYPE
         intent.data = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-        startActivityForResult(intent, PICK_IMAGE_REQUEST)//(Intent.createChooser(intent, "얌얌굿즈 : 프로필 사진을 선택해주세요!"), PICK_IMAGE_REQUEST)
+        startActivityForResult(intent,PICK_IMAGE_REQUEST)   //(Intent.createChooser(intent, "얌얌굿즈 : 프로필 사진을 선택해주세요!"), PICK_IMAGE_REQUEST)
     }
 
     // 프로필 사진 변경 서버 통신
-    private fun putMypageEditProfileImageRequest(img: MultipartBody.Part){
-        Log.v("현주", "put 함수에 들어옴")
-        if (img !=null) {
-            networkService.putMypageEditProfileImageRequest("multipart/form-data",
-                    token,
-                    img!!
-            ).enqueue(object: Callback<PutMypageEditProfileImageRequest>{
-                override fun onFailure(call: Call<PutMypageEditProfileImageRequest>, t: Throwable) {
+    private fun postMypageEditProfileImageRequest(img: MultipartBody.Part?) {
+        networkService.postMypageEditProfileImageRequest(token, img)
+            .enqueue(object : Callback<PostMypageEditProfileImageRequest> {
+                override fun onFailure(call: Call<PostMypageEditProfileImageRequest>, t: Throwable) {
                 }
-                override fun onResponse(call: Call<PutMypageEditProfileImageRequest>, response: Response<PutMypageEditProfileImageRequest>) {
-                  if (response.isSuccessful)
-                      Log.v("현주", response.body()!!.toString())
-                    else{
-                      if(response.code()== 401)
-                          Log.v("현주", "실패")
-                      else
-                          Log.v("현주", "401이 아닌 실패")
-                  }
+
+                override fun onResponse(
+                    call: Call<PostMypageEditProfileImageRequest>,
+                    response: Response<PostMypageEditProfileImageRequest>
+                ) {
+                    if (response.isSuccessful)
+                        Log.v("현주", response.body()!!.toString())
                 }
             })
-        }
+    }
+
+    fun setProfileImageDefault() {
+        iv_mypage_user_image.setImageResource(R.drawable.img_myprofile)
+        networkService.postMypageEditProfileImageRequest(token, null)
     }
 
     // 최근 본 상품 서버 통신
-    private fun getMypageRecentlyReviewedProductsRequest(){
+    private fun getMypageRecentlyReviewedProductsRequest() {
         networkService.getMypageRecentlyViewedProductsResponse(
-                "application/json",
-                token,
-                -1
-        ).enqueue(object:  Callback<GetMypageRecentlyViewedProductsResponse>{
+            "application/json",
+            token, -1
+        ).enqueue(object : Callback<GetMypageRecentlyViewedProductsResponse> {
             override fun onFailure(call: Call<GetMypageRecentlyViewedProductsResponse>, t: Throwable) {
                 Log.e("현주", t.toString())
             }
 
-            override fun onResponse(call: Call<GetMypageRecentlyViewedProductsResponse>, response: Response<GetMypageRecentlyViewedProductsResponse>) {
-                if (response.isSuccessful){
+            override fun onResponse(
+                call: Call<GetMypageRecentlyViewedProductsResponse>,
+                response: Response<GetMypageRecentlyViewedProductsResponse>
+            ) {
+                if (response.isSuccessful) {
                     Log.v("현주", "최근 본 상품 response : ${response.body()}")
-                    response.body()?.let{
+                    response.body()?.let {
                         var tmp: ArrayList<RecentlyViewedProducts> = response.body()!!.data!!
                         mypageProductRVAdapter = MypageProductRVAdapter(this@MypageActivity!!, tmp)
                         rv_mypage_recently_viewed_product_list.apply {
-                            adapter = MypageProductRVAdapter (this@MypageActivity, tmp)
-                            layoutManager = LinearLayoutManager(this@MypageActivity, LinearLayoutManager.HORIZONTAL, false)
+                            adapter = MypageProductRVAdapter(this@MypageActivity, tmp)
+                            layoutManager =
+                                LinearLayoutManager(this@MypageActivity, LinearLayoutManager.HORIZONTAL, false)
                         }
-                        //mypageProductRVAdapter.dataList = tmp
                         mypageProductRVAdapter.notifyDataSetChanged()
                     }
                 }
 
-                response.errorBody()?.let{
+                response.errorBody()?.let {
                     val type: Type = object : TypeToken<GetMypageRecentlyViewedProductsResponse>() {}.type
                     val gson: Gson = GsonBuilder().create()
-                    val responseJson: GetMypageRecentlyViewedProductsResponse = gson.fromJson(it.string().toString(), type)
+                    val responseJson: GetMypageRecentlyViewedProductsResponse =
+                        gson.fromJson(it.string().toString(), type)
 
                     if (response.code() == 401) {
                         if (responseJson.message == "jwt must be provided")
@@ -259,6 +258,7 @@ class MypageActivity : AppCompatActivity() {
         }
     }
 
+    // 알람 드로어 열기
     private fun openAlarmDrawer() {
         val drawer: DrawerLayout = findViewById(R.id.drawer_mypage_alarm)
         if (!drawer.isDrawerOpen(Gravity.RIGHT)) {
@@ -266,46 +266,74 @@ class MypageActivity : AppCompatActivity() {
         }
     }
 
-    // 알림 목록 서버 통신
-    private fun getAlarmListResponse(){
-      networkService.getAlarmListResponse("application/json",
-              token,
-              -1)  .enqueue(object: Callback<GetAlarmListResponse>{
-          override fun onFailure(call: Call<GetAlarmListResponse>, t: Throwable) {
-              Log.e("현주", t.toString())
-          }
+    // 알람 목록 서버 통신
+    private fun getAlarmListResponse() {
+        networkService.getAlarmListResponse(
+            "application/json",token, -1)
+            .enqueue(object : Callback<GetAlarmListResponse> {
+            override fun onFailure(call: Call<GetAlarmListResponse>, t: Throwable) {
+                Log.e("현주", t.toString())
+            }
 
-          override fun onResponse(call: Call<GetAlarmListResponse>, response: Response<GetAlarmListResponse>) {
-              if (response.isSuccessful){
-                  Log.v("현주", "알람 목록 response: ${response.body()}")
-                  response.body()?.let{
-                      var tmp: ArrayList<AlarmListData> = response.body()!!.data!!
-                      rv_mypage_alarm_list.apply{
-                          adapter = MypageAlarmRVAdapter(this@MypageActivity, tmp)
-                          layoutManager = LinearLayoutManager(this@MypageActivity)
-                      }
-                      mypageAlarmRVAdapter = MypageAlarmRVAdapter(this@MypageActivity, tmp)
-                      //mypageProductRVAdapter.notifyDataSetChanged()
-                  }
-              }
+            override fun onResponse(call: Call<GetAlarmListResponse>, response: Response<GetAlarmListResponse>) {
+                if (response.isSuccessful) {
+                    Log.v("현주", "알람 목록 response: ${response.body()}")
+                    response.body()?.let {
+                        var tmp: ArrayList<AlarmListData> = response.body()!!.data!!
+                        rv_mypage_alarm_list.apply {
+                            adapter = MypageAlarmRVAdapter(this@MypageActivity, tmp)
+                            layoutManager = LinearLayoutManager(this@MypageActivity)
+                        }
+                        mypageAlarmRVAdapter = MypageAlarmRVAdapter(this@MypageActivity, tmp)
+                        //mypageProductRVAdapter.notifyDataSetChanged()
+                    }
+                }
 
-              response.errorBody()?.let{
-                  Log.v("현주", "알람 목록에서 에러났어요")
-                  val type:Type = object: TypeToken<GetAlarmListResponse>() {}.type
-                  val gson: Gson = GsonBuilder().create()
-                  val responseJson: GetMypageRecentlyViewedProductsResponse = gson.fromJson(it.string().toString(), type)
+                response.errorBody()?.let {
+                    Log.v("현주", "알람 목록에서 에러났어요")
+                    val type: Type = object : TypeToken<GetAlarmListResponse>() {}.type
+                    val gson: Gson = GsonBuilder().create()
+                    val responseJson: GetMypageRecentlyViewedProductsResponse =
+                        gson.fromJson(it.string().toString(), type)
 
-                  if (response.code() == 401) {
-                      if (responseJson.message == "jwt must be provided")
-                          toast("로그인을 해주세요.")
-                      if (responseJson.message == "jwt expired")
-                          toast("로그인이 만료되었습니다.")
-                  }
-              }
-          }
-      })
+                    if (response.code() == 401) {
+                        if (responseJson.message == "jwt must be provided")
+                            toast("로그인을 해주세요.")
+                        if (responseJson.message == "jwt expired")
+                            toast("로그인이 만료되었습니다.")
+                    }
+                }
+            }
+        })
     }
 
+    // 알람 목록에서 리뷰 상세보기
+    fun getAlarmReviewDetailResponse() {
+        networkService.getAlarmReviewDetail(
+            "application/json", token,
+            -1, -1
+        ).enqueue(object : Callback<GetReviewDetailResponse> {
+            override fun onFailure(call: Call<GetReviewDetailResponse>, t: Throwable) {
+                Log.e("현주", t.toString())
+            }
+
+            override fun onResponse(
+                call: Call<GetReviewDetailResponse>,
+                response: Response<GetReviewDetailResponse>
+            ) {
+                if (response.isSuccessful) {
+                    Log.v("현주", "알람 목록 response: ${response.body()}")
+                    response.body()?.let {
+                        val intent = Intent(this@MypageActivity, ReviewDetailActivity::class.java)
+                        startActivity(intent)
+                        // 어떻게 그 리뷰 아이디로 받아오지????....????...???
+                    }
+                }
+            }
+        })
+    }
+
+    // 닉네임 변경
     private fun editUserNickName() {
         btn_mypage_user_name_edt.setOnClickListener {
             try {
@@ -330,9 +358,8 @@ class MypageActivity : AppCompatActivity() {
                 var changedName: String = edt_mypage_user_name.text.toString()
                 tv_mypage_user_name.setText(changedName)
                 putMypageEditNicknameResponse(changedName)
-                Log.v("현주-바뀐 닉네임",changedName)
-            }
-            catch (e: Exception) {
+                Log.v("현주-바뀐 닉네임", changedName)
+            } catch (e: Exception) {
             }
         }
     }
@@ -340,21 +367,24 @@ class MypageActivity : AppCompatActivity() {
     // 닉네임 변경 서버 통신
     private fun putMypageEditNicknameResponse(changedName: String) {
         networkService.putMypageEditNicknameRequest(
-                "application/json",
-                token,
-            PutMypageEditNicknameRequest(changedName))
-                .enqueue(object : Callback<PutMypageEditNicknameRequest> {
-                    override fun onFailure(call: Call<PutMypageEditNicknameRequest>, t: Throwable) {
-                    }
+            "application/json", token,
+            PutMypageEditNicknameRequest(changedName)
+        )
+            .enqueue(object : Callback<PutMypageEditNicknameRequest> {
+                override fun onFailure(call: Call<PutMypageEditNicknameRequest>, t: Throwable) {
+                }
 
-                    override fun onResponse(call: Call<PutMypageEditNicknameRequest>, response: Response<PutMypageEditNicknameRequest>) {
-                        if (response.isSuccessful) {
-                            response.body()?.let {
-                                Log.v("현주", "닉네임 변경 통신 성공  response : ${response.body()}")
-                            }
+                override fun onResponse(
+                    call: Call<PutMypageEditNicknameRequest>,
+                    response: Response<PutMypageEditNicknameRequest>
+                ) {
+                    if (response.isSuccessful) {
+                        response.body()?.let {
+                            Log.v("현주", "닉네임 변경 통신 성공  response : ${response.body()}")
                         }
                     }
-                })
+                }
+            })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -371,19 +401,19 @@ class MypageActivity : AppCompatActivity() {
                 val photoBody = RequestBody.create(MediaType.parse("image/jpg"), byteArrayOutputStream.toByteArray())
 
                 input_profile_img = MultipartBody.Part.createFormData(
-                        "img",
-                        File(selectedPictureUri.toString()).name + ".jpg",
-                        photoBody
+                    "img",
+                    File(selectedPictureUri.toString()).name + ".jpg",
+                    photoBody
                 )
 
-                Log.v("현주: 사진 주소 확인", selectedPictureUri.toString()+ ".jpg")
+                Log.v("현주: 사진 주소 확인", selectedPictureUri.toString())
 
                 Glide.with(this@MypageActivity)
-                        .load(selectedPictureUri)
-                        .circleCrop()
-                        .into(iv_mypage_user_image)
+                    .load(selectedPictureUri)
+                    .circleCrop()
+                    .into(iv_mypage_user_image)
 
-                putMypageEditProfileImageRequest(input_profile_img!!)
+                postMypageEditProfileImageRequest(input_profile_img!!)   // 앨범에서 사진 선택
             } else {
                 Toast.makeText(this, "취소 되었습니다.", Toast.LENGTH_LONG).show()
             }
@@ -393,14 +423,13 @@ class MypageActivity : AppCompatActivity() {
         }
     }
 
-    fun addComma(number: Int):String{
+    fun addComma(number: Int): String {
         var str: String = number.toString()
-        if (str.length > 3){
-            var strAfter: String = str.substring(str.length-3, str.length)
-            var strBefore: String = str.substring(0, str.length -3)
+        if (str.length > 3) {
+            var strAfter: String = str.substring(str.length - 3, str.length)
+            var strBefore: String = str.substring(0, str.length - 3)
             return strBefore.plus(",").plus(strAfter)
-        }
-        else
+        } else
             return str
     }
 

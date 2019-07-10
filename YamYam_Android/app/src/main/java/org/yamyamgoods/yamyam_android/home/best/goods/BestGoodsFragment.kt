@@ -73,7 +73,7 @@ class BestGoodsFragment : Fragment(), BestGoodsContract.View {
     }
 
     private fun viewInit() {
-        val ctx = activity!!.applicationContext
+        val ctx = activity!!
 
         bestGoodsRVAdapter = BestGoodsRVAdapter(ctx, bookmarkClickListener)
         rv_best_goods_frag_list.apply {
