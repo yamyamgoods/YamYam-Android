@@ -19,14 +19,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
             android:layout_marginTop="22dp"
-            android:layout_marginRight="15dp">
+            android:layout_alignEnd="@+id/btn_dialog_option_confirm">
         <TextView
                 android:id="@+id/btn_dialog_option_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="가격 범위"
+                android:fontFamily="@font/notosansbold"
+                android:includeFontPadding="false"
                 android:layout_margin="5dp"
                 android:textSize="15dp"
                 android:textColor="@color/darkgray">
@@ -36,6 +39,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="최소 수량"
+                android:fontFamily="@font/notosansbold"
+                android:includeFontPadding="false"
                 android:layout_margin="5dp"
                 android:textSize="15dp">
         </TextView>
@@ -44,6 +49,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="종류"
+                android:fontFamily="@font/notosansbold"
+                android:includeFontPadding="false"
                 android:layout_margin="5dp"
                 android:textSize="15dp">
         </TextView>
@@ -66,29 +73,41 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="10,000"
-                    android:textStyle="bold"
+                    android:textColor="@color/darkgray"
+                    android:fontFamily="@font/notosansbold"
+                    android:includeFontPadding="false"
                     android:textSize="18dp"/>
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="원"
+                    android:textColor="@color/darkgray"
+                    android:includeFontPadding="false"
                     android:textSize="18dp"/>
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="~"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/notosansregular"
+                    android:textColor="@color/darkgray"
+                    android:textSize="24dp"
                     android:layout_marginHorizontal="10dp"/>
             <TextView
                     android:id="@+id/tv_dialog_option_price_max"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="10,000"
-                    android:textStyle="bold"
+                    android:textColor="@color/darkgray"
+                    android:fontFamily="@font/notosansbold"
+                    android:includeFontPadding="false"
                     android:textSize="18dp"/>
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="원"
+                    android:textColor="@color/darkgray"
+                    android:includeFontPadding="false"
                     android:textSize="18dp"/>
         </LinearLayout>
         <com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
@@ -112,7 +131,7 @@
             android:id="@+id/rl_dialog_option_min_amount"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/ll_dialog_option_top"
+            android:layout_below="@id/btn_dialog_option_close"
             android:layout_above="@id/btn_dialog_option_confirm"
             android:visibility="invisible">
         <RelativeLayout
@@ -124,6 +143,7 @@
                     android:layout_width="126dp"
                     android:layout_height="35dp"
                     android:hint="입력해주세요"
+                    android:includeFontPadding="false"
                     android:textColorHint="#a2a2a2"
                     android:textAlignment="center"
                     android:textSize="15dp"
@@ -135,6 +155,8 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/darkgray"
                     android:text="개"
+                    android:fontFamily="@font/notosansmedium"
+                    android:includeFontPadding="false"
                     android:textSize="20dp"
                     android:layout_toRightOf="@id/et_dialog_option_minAmount"
                     android:layout_marginLeft="16dp"
@@ -143,12 +165,13 @@
     </RelativeLayout>
     <RelativeLayout
             android:id="@+id/rl_dialog_option_variety"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_below="@id/ll_dialog_option_top"
+            android:layout_below="@id/btn_dialog_option_close"
             android:layout_above="@id/btn_dialog_option_confirm"
             android:visibility="visible"
-            android:paddingHorizontal="16dp">
+            android:layout_marginTop="26dp"
+            android:layout_marginLeft="20dp">
         <RelativeLayout
                 android:id="@+id/btn_dialog_option_variety1"
                 android:layout_width="wrap_content"
@@ -161,10 +184,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="정음스티커"
+                    android:fontFamily="@font/notosansmedium"
+                    android:includeFontPadding="false"
                     android:textColor="@color/darkgray"
                     android:textSize="14dp"
                     android:layout_marginHorizontal="11dp"
-                    android:layout_marginVertical="7dp" android:layout_marginTop="7dp"
+                    android:layout_marginVertical="5dp" android:layout_marginTop="7dp"
                     android:layout_alignParentTop="true"/>
         </RelativeLayout>
         <RelativeLayout
@@ -180,10 +205,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="정음스티커"
+                    android:fontFamily="@font/notosansmedium"
+                    android:includeFontPadding="false"
                     android:textColor="@color/darkgray"
                     android:textSize="14dp"
                     android:layout_marginHorizontal="11dp"
-                    android:layout_marginVertical="7dp"/>
+                    android:layout_marginVertical="5dp"/>
         </RelativeLayout>
         <RelativeLayout
                 android:id="@+id/btn_dialog_option_variety3"
@@ -198,10 +225,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="정음스티커"
+                    android:fontFamily="@font/notosansmedium"
+                    android:includeFontPadding="false"
                     android:textColor="@color/darkgray"
                     android:textSize="14dp"
                     android:layout_marginHorizontal="11dp"
-                    android:layout_marginVertical="7dp"/>
+                    android:layout_marginVertical="5dp"/>
         </RelativeLayout>
         <RelativeLayout
                 android:id="@+id/btn_dialog_option_variety4"
@@ -216,10 +245,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="정음스티커"
+                    android:fontFamily="@font/notosansmedium"
+                    android:includeFontPadding="false"
                     android:textColor="@color/darkgray"
                     android:textSize="14dp"
                     android:layout_marginHorizontal="11dp"
-                    android:layout_marginVertical="7dp"/>
+                    android:layout_marginVertical="5dp"/>
         </RelativeLayout>
         <RelativeLayout
                 android:id="@+id/btn_dialog_option_variety5"
@@ -235,10 +266,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="정음스티커"
+                    android:fontFamily="@font/notosansmedium"
+                    android:includeFontPadding="false"
                     android:textColor="@color/darkgray"
                     android:textSize="14dp"
                     android:layout_marginHorizontal="11dp"
-                    android:layout_marginVertical="7dp"/>
+                    android:layout_marginVertical="5dp"/>
         </RelativeLayout>
         <RelativeLayout
                 android:id="@+id/btn_dialog_option_variety6"
@@ -254,10 +287,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="정음스티커"
+                    android:fontFamily="@font/notosansmedium"
+                    android:includeFontPadding="false"
                     android:textColor="@color/darkgray"
                     android:textSize="14dp"
                     android:layout_marginHorizontal="11dp"
-                    android:layout_marginVertical="7dp"/>
+                    android:layout_marginVertical="5dp"/>
         </RelativeLayout>
         <RelativeLayout
                 android:id="@+id/btn_dialog_option_variety7"
@@ -272,10 +307,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="정음스티커"
+                    android:fontFamily="@font/notosansmedium"
+                    android:includeFontPadding="false"
                     android:textColor="@color/darkgray"
                     android:textSize="14dp"
                     android:layout_marginHorizontal="11dp"
-                    android:layout_marginVertical="7dp"/>
+                    android:layout_marginVertical="5dp"/>
         </RelativeLayout>
         <RelativeLayout
                 android:id="@+id/btn_dialog_option_variety8"
@@ -291,10 +328,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="정음스티커"
+                    android:fontFamily="@font/notosansmedium"
+                    android:includeFontPadding="false"
                     android:textColor="@color/darkgray"
                     android:textSize="14dp"
                     android:layout_marginHorizontal="11dp"
-                    android:layout_marginVertical="7dp"/>
+                    android:layout_marginVertical="5dp"/>
         </RelativeLayout>
         <RelativeLayout
                 android:id="@+id/btn_dialog_option_variety9"
@@ -310,10 +349,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="정음스티커"
+                    android:fontFamily="@font/notosansmedium"
+                    android:includeFontPadding="false"
                     android:textColor="@color/darkgray"
                     android:textSize="14dp"
                     android:layout_marginHorizontal="11dp"
-                    android:layout_marginVertical="7dp"/>
+                    android:layout_marginVertical="5dp"/>
         </RelativeLayout>
         <RelativeLayout
                 android:id="@+id/btn_dialog_option_variety10"
@@ -328,10 +369,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="정음스티커"
+                    android:fontFamily="@font/notosansmedium"
+                    android:includeFontPadding="false"
                     android:textColor="@color/darkgray"
                     android:textSize="14dp"
                     android:layout_marginHorizontal="11dp"
-                    android:layout_marginVertical="7dp"/>
+                    android:layout_marginVertical="5dp"/>
         </RelativeLayout>
         <RelativeLayout
                 android:id="@+id/btn_dialog_option_variety11"
@@ -347,10 +390,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="정음스티커"
+                    android:fontFamily="@font/notosansmedium"
+                    android:includeFontPadding="false"
                     android:textColor="@color/darkgray"
                     android:textSize="14dp"
                     android:layout_marginHorizontal="11dp"
-                    android:layout_marginVertical="7dp"/>
+                    android:layout_marginVertical="5dp"/>
         </RelativeLayout>
     </RelativeLayout>
     <RelativeLayout
@@ -360,11 +405,13 @@
             android:background="@drawable/border_dialog_button_save"
             android:layout_alignParentBottom="true"
             android:layout_marginHorizontal="20dp"
-            android:layout_marginVertical="17dp">
+            android:layout_marginBottom="17dp">
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="확인"
+                android:fontFamily="@font/notosansbold"
+                android:includeFontPadding="false"
                 android:textSize="16dp"
                 android:layout_marginVertical="12dp"
                 android:layout_centerHorizontal="true"

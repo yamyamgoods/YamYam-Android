@@ -28,8 +28,11 @@
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@+id/icon1"
                 android:text="얌얌 추천 기획전"
+                android:fontFamily="@font/notosansmedium"
+                android:textColor="@color/darkgray"
                 android:layout_marginLeft="9dp"
                 android:textSize="13dp"
+                android:includeFontPadding="false"
                 android:layout_centerVertical="true"/>
         </RelativeLayout>
 

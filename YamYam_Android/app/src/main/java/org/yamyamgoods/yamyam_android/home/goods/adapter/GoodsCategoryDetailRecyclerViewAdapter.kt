@@ -29,9 +29,9 @@ class GoodsCategoryDetailRecyclerViewAdapter (val ctx: Context, var dataList: Ar
         holder.price.text = dataList[position].goods_price
         val rate: String = String.format("%.1f",dataList[position].goods_rating)
         holder.rate.text = rate
-        //val minQuantity: String = String.format("%d",dataList[position].goods_minimum_amount)
-        //holder.minQuantity.text = minQuantity
-        holder.minQuantity.text = dataList[position].goods_minimum_amount
+        var min: String? = dataList[position].goods_minimum_amount
+        min = min!!.replace(",000","k")
+        holder.minQuantity.text = min
         val reviewNum: String = String.format("%d",dataList[position].goods_review_cnt)
         holder.reviewCount.text = reviewNum
     }

@@ -1,130 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="187dp"
-    android:layout_marginVertical="10dp"
-    android:layout_marginHorizontal="4dp"
-    android:background="@drawable/category_detail_product">
-
-    <RelativeLayout
-        android:id="@+id/topInfo"
+<android.support.v7.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="98dp">
-        <ImageView
-            android:id="@+id/iv_rv_item_goods_category_detail"
-            android:layout_width="match_parent"
-            android:layout_height="98dp"
-            android:scaleType="centerCrop"
-            android:background="@drawable/rounded_corner_top"/>
-        <ImageView
-            android:id="@+id/iv_rv_item_goods_category_detail_like"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/icon_lineheart"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="12dp"
-            android:layout_marginRight="10dp"/>
-    </RelativeLayout>
+        android:layout_height="187dp" xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_marginVertical="10dp"
+        android:layout_marginHorizontal="4dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="0dp">
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_below="@id/topInfo"
-        android:orientation="vertical"
-        android:layout_marginTop="6dp"
-        android:layout_marginLeft="11dp"
-        android:weightSum="4">
-        <TextView
-            android:id="@+id/tv_rv_item_goods_category_detail_store"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            tools:text="레드프린팅,프레스"
-            android:layout_gravity="center_vertical"
-            android:textSize="12dp"
-            android:textColor="@color/brownish_gray"/>
-        <TextView
-            android:id="@+id/tv_rv_item_goods_category_detail_name"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            tools:text="자유형 칼선 스티커"
-            android:textStyle="bold"
-            android:textSize="14dp"
-            android:textColor="@color/brownish_gray"/>
-        <TextView
-            android:id="@+id/tv_rv_item_goods_category_detail_price"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            tools:text="32,900"
-            android:textSize="14dp"
-            android:textColor="@color/darkgray"/>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginTop="2dp"
-            android:orientation="horizontal"
-            android:layout_marginBottom="8dp">
-
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+        <RelativeLayout
+                android:id="@+id/topInfo"
+                android:layout_width="match_parent"
+                android:layout_height="98dp">
             <ImageView
-                android:id="@+id/iv_rv_item_best_goods_star"
+                    android:id="@+id/iv_rv_item_goods_category_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="98dp"
+                    android:scaleType="centerCrop"
+                    android:background="@drawable/rounded_corner_top"/>
+            <ImageView
+                    android:id="@+id/iv_rv_item_goods_category_detail_like"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_lineheart"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginRight="10dp"/>
+        </RelativeLayout>
+        <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="9dp"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/star"
-                tools:layout_editor_absoluteX="1dp" />
-
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginTop="6dp"
+                android:layout_marginLeft="9dp"
+                android:weightSum="4">
             <TextView
-                android:id="@+id/tv_rv_item_goods_category_detail_rate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="4.8"
-                android:layout_gravity="center_vertical"
-                android:textColor="#4d4d4d"
-                android:textSize="12dp" />
-
+                    android:id="@+id/tv_rv_item_goods_category_detail_store"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    tools:text="레드프린팅,프레스"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/notosansregular"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="12dp"
+                    android:textColor="@color/brownish_gray"/>
             <TextView
-                android:id="@+id/textView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_gravity="center_vertical"
-                android:text="최소수량 "
-                android:textColor="#9d9d9d"
-                android:textSize="12dp" />
-
+                    android:id="@+id/tv_rv_item_goods_category_detail_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    tools:text="자유형 칼선 스티커"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/notosansmedium"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="15dp"
+                    android:textColor="@color/darkgray"/>
             <TextView
-                android:id="@+id/tv_rv_item_goods_category_detail_minQuantity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:textColor="#9d9d9d"
-                tools:text="10"
-                android:textSize="12dp"/>
+                    android:id="@+id/tv_rv_item_goods_category_detail_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    tools:text="32,900"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/notosansbold"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="15dp"
+                    android:textColor="@color/darkgray"/>
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="2dp"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="8dp">
 
-            <TextView
-                android:id="@+id/textView7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_gravity="center_vertical"
-                android:textColor="#9d9d9d"
-                android:text="리뷰 "
-                android:textSize="12dp" />
+                <ImageView
+                        android:id="@+id/iv_rv_item_best_goods_star"
+                        android:layout_width="wrap_content"
+                        android:layout_height="9dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/star"
+                        tools:layout_editor_absoluteX="1dp" />
 
-            <TextView
-                android:id="@+id/tv_rv_item_goods_category_detail_reviewCount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:textColor="#9d9d9d"
-                tools:text="300"
-                android:textSize="12dp" />
+                <TextView
+                        android:id="@+id/tv_rv_item_goods_category_detail_rate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="4.8"
+                        android:fontFamily="@font/notosansbold"
+                        android:includeFontPadding="false"
+                        android:layout_gravity="center_vertical"
+                        android:textColor="@color/darkgray"
+                        android:textSize="12dp" />
+
+                <TextView
+                        android:id="@+id/textView5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_gravity="center_vertical"
+                        android:text="최소수량 "
+                        android:fontFamily="@font/notosansmedium"
+                        android:includeFontPadding="false"
+                        android:textColor="#9d9d9d"
+                        android:textSize="12dp" />
+
+                <TextView
+                        android:id="@+id/tv_rv_item_goods_category_detail_minQuantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        tools:text="10"
+                        android:fontFamily="@font/notosansmedium"
+                        android:includeFontPadding="false"
+                        android:textColor="#9d9d9d"
+                        android:textSize="12dp" />
+                <TextView
+                        android:id="@+id/textView7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_gravity="center_vertical"
+                        android:text="리뷰 "
+                        android:fontFamily="@font/notosansmedium"
+                        android:includeFontPadding="false"
+                        android:textColor="#9d9d9d"
+                        android:textSize="12dp" />
+                <TextView
+                        android:id="@+id/tv_rv_item_goods_category_detail_reviewCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        tools:text="300"
+                        android:fontFamily="@font/notosansmedium"
+                        android:includeFontPadding="false"
+                        android:textColor="#9d9d9d"
+                        android:textSize="12dp" />
+            </LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>
-</RelativeLayout>
+</android.support.v7.widget.CardView>

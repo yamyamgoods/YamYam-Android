@@ -22,7 +22,10 @@
                 android:text="#가격 범위"
                 android:textSize="13dp"
                 android:layout_marginVertical="4dp"
-                android:layout_marginHorizontal="10dp"/>
+                android:layout_marginHorizontal="10dp"
+                android:includeFontPadding="false"
+                android:fontFamily="@font/notosansregular"
+                android:textColor="@color/darkgray"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -39,7 +42,10 @@
                 android:text="#최소수량"
                 android:textSize="13dp"
                 android:layout_marginVertical="4dp"
-                android:layout_marginHorizontal="10dp"/>
+                android:layout_marginHorizontal="10dp"
+                android:includeFontPadding="false"
+                android:fontFamily="@font/notosansregular"
+                android:textColor="@color/darkgray"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -55,8 +61,11 @@
                 android:layout_height="wrap_content"
                 android:text="#종류"
                 android:textSize="13dp"
-                android:layout_marginVertical="4dp"
-                android:layout_marginHorizontal="10dp"/>
+                android:paddingVertical="4dp"
+                android:paddingHorizontal="10dp"
+                android:includeFontPadding="false"
+                android:fontFamily="@font/notosansregular"
+                android:textColor="@color/darkgray"/>
         </RelativeLayout>
         <LinearLayout
             android:id="@+id/btn_frag_goods_category_detail_sort"
@@ -77,6 +86,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="인기순"
+                android:fontFamily="@font/notosansregular"
+                android:includeFontPadding="false"
                 android:textSize="13dp"
                 android:textColor="@color/darkgray"
                 android:layout_gravity="center_vertical"/>
