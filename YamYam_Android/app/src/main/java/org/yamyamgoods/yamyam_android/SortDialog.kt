@@ -28,30 +28,34 @@ class SortDialog(context:Context) : Dialog(context), View.OnClickListener {
     }
 
     fun setView(){
-        if(sort=="인기순") {
-            tv_dialog_sort_popular.setTextColor(context.resources.getColor(R.color.MainYellow))
-            tv_dialog_sort_price_high.setTextColor(context.resources.getColor(R.color.darkgray))
-            tv_dialog_sort_price_low.setTextColor(context.resources.getColor(R.color.darkgray))
-            iv_dialog_sort_popular.setImageDrawable(context.resources.getDrawable(R.drawable.icon_checkkky))
-            iv_dialog_sort_price_high.setImageDrawable(context.resources.getDrawable(R.drawable.icon_checkkk))
-            iv_dialog_sort_price_low.setImageDrawable(context.resources.getDrawable(R.drawable.icon_checkkk))
-            sort_flag="인기순"
-        } else if(sort=="고가순") {
-            tv_dialog_sort_popular.setTextColor(context.resources.getColor(R.color.darkgray))
-            tv_dialog_sort_price_high.setTextColor(context.resources.getColor(R.color.MainYellow))
-            tv_dialog_sort_price_low.setTextColor(context.resources.getColor(R.color.darkgray))
-            iv_dialog_sort_popular.setImageDrawable(context.resources.getDrawable(R.drawable.icon_checkkk))
-            iv_dialog_sort_price_high.setImageDrawable(context.resources.getDrawable(R.drawable.icon_checkkky))
-            iv_dialog_sort_price_low.setImageDrawable(context.resources.getDrawable(R.drawable.icon_checkkk))
-            sort_flag="고가순"
-        } else if(sort=="저가순"){
-            tv_dialog_sort_popular.setTextColor(context.resources.getColor(R.color.darkgray))
-            tv_dialog_sort_price_high.setTextColor(context.resources.getColor(R.color.darkgray))
-            tv_dialog_sort_price_low.setTextColor(context.resources.getColor(R.color.MainYellow))
-            iv_dialog_sort_popular.setImageDrawable(context.resources.getDrawable(R.drawable.icon_checkkk))
-            iv_dialog_sort_price_high.setImageDrawable(context.resources.getDrawable(R.drawable.icon_checkkk))
-            iv_dialog_sort_price_low.setImageDrawable(context.resources.getDrawable(R.drawable.icon_checkkky))
-            sort_flag="저가순"
+        when (sort) {
+            "인기순" -> {
+                tv_dialog_sort_popular.setTextColor(context.resources.getColor(R.color.MainYellow))
+                tv_dialog_sort_price_high.setTextColor(context.resources.getColor(R.color.darkgray))
+                tv_dialog_sort_price_low.setTextColor(context.resources.getColor(R.color.darkgray))
+                iv_dialog_sort_popular.setImageDrawable(context.resources.getDrawable(R.drawable.icon_checkkky))
+                iv_dialog_sort_price_high.setImageDrawable(context.resources.getDrawable(R.drawable.icon_checkkk))
+                iv_dialog_sort_price_low.setImageDrawable(context.resources.getDrawable(R.drawable.icon_checkkk))
+                sort_flag="인기순"
+            }
+            "고가순" -> {
+                tv_dialog_sort_popular.setTextColor(context.resources.getColor(R.color.darkgray))
+                tv_dialog_sort_price_high.setTextColor(context.resources.getColor(R.color.MainYellow))
+                tv_dialog_sort_price_low.setTextColor(context.resources.getColor(R.color.darkgray))
+                iv_dialog_sort_popular.setImageDrawable(context.resources.getDrawable(R.drawable.icon_checkkk))
+                iv_dialog_sort_price_high.setImageDrawable(context.resources.getDrawable(R.drawable.icon_checkkky))
+                iv_dialog_sort_price_low.setImageDrawable(context.resources.getDrawable(R.drawable.icon_checkkk))
+                sort_flag="고가순"
+            }
+            "저가순" -> {
+                tv_dialog_sort_popular.setTextColor(context.resources.getColor(R.color.darkgray))
+                tv_dialog_sort_price_high.setTextColor(context.resources.getColor(R.color.darkgray))
+                tv_dialog_sort_price_low.setTextColor(context.resources.getColor(R.color.MainYellow))
+                iv_dialog_sort_popular.setImageDrawable(context.resources.getDrawable(R.drawable.icon_checkkk))
+                iv_dialog_sort_price_high.setImageDrawable(context.resources.getDrawable(R.drawable.icon_checkkk))
+                iv_dialog_sort_price_low.setImageDrawable(context.resources.getDrawable(R.drawable.icon_checkkky))
+                sort_flag="저가순"
+            }
         }
     }
     fun setOnClickListner(){
