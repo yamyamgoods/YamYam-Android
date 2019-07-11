@@ -35,7 +35,7 @@ class ReviewDetailRVAdapter(private val ctx: Context, private val dataList: List
             holder.tvContents.text = item.goods_review_cmt_content
 
             holder.clCommentItem.setOnClickListener{
-                (ctx as ReviewDetailActivity).editTextTag(item.user_name, item.goods_review_cmt_idx)
+                (ctx as ReviewDetailActivity).editTextTag(item.user_name, item.user_idx)
             }
         }
     }

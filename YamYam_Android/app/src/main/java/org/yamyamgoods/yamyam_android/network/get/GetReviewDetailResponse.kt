@@ -6,8 +6,13 @@ data class GetReviewDetailResponse (
 )
 
 data class reviewDetailData(
+    val review: ReviewDetailReviewData,
     val goods: ReviewDetailGoodsData,
     val review_comment: ArrayList<ReviewCommentData>
+)
+
+data class ReviewDetailReviewData(
+    val user_idx: Int
 )
 
 data class ReviewDetailGoodsData(

@@ -86,7 +86,6 @@ class MypageActivity : AppCompatActivity() {
         }
     }
 
-
     // 유저 정보 서버 통신
     fun getUserInfoResponse() {
         networkService.getUserInfoResponse(
