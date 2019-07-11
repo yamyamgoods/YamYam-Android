@@ -25,12 +25,18 @@ import org.yamyamgoods.yamyam_android.productdetail.ProductDetailActivity
 class BookmarkOptionsRVAdapter(private val ctx: Context, private val data: BookmarkItemOption) :
     RecyclerView.Adapter<BookmarkOptionsRVAdapter.Holder>() {
 
-    var dataList: List<ProductOption> = data.goods_option_data
+    var dataList = ArrayList<ProductOption>()
     var selectedOptions = ArrayList<SelectedOption>()
-    var basePrice = -1
+    var basePrice = data.goods_price.replace(",", "").toInt()
     var totalPrice = -1
 
-//    private val optionHolders = ArrayList<Holder>()
+    init {
+        dataList.addAll(data.goods_option_data)
+        selectedOptions.addAll(data.goods_scrap_option_data)
+
+        Log.v("Malibin Debug", "init{} selectedOptions : $selectedOptions")
+
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val view = LayoutInflater.from(ctx).inflate(R.layout.rv_item_product_option, parent, false)
@@ -41,12 +47,10 @@ class BookmarkOptionsRVAdapter(private val ctx: Context, private val data: Bookm
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
 
-//        optionHolders.add(holder)
-
         dataList[position].let {
             val optionMap = getOptionValueMap(it.goods_option_detail)
             val optionList = getOptionValueList(it.goods_option_detail)
-            setDefaultOption(position)
+            //setDefaultOption(position)
 
             holder.optionName = it.goods_option_name
             holder.optionDetails = optionList
@@ -58,7 +62,7 @@ class BookmarkOptionsRVAdapter(private val ctx: Context, private val data: Bookm
                 adapter = ArrayAdapter(ctx, R.layout.spinner_item_option, R.id.tv_spinner_option, optionList)
             }
         }
-        Log.v("Malibin Debug", "onBindViewHolder : ${selectedOptions.toString()}")
+        Log.v("Malibin Debug", "onBindViewHolder : $selectedOptions")
     }
 
 
@@ -105,6 +109,7 @@ class BookmarkOptionsRVAdapter(private val ctx: Context, private val data: Bookm
 
         private val spinnerListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
+
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -113,6 +118,8 @@ class BookmarkOptionsRVAdapter(private val ctx: Context, private val data: Bookm
         }
 
         init {
+            optionSpinner.isSelected = false
+            optionSpinner.setSelection(0, false)
             optionSpinner.onItemSelectedListener = spinnerListener
         }
 
@@ -135,7 +142,7 @@ class BookmarkOptionsRVAdapter(private val ctx: Context, private val data: Bookm
             //(ctx as ProductDetailActivity).refreshOptionData(totalPrice, selectedOptions)
             //ctx.notifyTotalPrice()
 
-            Log.v("Malibin Debug", "currunt Price : $totalPrice")
+            Log.v("Malibin Debug", "currunt Price : $totalPrice, basePrice : $basePrice")
             Log.v("Malibin Debug", "onItemSelected : $selectedOptions")
         }
     }
