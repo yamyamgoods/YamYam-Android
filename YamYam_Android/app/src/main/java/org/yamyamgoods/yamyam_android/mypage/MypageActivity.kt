@@ -284,6 +284,9 @@ class MypageActivity : AppCompatActivity() {
             override fun onResponse(call: Call<GetAlarmListResponse>, response: Response<GetAlarmListResponse>) {
                 if (response.isSuccessful) {
                     Log.v("현주", "알람 목록 response: ${response.body()}")
+                    if (response.body()!!.data.toString() == "[]")  // 아무 알람도 없을 때
+                        setVisible(cl_mypage_alarm_empty)
+
                     response.body()?.let {
                         var tmp: ArrayList<AlarmListData> = response.body()!!.data!!
                         rv_mypage_alarm_list.apply {

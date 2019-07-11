@@ -4,6 +4,7 @@ import android.content.Context
 import android.media.Image
 import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,6 +26,11 @@ class MypageAlarmRVAdapter(private val ctx: Context, var dataList: List<AlarmLis
     override fun getItemCount(): Int = dataList.size
 
     override fun onBindViewHolder(holder: MypageAlarmRVAdapter.Holder, position: Int) {
+//        if ( getItemCount() == 0){
+//            setVisible(holder.emptyClAlarm)
+//            Log.v("현주: 알람", "지금 빈 페이지임")
+//        }
+
         dataList[position].let { item ->
             //알람 목록에 있는 빨간 색
             if (item.alarm_check_flag == 0)   //읽지 않음
@@ -44,6 +50,7 @@ class MypageAlarmRVAdapter(private val ctx: Context, var dataList: List<AlarmLis
     }
 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        //var emptyClAlarm: ConstraintLayout = itemView.findViewById(R.id.cl_mypage_alarm_empty) as ConstraintLayout
         var clAlarm: ConstraintLayout = itemView.findViewById(R.id.cl_rv_item_mypage_alarm) as ConstraintLayout
         var ivReddot: ImageView = itemView.findViewById(R.id.iv_rv_item_mypage_alarm_reddot) as ImageView
         var alarmContents: TextView = itemView.findViewById(R.id.tv_rv_item_mypage_alarm_contents) as TextView
@@ -52,5 +59,8 @@ class MypageAlarmRVAdapter(private val ctx: Context, var dataList: List<AlarmLis
 
     fun setInvisible(view: View) {
         view.visibility = View.INVISIBLE
+    }
+    fun setVisible(view: View) {
+        view.visibility = View.VISIBLE
     }
 }
