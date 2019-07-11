@@ -45,7 +45,7 @@
                 android:layout_marginEnd="7dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/selector_bookmark_heart"/>
+                app:srcCompat="@drawable/selector_bookmark_heart" android:visibility="gone"/>
 
     </android.support.constraint.ConstraintLayout>
 

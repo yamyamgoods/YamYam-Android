@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <android.support.constraint.ConstraintLayout
-            android:id="@+id/btn_bookmark_estimate_dialog_close"
+            android:id="@+id/btn_bookmark_option_dialog_close"
             android:layout_width="48dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -35,7 +35,7 @@
         </android.support.constraint.ConstraintLayout>
 
         <TextView
-            android:id="@+id/tv_bookmark_estimate_dialog_main_name"
+            android:id="@+id/tv_bookmark_option_dialog_main_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView"
@@ -68,7 +68,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <EditText
-                android:id="@+id/et_bookmark_estimate_dialog_tag"
+                android:id="@+id/et_bookmark_option_dialog_tag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -125,7 +125,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <EditText
-                        android:id="@+id/et_bookmark_estimate_dialog_amount"
+                        android:id="@+id/et_bookmark_option_dialog_amount"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_marginStart="16dp"
@@ -158,13 +158,13 @@
                 android:background="#A2A2A2" />
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_bookmark_estimate_dialog_option_list"
+                android:id="@+id/rv_bookmark_option_dialog_option_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tv_bookmark_estimate_dialog_total_price"
+            android:id="@+id/tv_bookmark_option_dialog_total_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -186,10 +186,10 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_bookmark_estimate_dialog_total_price">
+            app:layout_constraintTop_toBottomOf="@+id/tv_bookmark_option_dialog_total_price">
 
             <android.support.constraint.ConstraintLayout
-                android:id="@+id/btn_bookmark_estimate_dialog_go_detail"
+                android:id="@+id/btn_bookmark_option_dialog_go_detail"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="3dp"
@@ -216,7 +216,7 @@
             </android.support.constraint.ConstraintLayout>
 
             <android.support.constraint.ConstraintLayout
-                android:id="@+id/btn_bookmark_estimate_dialog_save"
+                android:id="@+id/btn_bookmark_option_dialog_save"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"

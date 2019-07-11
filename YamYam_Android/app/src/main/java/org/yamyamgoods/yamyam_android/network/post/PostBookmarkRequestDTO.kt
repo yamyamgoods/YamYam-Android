@@ -9,7 +9,7 @@ import org.yamyamgoods.yamyam_android.dataclass.SelectedOption
 
 data class PostBookmarkRequestDTO(
         var goodsIdx: Int,
-        var goodsScrapPrice: String,
+        var goodsScrapPrice: Int,
         var goodsScrapLabel: String,
         var options: List<SelectedOption>?
 )

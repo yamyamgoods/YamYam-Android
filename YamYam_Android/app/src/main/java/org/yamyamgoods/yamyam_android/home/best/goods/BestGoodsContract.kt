@@ -24,7 +24,7 @@ interface BestGoodsContract {
 
     interface Presenter : BasePresenter {
 
-        fun getBestGoodsData(lastIndex: Int)
+        fun getBestGoodsData(lastIndex: Int = -1)
 
         fun bookmarkRequest(body: PostBookmarkRequestDTO)
 

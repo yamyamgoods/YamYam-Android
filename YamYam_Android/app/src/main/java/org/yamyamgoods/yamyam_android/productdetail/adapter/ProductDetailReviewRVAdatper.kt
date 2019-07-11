@@ -51,7 +51,7 @@ class ProductDetailReviewRVAdatper(private val ctx: Context, private val dataLis
             }
 
             holder.btnWhole.setOnClickListener {
-                ctx.startActivity<ReviewDetailActivity>("reviewData" to data)
+                ctx.startActivity<ReviewDetailActivity>("dto" to data)
             }
         }
     }

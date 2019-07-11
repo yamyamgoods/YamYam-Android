@@ -1,5 +1,6 @@
 package org.yamyamgoods.yamyam_android.productdetail
 
+import android.app.Activity
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
@@ -18,7 +19,9 @@ import android.support.v4.view.ViewPager
 import android.support.v4.widget.NestedScrollView
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.text.Editable
 import android.text.TextUtils
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.view.ViewTreeObserver
@@ -44,14 +47,20 @@ import org.yamyamgoods.yamyam_android.network.get.GoodsDetail
 import org.yamyamgoods.yamyam_android.network.get.ProductDetailData
 import org.yamyamgoods.yamyam_android.productdetail.adapter.ProductDetailImageFragmentPagerAdapter
 import org.yamyamgoods.yamyam_android.productdetail.adapter.ProductDetailReviewRVAdatper
-import org.yamyamgoods.yamyam_android.productdetail.adapter.ProductOptionsRVAdatper
+import org.yamyamgoods.yamyam_android.productdetail.adapter.ProductOptionsRVAdapter
 import org.yamyamgoods.yamyam_android.review.ReviewActivity
 import org.yamyamgoods.yamyam_android.dataclass.ReviewData
+import org.yamyamgoods.yamyam_android.network.post.PostBookmarkRequestDTO
+import org.yamyamgoods.yamyam_android.productdetail.dialog.BookmarkCheckDialog
+import org.yamyamgoods.yamyam_android.productdetail.dialog.LoginRequestDialog
 import org.yamyamgoods.yamyam_android.reviewwrite.ReviewWriteActivity
 import org.yamyamgoods.yamyam_android.storeweb.StoreWebActivity
+import org.yamyamgoods.yamyam_android.util.User
 import org.yamyamgoods.yamyam_android.util.dp2px
 import org.yamyamgoods.yamyam_android.util.getScreenWidth
 import java.lang.Exception
+import java.text.NumberFormat
+import java.util.*
 
 /**
  * Created By Yun Hyeok
@@ -77,7 +86,9 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailContract.View {
     private var isBookmarked = false
 
     private var goodsIdx = -1
-    private var seletedOptions: List<SelectedOption>? = null
+    private var oneTotalPrice = -1
+    private var productQuantity = 1
+    private var selectedOptions: List<SelectedOption>? = null
 
     private val blurredImages: MutableMap<String, BitmapDrawable> = mutableMapOf()
     private lateinit var mainImageUrls: List<String>
@@ -191,10 +202,37 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailContract.View {
 
     override fun setProductOptionData(response: List<ProductOption>) {
         rv_product_detail_act_slide_option_list.apply {
-            adapter = ProductOptionsRVAdatper(this@ProductDetailActivity, response)
+            adapter = ProductOptionsRVAdapter(this@ProductDetailActivity, response).apply {
+                basePrice = integrateData.goods.goods_price.replace(",", "").toInt()
+                totalPrice = basePrice
+            }
             layoutManager = LinearLayoutManager(this@ProductDetailActivity)
         }
         Log.v("Malibin Debug", response.toString())
+    }
+
+    override fun showBookmarkSuccessDialog() {
+        slide_product_detail_act_panel.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
+        isBookmarked = true
+        iv_product_detail_act_bookmark.isSelected = true
+        setResult(Activity.RESULT_OK)
+        BookmarkCheckDialog(this).show()
+    }
+
+    override fun showBookmarkCancelToast() {
+        setResult(Activity.RESULT_OK)
+    }
+
+    override fun showLoginRequiredDialog() {
+        LoginRequestDialog(this).show()
+    }
+
+    override fun showAlreadySameOptionsBookmarkToast() {
+        toast("해당 굿즈에 이미 같은 견적이 있습니다.")
+    }
+
+    override fun showAlreadySameLabelBookmarkToast() {
+        toast("해당 굿즈에 이미 같은 라벨이 있습니다.")
     }
 
     private fun progressBarOn() {
@@ -213,15 +251,14 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailContract.View {
         presenter = ProductDetailPresenter().apply {
             view = this@ProductDetailActivity
             goodsRepository = ApplicationController.networkServiceGoods
-            userToken =
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWR4IjoxLCJpYXQiOjE1NjIzMTUzNjYsImV4cCI6MTU2MzYyOTM2Nn0.ZkDGasoDPHTrGvy7yFOT9cPjTQ7gnnUOqekY_zYrAuc"
+            userToken = User.authorization
         }
     }
 
     private fun getServerData() {
         goodsIdx = intent.getIntExtra("goodsIdx", -1)
         presenter.getProductDetailData(goodsIdx)
-        presenter.getProductOptionData(goodsIdx)
+        //presenter.getProductOptionData(goodsIdx)
     }
 
     private fun setStatusBarTransparent() {
@@ -346,7 +383,7 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailContract.View {
         tv_product_detail_act_price.text = data.goods_price
         tv_product_detail_act_deliver_cost.text = data.goods_delivery_charge
         tv_product_detail_act_deliver_deadline.text = data.goods_delivery_period
-        tv_product_detail_act_min_amount.text = data.goods_minimum_amount.toString()
+        tv_product_detail_act_min_amount.text = data.goods_minimum_amount
 
         isBookmarked = (data.scrap_flag == 1)
         bookmarkInit()
@@ -365,23 +402,22 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailContract.View {
         }
         if (halfStarNum == 1)
             starImages[fullStarNum].imageResource = R.drawable.img_goods_star_half
-
     }
 
     private fun bookmarkInit() {
         if (isBookmarked)
             iv_product_detail_act_bookmark.isSelected = true
+
         iv_product_detail_act_bookmark.setOnClickListener {
-            toast("북마크통신해야함 눌렀을 때의 불린 :  $isBookmarked")
             if (isBookmarked) {
-                it.isSelected = false
-                isBookmarked = false
-                //북마크 취소통신
+                toast("찜 탭에서 찜 해제 해주세요!")
                 return@setOnClickListener
             }
             it.isSelected = true
             isBookmarked = true
-            //북마크 요청통신
+            presenter.bookmarkRequest(getPostBookmarkRequestDTO())
+            toast("현재 선택 견적으로 찜하기 완료!")
+            BookmarkCheckDialog(this).show()
         }
     }
 
@@ -402,6 +438,8 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailContract.View {
         btn_product_detail_act_review_write.setOnClickListener {
             startActivity<ReviewWriteActivity>("goodsIdx" to goodsIdx)
         }
+        tv_product_detail_act_review_count.text = integrateData.goods.goods_review_cnt.toString()
+        tv_product_detail_act_review_more_count.text = integrateData.goods.goods_review_cnt.toString()
     }
 
     private fun setMainImagesHeight() {
@@ -523,19 +561,61 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailContract.View {
     }
 
     private fun slideUpPanelLayoutConfig() {
-        cl_product_detail_act_slide_panel.setOnClickListener { return@setOnClickListener }
-
         btn_product_detail_act_slide_close.setOnClickListener {
             slide_product_detail_act_panel.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
         }
 
-        et_product_detail_act_slide_amount.setOnClickListener {
+        et_product_detail_act_slide_amount.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                if (s!!.isEmpty()) {
+                    productQuantity = 0
+                    notifyTotalPrice()
+                    return
+                }
+                productQuantity = s.toString().toInt()
+                notifyTotalPrice()
+            }
 
-        }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
 
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+        })
+
+        //찜하기버튼
         btn_product_detail_act_slide_bookmark.setOnClickListener {
-            slide_product_detail_act_panel.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
+            val body = getPostBookmarkRequestDTO()
+            presenter.bookmarkRequest(body)
+            //slide_product_detail_act_panel.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
         }
+
+        tv_product_detail_act_slide_main_name.text =
+            ("[${integrateData.goods.store_name}] ${integrateData.goods.goods_name}")
+
+        et_product_detail_act_slide_tag.setText(integrateData.goods.goods_name)
+
+        tv_product_detail_act_slide_total_price.text = integrateData.goods.goods_price
+    }
+
+    private fun getPostBookmarkRequestDTO() =
+        PostBookmarkRequestDTO(
+            integrateData.goods.goods_idx,
+            oneTotalPrice * productQuantity,
+            et_product_detail_act_slide_tag.text.toString(),
+            getSelectedOptionsAddedAmount()
+        )
+
+    private fun getSelectedOptionsAddedAmount(): List<SelectedOption> {
+        val result = ArrayList<SelectedOption>()
+        result.addAll(selectedOptions!!)
+        result.add(
+            SelectedOption(
+                "수량", et_product_detail_act_slide_amount.text.toString()
+            )
+        )
+        return result
     }
 
     private fun mainImagesViewPagerInit() {
@@ -587,7 +667,6 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailContract.View {
     }
 
     private fun setThumbnailIndicatorClickListener() {
-
         currentIndicatorPosition = thumbnailFrame[0].apply {
             isSelected = true
         }
@@ -622,5 +701,17 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailContract.View {
 
     private fun selectViewPagerAt(position: Int) {
         vp_product_detail_act_main_image.currentItem = position
+    }
+
+    private fun toNumberFormat(price: Int): String = NumberFormat.getNumberInstance(Locale.US).format(price)
+
+    fun refreshOptionData(totalPrice: Int, selectedOptions: List<SelectedOption>) {
+        this.oneTotalPrice = totalPrice
+        this.selectedOptions = selectedOptions
+    }
+
+    fun notifyTotalPrice() {
+        val totalPrice = toNumberFormat(oneTotalPrice * productQuantity)
+        tv_product_detail_act_slide_total_price.text = totalPrice
     }
 }

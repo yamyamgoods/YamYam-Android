@@ -2,6 +2,7 @@ package org.yamyamgoods.yamyam_android.network.get
 
 import org.yamyamgoods.yamyam_android.dataclass.StoreDetail
 import org.yamyamgoods.yamyam_android.dataclass.ReviewData
+import org.yamyamgoods.yamyam_android.network.post.PostBookmarkRequestDTO
 
 /**
  * Created By Yun Hyeok
@@ -29,6 +30,7 @@ data class GoodsDetail(
     val goods_delivery_period: String,
     val goods_minimum_amount: String,
     val goods_detail: String,
+    val goods_review_cnt : Int,
     val scrap_flag: Int,
     val goods_img: List<String>
 )

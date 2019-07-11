@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             android:background="@android:color/white">
 
     <ProgressBar
             style="?android:attr/progressBarStyle"
@@ -22,7 +23,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:umanoPanelHeight="0dp"
-            app:umanoShadowHeight="0dp" android:visibility="gone" tools:visibility="visible">
+            app:umanoShadowHeight="0dp" android:visibility="gone" tools:visibility="visible"
+            android:background="@android:color/transparent"
+            app:umanoOverlay="true">
 
         <android.support.constraint.ConstraintLayout
                 android:id="@+id/main"
@@ -32,7 +35,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" tools:visibility="visible">
+                app:layout_constraintTop_toTopOf="parent" tools:visibility="visible"
+                android:background="@android:color/white">
 
             <android.support.design.widget.CoordinatorLayout
                     android:layout_width="match_parent"
@@ -419,7 +423,7 @@
 
                                     <TextView
                                             android:id="@+id/tv_product_detail_act_goods_name"
-                                            android:layout_width="match_parent"
+                                            android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_marginTop="4dp"
                                             android:text="굿즈이름"
@@ -649,7 +653,7 @@
                                     android:id="@+id/cl_product_detail_act_detail_zone"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="12dp">
+                                    android:layout_marginTop="24dp">
 
                                 <android.support.constraint.ConstraintLayout
                                         android:layout_width="match_parent"
@@ -671,7 +675,7 @@
                                             app:layout_constraintRight_toRightOf="parent"
                                             app:layout_constraintStart_toStartOf="parent"
                                             app:layout_constraintTop_toTopOf="parent"
-                                            app:srcCompat="@drawable/img_keyrop"/>
+                                            app:srcCompat="@drawable/img_keyrop" android:layout_marginBottom="32dp"/>
                                 </android.support.constraint.ConstraintLayout>
 
                                 <android.support.constraint.ConstraintLayout
@@ -1219,12 +1223,13 @@
                                     android:background="@android:color/transparent"
                                     android:ems="10"
                                     android:gravity="center"
-                                    android:inputType="textPersonName"
+                                    android:inputType="number"
                                     android:text="1"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent"/>
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    android:maxLength="8"/>
 
                             <ImageView
                                     android:id="@+id/imageView10"
