@@ -232,6 +232,7 @@ class ReviewDetailActivity : AppCompatActivity() {
                     .into(reviewImage[i])
         }
 
+/*
         if (thumbFlag == 1)
             iv_review_detail_review_thumbs.isSelected  = !(iv_review_detail_review_thumbs.isSelected)
         btn_review_detail_review_thumbs.setOnClickListener{
@@ -239,7 +240,7 @@ class ReviewDetailActivity : AppCompatActivity() {
             iv_review_detail_review_thumbs.isSelected  = !(iv_review_detail_review_thumbs.isSelected)
             BestReviewFragment.instance.flag = 1
         }
-
+*/
         tv_review_detail_review_thumbs_num.text = thumbCount.toString()
         tv_rv_item_best_review_all_comments_num.text = commentCount.toString()
     }
@@ -289,6 +290,7 @@ class ReviewDetailActivity : AppCompatActivity() {
         var tagUser: String = originText.plus("@").plus(nickname).plus(" ")
         edt_review_detail_input_comment.setText(tagUser)
         edt_review_detail_input_comment.setSelection(edt_review_detail_input_comment.length())
+
         // 댓글을 입력했을 때
         var content : String = edt_review_detail_input_comment.text.toString()
         btn_review_detail_comment_input.setOnClickListener{

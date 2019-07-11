@@ -16,7 +16,7 @@ import org.yamyamgoods.yamyam_android.reviewwrite.ReviewWriteActivity
 import org.yamyamgoods.yamyam_android.reviewwrite.ReviewWriteUploadImagesItem
 import java.sql.SQLException
 
-class ReviewWriteUploadImagesRVAdapter(private val ctx: Context, private val dataList: List<ReviewWriteUploadImagesItem>): RecyclerView.Adapter<ReviewWriteUploadImagesRVAdapter.Holder>(){
+class ReviewWriteUploadImagesRVAdapter(private val ctx: Context, private val dataList: ArrayList<ReviewWriteUploadImagesItem>): RecyclerView.Adapter<ReviewWriteUploadImagesRVAdapter.Holder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewWriteUploadImagesRVAdapter.Holder {
         val view: View = LayoutInflater.from(ctx).inflate(R.layout.rv_item_review_write_images, parent, false)
 
@@ -35,8 +35,9 @@ class ReviewWriteUploadImagesRVAdapter(private val ctx: Context, private val dat
 
             holder.btnClose.setOnClickListener{
                 try{
-                    (ctx as ReviewWriteActivity).deleteClipDataItem(item.idx)
-                    notifyItemRemoved(position)
+                    //(ctx as ReviewWriteActivity).deleteClipDataItem(item.idx)
+                    dataList.removeAt(position);
+                    this.notifyDataSetChanged();
                 }
                 catch(e: SQLException){
                     e.printStackTrace()

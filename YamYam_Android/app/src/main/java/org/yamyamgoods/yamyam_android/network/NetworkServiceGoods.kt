@@ -1,10 +1,12 @@
 package org.yamyamgoods.yamyam_android.network
 
 import org.yamyamgoods.yamyam_android.network.delete.DeleteBookmarkResponseData
+import org.yamyamgoods.yamyam_android.network.delete.DeleteReviewLikeResponseData
 import org.yamyamgoods.yamyam_android.network.get.*
 import org.yamyamgoods.yamyam_android.network.post.PostBookmarkRequestDTO
 import org.yamyamgoods.yamyam_android.network.post.PostBookmarkResponseData
 import org.yamyamgoods.yamyam_android.network.post.PostCommentWriteRequestData
+import org.yamyamgoods.yamyam_android.network.post.PostReviewLikeData
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -136,4 +138,19 @@ interface NetworkServiceGoods {
         @Header("Authorization") authroization: String?,
         @Body requestBody: PostCommentWriteRequestData
     ): Call<PostCommentWriteRequestData>
+
+    // 리뷰 좋아요
+    @POST("/goods/review/like")
+    fun postReviewLikeRequest(
+        @Header("Content-Type") content_type: String,
+        @Header("Authorization") authorization: String?,
+        @Body requestBody: PostReviewLikeData
+    ): Call<PostReviewLikeData>
+
+    @DELETE("/goods/review/{reviewIdx}/like")
+    fun deleteReviewLikeRequest(
+        @Header("Content-Type") content_type: String,
+        @Header("Authorization") authorization: String?,
+        @Path("reviewIdx") reviewIdx: Int
+    ): Call<DeleteReviewLikeResponseData>
 }
