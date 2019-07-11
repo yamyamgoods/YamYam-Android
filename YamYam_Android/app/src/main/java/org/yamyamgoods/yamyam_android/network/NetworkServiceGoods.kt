@@ -175,11 +175,11 @@ interface NetworkServiceGoods {
 
     // 리뷰 보기
     @GET("/goods/{goodsIdx}/reviews/{photoFlag}/{lastIndex}")
-    fun getReviewResponse(
+    fun getReviewRequest(
         @Header("Content-Type") content_type: String,
         @Header("Authorization") authorization: String?,
         @Path("goodsIdx") goodsIdx: Int,
-        @Path("photoFlag") goodsFlag: Int,
-        @Path("lastIdx") lastIdx: Int
+        @Path("photoFlag") photoFlag: Int,
+        @Path("lastIndex") lastIdx: Int
     ): Call<GetReviewResponse>
 }

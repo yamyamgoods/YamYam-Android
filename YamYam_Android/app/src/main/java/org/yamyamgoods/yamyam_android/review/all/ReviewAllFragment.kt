@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_review_all.*
+import kotlinx.android.synthetic.main.top_navigation_tab_review.*
 import org.jetbrains.anko.support.v4.ctx
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.dataclass.ReviewData
@@ -21,9 +22,6 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class ReviewAllFragment :Fragment() {
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_review_all, container, false)
-    }
 
     var dataList: ArrayList<ReviewData> = ArrayList()
 
@@ -35,18 +33,24 @@ class ReviewAllFragment :Fragment() {
     }
     lateinit var reviewAllRVAdapter : ReviewAllRVAdapter
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_review_all, container, false)
+
+        setRecyclerView()
 
         var goodsIndex: Int = activity!!.intent.getIntExtra("goodsIdx", -1)
-
         getReviewResponse(goodsIndex, -1)
-        setRecyclerView()
+//        var num: String = dataList.size.toString()
+//        tv_review_nav_all_num!!.setText(num)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
     }
 
     private fun getReviewResponse(goodsIndex: Int, lastIndex: Int){
-        networkService.getReviewResponse("applitcation/json", token,
-            goodsIndex, -1, lastIndex)
+        Log.v("현주", goodsIndex.toString())
+        networkService.getReviewRequest("application/json", token, goodsIndex, -1, lastIndex)
             .enqueue(object: Callback<GetReviewResponse>{
                 override fun onFailure(call: Call<GetReviewResponse>, t: Throwable) {
                     Log.e("ReviewAllFragment", t.toString())
@@ -55,11 +59,15 @@ class ReviewAllFragment :Fragment() {
                 override fun onResponse(call: Call<GetReviewResponse>, response: Response<GetReviewResponse>) {
                     if (response.isSuccessful){
                         Log.v("ReviewAllFragment", "통신 성공")
-                        response.body()?.let{
-                            dataList = response.body()!!.data!!
+                        dataList = response.body()!!.data!!
+                        response.body()?.let {
                             reviewAllRVAdapter = ReviewAllRVAdapter(activity!!, dataList)
-
+                            rv_review_all_list.apply{
+                                adapter = ReviewAllRVAdapter(activity!!, dataList)
+                                layoutManager = LinearLayoutManager(activity!!)
+                            }
                         }
+                        reviewAllRVAdapter.notifyDataSetChanged()
                     }
                 }
             })
@@ -71,6 +79,5 @@ class ReviewAllFragment :Fragment() {
             adapter = ReviewAllRVAdapter(ctx, dataList)
             layoutManager = LinearLayoutManager(ctx)
         }
-        reviewAllRVAdapter.notifyDataSetChanged()
     }
 }
