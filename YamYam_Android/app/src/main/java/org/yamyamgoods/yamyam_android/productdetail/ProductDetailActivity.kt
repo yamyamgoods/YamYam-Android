@@ -409,17 +409,14 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailContract.View {
             iv_product_detail_act_bookmark.isSelected = true
 
         iv_product_detail_act_bookmark.setOnClickListener {
-//            if (isBookmarked) {
-//                toast("찜 탭에서 찜 해제 해주세요!")
-//                return@setOnClickListener
-//            }
-//            it.isSelected = true
-//            isBookmarked = true
-//            presenter.bookmarkRequest(getPostBookmarkRequestDTO())
-//            toast("현재 선택 견적으로 찜하기 완료!")
-//
-
-            BookmarkCheckDialog(this).show()
+            if (isBookmarked) {
+                toast("찜 탭에서 찜 해제 해주세요!")
+                return@setOnClickListener
+            }
+            it.isSelected = true
+            isBookmarked = true
+            presenter.bookmarkRequest(getPostBookmarkRequestDTO())
+            toast("현재 선택 견적으로 찜하기 완료!")
         }
     }
 
