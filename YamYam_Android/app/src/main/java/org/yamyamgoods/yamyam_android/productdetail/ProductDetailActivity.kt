@@ -402,23 +402,24 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailContract.View {
         }
         if (halfStarNum == 1)
             starImages[fullStarNum].imageResource = R.drawable.img_goods_star_half
-
     }
 
     private fun bookmarkInit() {
         if (isBookmarked)
             iv_product_detail_act_bookmark.isSelected = true
+
         iv_product_detail_act_bookmark.setOnClickListener {
-            toast("북마크통신해야함 눌렀을 때의 불린 :  $isBookmarked")
-            if (isBookmarked) {
-                it.isSelected = false
-                isBookmarked = false
-                //북마크 취소통신
-                return@setOnClickListener
-            }
-            it.isSelected = true
-            isBookmarked = true
-            //북마크 요청통신
+//            if (isBookmarked) {
+//                toast("찜 탭에서 찜 해제 해주세요!")
+//                return@setOnClickListener
+//            }
+//            it.isSelected = true
+//            isBookmarked = true
+//            presenter.bookmarkRequest(getPostBookmarkRequestDTO())
+//            toast("현재 선택 견적으로 찜하기 완료!")
+//
+
+            BookmarkCheckDialog(this).show()
         }
     }
 

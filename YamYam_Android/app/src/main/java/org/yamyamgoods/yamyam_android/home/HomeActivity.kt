@@ -32,6 +32,10 @@ class HomeActivity : AppCompatActivity() {
 
     }
 
+    fun gotoBookmarkTab() {
+        vp_home_act_pager.currentItem = 3
+    }
+
     //액티비티에서는 Back버튼을 두번 눌렀을 때, 종료되도록
 //    override fun onBackPressed() {
 //        val fragment = this.supportFragmentManager.findFragmentById(R.id.fl_goods_fragment_frag)

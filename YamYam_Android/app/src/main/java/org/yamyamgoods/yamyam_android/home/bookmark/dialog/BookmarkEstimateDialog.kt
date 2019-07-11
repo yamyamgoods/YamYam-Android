@@ -16,7 +16,7 @@ class BookmarkEstimateDialog(private val ctx: Context) : Dialog(ctx){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dialog_bookmark_estimate_check)
 
-        window.setBackgroundDrawableResource(R.color.transparent)
+        window!!.setBackgroundDrawableResource(R.color.transparent)
     }
 
 

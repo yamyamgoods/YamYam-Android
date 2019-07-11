@@ -24,7 +24,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:umanoPanelHeight="0dp"
             app:umanoShadowHeight="0dp" android:visibility="gone" tools:visibility="visible"
-            android:background="@android:color/transparent">
+            android:background="@android:color/transparent"
+            app:umanoOverlay="true">
 
         <android.support.constraint.ConstraintLayout
                 android:id="@+id/main"
@@ -34,7 +35,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" tools:visibility="gone"
+                app:layout_constraintTop_toTopOf="parent" tools:visibility="visible"
                 android:background="@android:color/white">
 
             <android.support.design.widget.CoordinatorLayout
@@ -674,7 +675,7 @@
                                             app:layout_constraintRight_toRightOf="parent"
                                             app:layout_constraintStart_toStartOf="parent"
                                             app:layout_constraintTop_toTopOf="parent"
-                                            app:srcCompat="@drawable/img_keyrop"/>
+                                            app:srcCompat="@drawable/img_keyrop" android:layout_marginBottom="32dp"/>
                                 </android.support.constraint.ConstraintLayout>
 
                                 <android.support.constraint.ConstraintLayout

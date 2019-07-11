@@ -123,11 +123,11 @@ class ProductDetailPresenter : ProductDetailContract.Presenter {
             }
         )
     }
-
-    private fun <T> getErrorbodyJson(errorBodyString: String): T {
-        val type: Type = object : TypeToken<T>() {}.type
-        val gson: Gson = GsonBuilder().create()
-        val responseJson: T = gson.fromJson(errorBodyString, type)
-        return responseJson
-    }
+//    // 안되는코드임
+//    private fun <T> getErrorbodyJson(errorBodyString: String): T {
+//        val type: Type = object : TypeToken<T>() {}.type
+//        val gson: Gson = GsonBuilder().create()
+//        val responseJson: T = gson.fromJson(errorBodyString, type)
+//        return responseJson
+//    }
 }

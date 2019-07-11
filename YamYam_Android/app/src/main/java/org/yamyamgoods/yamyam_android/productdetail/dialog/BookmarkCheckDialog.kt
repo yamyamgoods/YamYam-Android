@@ -3,6 +3,7 @@ package org.yamyamgoods.yamyam_android.productdetail.dialog
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import android.view.ViewGroup
 import kotlinx.android.synthetic.main.dialog_bookmark_check.*
 import org.jetbrains.anko.toast
 import org.yamyamgoods.yamyam_android.R
@@ -18,6 +19,8 @@ class BookmarkCheckDialog(private val ctx: Context) : Dialog(ctx) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dialog_bookmark_check)
 
+        window!!.setBackgroundDrawableResource(R.color.transparent)
+        window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         viewInit()
     }
 
