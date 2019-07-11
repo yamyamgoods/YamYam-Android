@@ -58,6 +58,7 @@ import org.yamyamgoods.yamyam_android.storeweb.StoreWebActivity
 import org.yamyamgoods.yamyam_android.util.User
 import org.yamyamgoods.yamyam_android.util.dp2px
 import org.yamyamgoods.yamyam_android.util.getScreenWidth
+import org.yamyamgoods.yamyam_android.util.px2dp
 import java.lang.Exception
 import java.text.NumberFormat
 import java.util.*
@@ -176,7 +177,13 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailContract.View {
         presenterInit()
         getServerData()
 
+        setStatusBarHeight()
         setStatusBarTransparent()
+
+        Log.v(
+            "Malibin Debug",
+            "getStatusBarHeight() : ${getStatusBarHeight()}, toDP : ${px2dp(getStatusBarHeight(), this)}"
+        )
     }
 
     override fun onBackPressed() {
@@ -259,6 +266,10 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailContract.View {
         goodsIdx = intent.getIntExtra("goodsIdx", -1)
         presenter.getProductDetailData(goodsIdx)
         //presenter.getProductOptionData(goodsIdx)
+    }
+
+    private fun setStatusBarHeight(){
+        toolbar_product_detail_act.layoutParams.height = getStatusBarHeight()
     }
 
     private fun setStatusBarTransparent() {
@@ -704,6 +715,15 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailContract.View {
     }
 
     private fun toNumberFormat(price: Int): String = NumberFormat.getNumberInstance(Locale.US).format(price)
+
+    private fun getStatusBarHeight(): Int {
+        var result = 0
+        val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
+        if (resourceId > 0) {
+            result = resources.getDimensionPixelSize(resourceId)
+        }
+        return result
+    }
 
     fun refreshOptionData(totalPrice: Int, selectedOptions: List<SelectedOption>) {
         this.oneTotalPrice = totalPrice

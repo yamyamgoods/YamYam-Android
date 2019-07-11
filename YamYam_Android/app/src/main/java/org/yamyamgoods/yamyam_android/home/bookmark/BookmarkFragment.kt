@@ -58,7 +58,6 @@ class BookmarkFragment : Fragment(), BookmarkContract.View {
     }
 
     override fun addBookmarkData(data: List<BookmarkData>) {
-        Log.v("Malibin Debug", data.toString())
         if (data.isEmpty()) {
             rv_bookmark_frag_list.visibility = View.GONE
             cl_bookmark_frag_no_list.visibility = View.VISIBLE
