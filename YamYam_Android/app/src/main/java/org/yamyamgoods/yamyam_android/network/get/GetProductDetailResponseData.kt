@@ -29,6 +29,7 @@ data class GoodsDetail(
     val goods_delivery_period: String,
     val goods_minimum_amount: String,
     val goods_detail: String,
+    val goods_review_cnt : Int,
     val scrap_flag: Int,
     val goods_img: List<String>
 )

@@ -41,6 +41,8 @@ class ProductDetailPresenter : ProductDetailContract.Presenter {
                 ) {
                     if (response.isSuccessful) {
                         view.setProductDetailData(response.body()!!.data)
+
+                        getProductOptionData(goodsIdx)
                     }
                 }
             }
