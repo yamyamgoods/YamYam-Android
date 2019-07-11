@@ -21,6 +21,8 @@ import org.yamyamgoods.yamyam_android.util.User
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import org.yamyamgoods.yamyam_android.home.best.review.BestReviewFragment
+
 
 class GoodsExhibitionDetailActivity : AppCompatActivity() {
 
@@ -131,6 +133,12 @@ class GoodsExhibitionDetailActivity : AppCompatActivity() {
             }
         })
     }
+
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        val tf = supportFragmentManager.findFragmentById(R.id.cl_fragment_best_review) as BestReviewFragment?
+//        tf!!.getBestReviewResponse()
+//    }
 
     private fun setRecyclerView() {
         goodsExhibitionDetailRecyclerViewAdapter = GoodsExhibitionDetailRecyclerViewAdapter(this, dataList)

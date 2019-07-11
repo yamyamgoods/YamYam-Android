@@ -20,9 +20,11 @@ import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.dataclass.ReviewData
 import org.yamyamgoods.yamyam_android.network.ApplicationController
 import org.yamyamgoods.yamyam_android.network.NetworkServiceGoods
+import org.yamyamgoods.yamyam_android.network.delete.DeleteReviewLikeResponseData
 import org.yamyamgoods.yamyam_android.network.get.GetReviewDetailResponse
 import org.yamyamgoods.yamyam_android.network.get.ReviewCommentData
 import org.yamyamgoods.yamyam_android.network.post.PostCommentWriteRequestData
+import org.yamyamgoods.yamyam_android.network.post.PostReviewLikeData
 import org.yamyamgoods.yamyam_android.reviewdetail.adapter.ReviewDetailRVAdapter
 import retrofit2.Call
 import retrofit2.Callback
@@ -194,6 +196,13 @@ class ReviewDetailActivity : AppCompatActivity() {
         tv_review_detail_review_date.text = date
         tv_review_detail_review_contents.text = reviewContents
 
+        Log.v("현주-리뷰상세-thumbFlag: ", thumbFlag.toString())
+
+        if (thumbFlag == 1)
+            iv_review_detail_review_thumbs.isSelected = true
+        if (thumbFlag == 0)
+            iv_review_detail_review_thumbs.isSelected = false
+
         var starRate: List<ImageView> = listOf(
             findViewById(R.id.iv_review_detail_review_star1),
             findViewById(R.id.iv_review_detail_review_star2),
@@ -219,28 +228,70 @@ class ReviewDetailActivity : AppCompatActivity() {
             reviewImage[2].setColorFilter(Color.parseColor("#333333"), PorterDuff.Mode.MULTIPLY)
             etcImageNum.text = "+" + (imageNum - 3).toString()
             imageNum = 3
-            Log.v("현주", "이미지 3 초과")
         }
         for (i in 0 until imageNum) {
-            Log.v("현주", "이미지 3 이하")
             setVisible(reviewImage[i])
             Glide.with(this)
                 .load(imageUrl[i])
                 .apply(options)
                 .into(reviewImage[i])
         }
+        btn_review_detail_review_thumbs.setOnClickListener{// 리뷰 좋아요
+            if (thumbFlag == 0){
+                postReviewLike(reviewIndex)
+                thumbFlag = 1
+                iv_review_detail_review_thumbs.isSelected = true
+                //holder.tvThumbNum.text = (item.goods_review_like_count + 1).toString()
+            }
 
-/*
-        if (thumbFlag == 1)
-            iv_review_detail_review_thumbs.isSelected  = !(iv_review_detail_review_thumbs.isSelected)
-        btn_review_detail_review_thumbs.setOnClickListener{
-            thumbFlag = Math.abs(thumbFlag - 1)
-            iv_review_detail_review_thumbs.isSelected  = !(iv_review_detail_review_thumbs.isSelected)
-            BestReviewFragment.instance.flag = 1
+            // 리뷰 좋아요 취소
+            else if (thumbFlag == 1){
+                deleteReviewLike(reviewIndex)
+                thumbFlag = 0
+                iv_review_detail_review_thumbs.isSelected = false
+                //holder.tvThumbNum.text = (item.goods_review_like_count - 1).toString()
+            }
         }
-*/
+
         tv_review_detail_review_thumbs_num.text = thumbCount.toString()
         tv_rv_item_best_review_all_comments_num.text = commentCount.toString()
+    }
+
+
+    // 리뷰 좋아요
+    fun postReviewLike(reviewIdx: Int) {
+        networkService.postReviewLikeRequest("application/json", token, PostReviewLikeData(reviewIdx))
+            .enqueue(object : Callback<PostReviewLikeData> {
+
+                override fun onFailure(call: Call<PostReviewLikeData>, t: Throwable) {
+                    Log.e("BestReviewFragment", t.toString())
+                }
+
+                override fun onResponse(call: Call<PostReviewLikeData>, response: Response<PostReviewLikeData>) {
+                    Log.v("BestReviewFragment", "리뷰 좋아요 서버 통신 성공  response : ${response.body()}")
+                    if (response.isSuccessful) {
+                        Log.v("현주", "리뷰 좋아요 통신 성공: "+ reviewIdx.toString())
+                    }
+                }
+            })
+    }
+
+    // 리뷰 좋아요 취소
+    fun deleteReviewLike(reviewIdx: Int) {
+        networkService.deleteReviewLikeRequest("application/json", token, reviewIdx)
+            .enqueue(object: Callback<DeleteReviewLikeResponseData>{
+                override fun onFailure(call: Call<DeleteReviewLikeResponseData>, t: Throwable) {
+                    Log.e("BestReviewFragment", t.toString())
+                }
+
+                override fun onResponse(
+                    call: Call<DeleteReviewLikeResponseData>,
+                    response: Response<DeleteReviewLikeResponseData>){
+                    if (response.isSuccessful){
+                        Log.v("현주", "리뷰 좋아요 취소 통신 성공: "+ reviewIdx.toString())
+                    }
+                }
+            })
     }
 
     // 댓글 작성 서버 통신
@@ -285,12 +336,11 @@ class ReviewDetailActivity : AppCompatActivity() {
             if (edt_review_detail_input_comment.text.toString() != "")
             try {
                 var content: String = edt_review_detail_input_comment.text.toString()
-                //postCommentWriteResponse(reviewIndex, content, alarmIdx, flag)
-                if (content.indexOf("@") == -1)
-                    postCommentWriteResponse(reviewIndex, content, userIndex, 0)
-                else{
-                    postCommentWriteResponse(reviewIndex, content, commentIdx, 1)
-                }
+                postCommentWriteResponse(reviewIndex, content, userIndex, 1)
+                if (content.indexOf("@") != -1) //태그를 한 경우
+                    postCommentWriteResponse(reviewIndex, content, commentIdx, 0)
+                //Log.v("현주: 알람", commentIdx.toString()+userIndex.toString())
+
                 edt_review_detail_input_comment.setText("")
                 getReviewDetailResponse()
             } catch (e: Exception) {

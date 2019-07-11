@@ -21,15 +21,36 @@ import android.widget.Toast
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import kotlinx.android.synthetic.main.activity_review_write.*
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import org.yamyamgoods.yamyam_android.R
+import org.yamyamgoods.yamyam_android.network.ApplicationController
+import org.yamyamgoods.yamyam_android.network.NetworkServiceGoods
+import org.yamyamgoods.yamyam_android.network.get.GetReviewWritePageResponse
+import org.yamyamgoods.yamyam_android.network.get.GetReviewWritePageResponseData
+import org.yamyamgoods.yamyam_android.network.post.PostReviewWriteResponse
 import org.yamyamgoods.yamyam_android.reviewwrite.adapter.ReviewWriteUploadImagesRVAdapter
 import org.yamyamgoods.yamyam_android.reviewwrite.dialog.DialogReviewWriteSave
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.InputStream
 
 class ReviewWriteActivity : AppCompatActivity() {
     companion object {
         var reviewWriteCtx: ReviewWriteActivity? = null
     }
+
+    val token: String =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWR4IjoxLCJpYXQiOjE1NjIzMTUzNjYsImV4cCI6MTU2MzYyOTM2Nn0.ZkDGasoDPHTrGvy7yFOT9cPjTQ7gnnUOqekY_zYrAuc"
+
+    val networkService: NetworkServiceGoods by lazy {
+        ApplicationController.networkServiceGoods
+    }
+
+    var images = ArrayList<MultipartBody.Part>()
+    lateinit var getReviewWritePageResponseData: GetReviewWritePageResponseData
 
     private var PICTURE_REQUEST_CODE: Int = 100
 
@@ -55,13 +76,14 @@ class ReviewWriteActivity : AppCompatActivity() {
         }
 
         btn_review_write_save.setOnClickListener {
-            saveReview()
+            saveReview(102, images)
         }
     }
 
     override fun onResume() {
         super.onResume()
         configureRecyclerView()
+        getReviewWritePage(102) // 리뷰 작성 페이지
         configureSaveButton()
     }
 
@@ -78,11 +100,11 @@ class ReviewWriteActivity : AppCompatActivity() {
             }
         }
         TedPermission.with(this)
-                .setPermissionListener(permissionListener)
-                .setRationaleMessage(getString(R.string.txt_permission2))
-                .setDeniedMessage(getString(R.string.txt_permission1))
-                .setPermissions(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.CAMERA)
-                .check()
+            .setPermissionListener(permissionListener)
+            .setRationaleMessage(getString(R.string.txt_permission2))
+            .setDeniedMessage(getString(R.string.txt_permission1))
+            .setPermissions(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.CAMERA)
+            .check()
     }
 
     fun openGallery() {
@@ -164,17 +186,66 @@ class ReviewWriteActivity : AppCompatActivity() {
         })
     }
 
-    fun saveReview() {
+    // 리뷰 작성 서버 통신
+    fun getReviewWritePage(goodsIdx: Int) {       //goodsIdx : 리뷰를 작성할 굿즈의 Idx
+        networkService.getReviewWritePageRequest("application/json", token, goodsIdx)
+            .enqueue(object : Callback<GetReviewWritePageResponse> {
+                override fun onFailure(call: Call<GetReviewWritePageResponse>, t: Throwable) {
+                }
+
+                override fun onResponse(
+                    call: Call<GetReviewWritePageResponse>,
+                    response: Response<GetReviewWritePageResponse>
+                ) {
+                    if (response.isSuccessful) { //통신 성공 시
+                        getReviewWritePageResponseData = response.body()!!.data
+
+                        //굿즈의 옵션 받아옴
+                        var option = getReviewWritePageResponseData.goods_option_name;
+                        var optionLength = option.size;
+                        var optionString = "";
+
+                        for (i in 0 until optionLength) {
+                            if (i == optionLength - 1) {
+                                optionString += option[i]
+                            } else {
+                                optionString += option[i] + ", "
+                            }
+                        }
+
+                        // 리뷰작성부분의 hint 글자 바꿔주는 곳
+                        edt_review_write.hint = "구매하신 굿즈의 " + optionString + "를 함께 입력해주세요:)"
+                    } else {
+                    }
+                }
+            })
+    }
+
+    fun saveReview(goodsIdx: Int, img: ArrayList<MultipartBody.Part>) {
         //서버랑 통신.
         // 별점, 리뷰 스트링, 사진 저장
+        var rating_data: Int = rb_review_write_star_rate.rating.toInt()
+        var content_data: String = edt_review_write.text.toString()
 
-        // 포인트 쌓기 다이얼로그 띄우기
-        btn_review_write_save.setOnClickListener {
-            var imageBtnDialog = DialogReviewWriteSave(this)
-            imageBtnDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            imageBtnDialog.setCanceledOnTouchOutside(false)
-            imageBtnDialog.show()
-        }
+        //var rating =  RequestBody.create(MediaType.parse("text/plain"), rating_data);
+        var content = RequestBody.create(MediaType.parse("text/plain"), content_data)
+
+        networkService.postReviewWriteRequest(token, goodsIdx, content, rating_data, img).
+            enqueue(object : Callback<PostReviewWriteResponse> {
+            override fun onFailure(call: Call<PostReviewWriteResponse>, t: Throwable) {
+            }
+
+            override fun onResponse(call: Call<PostReviewWriteResponse>, response: Response<PostReviewWriteResponse>) {
+                if (response.isSuccessful) {
+                    //포인트 쌓기 다이얼로그 띄우기
+                    var imageBtnDialog = DialogReviewWriteSave(this@ReviewWriteActivity)
+                    imageBtnDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                    imageBtnDialog.setCanceledOnTouchOutside(false)
+                    imageBtnDialog.show()
+                } else {
+                }
+            }
+        })
     }
 }
 

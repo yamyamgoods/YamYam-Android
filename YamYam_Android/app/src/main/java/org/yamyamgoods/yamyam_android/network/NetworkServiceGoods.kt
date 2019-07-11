@@ -1,12 +1,11 @@
 package org.yamyamgoods.yamyam_android.network
 
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import org.yamyamgoods.yamyam_android.network.delete.DeleteBookmarkResponseData
 import org.yamyamgoods.yamyam_android.network.delete.DeleteReviewLikeResponseData
 import org.yamyamgoods.yamyam_android.network.get.*
-import org.yamyamgoods.yamyam_android.network.post.PostBookmarkRequestDTO
-import org.yamyamgoods.yamyam_android.network.post.PostBookmarkResponseData
-import org.yamyamgoods.yamyam_android.network.post.PostCommentWriteRequestData
-import org.yamyamgoods.yamyam_android.network.post.PostReviewLikeData
+import org.yamyamgoods.yamyam_android.network.post.*
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -147,10 +146,30 @@ interface NetworkServiceGoods {
         @Body requestBody: PostReviewLikeData
     ): Call<PostReviewLikeData>
 
+    // 리뷰 작성 페이지 (옵션 나타내주는 부분)
     @DELETE("/goods/review/{reviewIdx}/like")
     fun deleteReviewLikeRequest(
         @Header("Content-Type") content_type: String,
         @Header("Authorization") authorization: String?,
         @Path("reviewIdx") reviewIdx: Int
     ): Call<DeleteReviewLikeResponseData>
+
+    // 리뷰 작성 페이지 (옵션 나타내주는 부분)
+    @GET("/goods/{goodsIdx}/options/name")
+    fun getReviewWritePageRequest(
+        @Header("Content-Type") content_type: String,
+        @Header("Authorization") authroization: String?,
+        @Path("goodsIdx") goodsIdx: Int
+    ): Call<GetReviewWritePageResponse>
+
+    // 리뷰 작성 하기
+    @Multipart
+    @POST("/goods/review")
+    fun postReviewWriteRequest(
+        @Header("Authorization") authroization: String?,
+        @Part("goodsIdx") goodsIdx: Int,
+        @Part("content") content: RequestBody,
+        @Part("rating") rating : Int,
+        @Part img: ArrayList<MultipartBody.Part>
+    ): Call<PostReviewWriteResponse>
 }

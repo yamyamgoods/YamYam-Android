@@ -131,7 +131,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    tools:text="5,200"
+                    android:text="0"
                     android:textColor="#ffce00"
                     android:textSize="16dp"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_mypage_user_email"

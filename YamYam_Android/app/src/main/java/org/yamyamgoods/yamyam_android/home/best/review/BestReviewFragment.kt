@@ -58,24 +58,9 @@ class BestReviewFragment : Fragment() {
 
         getBestReviewResponse()
     }
-    //val ctx = activity!!.applicationContext!!
-    /*private fun viewInit() {
-       // val ctx = activity!!.applicationContext
-        var tmp: ArrayList<ReviewData> = response.body()!!.data!!
-        dataList = TempData.BestReview()
-        bestReviewRVAdapter = BestReviewRVAdapter(context!!,dataList)
-        rv_best_review_list.apply{
-            adapter = bestReviewRVAdapter
-            layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL,false)
-        }
-        if(instance.flag==1)
-            dataList[0].thumbFlag = 1
-        bestReviewRVAdapter.dataList = dataList
-        bestReviewRVAdapter.notifyDataSetChanged()
-    }*/
 
     // 베스트 리뷰 보기 서버 통신
-    private fun getBestReviewResponse() {
+    fun getBestReviewResponse() {
         networkService.getBestReviewItemRequest("application/json", token, -1)
             .enqueue(object : Callback<GetReviewResponse> {
                 override fun onFailure(call: Call<GetReviewResponse>, t: Throwable) {
@@ -92,6 +77,7 @@ class BestReviewFragment : Fragment() {
                                 layoutManager = LinearLayoutManager(activity!!)
                             }
                             bestReviewRVAdapter = BestReviewRVAdapter(activity!!, dataList, this@BestReviewFragment)
+                            bestReviewRVAdapter.notifyDataSetChanged()
                         }
                     }
                 }

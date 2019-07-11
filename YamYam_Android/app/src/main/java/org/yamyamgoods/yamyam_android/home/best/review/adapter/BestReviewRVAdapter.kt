@@ -62,6 +62,7 @@ class BestReviewRVAdapter(private val ctx: Context, var dataList: List<ReviewDat
                 try {
                     var intent = Intent(ctx, ReviewDetailActivity::class.java)
                     intent.putExtra("dto", item)
+                    Log.v("현주 flag 확인: ", item.goods_review_idx.toString()+ item.review_like_flag)
                     ctx.startActivity(intent)
                 } catch (e: Exception) {
                 }
@@ -95,7 +96,7 @@ class BestReviewRVAdapter(private val ctx: Context, var dataList: List<ReviewDat
                     fragment.postReviewLike(reviewIndex)
                     item.review_like_flag = 1
                     holder.ivThumb.isSelected = true
-                    //holder.tvThumbNum.text = (item.goods_review_like_count + 1).toString()
+                    holder.tvThumbNum.text = (item.goods_review_like_count + 1).toString()
                 }
 
                 // 리뷰 좋아요 취소
@@ -103,7 +104,7 @@ class BestReviewRVAdapter(private val ctx: Context, var dataList: List<ReviewDat
                     fragment.deleteReviewLike(reviewIndex)
                     item.review_like_flag = 0
                     holder.ivThumb.isSelected = false
-                    //holder.tvThumbNum.text = (item.goods_review_like_count - 1).toString()
+                    holder.tvThumbNum.text = (item.goods_review_like_count - 1).toString()
                 }
             }
         }
@@ -137,7 +138,6 @@ class BestReviewRVAdapter(private val ctx: Context, var dataList: List<ReviewDat
         var btnComments: ImageView = itemView.findViewById(R.id.btn_rv_item_best_review_comments) as ImageView
         var tvCommentsNum: TextView = itemView.findViewById(R.id.tv_rv_item_best_review_comments_num) as TextView
     }
-
 
     fun setVisible(view: View) {
         view.visibility = View.VISIBLE
