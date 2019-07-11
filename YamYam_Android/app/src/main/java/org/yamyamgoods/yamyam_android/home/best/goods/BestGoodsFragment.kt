@@ -1,5 +1,7 @@
 package org.yamyamgoods.yamyam_android.home.best.goods
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
@@ -9,12 +11,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_best_goods.*
+import org.jetbrains.anko.support.v4.startActivityForResult
 import org.jetbrains.anko.toast
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.dataclass.GoodsData
 import org.yamyamgoods.yamyam_android.home.best.goods.adapter.BestGoodsRVAdapter
 import org.yamyamgoods.yamyam_android.network.ApplicationController
 import org.yamyamgoods.yamyam_android.network.post.PostBookmarkRequestDTO
+import org.yamyamgoods.yamyam_android.productdetail.ProductDetailActivity
 
 class BestGoodsFragment : Fragment(), BestGoodsContract.View {
 
@@ -53,6 +57,17 @@ class BestGoodsFragment : Fragment(), BestGoodsContract.View {
         getBestGoodsData()
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        when (requestCode) {
+            1001 -> {
+                if (resultCode == Activity.RESULT_OK)
+                    refreshGoodsData()
+            }
+        }
+    }
+
     override fun showServerFailToast(message: String, t: Throwable) {
         activity!!.toast(message)
         Log.v("Malibin Debug", "t : ${t.message}, stack : ${TextUtils.join("\n", t.stackTrace)}")
@@ -79,7 +94,7 @@ class BestGoodsFragment : Fragment(), BestGoodsContract.View {
     private fun viewInit() {
         val ctx = activity!!
 
-        bestGoodsRVAdapter = BestGoodsRVAdapter(ctx, bookmarkClickListener)
+        bestGoodsRVAdapter = BestGoodsRVAdapter(ctx, bookmarkClickListener, this)
         rv_best_goods_frag_list.apply {
             adapter = bestGoodsRVAdapter
             layoutManager = GridLayoutManager(ctx, 2)
@@ -88,6 +103,15 @@ class BestGoodsFragment : Fragment(), BestGoodsContract.View {
 
     private fun getBestGoodsData(lastIndex: Int = -1) {
         presenter.getBestGoodsData(lastIndex)
+    }
+
+    private fun refreshGoodsData() {
+        bestGoodsRVAdapter.dataList.clear()
+        presenter.getBestGoodsData()
+    }
+
+    fun startProductDetailActivity(storeIdx: Int) {
+        startActivityForResult<ProductDetailActivity>(1001, "storeIdx" to storeIdx)
     }
 
     interface BookmarkClickListener {

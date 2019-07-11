@@ -102,7 +102,6 @@ class ProductDetailPresenter : ProductDetailContract.Presenter {
                     Log.v("Malibin Debug", "북마크 해제 실패")
                 }
             }
-
         )
     }
 

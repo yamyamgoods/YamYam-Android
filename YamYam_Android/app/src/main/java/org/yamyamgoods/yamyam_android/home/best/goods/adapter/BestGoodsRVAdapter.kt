@@ -18,7 +18,11 @@ import org.yamyamgoods.yamyam_android.productdetail.ProductDetailActivity
 import org.yamyamgoods.yamyam_android.util.dp2px
 import org.yamyamgoods.yamyam_android.util.getScreenWidth
 
-class BestGoodsRVAdapter(private val ctx: Context, private val listener: BestGoodsFragment.BookmarkClickListener) :
+class BestGoodsRVAdapter(
+    private val ctx: Context,
+    private val listener: BestGoodsFragment.BookmarkClickListener,
+    private val fragment: BestGoodsFragment
+) :
     RecyclerView.Adapter<BestGoodsRVAdapter.Holder>() {
 
     val dataList = ArrayList<GoodsData>()
@@ -63,6 +67,7 @@ class BestGoodsRVAdapter(private val ctx: Context, private val listener: BestGoo
             holder.tvReviewCount.text = item.goods_review_cnt.toString()
 
             holder.clWhole.setOnClickListener {
+                //fragment.startProductDetailActivity(item.goods_idx)
                 ctx.startActivity<ProductDetailActivity>("goodsIdx" to item.goods_idx)
             }
         }

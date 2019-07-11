@@ -1,5 +1,6 @@
 package org.yamyamgoods.yamyam_android.productdetail
 
+import android.app.Activity
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
@@ -213,11 +214,12 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailContract.View {
         slide_product_detail_act_panel.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
         isBookmarked = true
         iv_product_detail_act_bookmark.isSelected = true
+        setResult(Activity.RESULT_OK)
         BookmarkCheckDialog(this).show()
     }
 
     override fun showBookmarkCancelToast() {
-
+        setResult(Activity.RESULT_OK)
     }
 
     override fun showLoginRequiredDialog() {
