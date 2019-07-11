@@ -110,11 +110,11 @@ class ReviewWriteActivity : AppCompatActivity() {
                             var item: ClipData.Item = data.clipData.getItemAt(i)
 
                             // 클립데이터의 uri을 리사이클러뷰 데이터 클래스에 추가하기.
-                            uploadImageList.add(ReviewWriteUploadImagesItem(1, i, item.uri.toString()))
+                            uploadImageList.add(ReviewWriteUploadImagesItem(1, item.uri.toString()))
                         }
                     }
                 } else {
-                    uploadImageList.add(ReviewWriteUploadImagesItem(1, 0, uri.toString()))
+                    uploadImageList.add(ReviewWriteUploadImagesItem(1, uri.toString()))
                 }
             }
         } catch (e: Exception) {
@@ -125,6 +125,11 @@ class ReviewWriteActivity : AppCompatActivity() {
     fun deleteClipDataItem(idx: Int) {
         val item: ReviewWriteUploadImagesItem = uploadImageList[idx]
         uploadImageList.remove(item)
+    }
+
+    override fun onResumeFragments() {
+        super.onResumeFragments()
+        configureRecyclerView()
     }
 
     //리사이클러 뷰 적용하기

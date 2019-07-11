@@ -1,10 +1,12 @@
 package org.yamyamgoods.yamyam_android.home.best.review.adapter
 
+import android.app.PendingIntent.getActivity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.support.constraint.ConstraintLayout
+import android.support.v4.app.Fragment
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
@@ -19,11 +21,12 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.dataclass.ReviewData
-import org.yamyamgoods.yamyam_android.reviewdetail.ReviewBasicDTO
+import org.yamyamgoods.yamyam_android.home.HomeActivity
+import org.yamyamgoods.yamyam_android.home.best.review.BestReviewFragment
 import org.yamyamgoods.yamyam_android.reviewdetail.ReviewDetailActivity
-import java.lang.Math.abs
 
-class BestReviewRVAdapter(private val ctx: Context, var dataList: List<ReviewData>) : RecyclerView.Adapter<BestReviewRVAdapter.Holder>() {
+class BestReviewRVAdapter(private val ctx: Context, var dataList: List<ReviewData>, private val fragment: BestReviewFragment) : RecyclerView.Adapter<BestReviewRVAdapter.Holder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BestReviewRVAdapter.Holder {
         val view: View = LayoutInflater.from(ctx).inflate(R.layout.rv_item_best_review, parent, false)
 
@@ -31,6 +34,7 @@ class BestReviewRVAdapter(private val ctx: Context, var dataList: List<ReviewDat
     }
 
     override fun getItemCount(): Int = dataList.size
+
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
 
@@ -43,6 +47,11 @@ class BestReviewRVAdapter(private val ctx: Context, var dataList: List<ReviewDat
 
             holder.tvUserNickname.text = item.user_name
             holder.tvReviewDate.text = item.goods_review_date
+
+            if (item.review_like_flag == 1)
+                holder.ivThumb.isSelected = true
+            if (item.review_like_flag == 0)
+                holder.ivThumb.isSelected = false
 
             for (i in 0 until (item.goods_review_rating)) {
                 holder.starRate[i].setImageResource(R.drawable.icon_colorstar)
@@ -67,7 +76,6 @@ class BestReviewRVAdapter(private val ctx: Context, var dataList: List<ReviewDat
                 imageNum = 3
             }
             for (i in 0 until imageNum) {
-                Log.v("현주", item.goods_review_img[i].toString())
                 setVisible(holder.reviewImage[i])
                 Glide.with(ctx)
                         .load(item.goods_review_img[i])
@@ -75,13 +83,29 @@ class BestReviewRVAdapter(private val ctx: Context, var dataList: List<ReviewDat
                         .into(holder.reviewImage[i])
             }
 
-            holder.btnThumb.setOnClickListener {
-                item.review_like_flag = abs(item.review_like_flag - 1)
-                holder.ivThumb.isSelected = !(holder.ivThumb.isSelected)
-            }
             holder.tvThumbNum.text = item.goods_review_like_count.toString()
             holder.btnComments.setImageResource(R.drawable.icon_comment)
             holder.tvCommentsNum.text = item.goods_review_cmt_count.toString()
+
+            holder.btnThumb.setOnClickListener {
+                var reviewIndex: Int = item.goods_review_idx
+                Log.v("리뷰 좋아요 현재", item.review_like_flag.toString())
+                // 리뷰 좋아요
+                if (item.review_like_flag == 0){
+                    fragment.postReviewLike(reviewIndex)
+                    item.review_like_flag = 1
+                    holder.ivThumb.isSelected = true
+                    //holder.tvThumbNum.text = (item.goods_review_like_count + 1).toString()
+                }
+
+                // 리뷰 좋아요 취소
+                else if (item.review_like_flag == 1){
+                    fragment.deleteReviewLike(reviewIndex)
+                    item.review_like_flag = 0
+                    holder.ivThumb.isSelected = false
+                    //holder.tvThumbNum.text = (item.goods_review_like_count - 1).toString()
+                }
+            }
         }
     }
 
@@ -113,6 +137,7 @@ class BestReviewRVAdapter(private val ctx: Context, var dataList: List<ReviewDat
         var btnComments: ImageView = itemView.findViewById(R.id.btn_rv_item_best_review_comments) as ImageView
         var tvCommentsNum: TextView = itemView.findViewById(R.id.tv_rv_item_best_review_comments_num) as TextView
     }
+
 
     fun setVisible(view: View) {
         view.visibility = View.VISIBLE

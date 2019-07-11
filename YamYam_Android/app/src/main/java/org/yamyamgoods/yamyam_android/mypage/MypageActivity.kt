@@ -98,7 +98,7 @@ class MypageActivity : AppCompatActivity() {
                 }
 
                 override fun onResponse(call: Call<GetUserInfoResponse>, response: Response<GetUserInfoResponse>) {
-                    Log.v("현주", "마이페이지 서버 통신 성공  response : ${response.body()}")
+                    Log.v("MypageActivity", "마이페이지 서버 통신 성공  response : ${response.body()}")
                     if (response.code() == 200) {
                         response.body()?.let {
                             // 닉네임
@@ -195,7 +195,7 @@ class MypageActivity : AppCompatActivity() {
                     response: Response<PostMypageEditProfileImageRequest>
                 ) {
                     if (response.isSuccessful)
-                        Log.v("현주", response.body()!!.toString())
+                        Log.v("MypageActivity", response.body()!!.toString())
                 }
             })
     }
@@ -219,7 +219,7 @@ class MypageActivity : AppCompatActivity() {
             token, -1
         ).enqueue(object : Callback<GetMypageRecentlyViewedProductsResponse> {
             override fun onFailure(call: Call<GetMypageRecentlyViewedProductsResponse>, t: Throwable) {
-                Log.e("현주", t.toString())
+                Log.e("MypageActivity", t.toString())
             }
 
             override fun onResponse(
@@ -227,7 +227,7 @@ class MypageActivity : AppCompatActivity() {
                 response: Response<GetMypageRecentlyViewedProductsResponse>
             ) {
                 if (response.isSuccessful) {
-                    Log.v("현주", "최근 본 상품 response : ${response.body()}")
+                    Log.v("MypageActivity", "최근 본 상품 response : ${response.body()}")
                     response.body()?.let {
                         var tmp: ArrayList<RecentlyViewedProducts> = response.body()!!.data!!
                         mypageProductRVAdapter = MypageProductRVAdapter(this@MypageActivity!!, tmp)
@@ -279,7 +279,7 @@ class MypageActivity : AppCompatActivity() {
             "application/json",token, -1)
             .enqueue(object : Callback<GetAlarmListResponse> {
             override fun onFailure(call: Call<GetAlarmListResponse>, t: Throwable) {
-                Log.e("현주", t.toString())
+                Log.e("MypageActivity", t.toString())
             }
 
             override fun onResponse(call: Call<GetAlarmListResponse>, response: Response<GetAlarmListResponse>) {
@@ -329,7 +329,7 @@ class MypageActivity : AppCompatActivity() {
                 response: Response<GetReviewDetailResponse>
             ) {
                 if (response.isSuccessful) {
-                    Log.v("현주", "알람 목록 response: ${response.body()}")
+                    Log.v("MypageActivity", "알람 목록 response: ${response.body()}")
                     response.body()?.let {
                         val intent = Intent(this@MypageActivity, ReviewDetailActivity::class.java)
                         startActivity(intent)
@@ -365,7 +365,6 @@ class MypageActivity : AppCompatActivity() {
                 var changedName: String = edt_mypage_user_name.text.toString()
                 tv_mypage_user_name.setText(changedName)
                 putMypageEditNicknameResponse(changedName)
-                Log.v("현주-바뀐 닉네임", changedName)
             } catch (e: Exception) {
             }
         }
@@ -387,7 +386,7 @@ class MypageActivity : AppCompatActivity() {
                 ) {
                     if (response.isSuccessful) {
                         response.body()?.let {
-                            Log.v("현주", "닉네임 변경 통신 성공  response : ${response.body()}")
+                            Log.v("MypageActivity", "닉네임 변경 통신 성공  response : ${response.body()}")
                         }
                     }
                 }
@@ -412,8 +411,6 @@ class MypageActivity : AppCompatActivity() {
                     File(selectedPictureUri.toString()).name + ".jpg",
                     photoBody
                 )
-
-                Log.v("현주: 사진 주소 확인", selectedPictureUri.toString())
 
                 Glide.with(this@MypageActivity)
                     .load(selectedPictureUri)
