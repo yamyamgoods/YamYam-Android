@@ -45,7 +45,7 @@ interface NetworkServiceGoods {
             @Query("priceStart") priceStart: Int?,
             @Query("priceEnd") priceEnd: Int?,
             @Query("minAmount") minAmount: Int?,
-            @Query("options") options: List<Int>?
+            @Query("options") options: ArrayList<Int>?
     ): Call<GetCategoryDetailResponse>
 
     //가격 범위 보기

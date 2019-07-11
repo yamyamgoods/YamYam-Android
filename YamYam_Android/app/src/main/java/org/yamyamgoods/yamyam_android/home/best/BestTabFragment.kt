@@ -43,7 +43,7 @@ class BestTabFragment : Fragment() {
 
     private fun setOnClickListener() {
         this.btn_best_tab_frag_search.setOnClickListener {
-            startActivity<SearchResultActivity>()
+            startActivity<SearchActivity>()
         }
     }
 

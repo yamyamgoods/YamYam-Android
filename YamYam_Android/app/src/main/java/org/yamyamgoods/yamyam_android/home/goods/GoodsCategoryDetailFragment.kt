@@ -1,7 +1,5 @@
 package org.yamyamgoods.yamyam_android.home.goods
 
-
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
@@ -20,6 +18,7 @@ import org.yamyamgoods.yamyam_android.dataclass.GoodsData
 import org.yamyamgoods.yamyam_android.home.HomeActivity
 import org.yamyamgoods.yamyam_android.home.goods.adapter.GoodsCategoryDetailRecyclerViewAdapter
 import org.yamyamgoods.yamyam_android.network.ApplicationController
+import org.yamyamgoods.yamyam_android.network.get.CategoryOptionData
 import org.yamyamgoods.yamyam_android.network.get.GetCategoryDetailResponse
 import org.yamyamgoods.yamyam_android.util.User
 import retrofit2.Call
@@ -34,6 +33,12 @@ class GoodsCategoryDetailFragment : Fragment() {
     var sort:String? = null
     var categoryIdx:Int = -1
     var sort_flag: String? = null
+    var option_flag: Int = -1
+    var price_start: Int? = null
+    var price_end: Int? = null
+    var min_amount: Int? = null
+    var options: ArrayList<Int>? = null
+    var dataListOption : ArrayList<CategoryOptionData> = ArrayList()
     companion object {
         var instance : GoodsCategoryDetailFragment = GoodsCategoryDetailFragment()
     }
@@ -55,15 +60,16 @@ class GoodsCategoryDetailFragment : Fragment() {
     }
 
     private fun setOnScrollChange(){
-        if(Build.VERSION.SDK_INT >=23){
-            nsv_goods_category_detail_frag.setOnScrollChangeListener(object: View.OnScrollChangeListener{
-                override fun onScrollChange(v: View?, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int) {
+        try{
+            if(Build.VERSION.SDK_INT >=23){
+                nsv_goods_category_detail_frag.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
                     if(!isRequested && !nsv_goods_category_detail_frag.canScrollVertically(1)){
                         isRequested = true
                         categoryDetailResponse(categoryIdx)
                     }
                 }
-            })
+            }
+        } catch(e:Exception){
         }
     }
 
@@ -76,13 +82,30 @@ class GoodsCategoryDetailFragment : Fragment() {
             }
         }
         btn_frag_goods_category_detail_price.setOnClickListener {
+            instance.option_flag = 0
+            instance.price_start = price_start
+            instance.price_end = price_end
+            instance.min_amount = min_amount
+            instance.options = options
             categoryIdx = instance.categoryIdx
             setOptionDialog()
         }
         btn_frag_goods_category_detail_minQuantity.setOnClickListener {
+            instance.option_flag = 1
+            instance.price_start = price_start
+            instance.price_end = price_end
+            instance.min_amount = min_amount
+            instance.options = options
             setOptionDialog()
         }
         btn_frag_goods_category_detail_variety.setOnClickListener {
+            instance.option_flag = 2
+            instance.price_start = price_start
+            instance.price_end = price_end
+            instance.min_amount = min_amount
+            instance.dataListOption = dataListOption
+            Log.e("**GCDF", "options : $options")
+            instance.options = options
             setOptionDialog()
         }
     }
@@ -110,6 +133,8 @@ class GoodsCategoryDetailFragment : Fragment() {
         optionDialog.setOnDismissListener {
             lastIndex = -1
             setOptionFlag()
+            setRecyclerView()
+            categoryDetailResponse(categoryIdx)
         }
     }
 
@@ -128,40 +153,49 @@ class GoodsCategoryDetailFragment : Fragment() {
     }
 
     fun setOptionFlag(){
-
+        if(instance.min_amount!=null){
+            min_amount = instance.min_amount
+        }
+        if(instance.price_start != null){
+            price_start = instance.price_start
+            price_end = instance.price_end
+        }
+        if(instance.options !=null){
+            options = instance.options
+        }
+        dataListOption = instance.dataListOption
     }
 
     fun categoryDetailResponse(category_idx: Int) {
         val getCategoryDetailResponse = networkServiceGoods.getCategoryDetailResponse(
             "application/json", User.authorization, category_idx, order, lastIndex,
-            null, null, null, null)
+            price_start, price_end, min_amount, options)
+        Log.e("**GCDF", "min_amount : $min_amount, price_start: $price_start, price_end: $price_end, options: $options")
+
         getCategoryDetailResponse.enqueue(object: Callback<GetCategoryDetailResponse>{
             override fun onFailure(call: Call<GetCategoryDetailResponse>, t: Throwable) {
                 Log.e("Category-detail fail", t.toString())
             }
 
             override fun onResponse(call: Call<GetCategoryDetailResponse>, response: Response<GetCategoryDetailResponse>) {
-                if(response.isSuccessful){
-
-                    if(lastIndex!=-1){
-                        var prev_cnt = dataList.size
-                        dataList.addAll(response.body()!!.data)
-                        goodsCategoryDetailRecyclerViewAdapter.dataList = dataList
-                        goodsCategoryDetailRecyclerViewAdapter.notifyItemRangeInserted(prev_cnt, dataList.size-prev_cnt)
-                        Log.e("**GCDF, li -1",dataList[0].goods_name+order)
-                    } else {
-                        dataList = response.body()!!.data
-                        goodsCategoryDetailRecyclerViewAdapter.dataList = dataList
-                        goodsCategoryDetailRecyclerViewAdapter.notifyDataSetChanged()
-                        nsv_goods_category_detail_frag.fullScroll(NestedScrollView.FOCUS_UP)
-                        Log.e("**GCDF, li else",dataList[0].goods_name+order)
+                if(response.isSuccessful) {
+                    try{
+                        if (lastIndex != -1) {
+                            var prev_cnt = dataList.size
+                            dataList.addAll(response.body()!!.data)
+                            goodsCategoryDetailRecyclerViewAdapter.dataList = dataList
+                            goodsCategoryDetailRecyclerViewAdapter.notifyItemRangeInserted(prev_cnt,dataList.size - prev_cnt)
+                        } else {
+                            dataList = response.body()!!.data
+                            goodsCategoryDetailRecyclerViewAdapter.dataList = dataList
+                            goodsCategoryDetailRecyclerViewAdapter.notifyDataSetChanged()
+                            nsv_goods_category_detail_frag.fullScroll(NestedScrollView.FOCUS_UP)
+                        }
+                        isRequested = false
+                        if (dataList.size == 0) lastIndex = -1
+                        else lastIndex = dataList[dataList.size - 1].goods_idx
+                    } catch(e:Exception){
                     }
-
-                    isRequested = false
-                    if(dataList.size ==0) lastIndex = -1
-                    else lastIndex = dataList[dataList.size-1].goods_idx
-                    Log.e("**GCDF", dataList[0].goods_name+order)
-                    Log.e("**GCDF",response.body()!!.data.toString())
                 }
             }
         })

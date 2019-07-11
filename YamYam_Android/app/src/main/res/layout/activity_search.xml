@@ -10,7 +10,6 @@
     <RelativeLayout
         android:id="@+id/top"
         android:layout_width="match_parent"
-        android:layout_marginTop="24dp"
         android:layout_height="56dp"
         android:layout_marginHorizontal="16dp">
         <RelativeLayout
@@ -29,13 +28,17 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="64dp"
                 android:background="@drawable/round_rectangle_light_gray_8dp">
-                <TextView
-                    android:id="@+id/textView8"
+                <EditText
+                    android:id="@+id/et_search_act"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_centerVertical="true"
-                    android:text="아크릴 자캐 키링을 검색해보세요!"/>
+                    android:textColorHint="#a2a2a2"
+                    android:textColor="@color/darkgray"
+                    android:textSize="15dp"
+                    android:background="@drawable/round_rectangle_light_gray_8dp"
+                    android:hint="아크릴 키링을 검색해보세요!"/>
                 <ImageView
                     android:id="@+id/btn_search_act_searchreset"
                     android:layout_width="wrap_content"
