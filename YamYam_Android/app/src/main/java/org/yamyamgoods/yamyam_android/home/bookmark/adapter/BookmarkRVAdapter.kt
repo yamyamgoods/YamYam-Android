@@ -12,10 +12,7 @@ import com.bumptech.glide.Glide
 import org.jetbrains.anko.imageResource
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.dataclass.BookmarkData
-import org.yamyamgoods.yamyam_android.dataclass.GoodsData
-import org.yamyamgoods.yamyam_android.home.HomeActivity
-import org.yamyamgoods.yamyam_android.home.bookmark.BookmarkItem
-import org.yamyamgoods.yamyam_android.home.bookmark.dialog.BookmarkEstimateDialog
+import org.yamyamgoods.yamyam_android.home.bookmark.dialog.BookmarkOptionDialog
 import org.yamyamgoods.yamyam_android.util.dp2px
 import org.yamyamgoods.yamyam_android.util.getScreenWidth
 import java.text.NumberFormat
@@ -65,7 +62,7 @@ class BookmarkRVAdapter(private val ctx: Context) :
             holder.tvPrice.text = item.goods_price
 
             holder.clWholeView.setOnClickListener {
-                BookmarkEstimateDialog(ctx, item.goods_scrap_idx).show()
+                BookmarkOptionDialog(ctx, item.goods_scrap_idx).show()
             }
         }
     }

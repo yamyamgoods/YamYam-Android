@@ -137,10 +137,19 @@ interface NetworkServiceGoods {
         @Body requestBody: PostCommentWriteRequestData
     ): Call<PostCommentWriteRequestData>
 
+    // 북마크 목록 가져오기
     @GET("/user/goods/scrap/{lastIndex}")
     fun getBookmarkListRequest(
         @Header("Content-Type") contentType: String = "application/json",
         @Header("Authorization") token: String?,
         @Path("lastIndex") lastIndex: Int
     ): Call<GetBookmarkListResponseData>
+
+    // 북마크 견적 옵션 가져오기
+    @GET("/user/goods/scrap/{goodsScrapId}/option")
+    fun getBookmarkItemOptionRequest(
+        @Header("Content-Type") contentType: String = "application/json",
+        @Header("Authorization") token: String?,
+        @Path("goodsScrapId") goodsScrapId: Int
+    ): Call<GetBookmarkItemOptionResponseData>
 }
