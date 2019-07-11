@@ -62,7 +62,10 @@ class BookmarkRVAdapter(private val ctx: Context) :
             holder.tvPrice.text = item.goods_price
 
             holder.clWholeView.setOnClickListener {
-                BookmarkOptionDialog(ctx, item.goods_scrap_idx).show()
+                BookmarkOptionDialog(ctx, item.goods_scrap_idx).apply {
+                    totalPrice = item.goods_price.replace(",", "").toInt()
+                    bookmarkData = item
+                }.show()
             }
         }
     }

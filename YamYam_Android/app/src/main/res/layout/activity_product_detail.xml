@@ -60,7 +60,7 @@
                             app:contentScrim="@android:color/white"
                             app:layout_scrollFlags="scroll|exitUntilCollapsed"
                             app:scrimAnimationDuration="70"
-                            app:toolbarId="@+id/toolbar">
+                            app:toolbarId="@+id/toolbar_product_detail_act">
 
                         <android.support.constraint.ConstraintLayout
                                 android:id="@+id/cl_product_detail_act_main_image_frame"
@@ -95,7 +95,7 @@
                         </android.support.constraint.ConstraintLayout>
 
                         <android.support.v7.widget.Toolbar
-                                android:id="@+id/toolbar"
+                                android:id="@+id/toolbar_product_detail_act"
                                 android:layout_width="match_parent"
                                 android:layout_height="24dp"/>
 
