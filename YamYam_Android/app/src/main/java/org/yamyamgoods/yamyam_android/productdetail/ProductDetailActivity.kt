@@ -417,6 +417,7 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailContract.View {
             isBookmarked = true
             presenter.bookmarkRequest(getPostBookmarkRequestDTO())
             toast("현재 선택 견적으로 찜하기 완료!")
+            BookmarkCheckDialog(this).show()
         }
     }
 

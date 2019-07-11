@@ -29,7 +29,7 @@ class BookmarkCheckDialog(private val ctx: Context) : Dialog(ctx) {
             dismiss()
         }
         btn_bookmark_check_dialog_go_bookmark.setOnClickListener {
-            ctx.toast("호롤롤")
+            
         }
     }
 }

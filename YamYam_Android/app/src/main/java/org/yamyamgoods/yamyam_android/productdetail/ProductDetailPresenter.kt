@@ -78,6 +78,7 @@ class ProductDetailPresenter : ProductDetailContract.Presenter {
                     when (responseJson.message) {
                         "already existed option" -> view.showAlreadySameOptionsBookmarkToast()
                         "already existed label" -> view.showAlreadySameLabelBookmarkToast()
+                        "jwt must be provided" -> view.showLoginRequiredDialog()
                     }
                 }
             })
