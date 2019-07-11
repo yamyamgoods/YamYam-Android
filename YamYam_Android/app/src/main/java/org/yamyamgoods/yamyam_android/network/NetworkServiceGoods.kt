@@ -172,4 +172,14 @@ interface NetworkServiceGoods {
         @Part("rating") rating : Int,
         @Part img: ArrayList<MultipartBody.Part>
     ): Call<PostReviewWriteResponse>
+
+    // 리뷰 보기
+    @GET("/goods/{goodsIdx}/reviews/{photoFlag}/{lastIndex}")
+    fun getReviewResponse(
+        @Header("Content-Type") content_type: String,
+        @Header("Authorization") authorization: String?,
+        @Path("goodsIdx") goodsIdx: Int,
+        @Path("photoFlag") goodsFlag: Int,
+        @Path("lastIdx") lastIdx: Int
+    ): Call<GetReviewResponse>
 }

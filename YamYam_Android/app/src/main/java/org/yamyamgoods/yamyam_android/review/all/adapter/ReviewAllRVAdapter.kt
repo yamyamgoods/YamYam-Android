@@ -48,17 +48,8 @@ class ReviewAllRVAdapter (private val ctx: Context, private val dataList: List<R
             holder.tvReviewContents.text = item.goods_review_content
             holder.btnDetailReview.setOnClickListener{
                 try {
-                    var dto = ReviewBasicDTO(item.user_img,
-                            item.user_name,
-                            item.goods_review_date,
-                            item.goods_review_rating,
-                            item.goods_review_content,
-                            item.goods_review_img,
-                            item.review_like_flag,
-                            item.goods_review_like_count,
-                            item.goods_review_cmt_count)
                     var intent = Intent(ctx, ReviewDetailActivity::class.java)
-                    intent.putExtra("dto", dto)
+                    intent.putExtra("dto", item)
                     ctx.startActivity(intent)
                 } catch (e: Exception) {
                 }

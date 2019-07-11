@@ -6,3 +6,4 @@ data class GetReviewResponse (
     val message: String,
     val data: ArrayList<ReviewData>
 )
+

@@ -60,6 +60,14 @@ class ReviewDetailActivity : AppCompatActivity() {
     lateinit var reviewContents: String
     lateinit var imageUrl: List<String>
 
+    var productStarRate: List<ImageView> = listOf(
+        findViewById(R.id.iv_review_detail_poduct_star1),
+        findViewById(R.id.iv_review_detail_poduct_star2),
+        findViewById(R.id.iv_review_detail_poduct_star3),
+        findViewById(R.id.iv_review_detail_poduct_star4),
+        findViewById(R.id.iv_review_detail_poduct_star5)
+    )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_review_detail)
@@ -96,14 +104,6 @@ class ReviewDetailActivity : AppCompatActivity() {
             }
 
             override fun onResponse(call: Call<GetReviewDetailResponse>, response: Response<GetReviewDetailResponse>) {
-                var productStarRate: List<ImageView> = listOf(
-                    findViewById(R.id.iv_review_detail_poduct_star1),
-                    findViewById(R.id.iv_review_detail_poduct_star2),
-                    findViewById(R.id.iv_review_detail_poduct_star3),
-                    findViewById(R.id.iv_review_detail_poduct_star4),
-                    findViewById(R.id.iv_review_detail_poduct_star5)
-                )
-
                 if (response.isSuccessful) {
                     response.body()?.let {
                         /*리뷰*/
@@ -147,42 +147,6 @@ class ReviewDetailActivity : AppCompatActivity() {
             }
         })
     }
-
-    // 굿즈 + 상점 부분
-    /*
-    private fun configureProduct(dataList: List<ProductShortInfo>, position: Int) {
-        dataList[position].let { item ->
-            Glide.with(this)
-                    .load(item.productImageUrl)
-                    .apply(options)
-                    .into(findViewById(R.id.iv_review_detail_product))
-
-            tv_review_detail_store_name.text = item.storeName
-            tv_review_detail_product_name.text = item.productName
-            tv_review_detail_product_price.text = item.amount
-
-            var productStarRate: List<ImageView> = listOf(
-                    findViewById(R.id.iv_review_detail_poduct_star1),
-                    findViewById(R.id.iv_review_detail_poduct_star2),
-                    findViewById(R.id.iv_review_detail_poduct_star3),
-                    findViewById(R.id.iv_review_detail_poduct_star4),
-                    findViewById(R.id.iv_review_detail_poduct_star5)
-            )
-
-            var productStarCount = item.starRate
-            var intStarCount: Int = productStarCount.toInt()
-            var remainder: Float = item.starRate - intStarCount.toFloat()
-
-            for (i in 0 until (intStarCount)) {
-                productStarRate[i].setImageResource(R.drawable.img_goods_star)
-                if (0.5 > remainder && remainder >= 0)
-                    continue
-                if (1 > remainder && remainder >= 0.5)
-                    productStarRate[i + 1].setImageResource(R.drawable.img_goods_star_half)
-            }
-        }
-    }
-    */
 
     // 리뷰 부분
     private fun configureReview() {
