@@ -12,7 +12,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout4" android:id="@+id/cl_bookmark_frag_no_list"
-            android:background="#F5F6F9" android:visibility="gone">
+            android:background="#F5F6F9" android:visibility="visible">
 
         <android.support.constraint.ConstraintLayout
                 android:layout_width="wrap_content"
@@ -34,7 +34,6 @@
                     android:textColor="#8d8d8d"
                     android:letterSpacing="-0.04"
                     android:lineSpacingExtra="11sp"
-                    android:gravity="center_horizontal"
                     tools:text="찜한 상품이 없습니다"
                     android:id="@+id/textView22"
                     app:layout_constraintTop_toBottomOf="@+id/imageView12" app:layout_constraintEnd_toEndOf="parent"
@@ -94,5 +93,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout4" tools:visibility="visible"/>
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout4" tools:visibility="visible"
+            android:visibility="gone"/>
 </android.support.constraint.ConstraintLayout>

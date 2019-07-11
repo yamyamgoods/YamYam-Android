@@ -55,6 +55,7 @@ import org.yamyamgoods.yamyam_android.productdetail.dialog.BookmarkCheckDialog
 import org.yamyamgoods.yamyam_android.productdetail.dialog.LoginRequestDialog
 import org.yamyamgoods.yamyam_android.reviewwrite.ReviewWriteActivity
 import org.yamyamgoods.yamyam_android.storeweb.StoreWebActivity
+import org.yamyamgoods.yamyam_android.util.User
 import org.yamyamgoods.yamyam_android.util.dp2px
 import org.yamyamgoods.yamyam_android.util.getScreenWidth
 import java.lang.Exception
@@ -250,8 +251,7 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailContract.View {
         presenter = ProductDetailPresenter().apply {
             view = this@ProductDetailActivity
             goodsRepository = ApplicationController.networkServiceGoods
-            userToken =
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWR4IjoxLCJpYXQiOjE1NjIzMTUzNjYsImV4cCI6MTU2MzYyOTM2Nn0.ZkDGasoDPHTrGvy7yFOT9cPjTQ7gnnUOqekY_zYrAuc"
+            userToken = User.authorization
         }
     }
 

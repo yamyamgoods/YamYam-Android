@@ -19,6 +19,7 @@ import org.yamyamgoods.yamyam_android.home.best.goods.adapter.BestGoodsRVAdapter
 import org.yamyamgoods.yamyam_android.network.ApplicationController
 import org.yamyamgoods.yamyam_android.network.post.PostBookmarkRequestDTO
 import org.yamyamgoods.yamyam_android.productdetail.ProductDetailActivity
+import org.yamyamgoods.yamyam_android.util.User
 
 class BestGoodsFragment : Fragment(), BestGoodsContract.View {
 
@@ -86,8 +87,7 @@ class BestGoodsFragment : Fragment(), BestGoodsContract.View {
         presenter = BestGoodsPresenter().apply {
             view = this@BestGoodsFragment
             goodsRepository = ApplicationController.networkServiceGoods
-            userToken =
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWR4IjoxLCJpYXQiOjE1NjIzMTUzNjYsImV4cCI6MTU2MzYyOTM2Nn0.ZkDGasoDPHTrGvy7yFOT9cPjTQ7gnnUOqekY_zYrAuc"
+            userToken = User.authorization
         }
     }
 
