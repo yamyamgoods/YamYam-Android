@@ -20,6 +20,16 @@ interface ProductDetailContract {
         fun setProductDetailData(response: ProductDetailData)
 
         fun setProductOptionData(response: List<ProductOption>)
+
+        fun showBookmarkSuccessDialog()
+
+        fun showBookmarkCancelToast()
+
+        fun showLoginRequiredDialog()
+
+        fun showAlreadySameOptionsBookmarkToast()
+
+        fun showAlreadySameLabelBookmarkToast()
     }
 
     interface Presenter : BasePresenter {

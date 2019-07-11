@@ -31,14 +31,17 @@ class BestGoodsFragment : Fragment(), BestGoodsContract.View {
                 data.scrap_flag = 0
                 return
             }
-            val requestBody = PostBookmarkRequestDTO(data.goods_idx, data.goods_price, data.goods_name, null)
-            Log.v("Malibin Debug","requestBody : $requestBody")
+            val intPrice = data.goods_price.replace(",", "").toInt()
+            val requestBody =
+                PostBookmarkRequestDTO(data.goods_idx, intPrice, data.goods_name, null)
+            Log.v("Malibin Debug", "requestBody : $requestBody")
             presenter.bookmarkRequest(requestBody)
             data.scrap_flag = 1
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        Log.v("Malibin Debug", "onCreateView called")
         return inflater.inflate(R.layout.fragment_best_goods, container, false)
     }
 
@@ -68,7 +71,8 @@ class BestGoodsFragment : Fragment(), BestGoodsContract.View {
         presenter = BestGoodsPresenter().apply {
             view = this@BestGoodsFragment
             goodsRepository = ApplicationController.networkServiceGoods
-            userToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWR4IjoxLCJpYXQiOjE1NjIzMTUzNjYsImV4cCI6MTU2MzYyOTM2Nn0.ZkDGasoDPHTrGvy7yFOT9cPjTQ7gnnUOqekY_zYrAuc"
+            userToken =
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWR4IjoxLCJpYXQiOjE1NjIzMTUzNjYsImV4cCI6MTU2MzYyOTM2Nn0.ZkDGasoDPHTrGvy7yFOT9cPjTQ7gnnUOqekY_zYrAuc"
         }
     }
 

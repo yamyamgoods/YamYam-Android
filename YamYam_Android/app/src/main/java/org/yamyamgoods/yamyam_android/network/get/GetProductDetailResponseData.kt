@@ -2,6 +2,7 @@ package org.yamyamgoods.yamyam_android.network.get
 
 import org.yamyamgoods.yamyam_android.dataclass.StoreDetail
 import org.yamyamgoods.yamyam_android.dataclass.ReviewData
+import org.yamyamgoods.yamyam_android.network.post.PostBookmarkRequestDTO
 
 /**
  * Created By Yun Hyeok

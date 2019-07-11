@@ -49,6 +49,9 @@ import org.yamyamgoods.yamyam_android.productdetail.adapter.ProductDetailReviewR
 import org.yamyamgoods.yamyam_android.productdetail.adapter.ProductOptionsRVAdapter
 import org.yamyamgoods.yamyam_android.review.ReviewActivity
 import org.yamyamgoods.yamyam_android.dataclass.ReviewData
+import org.yamyamgoods.yamyam_android.network.post.PostBookmarkRequestDTO
+import org.yamyamgoods.yamyam_android.productdetail.dialog.BookmarkCheckDialog
+import org.yamyamgoods.yamyam_android.productdetail.dialog.LoginRequestDialog
 import org.yamyamgoods.yamyam_android.reviewwrite.ReviewWriteActivity
 import org.yamyamgoods.yamyam_android.storeweb.StoreWebActivity
 import org.yamyamgoods.yamyam_android.util.dp2px
@@ -204,6 +207,29 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailContract.View {
             layoutManager = LinearLayoutManager(this@ProductDetailActivity)
         }
         Log.v("Malibin Debug", response.toString())
+    }
+
+    override fun showBookmarkSuccessDialog() {
+        slide_product_detail_act_panel.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
+        isBookmarked = true
+        iv_product_detail_act_bookmark.isSelected = true
+        BookmarkCheckDialog(this).show()
+    }
+
+    override fun showBookmarkCancelToast() {
+
+    }
+
+    override fun showLoginRequiredDialog() {
+        LoginRequestDialog(this).show()
+    }
+
+    override fun showAlreadySameOptionsBookmarkToast() {
+        toast("해당 굿즈에 이미 같은 견적이 있습니다.")
+    }
+
+    override fun showAlreadySameLabelBookmarkToast() {
+        toast("해당 굿즈에 이미 같은 라벨이 있습니다.")
     }
 
     private fun progressBarOn() {
@@ -559,8 +585,9 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailContract.View {
 
         //찜하기버튼
         btn_product_detail_act_slide_bookmark.setOnClickListener {
-
-            slide_product_detail_act_panel.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
+            val body = getPostBookmarkRequestDTO()
+            presenter.bookmarkRequest(body)
+            //slide_product_detail_act_panel.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
         }
 
         tv_product_detail_act_slide_main_name.text =
@@ -569,6 +596,25 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailContract.View {
         et_product_detail_act_slide_tag.setText(integrateData.goods.goods_name)
 
         tv_product_detail_act_slide_total_price.text = integrateData.goods.goods_price
+    }
+
+    private fun getPostBookmarkRequestDTO() =
+        PostBookmarkRequestDTO(
+            integrateData.goods.goods_idx,
+            oneTotalPrice * productQuantity,
+            et_product_detail_act_slide_tag.text.toString(),
+            getSelectedOptionsAddedAmount()
+        )
+
+    private fun getSelectedOptionsAddedAmount(): List<SelectedOption> {
+        val result = ArrayList<SelectedOption>()
+        result.addAll(selectedOptions!!)
+        result.add(
+            SelectedOption(
+                "수량", et_product_detail_act_slide_amount.text.toString()
+            )
+        )
+        return result
     }
 
     private fun mainImagesViewPagerInit() {
@@ -620,7 +666,6 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailContract.View {
     }
 
     private fun setThumbnailIndicatorClickListener() {
-
         currentIndicatorPosition = thumbnailFrame[0].apply {
             isSelected = true
         }

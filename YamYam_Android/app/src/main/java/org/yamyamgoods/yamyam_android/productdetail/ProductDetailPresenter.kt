@@ -1,6 +1,9 @@
 package org.yamyamgoods.yamyam_android.productdetail
 
 import android.util.Log
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
 import org.yamyamgoods.yamyam_android.network.NetworkServiceGoods
 import org.yamyamgoods.yamyam_android.network.delete.DeleteBookmarkResponseData
 import org.yamyamgoods.yamyam_android.network.get.GetProductDetailResponseData
@@ -10,6 +13,7 @@ import org.yamyamgoods.yamyam_android.network.post.PostBookmarkResponseData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.lang.reflect.Type
 
 /**
  * Created By Yun Hyeok
@@ -61,14 +65,23 @@ class ProductDetailPresenter : ProductDetailContract.Presenter {
                     response: Response<PostBookmarkResponseData>
                 ) {
                     if (response.isSuccessful) {
+                        view.showBookmarkSuccessDialog()
                         Log.v("Malibin Debug", "북마크 성공")
                         return
                     }
-                    Log.v("Malibin Debug", "북마크 실패")
-                }
 
-            }
-        )
+                    val type: Type = object : TypeToken<PostBookmarkResponseData>() {}.type
+                    val gson: Gson = GsonBuilder().create()
+                    val responseJson: PostBookmarkResponseData =
+                        gson.fromJson(response.errorBody()!!.string().toString(), type)
+
+                    when (responseJson.message) {
+                        "already existed option" -> view.showAlreadySameOptionsBookmarkToast()
+                        "already existed label" -> view.showAlreadySameLabelBookmarkToast()
+                    }
+                }
+            })
+
     }
 
     override fun bookmarkCancelRequest(goodsIdx: Int) {
@@ -110,5 +123,12 @@ class ProductDetailPresenter : ProductDetailContract.Presenter {
                 }
             }
         )
+    }
+
+    private fun <T> getErrorbodyJson(errorBodyString: String): T {
+        val type: Type = object : TypeToken<T>() {}.type
+        val gson: Gson = GsonBuilder().create()
+        val responseJson: T = gson.fromJson(errorBodyString, type)
+        return responseJson
     }
 }
