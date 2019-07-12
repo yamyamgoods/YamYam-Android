@@ -66,6 +66,7 @@ class BookmarkFragment : Fragment(), BookmarkContract.View {
         rv_bookmark_frag_list.visibility = View.VISIBLE
         cl_bookmark_frag_no_list.visibility = View.GONE
         bookmarkRVAdapter.addData(data)
+        bookmarkRVAdapter.notifyDataSetChanged()
     }
 
     private fun presenterInit() {
@@ -85,6 +86,13 @@ class BookmarkFragment : Fragment(), BookmarkContract.View {
     }
 
     private fun getServerData() {
+        presenter.getBookmarkData()
+    }
+
+    fun refreshDataList(){
+        val size = bookmarkRVAdapter.itemCount
+        bookmarkRVAdapter.dataList.clear()
+        bookmarkRVAdapter.notifyItemRangeRemoved(0,size)
         presenter.getBookmarkData()
     }
 }

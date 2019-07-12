@@ -55,10 +55,7 @@ import org.yamyamgoods.yamyam_android.productdetail.dialog.BookmarkCheckDialog
 import org.yamyamgoods.yamyam_android.productdetail.dialog.LoginRequestDialog
 import org.yamyamgoods.yamyam_android.reviewwrite.ReviewWriteActivity
 import org.yamyamgoods.yamyam_android.storeweb.StoreWebActivity
-import org.yamyamgoods.yamyam_android.util.User
-import org.yamyamgoods.yamyam_android.util.dp2px
-import org.yamyamgoods.yamyam_android.util.getScreenWidth
-import org.yamyamgoods.yamyam_android.util.px2dp
+import org.yamyamgoods.yamyam_android.util.*
 import java.lang.Exception
 import java.text.NumberFormat
 import java.util.*
@@ -224,6 +221,7 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailContract.View {
         iv_product_detail_act_bookmark.isSelected = true
         setResult(Activity.RESULT_OK)
         BookmarkCheckDialog(this).show()
+        HomeObject.notifyBookmarkTabChange()
     }
 
     override fun showBookmarkCancelToast() {
@@ -427,8 +425,7 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailContract.View {
             it.isSelected = true
             isBookmarked = true
             presenter.bookmarkRequest(getPostBookmarkRequestDTO())
-            toast("현재 선택 견적으로 찜하기 완료!")
-            BookmarkCheckDialog(this).show()
+            //toast("현재 선택 견적으로 찜하기 완료!")
         }
     }
 
