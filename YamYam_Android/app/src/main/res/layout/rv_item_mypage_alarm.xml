@@ -38,7 +38,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageView9"
                 app:layout_constraintTop_toTopOf="parent"
-                app:lineHeight="19dp"/>
+                app:lineHeight="19dp" android:fontFamily="@font/notosansregular"/>
 
         <ImageView
                 android:id="@+id/iv_rv_item_mypage_alarm_reddot"
@@ -59,7 +59,7 @@
                 android:textSize="13dp"
                 app:layout_constraintStart_toStartOf="@+id/tv_rv_item_mypage_alarm_contents"
                 app:layout_constraintTop_toBottomOf="@+id/tv_rv_item_mypage_alarm_contents"
-                app:lineHeight="16dp"/>
+                app:lineHeight="16dp" android:fontFamily="@font/notosansregular"/>
 
         <View
                 android:id="@+id/view18"

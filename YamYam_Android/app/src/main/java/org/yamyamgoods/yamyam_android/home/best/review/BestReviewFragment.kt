@@ -46,6 +46,11 @@ class BestReviewFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        sl_best_review_refresh.setOnRefreshListener {
+            getBestReviewResponse()
+            sl_best_review_refresh.isRefreshing = false
+        }
+
         getBestReviewResponse()
     }
 

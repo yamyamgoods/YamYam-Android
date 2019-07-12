@@ -23,6 +23,7 @@ import com.google.gson.reflect.TypeToken
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import kotlinx.android.synthetic.main.activity_mypage.*
+import kotlinx.android.synthetic.main.rv_item_mypage_alarm.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -149,25 +150,23 @@ class MypageActivity : AppCompatActivity() {
 
     // 권한 요청
     fun getPermission() {
-        try {
-            val permissionListener = object : PermissionListener {
-                override fun onPermissionGranted() {
-                    // 권한 요청 성공
-                    openGallery()
-                }
-
-                override fun onPermissionDenied(deniedPermissions: ArrayList<String>) {
-                    // 권한 요청 실패
-                    Toast.makeText(this@MypageActivity, "갤러리 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show()
-                }
+        val permissionListener = object : PermissionListener {
+            override fun onPermissionGranted() {
+                // 권한 요청 성공
+                openGallery()
             }
-            TedPermission.with(this)
-                .setPermissionListener(permissionListener)
-                .setRationaleMessage(getString(R.string.txt_permission2))
-                .setDeniedMessage(getString(R.string.txt_permission1))
-                .setPermissions(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.CAMERA)
-                .check()
-        }catch (e: Exception){}
+
+            override fun onPermissionDenied(deniedPermissions: ArrayList<String>) {
+                // 권한 요청 실패
+                Toast.makeText(this@MypageActivity, "갤러리 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show()
+            }
+        }
+        TedPermission.with(this)
+            .setPermissionListener(permissionListener)
+            .setRationaleMessage(getString(R.string.txt_permission2))
+            .setDeniedMessage(getString(R.string.txt_permission1))
+            .setPermissions(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.CAMERA)
+            .check()
     }
 
     fun openGallery() {
@@ -175,7 +174,10 @@ class MypageActivity : AppCompatActivity() {
         //intent.setType("image/*")
         intent.type = android.provider.MediaStore.Images.Media.CONTENT_TYPE
         intent.data = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-        startActivityForResult(intent,PICK_IMAGE_REQUEST)   //(Intent.createChooser(intent, "얌얌굿즈 : 프로필 사진을 선택해주세요!"), PICK_IMAGE_REQUEST)
+        startActivityForResult(
+            intent,
+            PICK_IMAGE_REQUEST
+        )   //(Intent.createChooser(intent, "얌얌굿즈 : 프로필 사진을 선택해주세요!"), PICK_IMAGE_REQUEST)
     }
 
     // 프로필 사진 변경 서버 통신
@@ -195,13 +197,14 @@ class MypageActivity : AppCompatActivity() {
             })
     }
 
+    // 프로필 사진 기본 이미지로 변경
     fun setProfileImageDefault() {
         iv_mypage_user_image.setImageResource(R.drawable.img_myprofile)
 
         val byteArrayOutputStream = ByteArrayOutputStream()
         val photoBody = RequestBody.create(MediaType.parse("image/jpg"), byteArrayOutputStream.toByteArray())
-        var nullImg : MultipartBody.Part = MultipartBody.Part.createFormData(
-            "img",null, photoBody
+        var nullImg: MultipartBody.Part = MultipartBody.Part.createFormData(
+            "img", null, photoBody
         )
 
         postMypageEditProfileImageRequest(nullImg)
@@ -271,51 +274,58 @@ class MypageActivity : AppCompatActivity() {
     // 알람 목록 서버 통신
     private fun getAlarmListResponse() {
         networkService.getAlarmListResponse(
-            "application/json",token, -1)
+            "application/json", token, -1
+        )
             .enqueue(object : Callback<GetAlarmListResponse> {
-            override fun onFailure(call: Call<GetAlarmListResponse>, t: Throwable) {
-                Log.e("MypageActivity", t.toString())
-            }
+                override fun onFailure(call: Call<GetAlarmListResponse>, t: Throwable) {
+                    Log.e("**MypageActivity", t.toString())
+                }
 
-            override fun onResponse(call: Call<GetAlarmListResponse>, response: Response<GetAlarmListResponse>) {
-                try {
-                    if (response.isSuccessful) {
-                        Log.v("현주", "마이페이지- 알람 목록 서버 통신 성공")
-                        Log.v("현주", "알람 목록 response: ${response.body()}")
-                        if (response.body()!!.data.toString() == "[]")  // 아무 알람도 없을 때
-                            setVisible(cl_mypage_alarm_empty)
-                        else {
-                            response.body()?.let {
-                                var tmp: ArrayList<AlarmListData> = response.body()!!.data!!
-                                rv_mypage_alarm_list.apply {
-                                    adapter = MypageAlarmRVAdapter(this@MypageActivity, tmp)
-                                    layoutManager = LinearLayoutManager(this@MypageActivity)
+                override fun onResponse(call: Call<GetAlarmListResponse>, response: Response<GetAlarmListResponse>) {
+                    try {
+                        if (response.isSuccessful) {
+                            Log.v("현주", "마이페이지- 알람 목록 서버 통신 성공")
+                            Log.v("현주", "알람 목록 response: ${response.body()}")
+                            if (response.body()!!.data.toString() == "[]")  // 아무 알람도 없을 때
+                                setVisible(cl_mypage_alarm_empty)
+                            else {
+                                response.body()?.let {
+                                    var tmp: ArrayList<AlarmListData> = response.body()!!.data!!
+
+                                    if (tmp.toString() == "[]") {
+                                        setVisible(cl_mypage_alarm_empty)
+                                    }
+
+                                    Log.v("현주", tmp.toString())
+                                    rv_mypage_alarm_list.apply {
+                                        adapter = MypageAlarmRVAdapter(this@MypageActivity, tmp)
+                                        layoutManager = LinearLayoutManager(this@MypageActivity)
+                                    }
+                                    mypageAlarmRVAdapter = MypageAlarmRVAdapter(this@MypageActivity, tmp)
+                                    //mypageProductRVAdapter.notifyDataSetChanged()
                                 }
-                                mypageAlarmRVAdapter = MypageAlarmRVAdapter(this@MypageActivity, tmp)
-                                //mypageProductRVAdapter.notifyDataSetChanged()
                             }
                         }
+                    } catch (e: java.lang.Exception) {
+                        Log.v("현주-마이페이지", "에러 났다")
                     }
-                }catch(e: java.lang.Exception){
-                    Log.v("현주-마이페이지", "에러 났다")
-                }
 
-                response.errorBody()?.let {
-                    Log.v("현주", "알람 목록에서 에러났어요")
-                    val type: Type = object : TypeToken<GetAlarmListResponse>() {}.type
-                    val gson: Gson = GsonBuilder().create()
-                    val responseJson: GetMypageRecentlyViewedProductsResponse =
-                        gson.fromJson(it.string().toString(), type)
+                    response.errorBody()?.let {
+                        Log.v("현주", "알람 목록에서 에러났어요")
+                        val type: Type = object : TypeToken<GetAlarmListResponse>() {}.type
+                        val gson: Gson = GsonBuilder().create()
+                        val responseJson: GetMypageRecentlyViewedProductsResponse =
+                            gson.fromJson(it.string().toString(), type)
 
-                    if (response.code() == 401) {
-                        if (responseJson.message == "jwt must be provided")
-                            toast("로그인을 해주세요.")
-                        if (responseJson.message == "jwt expired")
-                            toast("로그인이 만료되었습니다.")
+                        if (response.code() == 401) {
+                            if (responseJson.message == "jwt must be provided")
+                                toast("로그인을 해주세요.")
+                            if (responseJson.message == "jwt expired")
+                                toast("로그인이 만료되었습니다.")
+                        }
                     }
                 }
-            }
-        })
+            })
     }
 
     // 알람 목록에서 리뷰 상세보기
@@ -334,16 +344,25 @@ class MypageActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     Log.v("MypageActivity", "알람 목록 response: ${response.body()}")
                     response.body()?.let {
-//                        val intent = Intent(this@MypageActivity, ReviewDetailActivity::class.java)
 
-//                        this@MypageActivity.startActivity<ReviewDetailActivity>(
-//                            "alarmIdx" to alarmIndex,
-//                            "reviewIdx" to reviewIndex)
+                        closeDrawer()
+                        var intent = Intent(this@MypageActivity, ReviewDetailActivity::class.java)
+                        intent.putExtra("reviewIdx", reviewIndex)
+                        intent.putExtra("alarmIdx", alarmIndex)
+                        startActivity(intent)
                     }
                 }
             }
         })
     }
+
+    private fun closeDrawer() {
+        val drawer: DrawerLayout = findViewById(R.id.drawer_mypage_alarm)
+        if (drawer.isDrawerOpen(Gravity.RIGHT)) {
+            drawer.closeDrawer(Gravity.RIGHT)
+        }
+    }
+
 
     // 닉네임 변경
     private fun editUserNickName() {
@@ -394,6 +413,7 @@ class MypageActivity : AppCompatActivity() {
                             Log.v("MypageActivity", "닉네임 변경 통신 성공  response : ${response.body()}")
                         }
                     }
+
                 }
             })
     }
@@ -432,6 +452,7 @@ class MypageActivity : AppCompatActivity() {
         }
     }
 
+    // 숫자에 세자리 찍기
     fun addComma(number: Int): String {
         var str: String = number.toString()
         if (str.length > 3) {
