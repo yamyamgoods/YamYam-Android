@@ -5,8 +5,10 @@ import android.content.Context
 import android.os.Bundle
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.dialog_bookmark_check.*
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import org.yamyamgoods.yamyam_android.R
+import org.yamyamgoods.yamyam_android.home.bookmark.BookmarkActivity
 
 /**
  * Created By Yun Hyeok
@@ -29,7 +31,7 @@ class BookmarkCheckDialog(private val ctx: Context) : Dialog(ctx) {
             dismiss()
         }
         btn_bookmark_check_dialog_go_bookmark.setOnClickListener {
-            
+            ctx.startActivity<BookmarkActivity>()
         }
     }
 }

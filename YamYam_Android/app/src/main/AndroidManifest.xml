@@ -17,9 +17,13 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme.NoActionBar"
             android:usesCleartextTraffic="true">
+        <activity android:name=".home.bookmark.BookmarkActivity">
+        </activity>
+
         <meta-data
                 android:name="com.kakao.sdk.AppKey"
                 android:value="@string/kakao_app_key"/>
+
         <activity android:name=".storedetail.StoreDetailActivity"/>
         <activity android:name=".search.SearchResultActivity"/>
         <activity android:name=".search.SearchActivity"/>
@@ -38,7 +42,6 @@
                 android:name=".LoginActivity"
                 android:label="@string/title_activity_login"
                 android:theme="@style/AppTheme.NoActionBar">
-
         </activity>
         <activity android:name=".home.HomeActivity">
             <intent-filter>

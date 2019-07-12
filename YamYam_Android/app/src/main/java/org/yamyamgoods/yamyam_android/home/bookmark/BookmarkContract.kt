@@ -15,11 +15,15 @@ interface BookmarkContract {
         fun showServerFailToast(message: String, t: Throwable)
 
         fun addBookmarkData(data: List<BookmarkData>)
+
+        fun deleteBookmarkData(position: Int)
     }
 
     interface Presenter : BasePresenter {
 
         fun getBookmarkData(lastIndex: Int = -1)
+
+        fun deleteBookmark(scrapIdx: Int, position: Int)
 
     }
 }
