@@ -10,5 +10,8 @@ data class BookmarkData(
     val goods_scrap_idx: Int,
     val goods_scrap_label: String,
     val goods_img: String,
-    val store_name: String
-)
+    val store_name: String,
+    val goods_name: String
+) {
+    fun getStoreGoodsName() = "[$store_name] $goods_name"
+}

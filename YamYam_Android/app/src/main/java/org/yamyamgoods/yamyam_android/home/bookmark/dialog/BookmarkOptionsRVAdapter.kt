@@ -50,7 +50,6 @@ class BookmarkOptionsRVAdapter(private val ctx: Context, private val data: Bookm
         dataList[position].let {
             val optionMap = getOptionValueMap(it.goods_option_detail)
             val optionList = getOptionValueList(it.goods_option_detail)
-            //setDefaultOption(position)
 
             holder.optionName = it.goods_option_name
             holder.optionDetails = optionList
@@ -63,19 +62,6 @@ class BookmarkOptionsRVAdapter(private val ctx: Context, private val data: Bookm
             }
         }
         Log.v("Malibin Debug", "onBindViewHolder : $selectedOptions")
-    }
-
-
-    private fun setDefaultOption(position: Int) {
-        dataList[position].let {
-            selectedOptions.add(
-                SelectedOption(
-                    it.goods_option_name,
-                    it.goods_option_detail[0].goods_option_detail_name
-                )
-            )
-            totalPrice += it.goods_option_detail[0].goods_option_detail_price
-        }
     }
 
     private fun getOptionValueMap(list: List<ProductOptionDetail>): Map<String, Int> {
@@ -107,12 +93,18 @@ class BookmarkOptionsRVAdapter(private val ctx: Context, private val data: Bookm
         val optionNameTextView: TextView = itemView.findViewById(R.id.tv_rv_item_product_option)
         val optionSpinner: Spinner = itemView.findViewById(R.id.spinner_rv_item_product_option)
 
+        private var isFirstSpinner = true
+
         private val spinnerListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if(isFirstSpinner){
+                    isFirstSpinner = false
+                    return
+                }
                 priceCalculateProcess(position)
             }
         }

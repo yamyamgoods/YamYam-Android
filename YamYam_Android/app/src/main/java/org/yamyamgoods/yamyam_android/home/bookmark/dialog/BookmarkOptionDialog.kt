@@ -10,6 +10,8 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.dialog_bookmark_estimate_check.*
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.dataclass.BookmarkData
+import org.yamyamgoods.yamyam_android.dataclass.ProductOptionDetail
+import org.yamyamgoods.yamyam_android.dataclass.SelectedOption
 import org.yamyamgoods.yamyam_android.network.ApplicationController
 import org.yamyamgoods.yamyam_android.network.get.BookmarkItemOption
 import org.yamyamgoods.yamyam_android.network.get.GetBookmarkItemOptionResponseData
@@ -28,7 +30,7 @@ import java.util.*
 class BookmarkOptionDialog(private val ctx: Context, private val bookmarkIdx: Int) : Dialog(ctx) {
 
     var totalPrice = -1
-    lateinit var bookmarkData : BookmarkData
+    lateinit var bookmarkData: BookmarkData
 
     private val goodsRepository = ApplicationController.networkServiceGoods
     private val userToken = User.authorization
@@ -53,11 +55,15 @@ class BookmarkOptionDialog(private val ctx: Context, private val bookmarkIdx: In
             adapter = optionsRVAdapter
             layoutManager = LinearLayoutManager(ctx)
         }
+        val amount = getAmountData(data.goods_scrap_option_data)
+        et_bookmark_option_dialog_amount.setText(amount.toString())
+        et_bookmark_option_dialog_tag.setText(bookmarkData.goods_scrap_label)
     }
 
     private fun bindViewServerData() {
         tv_bookmark_option_dialog_total_price.text = toNumberFormat(totalPrice)
-        tv_bookmark_option_dialog_main_name.text //= bookmarkData.
+        tv_bookmark_option_dialog_main_name.text = bookmarkData.getStoreGoodsName()
+
     }
 
     private fun getServerData() {
@@ -81,6 +87,15 @@ class BookmarkOptionDialog(private val ctx: Context, private val bookmarkIdx: In
     }
 
     private fun toNumberFormat(price: Int): String = NumberFormat.getNumberInstance(Locale.US).format(price)
+
+    private fun getAmountData(data: List<SelectedOption>): Int {
+        for (option in data) {
+            if (option.optionName == "수량") {
+                return option.optionValue.replace(",", "").toInt()
+            }
+        }
+        return -1
+    }
 
 
 }
