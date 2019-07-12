@@ -66,7 +66,7 @@ import java.util.*
  * on 7월 01, 2019
  *
  * StartActivity 로 호출 시
- * storeIdx 를 intent 로 반드시 넘겨야 합니다.
+ * goodsIdx 를 intent 로 반드시 넘겨야 합니다.
  */
 
 class ProductDetailActivity : AppCompatActivity(), ProductDetailContract.View {

@@ -10,16 +10,19 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.dialog_bookmark_estimate_check.*
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.dataclass.BookmarkData
 import org.yamyamgoods.yamyam_android.dataclass.ProductOptionDetail
 import org.yamyamgoods.yamyam_android.dataclass.SelectedOption
+import org.yamyamgoods.yamyam_android.home.bookmark.dto.Bookmark2ProductDetailDTO
 import org.yamyamgoods.yamyam_android.network.ApplicationController
 import org.yamyamgoods.yamyam_android.network.get.BookmarkItemOption
 import org.yamyamgoods.yamyam_android.network.get.GetBookmarkItemOptionResponseData
 import org.yamyamgoods.yamyam_android.network.put.PutBookmarkModifyRequestDTO
 import org.yamyamgoods.yamyam_android.network.put.PutBookmarkModifyResponseData
+import org.yamyamgoods.yamyam_android.productdetail.ProductDetailActivity
 import org.yamyamgoods.yamyam_android.util.HomeObject
 import org.yamyamgoods.yamyam_android.util.User
 import retrofit2.Call
@@ -36,7 +39,6 @@ import java.util.*
 class BookmarkOptionDialog(private val ctx: Context, private val bookmarkIdx: Int) : Dialog(ctx) {
 
     var totalPrice = -1
-
     var oneTotalPrice = -1
     var productQuantity = 1
     var selectedOptions = ArrayList<SelectedOption>()
@@ -66,18 +68,15 @@ class BookmarkOptionDialog(private val ctx: Context, private val bookmarkIdx: In
                 if (s!!.isEmpty()) {
                     productQuantity = 0
                     setAmountOption("0")
-                    Log.v("Malibin Debug", "selectedOptions : $selectedOptions, productQuantity : $productQuantity")
                     notifyTotalPrice()
                     return
                 }
                 productQuantity = s.toString().toInt()
                 setAmountOption(s.toString())
-                Log.v("Malibin Debug", "selectedOptions : $selectedOptions, productQuantity : $productQuantity")
                 notifyTotalPrice()
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -85,11 +84,17 @@ class BookmarkOptionDialog(private val ctx: Context, private val bookmarkIdx: In
         })
 
         btn_bookmark_option_dialog_save.setOnClickListener {
-            Log.v("Malibin Debug", getPutBookmarkModifyRequestDTO().toString())
             scrapModifyRequest(getPutBookmarkModifyRequestDTO())
-//            bookmarkData.goods_scrap_label = et_bookmark_option_dialog_tag.text.toString()
-//            bookmarkData.goods_price = (productQuantity * oneTotalPrice).toString()
+        }
 
+        btn_bookmark_option_dialog_close.setOnClickListener {
+            dismiss()
+        }
+
+        btn_bookmark_option_dialog_go_detail.setOnClickListener {
+            val dto = Bookmark2ProductDetailDTO(et_bookmark_option_dialog_tag.text.toString(), selectedOptions)
+            ctx.startActivity<ProductDetailActivity>("goodsIdx" to bookmarkData.goods_idx, "dto" to dto)
+            dismiss()
         }
     }
 
@@ -114,9 +119,6 @@ class BookmarkOptionDialog(private val ctx: Context, private val bookmarkIdx: In
         for (option in selectedOptions) {
             if (option.optionName == "수량") {
                 option.optionValue = amount
-//                selectedOptions.remove(option)
-//                val newOption = SelectedOption("수량", amount)
-//                selectedOptions.add(newOption)
             }
         }
     }

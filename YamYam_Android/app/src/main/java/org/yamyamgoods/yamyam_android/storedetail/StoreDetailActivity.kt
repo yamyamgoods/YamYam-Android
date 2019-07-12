@@ -18,13 +18,13 @@ class StoreDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_store_detail)
 
-        viewInit()
+      //  viewInit()
     }
-
-    private fun viewInit() {
-        rv_store_detail_act_list.apply {
-            adapter = StoreDetailRVAdapter(this@StoreDetailActivity, TempData.storeGoods(), "스토어이름")
-            layoutManager = GridLayoutManager(this@StoreDetailActivity, 2)
-        }
-    }
+//
+//    private fun viewInit() {
+//        rv_store_detail_act_list.apply {
+//            adapter = StoreDetailRVAdapter(this@StoreDetailActivity, TempData.storeGoods(), "스토어이름")
+//            layoutManager = GridLayoutManager(this@StoreDetailActivity, 2)
+//        }
+//    }
 }

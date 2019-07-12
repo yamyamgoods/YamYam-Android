@@ -70,22 +70,12 @@ class BookmarkOptionsRVAdapter(
             holder.optionSpinner.apply {
                 adapter = ArrayAdapter(ctx, R.layout.spinner_item_option, R.id.tv_spinner_option, optionList)
             }
-
             val optionIdx = optionList.indexOf(currentOptionDetailName)
             holder.setSpinnerItem(optionIdx)
             oneTotalPrice += currentOptionDetailValue
             dialog.oneTotalPrice = oneTotalPrice
             holder.setSpinnerListener()
-
-
         }
-
-        Log.v("Malibin Debug", "oneTotalPrice: $oneTotalPrice")
-        Log.v("Malibin Debug", "currunt Price : $totalPrice, basePrice : $basePrice")
-        Log.v("Malibin Debug", "onBindViewHolder : $selectedOptions")
-        Log.v("Malibin Debug", "dialog.selectedOptions : ${dialog.selectedOptions}")
-        Log.v("Malibin Debug", "dialog.oneTotalPrice : ${dialog.oneTotalPrice}")
-        Log.v("Malibin Debug", "dialog.productQuantity : ${dialog.productQuantity}")
     }
 
     private fun getOptionValueMap(list: List<ProductOptionDetail>): Map<String, Int> {
@@ -167,12 +157,6 @@ class BookmarkOptionsRVAdapter(
 
             dialog.refreshOptionData(totalPrice, selectedOptions)
             dialog.notifyTotalPrice()
-
-            Log.v("Malibin Debug", "currunt Price : $totalPrice, basePrice : $basePrice")
-            Log.v("Malibin Debug", "onItemSelected : $selectedOptions")
-            Log.v("Malibin Debug", "dialog.selectedOptions : ${dialog.selectedOptions}")
-            Log.v("Malibin Debug", "dialog.oneTotalPrice : ${dialog.oneTotalPrice}")
-            Log.v("Malibin Debug", "dialog.productQuantity : ${dialog.productQuantity}")
         }
     }
 }
