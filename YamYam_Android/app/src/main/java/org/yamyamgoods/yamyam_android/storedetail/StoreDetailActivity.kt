@@ -25,21 +25,22 @@ class StoreDetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_store_detail)
         val transaction: FragmentTransaction = this.supportFragmentManager.beginTransaction()
         transaction.add(R.id.fl_act_store_detail, StoreDetailGoodsFragment()).commit()
-        s_idx = intent.getIntExtra("s_idx",-1)
+        s_idx = intent.getIntExtra("s_idx", -1)
         StoreDetailGoodsFragment.instance.s_idx = s_idx
         title = intent.getStringExtra("title")
         image = intent.getStringExtra("image")
         hashtag = intent.getStringArrayListExtra("hashtag")
         store_url = intent.getStringExtra("store_url")
-        scrap_flag = intent.getBooleanExtra("store_scrap_flag",false)
+        scrap_flag = intent.getBooleanExtra("store_scrap_flag", false)
         setView()
         setOnClickListener()
     }
 
-    private fun setOnClickListener(){
+    private fun setOnClickListener() {
         btn_store_detail_act_web_link.setOnClickListener {
             this.startActivity<StoreWebActivity>(
-                "storeUrl" to store_url, "storeName" to title)
+                "storeUrl" to store_url, "storeName" to title
+            )
         }
     }
 
@@ -51,10 +52,10 @@ class StoreDetailActivity : AppCompatActivity() {
             .into(iv_store_detail_act_image)
         tv_store_detail_act_store_name.text = title
         tv_act_store_detail_hashtag1.text = hashtag[0]
-        if(hashtag.size>1) {
+        if (hashtag.size > 1) {
             tv_act_store_detail_hashtag2.text = hashtag[1]
-        } else{
-            rl_act_store_detail_hashtag2.visibility  = View.GONE
+        } else {
+            rl_act_store_detail_hashtag2.visibility = View.GONE
         }
     }
 }

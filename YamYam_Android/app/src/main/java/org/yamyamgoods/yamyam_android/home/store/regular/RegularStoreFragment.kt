@@ -17,6 +17,7 @@ import org.yamyamgoods.yamyam_android.dataclass.StoreData
 import org.yamyamgoods.yamyam_android.home.store.regular.adapter.RegularStoreRVAdapter
 import org.yamyamgoods.yamyam_android.network.ApplicationController
 import org.yamyamgoods.yamyam_android.util.HomeObject
+import org.yamyamgoods.yamyam_android.util.User
 
 class RegularStoreFragment : Fragment(), RegularStoreContract.View {
 
@@ -68,14 +69,16 @@ class RegularStoreFragment : Fragment(), RegularStoreContract.View {
         regularStoreRVAdapter.setRegularStoreRemove(data)
         HomeObject.notifyStoreRankingTabChange()
         toast("단골 스토어가 삭제되었습니다!")
+        if (regularStoreRVAdapter.dataList.isEmpty()) {
+            setNoRegularStoreList()
+        }
     }
 
     private fun presenterInit() {
         presenter = RegularStorePresenter().apply {
             storeRepository = ApplicationController.networkServiceStore
             view = this@RegularStoreFragment
-            userToken =
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWR4IjoxLCJpYXQiOjE1NjIzMTUzNjYsImV4cCI6MTU2MzYyOTM2Nn0.ZkDGasoDPHTrGvy7yFOT9cPjTQ7gnnUOqekY_zYrAuc"
+            userToken = User.authorization
         }
     }
 

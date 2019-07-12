@@ -12,8 +12,12 @@
             android:layout_width="18dp"
             android:layout_height="wrap_content"
             android:text="0"
-            android:textColor="#3C3C3C"
             android:textSize="14dp"
+            android:textColor="@color/darkgray"
+            android:lineSpacingExtra="3sp"
+            android:fontFamily="@font/notosansbold"
+            android:includeFontPadding="false"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
@@ -40,8 +44,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="가게 이름"
-                android:textColor="#4D4D4D"
+                android:textColor="@color/darkgray"
+                android:letterSpacing="-0.04"
+                android:lineSpacingExtra="11sp"
                 android:textSize="15dp"
+                android:fontFamily="@font/notosansmedium"
+                android:includeFontPadding="false"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
 
@@ -52,6 +60,11 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="#해시태그"
+                android:textColor="@color/darkgray"
+                android:letterSpacing="-0.04"
+                android:lineSpacingExtra="10sp"
+                android:fontFamily="@font/notosansdemilight"
+                android:includeFontPadding="false"
                 android:textSize="14dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_rv_item_store_ranking_name"></TextView>
