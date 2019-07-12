@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginVertical="10dp"
-    android:layout_marginHorizontal="5dp">
+    android:layout_marginHorizontal="5dp"
+    android:id="@+id/whole">
     <android.support.constraint.ConstraintLayout
         android:id="@+id/topInfo"
         android:layout_width="match_parent"
@@ -29,6 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:visibility="gone"
         android:layout_alignParentRight="true"
         android:layout_marginRight="8dp"
         android:layout_marginTop="11dp"
@@ -49,6 +51,8 @@
             android:layout_gravity="center_vertical"
             android:textColor="@color/brownish_gray"
             android:textSize="12dp"
+            android:fontFamily="@font/notosansregular"
+            android:includeFontPadding="false"
             tools:text="레드프린팅,프레스" />
 
         <TextView
@@ -57,7 +61,8 @@
             android:layout_height="wrap_content"
             android:textColor="@color/darkgray"
             android:textSize="15dp"
-            android:textStyle="bold"
+            android:fontFamily="@font/notosansmedium"
+            android:includeFontPadding="false"
             tools:text="자유형 칼선 스티커" />
 
         <TextView
@@ -66,6 +71,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="2dp"
             android:textColor="@color/darkgray"
+            android:includeFontPadding="false"
+            android:fontFamily="@font/notosansbold"
             android:textSize="15dp"
             tools:text="32,900" />
 
@@ -90,6 +97,8 @@
                 android:layout_gravity="center_vertical"
                 android:textColor="#4d4d4d"
                 android:textSize="12dp"
+                android:fontFamily="@font/notosansbold"
+                android:includeFontPadding="false"
                 tools:text="4.8" />
 
             <TextView
@@ -99,6 +108,8 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="8dp"
                 android:text="최소수량 "
+                android:fontFamily="@font/notosansmedium"
+                android:includeFontPadding="false"
                 android:textColor="#9d9d9d"
                 android:textSize="12dp" />
 
@@ -108,6 +119,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:textColor="#9d9d9d"
+                android:fontFamily="@font/notosansmedium"
+                android:includeFontPadding="false"
                 android:textSize="12dp"
                 tools:text="10" />
 
@@ -118,6 +131,8 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="8dp"
                 android:text="리뷰 "
+                android:fontFamily="@font/notosansmedium"
+                android:includeFontPadding="false"
                 android:textColor="#9d9d9d"
                 android:textSize="12dp" />
 
@@ -128,6 +143,8 @@
                 android:layout_gravity="center_vertical"
                 android:textColor="#9d9d9d"
                 android:textSize="12dp"
+                android:fontFamily="@font/notosansmedium"
+                android:includeFontPadding="false"
                 tools:text="300" />
         </LinearLayout>
 

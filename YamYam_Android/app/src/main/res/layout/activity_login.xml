@@ -35,6 +35,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="트위터계정으로 시작하기"
+            android:fontFamily="@font/notosansregular"
+            android:includeFontPadding="false"
             android:textColor="@color/colorWhite"
             android:textSize="15sp"
             android:lineHeight="20sp"/>
@@ -61,6 +63,8 @@
             android:layout_height="wrap_content"
             android:text="카카오계정으로 시작하기"
             android:textColor="#3c1e1e"
+            android:fontFamily="@font/notosansregular"
+            android:includeFontPadding="false"
             android:textSize="15sp"
             android:lineHeight="20sp"/>
     </LinearLayout>
@@ -82,7 +86,9 @@
             android:layout_height="wrap_content"
             android:paddingHorizontal="13.5dp"
             android:layout_gravity="center"
-            android:text="또는" />
+            android:text="또는"
+            android:fontFamily="@font/notosansmedium"
+            android:includeFontPadding="false"/>
         <View
             android:layout_width="145dp"
             android:layout_height="1dp"
@@ -105,8 +111,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/text_underbar"
-            android:layout_marginBottom="-2dp"
-            android:textStyle="normal"/>
+            android:fontFamily="@font/notosansregular"
+            android:includeFontPadding="false"
+            android:layout_marginBottom="-2dp"/>
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"

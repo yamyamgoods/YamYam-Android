@@ -11,12 +11,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.fragment_goods.*
+import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.support.v4.startActivity
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.home.goods.adapter.GoodsCategoryRecyclerViewAdapter
 import org.yamyamgoods.yamyam_android.home.HomeActivity
 import org.yamyamgoods.yamyam_android.network.ApplicationController
 import org.yamyamgoods.yamyam_android.network.get.GetGoodsTabResponse
 import org.yamyamgoods.yamyam_android.network.get.GoodsCategoryData
+import org.yamyamgoods.yamyam_android.search.SearchActivity
 import org.yamyamgoods.yamyam_android.util.User
 import retrofit2.Call
 import retrofit2.Callback
@@ -36,14 +39,18 @@ class GoodsTabFragment : Fragment(){
         val view:View =  inflater.inflate(R.layout.fragment_goods, container, false)
         goodsTabResponse()
         return view
+
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
         //Goods탭 처음에 기획전 화면을 띄우도록
         val transaction: FragmentTransaction = (context as HomeActivity).supportFragmentManager.beginTransaction()
         transaction.add(R.id.fl_goods_fragment_frag, GoodsExhibitionFragment()).commit()
+
+        btn_goods_fragment_search.setOnClickListener {
+            (context as HomeActivity).startActivity<SearchActivity>()
+        }
     }
 
     private fun goodsTabResponse(){

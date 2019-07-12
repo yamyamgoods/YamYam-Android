@@ -18,7 +18,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="어떤 굿즈와 스토어를\n찾으시나요?"
-                android:fontFamily="@font/notosansmedium"
+                android:fontFamily="@font/notosanslight"
                 android:includeFontPadding="false"
                 android:textSize="24dp"
                 android:layout_marginTop="51dp"

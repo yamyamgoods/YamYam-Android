@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="굿즈"
-            android:textStyle="bold"
+            android:fontFamily="@font/notosansbold"
             android:includeFontPadding="false"
             android:textColor="@color/colorTabDarkGray"
             android:textSize="15dp"/>
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="스토어"
-            android:textStyle="bold"
+            android:fontFamily="@font/notosansbold"
             android:includeFontPadding="false"
             android:textColor="@color/colorTabLightGray"
             android:textSize="15dp"/>

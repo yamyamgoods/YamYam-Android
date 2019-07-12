@@ -1,6 +1,7 @@
 package org.yamyamgoods.yamyam_android.home.goods.adapter
 
 import android.content.Context
+import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -8,8 +9,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import org.jetbrains.anko.startActivity
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.dataclass.GoodsData
+import org.yamyamgoods.yamyam_android.productdetail.ProductDetailActivity
 
 class GoodsCategoryDetailRecyclerViewAdapter (val ctx: Context, var dataList: ArrayList<GoodsData>): RecyclerView.Adapter<GoodsCategoryDetailRecyclerViewAdapter.Holder>() {
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): Holder {
@@ -34,10 +37,13 @@ class GoodsCategoryDetailRecyclerViewAdapter (val ctx: Context, var dataList: Ar
         holder.minQuantity.text = min
         val reviewNum: String = String.format("%d",dataList[position].goods_review_cnt)
         holder.reviewCount.text = reviewNum
+        holder.whole.setOnClickListener {
+            ctx.startActivity<ProductDetailActivity>("goodsIdx" to dataList[position].goods_idx)
+        }
     }
 
     inner class Holder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        //var whole = itemView.findViewById(R.id.w)
+        var whole = itemView.findViewById(R.id.whole) as CardView
         var image = itemView.findViewById(R.id.iv_rv_item_goods_category_detail) as ImageView
         var store = itemView.findViewById(R.id.tv_rv_item_goods_category_detail_store) as TextView
         var name = itemView.findViewById(R.id.tv_rv_item_goods_category_detail_name) as TextView

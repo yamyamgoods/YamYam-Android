@@ -75,6 +75,9 @@
                         android:layout_marginHorizontal="8dp"
                         android:layout_marginVertical="5dp"
                         tools:text="#해시태그1"
+                        android:fontFamily="@font/notosansregular"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/darkgray"
                         android:textSize="11dp"/>
             </RelativeLayout>
             <RelativeLayout
@@ -92,6 +95,9 @@
                         android:layout_marginHorizontal="8dp"
                         android:layout_marginVertical="5dp"
                         tools:text="#해시태그2"
+                        android:fontFamily="@font/notosansregular"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/darkgray"
                         android:textSize="11dp"/>
             </RelativeLayout>
         </LinearLayout>
