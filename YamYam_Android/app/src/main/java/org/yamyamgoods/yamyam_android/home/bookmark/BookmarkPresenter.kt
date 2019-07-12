@@ -2,6 +2,7 @@ package org.yamyamgoods.yamyam_android.home.bookmark
 
 import org.yamyamgoods.yamyam_android.network.NetworkServiceGoods
 import org.yamyamgoods.yamyam_android.network.get.GetBookmarkListResponseData
+import org.yamyamgoods.yamyam_android.network.get.GetDeleteBookmarkResponseData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -35,6 +36,25 @@ class BookmarkPresenter : BookmarkContract.Presenter {
                 ) {
                     if (response.isSuccessful) {
                         view.addBookmarkData(response.body()!!.data)
+                    }
+                }
+            }
+        )
+    }
+
+    override fun deleteBookmark(scrapIdx: Int, position: Int) {
+        goodsRepository.getDeleteBookmarkRequest(token = userToken, scrapIdx = scrapIdx).enqueue(
+            object : Callback<GetDeleteBookmarkResponseData> {
+                override fun onFailure(call: Call<GetDeleteBookmarkResponseData>, t: Throwable) {
+                    view.showServerFailToast("서버 통신에 실패하였습니다. 인터넷 연결을 확인해주세요.", t)
+                }
+
+                override fun onResponse(
+                    call: Call<GetDeleteBookmarkResponseData>,
+                    response: Response<GetDeleteBookmarkResponseData>
+                ) {
+                    if (response.isSuccessful) {
+                        view.deleteBookmarkData(position)
                     }
                 }
             }

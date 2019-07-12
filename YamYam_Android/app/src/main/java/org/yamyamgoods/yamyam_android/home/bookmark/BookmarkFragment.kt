@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_bookmark.*
+import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.toast
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.dataclass.BookmarkData
@@ -69,6 +70,11 @@ class BookmarkFragment : Fragment(), BookmarkContract.View {
         bookmarkRVAdapter.notifyDataSetChanged()
     }
 
+    override fun deleteBookmarkData(position: Int) {
+        bookmarkRVAdapter.deleteBookmarkAt(position)
+        toast("찜한 견적이 삭제되었습니다!")
+    }
+
     private fun presenterInit() {
         presenter = BookmarkPresenter().apply {
             userToken = User.authorization
@@ -78,7 +84,7 @@ class BookmarkFragment : Fragment(), BookmarkContract.View {
     }
 
     private fun viewInit() {
-        bookmarkRVAdapter = BookmarkRVAdapter(ctx)
+        bookmarkRVAdapter = BookmarkRVAdapter(ctx, presenter)
         rv_bookmark_frag_list.apply {
             adapter = bookmarkRVAdapter
             layoutManager = GridLayoutManager(ctx, 2)
@@ -94,5 +100,7 @@ class BookmarkFragment : Fragment(), BookmarkContract.View {
         bookmarkRVAdapter.dataList.clear()
         bookmarkRVAdapter.notifyItemRangeRemoved(0,size)
         presenter.getBookmarkData()
+
+        Log.v("Malibin Debug", "Bookmark Frag refreshDataList() called")
     }
 }

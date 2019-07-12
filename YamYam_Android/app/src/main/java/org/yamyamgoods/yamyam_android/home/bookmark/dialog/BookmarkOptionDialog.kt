@@ -20,6 +20,7 @@ import org.yamyamgoods.yamyam_android.network.get.BookmarkItemOption
 import org.yamyamgoods.yamyam_android.network.get.GetBookmarkItemOptionResponseData
 import org.yamyamgoods.yamyam_android.network.put.PutBookmarkModifyRequestDTO
 import org.yamyamgoods.yamyam_android.network.put.PutBookmarkModifyResponseData
+import org.yamyamgoods.yamyam_android.util.HomeObject
 import org.yamyamgoods.yamyam_android.util.User
 import retrofit2.Call
 import retrofit2.Callback
@@ -36,9 +37,11 @@ class BookmarkOptionDialog(private val ctx: Context, private val bookmarkIdx: In
 
     var totalPrice = -1
 
-    private var oneTotalPrice = -1
-    private var productQuantity = 1
-    private var selectedOptions: List<SelectedOption>? = null
+    var oneTotalPrice = -1
+    var productQuantity = 1
+    var selectedOptions = ArrayList<SelectedOption>()
+
+    var currentAmountOption: SelectedOption? = null
 
     lateinit var bookmarkData: BookmarkData
 
@@ -62,26 +65,40 @@ class BookmarkOptionDialog(private val ctx: Context, private val bookmarkIdx: In
             override fun afterTextChanged(s: Editable?) {
                 if (s!!.isEmpty()) {
                     productQuantity = 0
+                    setAmountOption("0")
+                    Log.v("Malibin Debug", "selectedOptions : $selectedOptions, productQuantity : $productQuantity")
                     notifyTotalPrice()
                     return
                 }
                 productQuantity = s.toString().toInt()
+                setAmountOption(s.toString())
+                Log.v("Malibin Debug", "selectedOptions : $selectedOptions, productQuantity : $productQuantity")
                 notifyTotalPrice()
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             }
-
         })
+
+        btn_bookmark_option_dialog_save.setOnClickListener {
+            Log.v("Malibin Debug", getPutBookmarkModifyRequestDTO().toString())
+            scrapModifyRequest(getPutBookmarkModifyRequestDTO())
+//            bookmarkData.goods_scrap_label = et_bookmark_option_dialog_tag.text.toString()
+//            bookmarkData.goods_price = (productQuantity * oneTotalPrice).toString()
+
+        }
     }
 
     private fun setOptionData(data: BookmarkItemOption) {
         val amount = getAmountData(data.goods_scrap_option_data)
+        currentAmountOption = SelectedOption("수량", amount.toString())
         et_bookmark_option_dialog_amount.setText(amount.toString())
         et_bookmark_option_dialog_tag.setText(bookmarkData.goods_scrap_label)
+        selectedOptions.addAll(data.goods_scrap_option_data)
 
         optionsRVAdapter = BookmarkOptionsRVAdapter(ctx, data, this).apply {
             this.totalPrice = this@BookmarkOptionDialog.totalPrice / amount
@@ -89,6 +106,18 @@ class BookmarkOptionDialog(private val ctx: Context, private val bookmarkIdx: In
         rv_bookmark_option_dialog_option_list.apply {
             adapter = optionsRVAdapter
             layoutManager = LinearLayoutManager(ctx)
+        }
+    }
+
+    private fun setAmountOption(amount: String) {
+
+        for (option in selectedOptions) {
+            if (option.optionName == "수량") {
+                option.optionValue = amount
+//                selectedOptions.remove(option)
+//                val newOption = SelectedOption("수량", amount)
+//                selectedOptions.add(newOption)
+            }
         }
     }
 
@@ -108,20 +137,19 @@ class BookmarkOptionDialog(private val ctx: Context, private val bookmarkIdx: In
         return -1
     }
 
-    fun refreshOptionData(totalPrice: Int, selectedOptions: List<SelectedOption>) {
-        this.oneTotalPrice = totalPrice
-        this.selectedOptions = selectedOptions
-    }
-
-    fun notifyTotalPrice() {
-        val totalPrice = toNumberFormat(oneTotalPrice * productQuantity)
-        tv_bookmark_option_dialog_total_price.text = totalPrice
-    }
+    private fun getPutBookmarkModifyRequestDTO() = PutBookmarkModifyRequestDTO(
+        bookmarkIdx,
+        bookmarkData.goods_idx,
+        oneTotalPrice * productQuantity,
+        et_bookmark_option_dialog_tag.text.toString(),
+        selectedOptions
+    )
 
     private fun getServerData() {
         goodsRepository.getBookmarkItemOptionRequest(token = userToken, goodsScrapId = bookmarkIdx).enqueue(object :
             Callback<GetBookmarkItemOptionResponseData> {
             override fun onFailure(call: Call<GetBookmarkItemOptionResponseData>, t: Throwable) {
+                ctx.toast("서버 통신에 실패하였습니다. 인터넷 연결을 확인해주세요.")
                 Log.v("Malibin Debug", "t : ${t.message}, stack : ${TextUtils.join("\n", t.stackTrace)}")
             }
 
@@ -142,6 +170,7 @@ class BookmarkOptionDialog(private val ctx: Context, private val bookmarkIdx: In
         goodsRepository.putBookmarkModifyRequest(token = userToken, body = body)
             .enqueue(object : Callback<PutBookmarkModifyResponseData> {
                 override fun onFailure(call: Call<PutBookmarkModifyResponseData>, t: Throwable) {
+                    ctx.toast("서버 통신에 실패하였습니다. 인터넷 연결을 확인해주세요.")
                     Log.v("Malibin Debug", "t : ${t.message}, stack : ${TextUtils.join("\n", t.stackTrace)}")
                 }
 
@@ -151,9 +180,20 @@ class BookmarkOptionDialog(private val ctx: Context, private val bookmarkIdx: In
                 ) {
                     if (response.isSuccessful) {
                         ctx.toast("견적 수정이 완료되었습니다!")
+                        HomeObject.notifyBookmarkTabChange()
                     }
                 }
             })
+    }
+
+    fun refreshOptionData(totalPrice: Int, selectedOptions: ArrayList<SelectedOption>) {
+        this.oneTotalPrice = totalPrice
+        this.selectedOptions = selectedOptions
+    }
+
+    fun notifyTotalPrice() {
+        val totalPrice = toNumberFormat(oneTotalPrice * productQuantity)
+        tv_bookmark_option_dialog_total_price.text = totalPrice
     }
 
 

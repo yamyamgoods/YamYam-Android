@@ -6,9 +6,10 @@ package org.yamyamgoods.yamyam_android.dataclass
  */
 
 data class BookmarkData(
-    val goods_price: String,
+    val goods_idx: Int,
+    var goods_price: String,
     val goods_scrap_idx: Int,
-    val goods_scrap_label: String,
+    var goods_scrap_label: String,
     val goods_img: String,
     val store_name: String,
     val goods_name: String

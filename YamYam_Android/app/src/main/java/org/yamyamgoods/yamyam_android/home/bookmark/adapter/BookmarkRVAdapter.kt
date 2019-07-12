@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide
 import org.jetbrains.anko.imageResource
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.dataclass.BookmarkData
+import org.yamyamgoods.yamyam_android.home.bookmark.BookmarkContract
 import org.yamyamgoods.yamyam_android.home.bookmark.dialog.BookmarkOptionDialog
 import org.yamyamgoods.yamyam_android.util.dp2px
 import org.yamyamgoods.yamyam_android.util.getScreenWidth
@@ -24,7 +25,7 @@ import kotlin.collections.ArrayList
  * on 7월 06, 2019
  */
 
-class BookmarkRVAdapter(private val ctx: Context) :
+class BookmarkRVAdapter(private val ctx: Context, private val presenter: BookmarkContract.Presenter) :
     RecyclerView.Adapter<BookmarkRVAdapter.Holder>() {
 
     val dataList = ArrayList<BookmarkData>()
@@ -38,7 +39,6 @@ class BookmarkRVAdapter(private val ctx: Context) :
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
         dataList[position].let { item ->
-
 
             Glide.with(ctx).load(item.goods_img).into(holder.ivImage)
 
@@ -54,7 +54,7 @@ class BookmarkRVAdapter(private val ctx: Context) :
             }
 
             holder.btnBookmark.setOnClickListener {
-                //북마크 해제 통신
+                presenter.deleteBookmark(item.goods_scrap_idx, position)
             }
 
             holder.tvStoreName.text = item.store_name
@@ -76,7 +76,10 @@ class BookmarkRVAdapter(private val ctx: Context) :
         notifyItemRangeInserted(previousSize, itemCount)
     }
 
-    private fun toNumberFormat(price: Int): String = NumberFormat.getNumberInstance(Locale.US).format(price)
+    fun deleteBookmarkAt(position: Int) {
+        dataList.removeAt(position)
+        notifyItemRemoved(position)
+    }
 
     private fun getDynamicImageWidth(): Int {
         val phoneWidth = getScreenWidth(ctx)
