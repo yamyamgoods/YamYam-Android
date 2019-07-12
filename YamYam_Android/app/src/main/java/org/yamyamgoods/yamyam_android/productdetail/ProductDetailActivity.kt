@@ -53,6 +53,7 @@ import org.yamyamgoods.yamyam_android.dataclass.ReviewData
 import org.yamyamgoods.yamyam_android.network.post.PostBookmarkRequestDTO
 import org.yamyamgoods.yamyam_android.productdetail.dialog.BookmarkCheckDialog
 import org.yamyamgoods.yamyam_android.productdetail.dialog.LoginRequestDialog
+import org.yamyamgoods.yamyam_android.productdetail.dto.ProductDetailShortDTO
 import org.yamyamgoods.yamyam_android.reviewwrite.ReviewWriteActivity
 import org.yamyamgoods.yamyam_android.storeweb.StoreWebActivity
 import org.yamyamgoods.yamyam_android.util.*
@@ -266,7 +267,7 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailContract.View {
         //presenter.getProductOptionData(goodsIdx)
     }
 
-    private fun setStatusBarHeight(){
+    private fun setStatusBarHeight() {
         toolbar_product_detail_act.layoutParams.height = getStatusBarHeight()
     }
 
@@ -440,11 +441,11 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailContract.View {
             btn_product_detail_act_review_more
         ).forEach {
             it.setOnClickListener {
-                startActivity<ReviewActivity>("goodsIdx" to goodsIdx)
+                startActivity<ReviewActivity>("goodsIdx" to goodsIdx, "reviewGoods" to getProductDetailShortDTO())
             }
         }
         btn_product_detail_act_review_write.setOnClickListener {
-            startActivity<ReviewWriteActivity>("goodsIdx" to goodsIdx)
+            startActivity<ReviewWriteActivity>("goodsIdx" to goodsIdx, "reviewGoods" to getProductDetailShortDTO())
         }
         tv_product_detail_act_review_count.text = integrateData.goods.goods_review_cnt.toString()
         tv_product_detail_act_review_more_count.text = integrateData.goods.goods_review_cnt.toString()
@@ -722,6 +723,15 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailContract.View {
         return result
     }
 
+    private fun getProductDetailShortDTO() = ProductDetailShortDTO(
+        goodsIdx,
+        mainImageUrls[0],
+        integrateData.goods.store_name,
+        integrateData.goods.goods_name,
+        integrateData.goods.goods_price,
+        integrateData.goods.goods_rating
+    )
+
     fun refreshOptionData(totalPrice: Int, selectedOptions: List<SelectedOption>) {
         this.oneTotalPrice = totalPrice
         this.selectedOptions = selectedOptions
@@ -731,4 +741,5 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailContract.View {
         val totalPrice = toNumberFormat(oneTotalPrice * productQuantity)
         tv_product_detail_act_slide_total_price.text = totalPrice
     }
+
 }
