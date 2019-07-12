@@ -10,6 +10,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="정음스티커"
+            android:fontFamily="@font/notosansmedium"
+            android:includeFontPadding="false"
             android:textColor="@color/darkgray"
             android:textSize="14dp"
             android:layout_marginHorizontal="11dp"

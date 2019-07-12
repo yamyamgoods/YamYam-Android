@@ -6,13 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import org.jetbrains.anko.startActivity
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.dataclass.GoodsData
+import org.yamyamgoods.yamyam_android.productdetail.ProductDetailActivity
 
 class SearchResultGoodsRecyclerViewAdapter(val ctx: Context, var dataList: ArrayList<GoodsData>): RecyclerView.Adapter<SearchResultGoodsRecyclerViewAdapter.Holder>(){
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): Holder {
@@ -39,9 +42,13 @@ class SearchResultGoodsRecyclerViewAdapter(val ctx: Context, var dataList: Array
         holder.min.text = min
         val reviewNum: String = String.format("%d",dataList[position].goods_review_cnt)
         holder.reviewNum.text = reviewNum
+        holder.whole.setOnClickListener {
+            ctx.startActivity<ProductDetailActivity>("goodsIdx" to dataList[position].goods_idx)
+        }
     }
 
     inner class Holder(itemView: View): RecyclerView.ViewHolder(itemView){
+        var whole = itemView.findViewById(R.id.whole) as RelativeLayout
         var img = itemView.findViewById(R.id.iv_rv_item_goods_thumnail) as ImageView
         var store = itemView.findViewById(R.id.tv_rv_item_goods_store) as TextView
         var name = itemView.findViewById(R.id.tv_rv_item_goods_name) as TextView
