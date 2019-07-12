@@ -7,13 +7,15 @@ data class GetSearchStoreResponse (
 )
 
 data class StoreSearchResultList(
-        val data: ArrayList<SearchStoreData>
+        val store: ArrayList<SearchStoreData>,
+        val totalCnt: Int
 )
 
 data class SearchStoreData(
-        val search_after: List<Int>,
+        val search_after: String,
         val store_idx: Int,
         val store_name: String,
         val store_img: String,
-        val hash_tag: List<String>
+        val hash_tag: ArrayList<String>,
+        val store_scrap_flag: Int
 )

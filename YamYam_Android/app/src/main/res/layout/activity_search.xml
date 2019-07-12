@@ -37,18 +37,30 @@
                     android:textColorHint="#a2a2a2"
                     android:textColor="@color/darkgray"
                     android:textSize="15dp"
+                    android:maxLines="1"
+                    android:lines="1"
+                    android:inputType="text"
+                    android:imeOptions="actionSearch"
+                    android:imeActionLabel="검색"
                     android:fontFamily="@font/notosansmedium"
                     android:includeFontPadding="false"
                     android:background="@drawable/round_rectangle_light_gray_8dp"
                     android:hint="아크릴 키링을 검색해보세요!"/>
-                <ImageView
-                    android:id="@+id/btn_search_act_searchreset"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/icon_searchreset"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="17dp"/>
+                <RelativeLayout
+                        android:id="@+id/btn_search_act_searchreset"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="12dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true">
+                    <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/icon_searchreset"
+
+                            android:layout_margin="5dp"/>
+                </RelativeLayout>
+
             </RelativeLayout>
         </RelativeLayout>
     </RelativeLayout>
@@ -57,245 +69,10 @@
         android:layout_height="0.3dp"
         android:layout_below="@id/top"
         android:background="#a2a2a2"/>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/top"
-        android:layout_marginHorizontal="16dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="어떤 굿즈와 스토어를\n찾으시나요?"
-            android:fontFamily="@font/notosansmedium"
-            android:includeFontPadding="false"
-            android:textSize="24dp"
-            android:layout_marginTop="51dp"
-            android:textColor="@color/colorReview"/>
-    </RelativeLayout>
-    <RelativeLayout
-        android:id="@+id/recommend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/top"
-        android:layout_marginTop="164dp"
-        android:layout_marginHorizontal="16dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="14dp"
-            android:fontFamily="@font/notosansbold"
-            android:includeFontPadding="false"
-            android:textColor="#333333"
-            android:text="추천 검색어"/>
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_below="@id/recommend"
-        android:layout_marginTop="28dp">
-        <RelativeLayout
-            android:id="@+id/recommend1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/border_round_rect_search">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14dp"
-                android:textColor="#333333"
-                android:fontFamily="@font/notosansregular"
-                android:includeFontPadding="false"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginVertical="8dp"
-                android:text="스탬프" />
-        </RelativeLayout>
-        <RelativeLayout
-            android:id="@+id/recommend2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/border_round_rect_search"
-            android:layout_toRightOf="@id/recommend1"
-            android:layout_marginLeft="5dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14dp"
-                android:textColor="#333333"
-                android:fontFamily="@font/notosansregular"
-                android:includeFontPadding="false"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginVertical="8dp"
-                android:text="폰케이스" />
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/border_round_rect_search"
-            android:layout_toRightOf="@id/recommend2"
-            android:layout_marginLeft="5dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14dp"
-                android:textColor="#333333"
-                android:fontFamily="@font/notosansregular"
-                android:includeFontPadding="false"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginVertical="8dp"
-                android:text="아크릴 키링" />
-        </RelativeLayout>
-        <RelativeLayout
-            android:id="@+id/recommend4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/border_round_rect_search"
-            android:layout_below="@id/recommend1"
-            android:layout_marginTop="6dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14dp"
-                android:textColor="#333333"
-                android:fontFamily="@font/notosansregular"
-                android:includeFontPadding="false"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginVertical="8dp"
-                android:text="에폭시 스티커" />
-        </RelativeLayout>
-        <RelativeLayout
-            android:id="@+id/recommend5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/border_round_rect_search"
-            android:layout_toRightOf="@id/recommend4"
-            android:layout_below="@id/recommend1"
-            android:layout_marginTop="6dp"
-            android:layout_marginLeft="5dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14dp"
-                android:textColor="#333333"
-                android:fontFamily="@font/notosansregular"
-                android:includeFontPadding="false"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginVertical="8dp"
-                android:text="등신대" />
-        </RelativeLayout>
-        <RelativeLayout
-            android:id="@+id/recommend6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/border_round_rect_search"
-            android:layout_below="@id/recommend1"
-            android:layout_marginTop="6dp"
-            android:layout_toRightOf="@id/recommend5"
-            android:layout_marginLeft="5dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14dp"
-                android:textColor="#333333"
-                android:fontFamily="@font/notosansregular"
-                android:includeFontPadding="false"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginVertical="8dp"
-                android:text="떡메모지" />
-        </RelativeLayout>
-        <RelativeLayout
-            android:id="@+id/recommend7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/border_round_rect_search"
-            android:layout_below="@id/recommend4"
-            android:layout_marginTop="6dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14dp"
-                android:textColor="#333333"
-                android:fontFamily="@font/notosansregular"
-                android:includeFontPadding="false"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginVertical="8dp"
-                android:text="파우치" />
-        </RelativeLayout>
-        <RelativeLayout
-            android:id="@+id/recommend8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/border_round_rect_search"
-            android:layout_below="@id/recommend4"
-            android:layout_marginTop="6dp"
-            android:layout_toRightOf="@id/recommend7"
-            android:layout_marginLeft="5dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14dp"
-                android:textColor="#333333"
-                android:fontFamily="@font/notosansregular"
-                android:includeFontPadding="false"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginVertical="8dp"
-                android:text="홀로그램 슬로건" />
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/border_round_rect_search"
-            android:layout_below="@id/recommend4"
-            android:layout_marginTop="6dp"
-            android:layout_toRightOf="@id/recommend8"
-            android:layout_marginLeft="5dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14dp"
-                android:textColor="#333333"
-                android:fontFamily="@font/notosansregular"
-                android:includeFontPadding="false"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginVertical="8dp"
-                android:text="뱃지" />
-        </RelativeLayout>
-        <RelativeLayout
-            android:id="@+id/recommend10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/border_round_rect_search"
-            android:layout_below="@id/recommend8"
-            android:layout_marginTop="6dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14dp"
-                android:textColor="#333333"
-                android:fontFamily="@font/notosansregular"
-                android:includeFontPadding="false"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginVertical="8dp"
-                android:text="스트랩 키링" />
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/border_round_rect_search"
-            android:layout_below="@id/recommend8"
-            android:layout_marginTop="6dp"
-            android:layout_toRightOf="@id/recommend10"
-            android:layout_marginLeft="5dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14dp"
-                android:textColor="#333333"
-                android:fontFamily="@font/notosansregular"
-                android:includeFontPadding="false"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginVertical="8dp"
-                android:text="그립톡" />
-        </RelativeLayout>
-    </RelativeLayout>
+    <FrameLayout
+            android:id="@+id/fl_search_act_pager"
+            android:layout_below="@id/top"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+    </FrameLayout>
 </RelativeLayout>

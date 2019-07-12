@@ -28,7 +28,7 @@ import retrofit2.Response
 class GoodsCategoryDetailFragment : Fragment() {
     var dataList: ArrayList<GoodsData> = ArrayList()
     var isRequested = false
-    var order: Int = -1
+    var order: Int = 0
     var lastIndex: Int = -1
     var sort:String? = null
     var categoryIdx:Int = -1

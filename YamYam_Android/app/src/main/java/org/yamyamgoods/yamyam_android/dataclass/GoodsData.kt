@@ -2,7 +2,7 @@ package org.yamyamgoods.yamyam_android.dataclass
 
 //검색은 따로 만듦
 data class GoodsData (
-        val search_after: List<Int>?,
+        val search_after: String?,
         val goods_idx: Int,
         val goods_category_idx: Int?,
         val goods_img: String,

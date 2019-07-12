@@ -70,10 +70,10 @@ interface NetworkServiceGoods {
     @GET("/search/goods/{goodsName}/{order}")
     fun getSearchGoodsResponse(
             @Header("Content-Type") content_type: String,
-            @Header("Authorization") token: String,
+            @Header("authorization") token: String?,
             @Path("goodsName") goodsName: String,
             @Path("order") order: Int,
-            @Query("searchAfter") searchAfter: List<Int>
+            @Query("searchAfter") searchAfter: String?
     ): Call<GetSearchGoodsResponse>
 
     //베스트 굿즈 리스트 요청
