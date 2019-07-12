@@ -63,17 +63,20 @@ class CategoryStoreDetailGoodsDialog(context: Context) : Dialog(context), View.O
             }
             override fun onResponse(call: Call<GetStoreDetailGoodsCategoryResponse>, response: Response<GetStoreDetailGoodsCategoryResponse>) {
                 if(response.isSuccessful){
-                    dataList = response.body()!!.data
-                    Log.e("CategoryOptions Success","성고옹")
-                    setVarieties()
-                    Log.e("**OD","dataList : $dataList")
-                    if(gc_idx!=null){
-                        for(i in 0 until dataList.size){
-                            Log.e("**OD",gc_idx.toString())
-                            if(dataList[i].goods_category_idx == gc_idx){
-                                rl_variety[i].isSelected = true
+                    try {
+                        dataList = response.body()!!.data
+                        Log.e("CategoryOptions Success", "성고옹")
+                        setVarieties()
+                        Log.e("**OD", "dataList : $dataList")
+                        if (gc_idx != null) {
+                            for (i in 0 until dataList.size) {
+                                Log.e("**OD", gc_idx.toString())
+                                if (dataList[i].goods_category_idx == gc_idx) {
+                                    rl_variety[i].isSelected = true
+                                }
                             }
                         }
+                    } catch(e:Exception){
                     }
                 }
             }
