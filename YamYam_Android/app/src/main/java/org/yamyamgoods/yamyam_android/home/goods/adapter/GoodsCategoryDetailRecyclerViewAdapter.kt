@@ -37,6 +37,7 @@ class GoodsCategoryDetailRecyclerViewAdapter (val ctx: Context, var dataList: Ar
     }
 
     inner class Holder(itemView: View): RecyclerView.ViewHolder(itemView) {
+        //var whole = itemView.findViewById(R.id.w)
         var image = itemView.findViewById(R.id.iv_rv_item_goods_category_detail) as ImageView
         var store = itemView.findViewById(R.id.tv_rv_item_goods_category_detail_store) as TextView
         var name = itemView.findViewById(R.id.tv_rv_item_goods_category_detail_name) as TextView

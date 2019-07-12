@@ -70,7 +70,7 @@ class MypageActivity : AppCompatActivity() {
         configureTitleBar()
         editUserNickName()
         getMypageRecentlyReviewedProductsRequest()
-        //getAlarmListResponse()
+        getAlarmListResponse()
         openRecentActivity()
         btn_mypage_alarm.setOnClickListener {
             openAlarmDrawer()

@@ -8,7 +8,7 @@ data class GetAlarmListResponse(
 data class AlarmListData(
         val alarm_idx: Int,
         val alarm_target_idx: Int,
-        val alarm_check_flag: Int,
+        //val alarm_check_flag: Int,
         val alarm_date_time: String,
         val alarm_message: String,
         val goods_review_idx: Int

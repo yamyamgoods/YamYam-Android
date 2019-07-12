@@ -7,20 +7,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import kotlinx.android.synthetic.main.fragment_review_all.*
-import kotlinx.android.synthetic.main.top_navigation_tab_review.*
-import org.jetbrains.anko.support.v4.ctx
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.dataclass.ReviewData
-import org.yamyamgoods.yamyam_android.mypage.MypageActivity
 import org.yamyamgoods.yamyam_android.network.ApplicationController
 import org.yamyamgoods.yamyam_android.network.NetworkServiceGoods
 import org.yamyamgoods.yamyam_android.network.get.GetReviewResponse
-import org.yamyamgoods.yamyam_android.network.get.ReviewCountData
 import org.yamyamgoods.yamyam_android.review.ReviewActivity
 import org.yamyamgoods.yamyam_android.review.all.adapter.ReviewAllRVAdapter
-import org.yamyamgoods.yamyam_android.util.TempData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -65,30 +59,24 @@ class ReviewAllFragment :Fragment() {
                 }
 
                 override fun onResponse(call: Call<GetReviewResponse>, response: Response<GetReviewResponse>) {
-
                     if (response.isSuccessful){
                         Log.v("현주:response", "통신 성공")
 
                         dataList = response.body()!!.data.review_data
-
                         response.body()?.let {
                             reviewAllRVAdapter = ReviewAllRVAdapter(activity!!, dataList)
-
                             Log.v("ReviewAllFragment", it.data.review_all_count.toString())
                             rv_review_all_list.apply{
                                 adapter = ReviewAllRVAdapter(activity!!, dataList)
                                 layoutManager = LinearLayoutManager(activity!!)
                             }
-
                             num  = it.data.review_all_count
-
                             (activity!! as ReviewActivity).setAllReviewCount(num)
                         }
                         reviewAllRVAdapter.notifyDataSetChanged()
                     }
                 }
             })
-
     }
 
     private fun setRecyclerView(){

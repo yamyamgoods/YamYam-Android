@@ -11,12 +11,13 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import okhttp3.MultipartBody
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.reviewwrite.ReviewWriteActivity
 import org.yamyamgoods.yamyam_android.reviewwrite.ReviewWriteUploadImagesItem
 import java.sql.SQLException
 
-class ReviewWriteUploadImagesRVAdapter(private val ctx: Context, private val dataList: ArrayList<ReviewWriteUploadImagesItem>): RecyclerView.Adapter<ReviewWriteUploadImagesRVAdapter.Holder>(){
+class ReviewWriteUploadImagesRVAdapter(private val ctx: Context, private val dataList: ArrayList<ReviewWriteUploadImagesItem>, private var imgsDataList : ArrayList<MultipartBody.Part>): RecyclerView.Adapter<ReviewWriteUploadImagesRVAdapter.Holder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewWriteUploadImagesRVAdapter.Holder {
         val view: View = LayoutInflater.from(ctx).inflate(R.layout.rv_item_review_write_images, parent, false)
 
@@ -35,6 +36,7 @@ class ReviewWriteUploadImagesRVAdapter(private val ctx: Context, private val dat
 
             holder.btnClose.setOnClickListener{
                 try{
+                    imgsDataList.removeAt(position);
                     //(ctx as ReviewWriteActivity).deleteClipDataItem(item.idx)
                     dataList.removeAt(position);
                     this.notifyDataSetChanged();

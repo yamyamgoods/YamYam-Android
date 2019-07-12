@@ -1,7 +1,5 @@
 package org.yamyamgoods.yamyam_android.home.best.review
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -9,13 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.fragment_best_review.*
-import kotlinx.android.synthetic.main.rv_item_best_review.*
-import org.jetbrains.anko.support.v4.ctx
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.dataclass.ReviewData
 import org.yamyamgoods.yamyam_android.home.best.review.adapter.BestReviewRVAdapter
@@ -23,13 +15,10 @@ import org.yamyamgoods.yamyam_android.network.ApplicationController
 import org.yamyamgoods.yamyam_android.network.NetworkServiceGoods
 import org.yamyamgoods.yamyam_android.network.delete.DeleteReviewLikeResponseData
 import org.yamyamgoods.yamyam_android.network.get.GetBestReviewResponse
-import org.yamyamgoods.yamyam_android.network.get.GetReviewResponse
 import org.yamyamgoods.yamyam_android.network.post.PostReviewLikeData
-import org.yamyamgoods.yamyam_android.util.TempData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.lang.reflect.Type
 
 class BestReviewFragment : Fragment() {
 

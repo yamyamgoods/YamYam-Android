@@ -14,10 +14,8 @@ import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.toast
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.dataclass.BookmarkData
-import org.yamyamgoods.yamyam_android.dataclass.GoodsData
 import org.yamyamgoods.yamyam_android.home.bookmark.adapter.BookmarkRVAdapter
 import org.yamyamgoods.yamyam_android.network.ApplicationController
-import org.yamyamgoods.yamyam_android.util.TempData
 import org.yamyamgoods.yamyam_android.util.User
 
 /**

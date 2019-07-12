@@ -11,12 +11,10 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_regular_store.*
 import org.jetbrains.anko.support.v4.toast
-import org.jetbrains.anko.toast
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.dataclass.StoreData
 import org.yamyamgoods.yamyam_android.home.store.regular.adapter.RegularStoreRVAdapter
 import org.yamyamgoods.yamyam_android.network.ApplicationController
-import org.yamyamgoods.yamyam_android.util.TempData
 
 class RegularStoreFragment : Fragment(), RegularStoreContract.View {
 
