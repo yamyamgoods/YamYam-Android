@@ -44,15 +44,14 @@ class GoodsExhibitionRecyclerViewAdapter(val dataList: ArrayList<ExhibitionData>
 
 
         holder.btn.setOnClickListener {
-            //try{
-            ctx.startActivity<GoodsExhibitionDetailActivity>(
-                    "e_idx" to dataList[position].exhibition_idx,
-                    "title" to dataList[position].exhibition_name,
-                    "subtitle" to dataList[position].exhibition_sub_name,
-                    "gradation_img" to dataList[position].exhibition_gradation_img)
-//            } catch (e:Exception){
-//            }
-
+            try{
+                ctx.startActivity<GoodsExhibitionDetailActivity>(
+                        "e_idx" to dataList[position].exhibition_idx,
+                        "title" to dataList[position].exhibition_name,
+                        "subtitle" to dataList[position].exhibition_sub_name,
+                        "gradation_img" to dataList[position].exhibition_gradation_img)
+            } catch (e:Exception){
+            }
         }
     }
 

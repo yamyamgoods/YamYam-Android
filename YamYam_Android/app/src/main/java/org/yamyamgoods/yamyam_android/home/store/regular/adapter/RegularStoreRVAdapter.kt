@@ -11,8 +11,10 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import org.jetbrains.anko.imageResource
+import org.jetbrains.anko.startActivity
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.dataclass.StoreData
+import org.yamyamgoods.yamyam_android.storedetail.StoreDetailActivity
 
 class RegularStoreRVAdapter(private val ctx: Context) : RecyclerView.Adapter<RegularStoreRVAdapter.Holder>() {
 
@@ -38,6 +40,19 @@ class RegularStoreRVAdapter(private val ctx: Context) : RecyclerView.Adapter<Reg
                 isSelected = item.store_scrap_flag
             }
         }
+        holder.whole.setOnClickListener {
+            try{
+                ctx.startActivity<StoreDetailActivity>(
+                    "e_idx" to dataList[position].store_idx,
+                    "title" to dataList[position].store_name,
+                    "subtitle" to dataList[position].store_img,
+                    "gradation_img" to dataList[position].store_hashtags,
+                    "store_url" to dataList[position].store_url,
+                    "like_flag" to dataList[position].store_scrap_flag)
+            } catch (e:Exception){
+            }
+
+        }
     }
 
     fun addData(newData: List<StoreData>) {
@@ -53,6 +68,7 @@ class RegularStoreRVAdapter(private val ctx: Context) : RecyclerView.Adapter<Reg
             .into(view)
 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val whole : ConstraintLayout = itemView.findViewById(R.id.btn_rv_item_regular_store_whole) as ConstraintLayout
         val ivImage: ImageView = itemView.findViewById(R.id.iv_rv_item_regular_store_image)
 
         val tvStoreName: TextView = itemView.findViewById(R.id.tv_rv_item_regular_store_name)
