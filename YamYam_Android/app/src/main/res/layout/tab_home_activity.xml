@@ -23,7 +23,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:id="@+id/textView36" android:textSize="10dp"
                     android:textColor="@color/selector_text_color_yellow_gray" android:gravity="center"
-                    android:layout_marginTop="1dp"/>
+                    android:layout_marginTop="1dp"
+                    android:letterSpacing="-0.02"
+                    android:lineSpacingExtra="7sp"
+                    android:fontFamily="@font/notosansregular"
+                    android:includeFontPadding="false"
+            />
         </LinearLayout>
     </android.support.constraint.ConstraintLayout>
     <android.support.constraint.ConstraintLayout
@@ -44,7 +49,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:id="@+id/textView361" android:textSize="10dp"
                     android:textColor="@color/selector_text_color_yellow_gray" android:gravity="center"
-                    android:layout_marginTop="4dp"/>
+                    android:layout_marginTop="4dp"
+                    android:letterSpacing="-0.02"
+                    android:lineSpacingExtra="7sp"
+                    android:fontFamily="@font/notosansregular"
+                    android:includeFontPadding="false"/>
         </LinearLayout>
     </android.support.constraint.ConstraintLayout>
     <android.support.constraint.ConstraintLayout
@@ -65,7 +74,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:id="@+id/textView362" android:textSize="10dp"
                     android:textColor="@color/selector_text_color_yellow_gray" android:gravity="center"
-                    android:layout_marginTop="4dp"/>
+                    android:layout_marginTop="4dp"
+                    android:letterSpacing="-0.02"
+                    android:lineSpacingExtra="7sp"
+                    android:fontFamily="@font/notosansregular"
+                    android:includeFontPadding="false"/>
         </LinearLayout>
     </android.support.constraint.ConstraintLayout>
     <android.support.constraint.ConstraintLayout
@@ -87,7 +100,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:id="@+id/textView363" android:textSize="10dp"
                     android:textColor="@color/selector_text_color_yellow_gray" android:gravity="center"
-                    android:layout_marginTop="4dp"/>
+                    android:layout_marginTop="4dp"
+                    android:letterSpacing="-0.02"
+                    android:lineSpacingExtra="7sp"
+                    android:fontFamily="@font/notosansregular"
+                    android:includeFontPadding="false"/>
         </LinearLayout>
     </android.support.constraint.ConstraintLayout>
 </LinearLayout>
