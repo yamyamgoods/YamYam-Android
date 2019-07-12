@@ -3,6 +3,7 @@ package org.yamyamgoods.yamyam_android.home.store.regular.adapter
 import android.content.Context
 import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,8 +14,11 @@ import com.bumptech.glide.request.RequestOptions
 import org.jetbrains.anko.imageResource
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.dataclass.StoreData
+import org.yamyamgoods.yamyam_android.home.store.regular.RegularStoreContract
+import org.yamyamgoods.yamyam_android.home.store.regular.RegularStorePresenter
 
-class RegularStoreRVAdapter(private val ctx: Context) : RecyclerView.Adapter<RegularStoreRVAdapter.Holder>() {
+class RegularStoreRVAdapter(private val ctx: Context, private val presenter: RegularStoreContract.Presenter) :
+    RecyclerView.Adapter<RegularStoreRVAdapter.Holder>() {
 
     val dataList = ArrayList<StoreData>()
 
@@ -37,6 +41,14 @@ class RegularStoreRVAdapter(private val ctx: Context) : RecyclerView.Adapter<Reg
                 imageResource = R.drawable.selector_bookmark_flag
                 isSelected = true
             }
+
+            holder.btnWhole.setOnClickListener {
+
+            }
+
+            holder.btnLike.setOnClickListener {
+                presenter.regularStoreCancelRequest(item, item.store_idx)
+            }
         }
     }
 
@@ -46,6 +58,12 @@ class RegularStoreRVAdapter(private val ctx: Context) : RecyclerView.Adapter<Reg
         notifyItemRangeInserted(previousSize, itemCount)
     }
 
+    fun setRegularStoreRemove(data: StoreData) {
+        val position = dataList.indexOf(data)
+        dataList.remove(data)
+        notifyItemRemoved(position)
+    }
+
     private fun setCircleImage(view: ImageView, imageUrl: String) =
         Glide.with(ctx)
             .load(imageUrl)
@@ -53,6 +71,7 @@ class RegularStoreRVAdapter(private val ctx: Context) : RecyclerView.Adapter<Reg
             .into(view)
 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val btnWhole: ConstraintLayout = itemView.findViewById(R.id.btn_rv_item_regular_store_whole)
         val ivImage: ImageView = itemView.findViewById(R.id.iv_rv_item_regular_store_image)
 
         val tvStoreName: TextView = itemView.findViewById(R.id.tv_rv_item_regular_store_name)

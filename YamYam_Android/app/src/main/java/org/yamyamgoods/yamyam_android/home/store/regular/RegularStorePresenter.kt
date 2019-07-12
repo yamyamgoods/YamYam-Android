@@ -1,6 +1,8 @@
 package org.yamyamgoods.yamyam_android.home.store.regular
 
+import org.yamyamgoods.yamyam_android.dataclass.StoreData
 import org.yamyamgoods.yamyam_android.network.NetworkServiceStore
+import org.yamyamgoods.yamyam_android.network.delete.DeleteRegularStoreMarkResponseData
 import org.yamyamgoods.yamyam_android.network.get.GetRegularStoreResponseData
 import retrofit2.Call
 import retrofit2.Callback
@@ -41,5 +43,25 @@ class RegularStorePresenter : RegularStoreContract.Presenter {
                 }
             }
         )
+    }
+
+    override fun regularStoreCancelRequest(data: StoreData, storeIdx: Int) {
+        storeRepository.deleteRegluarStoreMarkRequest(token = userToken, storeIdx = storeIdx).enqueue(
+            object : Callback<DeleteRegularStoreMarkResponseData> {
+
+                override fun onFailure(call: Call<DeleteRegularStoreMarkResponseData>, t: Throwable) {
+                    view.showServerFailToast("서버 통신에 실패하였습니다. 인터넷 연결을 확인해주세요.", t)
+                }
+
+                override fun onResponse(
+                    call: Call<DeleteRegularStoreMarkResponseData>,
+                    response: Response<DeleteRegularStoreMarkResponseData>
+                ) {
+                    if (response.isSuccessful) {
+                        view.setRegularStoreCanceled(data)
+                        return
+                    }
+                }
+            })
     }
 }

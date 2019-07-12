@@ -28,10 +28,10 @@ import org.yamyamgoods.yamyam_android.util.User
 class StoreRankingFragment : Fragment(), StoreRankingContract.View {
 
     companion object {
-        private var instance: RegularStoreFragment? = null
+        private var instance: StoreRankingFragment? = null
 
-        fun getInstance(): RegularStoreFragment = instance
-            ?: RegularStoreFragment().apply { instance = this }
+        fun getInstance(): StoreRankingFragment = instance
+            ?: StoreRankingFragment().apply { instance = this }
     }
 
     override lateinit var presenter: StoreRankingContract.Presenter
@@ -151,7 +151,7 @@ class StoreRankingFragment : Fragment(), StoreRankingContract.View {
         storeRankingRVAdapter.notifyItemRangeRemoved(0, size)
         presenter.getStoreRankingList(currentCategory)
 
-        Log.v("Malibin Debug", "Bookmark Frag refreshDataList() called")
+        Log.v("Malibin Debug", "StoreRanking Frag refreshDataList() called")
     }
 
 }

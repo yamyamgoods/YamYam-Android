@@ -12,12 +12,11 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_regular_store.*
 import org.jetbrains.anko.support.v4.toast
-import org.jetbrains.anko.toast
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.dataclass.StoreData
 import org.yamyamgoods.yamyam_android.home.store.regular.adapter.RegularStoreRVAdapter
 import org.yamyamgoods.yamyam_android.network.ApplicationController
-import org.yamyamgoods.yamyam_android.util.TempData
+import org.yamyamgoods.yamyam_android.util.HomeObject
 
 class RegularStoreFragment : Fragment(), RegularStoreContract.View {
 
@@ -56,12 +55,19 @@ class RegularStoreFragment : Fragment(), RegularStoreContract.View {
         }
         rv_regular_store_frag_list.visibility = View.VISIBLE
         cl_regular_store_no_data.visibility = View.GONE
+        regularStoreRVAdapter.dataList.clear()
         regularStoreRVAdapter.addData(data)
     }
 
     override fun setNoRegularStoreList() {
         rv_regular_store_frag_list.visibility = View.GONE
         cl_regular_store_no_data.visibility = View.VISIBLE
+    }
+
+    override fun setRegularStoreCanceled(data: StoreData) {
+        regularStoreRVAdapter.setRegularStoreRemove(data)
+        HomeObject.notifyStoreRankingTabChange()
+        toast("단골 스토어가 삭제되었습니다!")
     }
 
     private fun presenterInit() {
@@ -79,7 +85,7 @@ class RegularStoreFragment : Fragment(), RegularStoreContract.View {
 
     private fun viewInit() {
         val ctx = activity!!
-        regularStoreRVAdapter = RegularStoreRVAdapter(ctx)
+        regularStoreRVAdapter = RegularStoreRVAdapter(ctx, presenter)
 
         val dividerItem = DividerItemDecoration(ctx, DividerItemDecoration.VERTICAL).apply {
             setDrawable(ContextCompat.getDrawable(activity!!, R.drawable.divider_gray_line_05dp)!!)
@@ -97,6 +103,6 @@ class RegularStoreFragment : Fragment(), RegularStoreContract.View {
         regularStoreRVAdapter.notifyItemRangeRemoved(0, size)
         presenter.getRegularStoreList()
 
-        Log.v("Malibin Debug", "Bookmark Frag refreshDataList() called")
+        Log.v("Malibin Debug", "RegularStore Frag refreshDataList() called")
     }
 }
