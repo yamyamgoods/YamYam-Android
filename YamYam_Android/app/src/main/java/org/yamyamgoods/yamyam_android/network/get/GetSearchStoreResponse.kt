@@ -17,5 +17,6 @@ data class SearchStoreData(
         val store_name: String,
         val store_img: String,
         val hash_tag: ArrayList<String>,
+        val store_url: String?,
         val store_scrap_flag: Int
 )

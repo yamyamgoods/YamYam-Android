@@ -34,70 +34,79 @@ class SearchFirstFragment : Fragment() {
         recommend1.setOnClickListener {
             SearchActivity.instance.clicksearch =  tv_recommend1.text.toString()
             transaction.replace(R.id.fl_search_act_pager, SearchResultFragment()).commit()
-            SearchResultStoreFragment.instance.storeName = "스티커"
+            SearchResultStoreFragment.instance.storeName = tv_recommend1.text.toString()
             SearchResultGoodsFragment.instance.goodsName = tv_recommend1.text.toString()
-            //edittext에 text 넣을려고 함
-            //et_search_act.setText(tv_recommend1.text.toString())
+            activity!!.et_search_act.setText(tv_recommend1.text.toString())
         }
         (recommend2 as RelativeLayout).setOnClickListener {
             SearchActivity.instance.clicksearch =  tv_recommend2.text.toString()
             transaction.replace(R.id.fl_search_act_pager, SearchResultFragment()).commit()
             SearchResultStoreFragment.instance.storeName = tv_recommend2.text.toString()
             SearchResultGoodsFragment.instance.goodsName = tv_recommend2.text.toString()
+            activity!!.et_search_act.setText(tv_recommend2.text.toString())
         }
         (recommend3 as RelativeLayout).setOnClickListener {
             SearchActivity.instance.clicksearch =  tv_recommend3.text.toString()
             transaction.replace(R.id.fl_search_act_pager, SearchResultFragment()).commit()
             SearchResultStoreFragment.instance.storeName = tv_recommend3.text.toString()
             SearchResultGoodsFragment.instance.goodsName = tv_recommend3.text.toString()
+            activity!!.et_search_act.setText(tv_recommend3.text.toString())
         }
         (recommend4 as RelativeLayout).setOnClickListener {
             SearchActivity.instance.clicksearch =  tv_recommend4.text.toString()
             transaction.replace(R.id.fl_search_act_pager, SearchResultFragment()).commit()
             SearchResultStoreFragment.instance.storeName = tv_recommend4.text.toString()
             SearchResultGoodsFragment.instance.goodsName = tv_recommend4.text.toString()
+            activity!!.et_search_act.setText(tv_recommend4.text.toString())
         }
         (recommend5 as RelativeLayout).setOnClickListener {
             SearchActivity.instance.clicksearch =  tv_recommend5.text.toString()
             transaction.replace(R.id.fl_search_act_pager, SearchResultFragment()).commit()
             SearchResultStoreFragment.instance.storeName = tv_recommend5.text.toString()
             SearchResultGoodsFragment.instance.goodsName = tv_recommend5.text.toString()
+            activity!!.et_search_act.setText(tv_recommend5.text.toString())
         }
         (recommend6 as RelativeLayout).setOnClickListener {
             SearchActivity.instance.clicksearch =  tv_recommend6.text.toString()
             transaction.replace(R.id.fl_search_act_pager, SearchResultFragment()).commit()
             SearchResultStoreFragment.instance.storeName = tv_recommend6.text.toString()
             SearchResultGoodsFragment.instance.goodsName = tv_recommend6.text.toString()
+            activity!!.et_search_act.setText(tv_recommend6.text.toString())
         }
         (recommend7 as RelativeLayout).setOnClickListener {
             SearchActivity.instance.clicksearch =  tv_recommend7.text.toString()
             transaction.replace(R.id.fl_search_act_pager, SearchResultFragment()).commit()
             SearchResultStoreFragment.instance.storeName = tv_recommend7.text.toString()
             SearchResultGoodsFragment.instance.goodsName = tv_recommend7.text.toString()
+            activity!!.et_search_act.setText(tv_recommend7.text.toString())
         }
         (recommend8 as RelativeLayout).setOnClickListener {
             SearchActivity.instance.clicksearch =  tv_recommend8.text.toString()
             transaction.replace(R.id.fl_search_act_pager, SearchResultFragment()).commit()
             SearchResultStoreFragment.instance.storeName = tv_recommend8.text.toString()
             SearchResultGoodsFragment.instance.goodsName = tv_recommend8.text.toString()
+            activity!!.et_search_act.setText(tv_recommend8.text.toString())
         }
         (recommend9 as RelativeLayout).setOnClickListener {
             SearchActivity.instance.clicksearch =  tv_recommend9.text.toString()
             transaction.replace(R.id.fl_search_act_pager, SearchResultFragment()).commit()
             SearchResultStoreFragment.instance.storeName = tv_recommend9.text.toString()
             SearchResultGoodsFragment.instance.goodsName = tv_recommend9.text.toString()
+            activity!!.et_search_act.setText(tv_recommend9.text.toString())
         }
         (recommend10 as RelativeLayout).setOnClickListener {
             SearchActivity.instance.clicksearch =  tv_recommend10.text.toString()
             transaction.replace(R.id.fl_search_act_pager, SearchResultFragment()).commit()
             SearchResultStoreFragment.instance.storeName = tv_recommend10.text.toString()
             SearchResultGoodsFragment.instance.goodsName = tv_recommend10.text.toString()
+            activity!!.et_search_act.setText(tv_recommend10.text.toString())
         }
         (recommend11 as RelativeLayout).setOnClickListener {
             SearchActivity.instance.clicksearch =  tv_recommend11.text.toString()
             transaction.replace(R.id.fl_search_act_pager, SearchResultFragment()).commit()
             SearchResultStoreFragment.instance.storeName = tv_recommend11.text.toString()
             SearchResultGoodsFragment.instance.goodsName = tv_recommend11.text.toString()
+            activity!!.et_search_act.setText(tv_recommend11.text.toString())
         }
     }
 }

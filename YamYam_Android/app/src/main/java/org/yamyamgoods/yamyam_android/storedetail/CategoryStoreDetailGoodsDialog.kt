@@ -7,33 +7,27 @@ import android.util.Log
 import android.view.View
 import android.widget.RelativeLayout
 import android.widget.TextView
-import android.widget.Toast
-import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
-import kotlinx.android.synthetic.main.dialog_option.*
+import kotlinx.android.synthetic.main.activity_mypage.*
+import kotlinx.android.synthetic.main.dialog_category_store_detail_goods.*
+import kotlinx.android.synthetic.main.dialog_option.btn_dialog_option_close
+import kotlinx.android.synthetic.main.dialog_option.btn_dialog_option_confirm
 import org.yamyamgoods.yamyam_android.R
-import org.yamyamgoods.yamyam_android.home.goods.GoodsCategoryDetailFragment
 import org.yamyamgoods.yamyam_android.network.ApplicationController
-import org.yamyamgoods.yamyam_android.network.get.CategoryOptionData
-import org.yamyamgoods.yamyam_android.network.get.GetGoodsCategoryOptionsResponse
-import org.yamyamgoods.yamyam_android.network.get.GetPriceRangeResponse
+import org.yamyamgoods.yamyam_android.network.get.GetStoreDetailGoodsCategoryResponse
+import org.yamyamgoods.yamyam_android.network.get.categoryData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class CategoryStoreDetailGoodsDialog(context: Context) : Dialog(context), View.OnClickListener {
 
-    var c_idx: Int = -1
-    var dataList: ArrayList<CategoryOptionData> = ArrayList()
-    val networkServiceGoods = ApplicationController.networkServiceGoods
-    var dismiss_flag: Int = -1
+    var s_idx: Int = -1
+    var dataList: ArrayList<categoryData> = ArrayList()
+    val networkServiceStore = ApplicationController.networkServiceStore
     val rl_variety = ArrayList<RelativeLayout>()
     val variety = ArrayList<TextView>()
-
-    var price_start: Int? = null
-    var price_end: Int? = null
-    var min_amount: Int? = null
-    var options: ArrayList<Int>? = null
-    var size : Int = -1
+    var gc_idx: Int? = null
+    var gc_idx_flag: Int? = null
 
     override fun onClick(v: View?) {
         try{
@@ -45,12 +39,9 @@ class CategoryStoreDetailGoodsDialog(context: Context) : Dialog(context), View.O
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dialog_category_store_detail_goods)
-        c_idx = GoodsCategoryDetailFragment.instance.categoryIdx
-        min_amount = GoodsCategoryDetailFragment.instance.min_amount
-        options = GoodsCategoryDetailFragment.instance.options
-        dataList = GoodsCategoryDetailFragment.instance.dataListOption
-        Log.e("**OD",options.toString())
-        goodsCategoryOptionsResponse(c_idx)
+        s_idx = StoreDetailGoodsFragment.instance.s_idx
+        gc_idx = StoreDetailGoodsFragment.instance.goodsCategoryIdx
+        goodsCategoryOptionsResponse(s_idx)
         setOnClickListener()
     }
 
@@ -59,32 +50,28 @@ class CategoryStoreDetailGoodsDialog(context: Context) : Dialog(context), View.O
             dismiss()
         }
         btn_dialog_option_confirm.setOnClickListener {
-            setVarietyDismiss()
-            if(dismiss_flag == 1){
-                dismiss()
-            }
+            setCategoryDismiss()
+            dismiss()
         }
     }
 
-    private fun goodsCategoryOptionsResponse(category_idx:Int){
-        val getGoodsCategoryOptionsResponse = networkServiceGoods.getGoodsCategoryOptionsResponse("application/json",category_idx)
-        getGoodsCategoryOptionsResponse.enqueue(object: Callback<GetGoodsCategoryOptionsResponse> {
-            override fun onFailure(call: Call<GetGoodsCategoryOptionsResponse>, t: Throwable) {
+    private fun goodsCategoryOptionsResponse(s_idx:Int){
+        val getStoreDetailGoodsCategoryResponse = networkServiceStore.getStoreDetailGoodsCategoryResponse("application/json",s_idx)
+        getStoreDetailGoodsCategoryResponse.enqueue(object: Callback<GetStoreDetailGoodsCategoryResponse> {
+            override fun onFailure(call: Call<GetStoreDetailGoodsCategoryResponse>, t: Throwable) {
                 Log.e("CategoryOptions fail", t.toString())
             }
-            override fun onResponse(call: Call<GetGoodsCategoryOptionsResponse>, response: Response<GetGoodsCategoryOptionsResponse>) {
+            override fun onResponse(call: Call<GetStoreDetailGoodsCategoryResponse>, response: Response<GetStoreDetailGoodsCategoryResponse>) {
                 if(response.isSuccessful){
                     dataList = response.body()!!.data
-                    GoodsCategoryDetailFragment.instance.dataListOption = dataList
                     Log.e("CategoryOptions Success","성고옹")
                     setVarieties()
                     Log.e("**OD","dataList : $dataList")
-                    if(options!=null){
+                    if(gc_idx!=null){
                         for(i in 0 until dataList.size){
-                            Log.e("**OD",options.toString())
-                            if(dataList[i].category_option_idx in options!!){
+                            Log.e("**OD",gc_idx.toString())
+                            if(dataList[i].goods_category_idx == gc_idx){
                                 rl_variety[i].isSelected = true
-                                variety[i].setTextColor(context.resources.getColor(R.color.colorWhite))
                             }
                         }
                     }
@@ -95,54 +82,68 @@ class CategoryStoreDetailGoodsDialog(context: Context) : Dialog(context), View.O
 
     private fun setVarieties(){
 
-        variety.add(tv_dialog_option_variety1)
-        variety.add(tv_dialog_option_variety2)
-        variety.add(tv_dialog_option_variety3)
-        variety.add(tv_dialog_option_variety4)
-        variety.add(tv_dialog_option_variety5)
-        variety.add(tv_dialog_option_variety6)
-        variety.add(tv_dialog_option_variety7)
-        variety.add(tv_dialog_option_variety8)
-        variety.add(tv_dialog_option_variety9)
-        variety.add(tv_dialog_option_variety10)
-        variety.add(tv_dialog_option_variety11)
+        variety.add(tv_category1)
+        variety.add(tv_category2)
+        variety.add(tv_category3)
+        variety.add(tv_category4)
+        variety.add(tv_category5)
+        variety.add(tv_category6)
+        variety.add(tv_category7)
+        variety.add(tv_category8)
+        variety.add(tv_category9)
+        variety.add(tv_category10)
+        variety.add(tv_category11)
 
-        rl_variety.add(btn_dialog_option_variety1)
-        rl_variety.add(btn_dialog_option_variety2)
-        rl_variety.add(btn_dialog_option_variety3)
-        rl_variety.add(btn_dialog_option_variety4)
-        rl_variety.add(btn_dialog_option_variety5)
-        rl_variety.add(btn_dialog_option_variety6)
-        rl_variety.add(btn_dialog_option_variety7)
-        rl_variety.add(btn_dialog_option_variety8)
-        rl_variety.add(btn_dialog_option_variety9)
-        rl_variety.add(btn_dialog_option_variety10)
-        rl_variety.add(btn_dialog_option_variety11)
+        rl_variety.add(btn_category1)
+        rl_variety.add(btn_category2)
+        rl_variety.add(btn_category3)
+        rl_variety.add(btn_category4)
+        rl_variety.add(btn_category5)
+        rl_variety.add(btn_category6)
+        rl_variety.add(btn_category7)
+        rl_variety.add(btn_category8)
+        rl_variety.add(btn_category9)
+        rl_variety.add(btn_category10)
+        rl_variety.add(btn_category11)
+
+        val rll_variety = ArrayList<RelativeLayout>()
 
         for(i in 0 until dataList.size){
             rl_variety[i].visibility = View.VISIBLE
-            variety[i].text = dataList[i].category_option_name
+            variety[i].text = dataList[i].goods_category_name
+            rll_variety.add(rl_variety[i])
         }
-        for(i in 0 until dataList.size){
-            rl_variety[i].setOnClickListener {
-                rl_variety[i].isSelected = !(rl_variety[i].isSelected)
-                if(!rl_variety[i].isSelected){
-                    variety[i].setTextColor(context.resources.getColor(R.color.darkgray))
-                } else{
-                    variety[i].setTextColor(context.resources.getColor(R.color.colorWhite))
+
+
+        var currentSelected : RelativeLayout? = btn_category11
+
+        rll_variety.forEach { it ->
+            it.setOnClickListener {
+                if(currentSelected == it) {
+                    currentSelected!!.isSelected = false
+                }
+                else {
+                    it.isSelected = true
+                    currentSelected!!.isSelected = false
+                    currentSelected = it as RelativeLayout
+                    currentSelected!!.isSelected = true
                 }
             }
         }
+
     }
 
-    fun setVarietyDismiss() {
-        val optionNetwork: ArrayList<Int> = ArrayList()
+    fun setCategoryDismiss(){
+        var flag : Int = -1
         for(i in 0 until dataList.size) {
-            if(rl_variety[i].isSelected){
-                optionNetwork.add(dataList[i].category_option_idx)
+            if(rl_variety[i].isSelected) {
+                flag = 0
+                gc_idx = dataList[i].goods_category_idx
             }
         }
-        GoodsCategoryDetailFragment.instance.options = optionNetwork
-        dismiss_flag = 1
+        if(flag != 0) {
+            gc_idx = null
+        }
+        StoreDetailGoodsFragment.instance.goodsCategoryIdx = gc_idx
     }
 }

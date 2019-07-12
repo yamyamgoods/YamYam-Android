@@ -20,7 +20,6 @@ import org.yamyamgoods.yamyam_android.network.get.GetReviewResponse
 import org.yamyamgoods.yamyam_android.network.get.ReviewCountData
 import org.yamyamgoods.yamyam_android.review.ReviewActivity
 import org.yamyamgoods.yamyam_android.review.all.adapter.ReviewAllRVAdapter
-import org.yamyamgoods.yamyam_android.util.TempData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

@@ -25,7 +25,6 @@ import org.yamyamgoods.yamyam_android.network.delete.DeleteReviewLikeResponseDat
 import org.yamyamgoods.yamyam_android.network.get.GetBestReviewResponse
 import org.yamyamgoods.yamyam_android.network.get.GetReviewResponse
 import org.yamyamgoods.yamyam_android.network.post.PostReviewLikeData
-import org.yamyamgoods.yamyam_android.util.TempData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

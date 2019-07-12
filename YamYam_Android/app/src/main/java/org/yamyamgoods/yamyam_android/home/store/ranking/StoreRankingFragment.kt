@@ -16,7 +16,6 @@ import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.dataclass.StoreCategory
 import org.yamyamgoods.yamyam_android.home.store.ranking.adapter.StoreRankingRVAdapter
 import org.yamyamgoods.yamyam_android.network.ApplicationController
-import org.yamyamgoods.yamyam_android.util.TempData
 
 class StoreRankingFragment : Fragment(), StoreRankingContract.View {
 
@@ -72,11 +71,11 @@ class StoreRankingFragment : Fragment(), StoreRankingContract.View {
     }
 
     private fun viewInit() {
-        rv_item_store_ranking_frag_list.apply {
-            val ctx = activity!!.applicationContext
-            adapter = StoreRankingRVAdapter(ctx, TempData.storeRankings())
-            layoutManager = LinearLayoutManager(ctx)
-            addItemDecoration(DividerItemDecoration(ctx, DividerItemDecoration.VERTICAL))
-        }
+//        rv_item_store_ranking_frag_list.apply {
+//            val ctx = activity!!.applicationContext
+//            adapter = StoreRankingRVAdapter(ctx, TempData.storeRankings())
+//            layoutManager = LinearLayoutManager(ctx)
+//            addItemDecoration(DividerItemDecoration(ctx, DividerItemDecoration.VERTICAL))
+//        }
     }
 }

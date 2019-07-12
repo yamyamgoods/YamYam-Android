@@ -40,15 +40,15 @@ class RegularStoreRVAdapter(private val ctx: Context) : RecyclerView.Adapter<Reg
                 isSelected = item.store_scrap_flag
             }
         }
-        holder.whole.setOnClickListener {
+        holder.ivImage.setOnClickListener {
             try{
                 ctx.startActivity<StoreDetailActivity>(
-                    "e_idx" to dataList[position].store_idx,
+                    "s_idx" to dataList[position].store_idx,
                     "title" to dataList[position].store_name,
-                    "subtitle" to dataList[position].store_img,
-                    "gradation_img" to dataList[position].store_hashtags,
+                    "image" to dataList[position].store_img,
+                    "hashtag" to dataList[position].store_hashtags,
                     "store_url" to dataList[position].store_url,
-                    "like_flag" to dataList[position].store_scrap_flag)
+                    "scrap_flag" to dataList[position].store_scrap_flag)
             } catch (e:Exception){
             }
 
@@ -68,7 +68,6 @@ class RegularStoreRVAdapter(private val ctx: Context) : RecyclerView.Adapter<Reg
             .into(view)
 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val whole : ConstraintLayout = itemView.findViewById(R.id.btn_rv_item_regular_store_whole) as ConstraintLayout
         val ivImage: ImageView = itemView.findViewById(R.id.iv_rv_item_regular_store_image)
 
         val tvStoreName: TextView = itemView.findViewById(R.id.tv_rv_item_regular_store_name)
