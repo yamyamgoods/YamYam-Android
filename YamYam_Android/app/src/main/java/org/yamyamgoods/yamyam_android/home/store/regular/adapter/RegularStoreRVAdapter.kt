@@ -44,12 +44,12 @@ class RegularStoreRVAdapter(private val ctx: Context, private val presenter: Reg
 
             holder.btnWhole.setOnClickListener {
                 ctx.startActivity<StoreDetailActivity>(
-                    "e_idx" to dataList[position].store_idx,
-                    "title" to dataList[position].store_name,
-                    "subtitle" to dataList[position].store_img,
-                    "gradation_img" to dataList[position].store_hashtags,
-                    "store_url" to dataList[position].store_url,
-                    "like_flag" to dataList[position].store_scrap_flag)
+                    "e_idx" to item.store_idx,
+                    "title" to item.store_name,
+                    "subtitle" to item.store_img,
+                    "gradation_img" to item.store_hashtags,
+                    "store_url" to item.store_url,
+                    "like_flag" to item.store_scrap_flag)
             }
 
             holder.btnLike.setOnClickListener {
