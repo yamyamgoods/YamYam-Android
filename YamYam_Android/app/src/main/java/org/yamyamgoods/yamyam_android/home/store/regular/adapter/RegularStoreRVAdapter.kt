@@ -35,7 +35,7 @@ class RegularStoreRVAdapter(private val ctx: Context) : RecyclerView.Adapter<Reg
 
             holder.ivLike.apply {
                 imageResource = R.drawable.selector_bookmark_flag
-                isSelected = item.store_scrap_flag
+                isSelected = true
             }
         }
     }

@@ -13,8 +13,12 @@ import com.bumptech.glide.request.RequestOptions
 import org.jetbrains.anko.imageResource
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.dataclass.StoreData
+import org.yamyamgoods.yamyam_android.home.store.ranking.StoreRankingContract
+import org.yamyamgoods.yamyam_android.home.store.ranking.StoreRankingPresenter
+import org.yamyamgoods.yamyam_android.network.post.PostRegularStoreMarkRequestDTO
 
-class StoreRankingRVAdapter(private val ctx: Context) : RecyclerView.Adapter<StoreRankingRVAdapter.Holder>() {
+class StoreRankingRVAdapter(private val ctx: Context, private val presenter: StoreRankingContract.Presenter) :
+    RecyclerView.Adapter<StoreRankingRVAdapter.Holder>() {
 
     val dataList = ArrayList<StoreData>()
 
@@ -40,7 +44,12 @@ class StoreRankingRVAdapter(private val ctx: Context) : RecyclerView.Adapter<Sto
             }
 
             holder.btnLike.setOnClickListener {
-
+                if (item.store_scrap_flag) {
+                    presenter.regularStoreCancelRequest(position, item.store_idx)
+                    return@setOnClickListener
+                }
+                val reqBody = PostRegularStoreMarkRequestDTO(item.store_idx)
+                presenter.regularStoreMarkRequest(position, reqBody)
             }
         }
     }
@@ -51,6 +60,11 @@ class StoreRankingRVAdapter(private val ctx: Context) : RecyclerView.Adapter<Sto
         notifyItemRangeRemoved(0, currentSize)
         dataList.addAll(data)
         notifyItemRangeInserted(0, itemCount)
+    }
+
+    fun setRegularStoreSelected(position: Int, isSelected: Boolean) {
+        dataList[position].store_scrap_flag = isSelected
+        notifyItemChanged(position)
     }
 
     private fun setCircleImage(view: ImageView, imageUrl: String) =

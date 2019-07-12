@@ -12,13 +12,16 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import kotlinx.android.synthetic.main.fragment_store_ranking.*
+import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.toast
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.dataclass.StoreCategory
 import org.yamyamgoods.yamyam_android.dataclass.StoreData
 import org.yamyamgoods.yamyam_android.home.store.ranking.adapter.StoreRankingRVAdapter
 import org.yamyamgoods.yamyam_android.network.ApplicationController
-import org.yamyamgoods.yamyam_android.util.TempData
+import org.yamyamgoods.yamyam_android.productdetail.dialog.LoginRequestDialog
+import org.yamyamgoods.yamyam_android.util.HomeObject
+import org.yamyamgoods.yamyam_android.util.User
 
 class StoreRankingFragment : Fragment(), StoreRankingContract.View {
 
@@ -52,8 +55,7 @@ class StoreRankingFragment : Fragment(), StoreRankingContract.View {
         super.onViewCreated(view, savedInstanceState)
 
         presenterInit()
-
-        getServerData()
+        getStoreCategoryData()
         viewInit()
     }
 
@@ -73,16 +75,31 @@ class StoreRankingFragment : Fragment(), StoreRankingContract.View {
         storeRankingRVAdapter.refreshAllDataWith(data)
     }
 
+    override fun setRegularStoreMarked(position: Int) {
+        storeRankingRVAdapter.setRegularStoreSelected(position, true)
+        HomeObject.notifyRegularStoreTabChange()
+        toast("단골 스토어가 등록되었습니다!")
+    }
+
+    override fun setRegularStoreCanceled(position: Int) {
+        storeRankingRVAdapter.setRegularStoreSelected(position, false)
+        HomeObject.notifyRegularStoreTabChange()
+        toast("단골 스토어가 삭제되었습니다!")
+    }
+
+    override fun showLoginRequiredDialog() {
+        LoginRequestDialog(activity!!).show()
+    }
+
     private fun presenterInit() {
         presenter = StoreRankingPresenter().apply {
-            userToken =
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWR4IjoxLCJpYXQiOjE1NjIzMTUzNjYsImV4cCI6MTU2MzYyOTM2Nn0.ZkDGasoDPHTrGvy7yFOT9cPjTQ7gnnUOqekY_zYrAuc"
+            userToken = User.authorization
             view = this@StoreRankingFragment
             storeRepository = ApplicationController.networkServiceStore
         }
     }
 
-    private fun getServerData() {
+    private fun getStoreCategoryData() {
         presenter.getStoreCategory()
     }
 
@@ -104,7 +121,7 @@ class StoreRankingFragment : Fragment(), StoreRankingContract.View {
 
     private fun viewInit() {
         val ctx = activity!!
-        storeRankingRVAdapter = StoreRankingRVAdapter(ctx)
+        storeRankingRVAdapter = StoreRankingRVAdapter(ctx, presenter)
 
         rv_item_store_ranking_frag_list.apply {
             adapter = storeRankingRVAdapter
@@ -112,4 +129,6 @@ class StoreRankingFragment : Fragment(), StoreRankingContract.View {
             addItemDecoration(DividerItemDecoration(ctx, DividerItemDecoration.VERTICAL))
         }
     }
+
+
 }

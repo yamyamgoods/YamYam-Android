@@ -12,7 +12,7 @@ data class StoreData(
     val store_name: String,
     val store_hashtags: List<String>,
 
-    val store_scrap_flag: Boolean,
+    var store_scrap_flag: Boolean,
     val store_url: String
 ) {
     fun getOneLineHashTags(): String {
