@@ -8,5 +8,6 @@ data class GetSearchGoodsResponse (
 )
 
 data class GoodsSearchResultList(
-        val data: ArrayList<GoodsData>
+        val goods: ArrayList<GoodsData>,
+        val totalCnt: Int
 )

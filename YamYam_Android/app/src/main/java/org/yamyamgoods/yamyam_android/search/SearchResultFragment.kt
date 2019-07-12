@@ -1,55 +1,37 @@
 package org.yamyamgoods.yamyam_android.search
 
-import android.graphics.Color
-import android.os.Build
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.TabLayout
+import android.support.v4.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
-import android.view.WindowManager
+import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.TextView
-import kotlinx.android.synthetic.main.activity_search_result.*
+import kotlinx.android.synthetic.main.fragment_search_result.*
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.search.adapter.SearchResultFragmentStatePagerAdapter
 
-class SearchResultActivity : AppCompatActivity() {
+class SearchResultFragment : Fragment() {
 
     lateinit var tv_tab_search_act_goods: TextView
     lateinit var tv_tab_search_act_store: TextView
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_search_result)
-        setStatusBarTransparent()
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view: View = inflater.inflate(R.layout.fragment_search_result, container, false)
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         configureTopNavigation()
     }
 
-    private fun setStatusBarTransparent() {
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.decorView.systemUiVisibility =
-                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
-                        View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-
-        setWindowFlag(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false)
-        if (Build.VERSION.SDK_INT >= 21) {
-            window.statusBarColor = Color.TRANSPARENT
-        }
-    }
-
-    private fun setWindowFlag(bits: Int, on: Boolean) {
-        val win = window
-        val winParams = win.attributes
-        if (on) {
-            winParams.flags = winParams.flags or bits
-            return
-        }
-        winParams.flags = winParams.flags and bits.inv()
-        win.attributes = winParams
-    }
 
     private fun configureTopNavigation(){
-        vp_search_result_act_pager.adapter = SearchResultFragmentStatePagerAdapter(supportFragmentManager,2)
+        vp_search_result_act_pager.apply {
+            adapter = SearchResultFragmentStatePagerAdapter(childFragmentManager,2)
+            offscreenPageLimit = 2
+        }
         tl_search_result_act.setupWithViewPager(vp_search_result_act_pager)
 
         val tabtopLayout: View = this.layoutInflater.inflate(R.layout.tab_search_activity,null, false)

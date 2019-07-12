@@ -1,4 +1,4 @@
-package org.yamyamgoods.yamyam_android.home.goods.adapter
+package org.yamyamgoods.yamyam_android.search.adapter
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
@@ -14,8 +14,7 @@ import com.bumptech.glide.request.RequestOptions
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.dataclass.GoodsData
 
-
-class GoodsExhibitionDetailRecyclerViewAdapter(val ctx: Context, var dataList: ArrayList<GoodsData>): RecyclerView.Adapter<GoodsExhibitionDetailRecyclerViewAdapter.Holder>(){
+class SearchResultGoodsRecyclerViewAdapter(val ctx: Context, var dataList: ArrayList<GoodsData>): RecyclerView.Adapter<SearchResultGoodsRecyclerViewAdapter.Holder>(){
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): Holder {
         val view: View = LayoutInflater.from(ctx).inflate(R.layout.rv_item_goods, viewGroup,false)
         return Holder(view)
@@ -26,9 +25,9 @@ class GoodsExhibitionDetailRecyclerViewAdapter(val ctx: Context, var dataList: A
     override fun onBindViewHolder(holder: Holder, position: Int) {
         var options: RequestOptions = RequestOptions().transform(CenterCrop(), RoundedCorners(10))
         Glide.with(ctx)
-                .load(dataList[position].goods_img)
-                .apply(options)
-                .into(holder.img)
+            .load(dataList[position].goods_img)
+            .apply(options)
+            .into(holder.img)
 
         holder.store.text = dataList[position].store_name
         holder.name.text = dataList[position].goods_name

@@ -2,22 +2,16 @@ package org.yamyamgoods.yamyam_android.home.best
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_best_tab.*
-import kotlinx.android.synthetic.main.fragment_best_tab.view.*
-import kotlinx.android.synthetic.main.tab_best_fragment.*
-import org.jetbrains.anko.support.v4.ctx
 import org.jetbrains.anko.support.v4.startActivity
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.home.best.adpater.BestTabFragmentStatePagerAdapter
 import org.yamyamgoods.yamyam_android.mypage.MypageActivity
 import org.yamyamgoods.yamyam_android.search.SearchActivity
-import org.yamyamgoods.yamyam_android.search.SearchResultActivity
 
 class BestTabFragment : Fragment() {
 

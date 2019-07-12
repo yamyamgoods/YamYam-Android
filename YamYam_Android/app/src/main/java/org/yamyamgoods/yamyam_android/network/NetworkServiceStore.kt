@@ -15,10 +15,10 @@ interface NetworkServiceStore {
     @GET("/search/store/{storeName}/{order}")
     fun getSearchStoreResponse(
         @Header("Content-Type") content_type: String,
-        @Header("Authorization") token: String,
-        @Path("storeName") storeName: String,
+        @Header("authorization") token: String?,
+        @Path("storeName") storeName: String?,
         @Path("order") order: Int,
-        @Query("searchAfter") searchAfter: List<Int>
+        @Query("searchAfter") searchAfter: String?
     ): Call<GetSearchStoreResponse>
 
     @GET("/store/category")
