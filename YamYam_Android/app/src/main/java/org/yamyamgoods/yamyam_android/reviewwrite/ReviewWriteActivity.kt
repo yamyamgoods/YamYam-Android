@@ -29,6 +29,7 @@ import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.jetbrains.anko.ctx
+import org.jetbrains.anko.toast
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.network.ApplicationController
 import org.yamyamgoods.yamyam_android.network.NetworkServiceGoods
@@ -86,8 +87,13 @@ class ReviewWriteActivity : AppCompatActivity() {
 
         // 사진넣기 버튼 눌렀을 때
         btn_review_write_upload_image.setOnClickListener {
-            getPermission()
-            configureRecyclerView()
+            try {
+                getPermission()
+                configureRecyclerView()
+            }
+            catch(e:Exception){
+                toast("문제가 있습니다.")
+            }
         }
 
         view_review_write_edit.setOnClickListener {

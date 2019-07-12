@@ -29,7 +29,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/cl_review_top"
                 app:layout_constraintStart_toStartOf="@+id/cl_review_top"
                 app:layout_constraintTop_toTopOf="parent"
-                app:lineHeight="21dp"/>
+                app:lineHeight="21dp" android:fontFamily="@font/notosansbold"/>
 
         <android.support.constraint.ConstraintLayout
                 android:id="@+id/btn_review_tab_close"

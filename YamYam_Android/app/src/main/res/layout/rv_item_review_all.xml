@@ -32,7 +32,7 @@
                 app:layout_constraintStart_toEndOf="@+id/iv_rv_item_review_all_user_img"
                 app:layout_constraintTop_toTopOf="parent"
                 app:lineHeight="17dp"
-                tools:text="유저닉네임"/>
+                tools:text="유저닉네임" android:fontFamily="@font/notosansbold"/>
 
         <TextView
                 android:id="@+id/tv_rv_item_review_all_date"
@@ -44,7 +44,7 @@
                 android:textSize="14dp"
                 app:layout_constraintStart_toStartOf="@+id/tv_rv_item_review_all_user_nickname"
                 app:layout_constraintTop_toBottomOf="@+id/tv_rv_item_review_all_user_nickname"
-                app:lineHeight="17dp"/>
+                app:lineHeight="17dp" android:fontFamily="@font/notosansmedium"/>
 
         <LinearLayout
                 android:id="@+id/ll_rv_item_review_all_star"
@@ -170,7 +170,7 @@
                     app:layout_constraintStart_toEndOf="@+id/btn_rv_item_review_all_comments"
                     app:layout_constraintTop_toBottomOf="@+id/ll_rv_item_review_all_images"
                     app:lineHeight="13dp"
-                    tools:text="0"/>
+                    tools:text="0" android:fontFamily="@font/notosansmedium"/>
 
             <ImageView
                     android:id="@+id/btn_rv_item_review_all_comments"
@@ -208,7 +208,7 @@
                         android:textColor="@color/colorReview"
                         android:textSize="11dp"
                         app:lineHeight="13dp"
-                        tools:text="0"/>
+                        tools:text="0" android:fontFamily="@font/notosansmedium"/>
             </LinearLayout>
 
             <TextView
@@ -223,7 +223,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:text="키릥 소량제작 몇개 했는데 뫄뫄 좋다는 소리듣고 여기서 했거덩요~ 근데 괜찮네여. 배송은 얼마정도 걸렸는데 파본도 별로 없고 조와~ 엄마아빠 할머니가 조와해요 근데 주문할때 뫄뫄는 조심하세요 "/>
+                    tools:text="키릥 소량제작 몇개 했는데 뫄뫄 좋다는 소리듣고 여기서 했거덩요~ 근데 괜찮네여. 배송은 얼마정도 걸렸는데 파본도 별로 없고 조와~ 엄마아빠 할머니가 조와해요 근데 주문할때 뫄뫄는 조심하세요 "
+                    android:fontFamily="@font/notosansregular"/>
         </android.support.constraint.ConstraintLayout>
 
         <View
