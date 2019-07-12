@@ -14,10 +14,8 @@ import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.toast
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.dataclass.BookmarkData
-import org.yamyamgoods.yamyam_android.dataclass.GoodsData
 import org.yamyamgoods.yamyam_android.home.bookmark.adapter.BookmarkRVAdapter
 import org.yamyamgoods.yamyam_android.network.ApplicationController
-import org.yamyamgoods.yamyam_android.util.TempData
 import org.yamyamgoods.yamyam_android.util.User
 
 /**
@@ -70,8 +68,8 @@ class BookmarkFragment : Fragment(), BookmarkContract.View {
         bookmarkRVAdapter.notifyDataSetChanged()
     }
 
-    override fun deleteBookmarkData(position: Int) {
-        bookmarkRVAdapter.deleteBookmarkAt(position)
+    override fun deleteBookmarkData(bookmarkData: BookmarkData) {
+        bookmarkRVAdapter.deleteBookmark(bookmarkData)
         toast("찜한 견적이 삭제되었습니다!")
     }
 

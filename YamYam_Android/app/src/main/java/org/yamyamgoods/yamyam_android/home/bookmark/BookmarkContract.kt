@@ -16,14 +16,14 @@ interface BookmarkContract {
 
         fun addBookmarkData(data: List<BookmarkData>)
 
-        fun deleteBookmarkData(position: Int)
+        fun deleteBookmarkData(bookmarkData: BookmarkData)
     }
 
     interface Presenter : BasePresenter {
 
         fun getBookmarkData(lastIndex: Int = -1)
 
-        fun deleteBookmark(scrapIdx: Int, position: Int)
+        fun deleteBookmark(scrapIdx: Int, bookmarkData: BookmarkData)
 
     }
 }

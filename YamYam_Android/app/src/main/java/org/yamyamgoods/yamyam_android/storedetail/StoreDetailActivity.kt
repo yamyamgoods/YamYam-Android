@@ -3,11 +3,9 @@ package org.yamyamgoods.yamyam_android.storedetail
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
-import kotlinx.android.synthetic.main.activity_product_detail.*
 import kotlinx.android.synthetic.main.activity_store_detail.*
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.storedetail.adapter.StoreDetailRVAdapter
-import org.yamyamgoods.yamyam_android.util.TempData
 
 /**
  * Created By Yun Hyeok

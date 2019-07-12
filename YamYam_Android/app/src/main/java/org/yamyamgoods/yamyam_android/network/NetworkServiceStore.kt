@@ -1,14 +1,14 @@
 package org.yamyamgoods.yamyam_android.network
 
+import org.yamyamgoods.yamyam_android.network.delete.DeleteRegularStoreMarkResponseData
 import org.yamyamgoods.yamyam_android.network.get.GetRegularStoreResponseData
 import org.yamyamgoods.yamyam_android.network.get.GetSearchStoreResponse
 import org.yamyamgoods.yamyam_android.network.get.GetStoreCategoryListResponseData
 import org.yamyamgoods.yamyam_android.network.get.GetStoreRankingResponseData
+import org.yamyamgoods.yamyam_android.network.post.PostRegularStoreMarkRequestDTO
+import org.yamyamgoods.yamyam_android.network.post.PostRegularStoreMarkResponseData
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface NetworkServiceStore {
     //검색 스토어 이름
@@ -42,4 +42,21 @@ interface NetworkServiceStore {
         @Header("Authorization") token: String?,
         @Path("lastIndex") lastIndex: Int
     ): Call<GetRegularStoreResponseData>
+
+
+    // 단골 스토어로 등록 요청
+    @POST("/store/scrap")
+    fun postRegluarStoreMarkRequest(
+        @Header("Content-Type") contentType: String = "application/json",
+        @Header("Authorization") token: String?,
+        @Body body: PostRegularStoreMarkRequestDTO
+    ): Call<PostRegularStoreMarkResponseData>
+
+    // 단골 스토어 해제 요청
+    @DELETE("/store/scrap/{storeIdx}")
+    fun deleteRegluarStoreMarkRequest(
+        @Header("Content-Type") contentType: String = "application/json",
+        @Header("Authorization") token: String?,
+        @Path("storeIdx") storeIdx: Int
+    ): Call<DeleteRegularStoreMarkResponseData>
 }

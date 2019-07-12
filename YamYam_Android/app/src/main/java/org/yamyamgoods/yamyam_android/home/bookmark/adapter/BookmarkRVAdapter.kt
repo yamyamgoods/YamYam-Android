@@ -3,6 +3,7 @@ package org.yamyamgoods.yamyam_android.home.bookmark.adapter
 import android.content.Context
 import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import com.bumptech.glide.Glide
 import org.jetbrains.anko.imageResource
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.dataclass.BookmarkData
+import org.yamyamgoods.yamyam_android.home.bookmark.BookmarkActivity
 import org.yamyamgoods.yamyam_android.home.bookmark.BookmarkContract
 import org.yamyamgoods.yamyam_android.home.bookmark.dialog.BookmarkOptionDialog
 import org.yamyamgoods.yamyam_android.util.dp2px
@@ -54,7 +56,8 @@ class BookmarkRVAdapter(private val ctx: Context, private val presenter: Bookmar
             }
 
             holder.btnBookmark.setOnClickListener {
-                presenter.deleteBookmark(item.goods_scrap_idx, position)
+                Log.v("Malibin Debug", " btnBookmark.setOnClickListener : position : $position")
+                presenter.deleteBookmark(item.goods_scrap_idx, item)
             }
 
             holder.tvStoreName.text = item.store_name
@@ -76,9 +79,12 @@ class BookmarkRVAdapter(private val ctx: Context, private val presenter: Bookmar
         notifyItemRangeInserted(previousSize, itemCount)
     }
 
-    fun deleteBookmarkAt(position: Int) {
-        dataList.removeAt(position)
-        notifyItemRemoved(position)
+    fun deleteBookmark(bookmarkData: BookmarkData) {
+        dataList.remove(bookmarkData)
+        notifyDataSetChanged()
+        if (ctx is BookmarkActivity && dataList.isEmpty()) {
+            ctx.showNoItemView()
+        }
     }
 
     private fun getDynamicImageWidth(): Int {

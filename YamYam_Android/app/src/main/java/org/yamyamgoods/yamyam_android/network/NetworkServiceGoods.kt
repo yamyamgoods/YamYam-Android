@@ -210,7 +210,7 @@ interface NetworkServiceGoods {
     ): Call<PutBookmarkModifyResponseData>
 
     // 북마크 탭 북마크 해제
-    @GET("/goods/scrap/{scrapIdx}")
+    @DELETE("/goods/scrap/{scrapIdx}")
     fun getDeleteBookmarkRequest(
         @Header("Content-Type") contentType: String = "application/json",
         @Header("Authorization") token: String?,

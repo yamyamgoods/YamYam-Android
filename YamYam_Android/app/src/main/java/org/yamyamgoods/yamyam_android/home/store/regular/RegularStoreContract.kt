@@ -19,10 +19,15 @@ interface RegularStoreContract {
 
         fun setNoRegularStoreList()
 
+        fun setRegularStoreCanceled(data: StoreData)
+
     }
 
     interface Presenter : BasePresenter {
 
         fun getRegularStoreList(lastIdx: Int = -1)
+
+        fun regularStoreCancelRequest(data: StoreData, storeIdx: Int)
+
     }
 }

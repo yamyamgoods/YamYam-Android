@@ -14,11 +14,13 @@ import org.jetbrains.anko.imageResource
 import org.jetbrains.anko.startActivity
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.dataclass.StoreData
+import org.yamyamgoods.yamyam_android.home.store.regular.RegularStoreContract
 import org.yamyamgoods.yamyam_android.storedetail.StoreDetailActivity
 
-class RegularStoreRVAdapter(private val ctx: Context) : RecyclerView.Adapter<RegularStoreRVAdapter.Holder>() {
+class RegularStoreRVAdapter(private val ctx: Context, private val presenter: RegularStoreContract.Presenter) :
+    RecyclerView.Adapter<RegularStoreRVAdapter.Holder>() {
 
-    private val dataList = ArrayList<StoreData>()
+    val dataList = ArrayList<StoreData>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val view: View = LayoutInflater.from(ctx).inflate(R.layout.rv_item_regular_store, parent, false)
@@ -37,11 +39,10 @@ class RegularStoreRVAdapter(private val ctx: Context) : RecyclerView.Adapter<Reg
 
             holder.ivLike.apply {
                 imageResource = R.drawable.selector_bookmark_flag
-                isSelected = item.store_scrap_flag
+                isSelected = true
             }
-        }
-        holder.whole.setOnClickListener {
-            try{
+
+            holder.btnWhole.setOnClickListener {
                 ctx.startActivity<StoreDetailActivity>(
                     "e_idx" to dataList[position].store_idx,
                     "title" to dataList[position].store_name,
@@ -49,9 +50,11 @@ class RegularStoreRVAdapter(private val ctx: Context) : RecyclerView.Adapter<Reg
                     "gradation_img" to dataList[position].store_hashtags,
                     "store_url" to dataList[position].store_url,
                     "like_flag" to dataList[position].store_scrap_flag)
-            } catch (e:Exception){
             }
 
+            holder.btnLike.setOnClickListener {
+                presenter.regularStoreCancelRequest(item, item.store_idx)
+            }
         }
     }
 
@@ -61,6 +64,12 @@ class RegularStoreRVAdapter(private val ctx: Context) : RecyclerView.Adapter<Reg
         notifyItemRangeInserted(previousSize, itemCount)
     }
 
+    fun setRegularStoreRemove(data: StoreData) {
+        val position = dataList.indexOf(data)
+        dataList.remove(data)
+        notifyItemRemoved(position)
+    }
+
     private fun setCircleImage(view: ImageView, imageUrl: String) =
         Glide.with(ctx)
             .load(imageUrl)
@@ -68,7 +77,8 @@ class RegularStoreRVAdapter(private val ctx: Context) : RecyclerView.Adapter<Reg
             .into(view)
 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val whole : ConstraintLayout = itemView.findViewById(R.id.btn_rv_item_regular_store_whole) as ConstraintLayout
+        val btnWhole: ConstraintLayout = itemView.findViewById(R.id.btn_rv_item_regular_store_whole)
+
         val ivImage: ImageView = itemView.findViewById(R.id.iv_rv_item_regular_store_image)
 
         val tvStoreName: TextView = itemView.findViewById(R.id.tv_rv_item_regular_store_name)

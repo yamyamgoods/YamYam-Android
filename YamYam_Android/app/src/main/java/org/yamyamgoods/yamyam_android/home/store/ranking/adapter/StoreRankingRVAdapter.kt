@@ -13,9 +13,14 @@ import com.bumptech.glide.request.RequestOptions
 import org.jetbrains.anko.imageResource
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.dataclass.StoreData
+import org.yamyamgoods.yamyam_android.home.store.ranking.StoreRankingContract
+import org.yamyamgoods.yamyam_android.home.store.ranking.StoreRankingPresenter
+import org.yamyamgoods.yamyam_android.network.post.PostRegularStoreMarkRequestDTO
 
-class StoreRankingRVAdapter(private val ctx: Context, private val dataList: List<StoreData>)
-    : RecyclerView.Adapter<StoreRankingRVAdapter.Holder>() {
+class StoreRankingRVAdapter(private val ctx: Context, private val presenter: StoreRankingContract.Presenter) :
+    RecyclerView.Adapter<StoreRankingRVAdapter.Holder>() {
+
+    val dataList = ArrayList<StoreData>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val view: View = LayoutInflater.from(ctx).inflate(R.layout.rv_item_store_ranking, parent, false)
@@ -27,24 +32,46 @@ class StoreRankingRVAdapter(private val ctx: Context, private val dataList: List
     override fun onBindViewHolder(holder: Holder, position: Int) {
 
         dataList[position].let { item ->
-            holder.tvIdx.text = item.idx.toString()
+            holder.tvIdx.text = (position + 1).toString()
             setCircleImage(holder.ivImage, item.store_img)
 
             holder.tvStoreName.text = item.store_name
             holder.tvHashTag.text = item.getOneLineHashTags()
 
-            holder.ivLike.apply{
+            holder.ivLike.apply {
                 imageResource = R.drawable.selector_bookmark_flag
                 isSelected = item.store_scrap_flag
+            }
+
+            holder.btnLike.setOnClickListener {
+                if (item.store_scrap_flag) {
+                    presenter.regularStoreCancelRequest(position, item.store_idx)
+                    return@setOnClickListener
+                }
+                val reqBody = PostRegularStoreMarkRequestDTO(item.store_idx)
+                presenter.regularStoreMarkRequest(position, reqBody)
             }
         }
     }
 
+    fun refreshAllDataWith(data: List<StoreData>) {
+        val currentSize = itemCount
+        dataList.clear()
+        notifyItemRangeRemoved(0, currentSize)
+        dataList.addAll(data)
+        notifyItemRangeInserted(0, itemCount)
+    }
+
+    fun setRegularStoreSelected(position: Int, isSelected: Boolean) {
+        dataList[position].store_scrap_flag = isSelected
+        notifyItemChanged(position)
+    }
+
     private fun setCircleImage(view: ImageView, imageUrl: String) =
-            Glide.with(ctx)
-                    .load(imageUrl)
-                    .apply(RequestOptions.circleCropTransform())
-                    .into(view)
+        Glide.with(ctx)
+            .load(imageUrl)
+            .apply(RequestOptions.circleCropTransform())
+            .into(view)
 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvIdx: TextView = itemView.findViewById(R.id.tv_rv_item_store_ranking_idx)
