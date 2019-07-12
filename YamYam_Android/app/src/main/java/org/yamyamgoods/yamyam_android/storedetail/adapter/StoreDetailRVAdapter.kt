@@ -1,7 +1,6 @@
 package org.yamyamgoods.yamyam_android.storedetail.adapter
 
 import android.content.Context
-import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -9,83 +8,51 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
-import org.jetbrains.anko.imageResource
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import org.yamyamgoods.yamyam_android.R
-import org.yamyamgoods.yamyam_android.storedetail.StoreDetailItem
-import org.yamyamgoods.yamyam_android.util.dp2px
-import org.yamyamgoods.yamyam_android.util.getScreenWidth
+import org.yamyamgoods.yamyam_android.dataclass.GoodsData
 
 /**
  * Created By Yun Hyeok
  * on 7월 09, 2019
  */
 
-class StoreDetailRVAdapter(private val ctx: Context, private val dataList: List<StoreDetailItem>, private val storeName: String) : RecyclerView.Adapter<StoreDetailRVAdapter.Holder>() {
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val view: View = LayoutInflater.from(ctx).inflate(R.layout.rv_item_store_detail_goods, parent, false)
+class StoreDetailRVAdapter(val ctx: Context, var dataList: ArrayList<GoodsData>): RecyclerView.Adapter<StoreDetailRVAdapter.Holder>(){
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): Holder {
+        val view: View = LayoutInflater.from(ctx).inflate(R.layout.rv_item_goods, viewGroup,false)
         return Holder(view)
     }
 
     override fun getItemCount(): Int = dataList.size
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
+        var options: RequestOptions = RequestOptions().transform(CenterCrop(), RoundedCorners(10))
+        Glide.with(ctx)
+            .load(dataList[position].goods_img)
+            .apply(options)
+            .into(holder.img)
 
-        dataList[position].let { item ->
-
-            Glide
-                    .with(ctx)
-                    .load(item.goods_img)
-                    .into(holder.ivImage)
-
-            val imageHeight = getDynamicImageHeight()
-
-            val imageParams = holder.clImageFrame.layoutParams
-            imageParams.height = imageHeight
-
-            holder.clImageFrame.layoutParams = imageParams
-
-            holder.ivBookmark.apply {
-                imageResource = R.drawable.selector_bookmark_heart
-                isSelected = item.goods_like_flag
-            }
-
-            holder.tvStoreName.text = storeName
-            holder.tvProductName.text = item.goods_name
-            holder.tvPrice.text = item.goods_price
-
-            holder.tvStarRate.text = item.goods_rating.toString()
-            holder.tvMinQuantity.text = item.goods_minimum_amount.toString()
-            holder.tvReviewCount.text = item.goods_review_cnt.toString()
-        }
+        holder.store.text = dataList[position].store_name
+        holder.name.text = dataList[position].goods_name
+        holder.price.text = dataList[position].goods_price
+        val rate: String = String.format("%.1f",dataList[position].goods_rating)
+        holder.rate.text = rate
+        var min: String? = dataList[position].goods_minimum_amount
+        min = min!!.replace(",000","k")
+        holder.min.text = min
+        val reviewNum: String = String.format("%d",dataList[position].goods_review_cnt)
+        holder.reviewNum.text = reviewNum
     }
 
-    private fun getDynamicImageWidth(): Int {
-        val phoneWidth = getScreenWidth(ctx)
-        val blankSpace = dp2px(40f, ctx)
-
-        return (phoneWidth - blankSpace) / 2
+    inner class Holder(itemView: View): RecyclerView.ViewHolder(itemView){
+        var img = itemView.findViewById(R.id.iv_rv_item_goods_thumnail) as ImageView
+        var store = itemView.findViewById(R.id.tv_rv_item_goods_store) as TextView
+        var name = itemView.findViewById(R.id.tv_rv_item_goods_name) as TextView
+        var price = itemView.findViewById(R.id.tv_rv_item_goods_price) as TextView
+        var rate = itemView.findViewById(R.id.tv_rv_item_goods_rate) as TextView
+        var min = itemView.findViewById(R.id.tv_rv_item_goods_minQuantity) as TextView
+        var reviewNum = itemView.findViewById(R.id.tv_rv_item_goods_reviewCount) as TextView
     }
-
-    private fun getDynamicImageHeight(): Int {
-        val width = getDynamicImageWidth()
-        val ratio = 150f / 160f
-        return (width * ratio).toInt()
-    }
-
-    inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        val clImageFrame: ConstraintLayout = itemView.findViewById(R.id.cl_rv_item_store_detail_goods_image)
-        val ivImage: ImageView = itemView.findViewById(R.id.iv_rv_item_store_detail_goods_picture)
-        val ivBookmark: ImageView = itemView.findViewById(R.id.iv_rv_item_store_detail_goods_bookmark)
-
-        val tvStoreName: TextView = itemView.findViewById(R.id.tv_rv_item_store_detail_goods_store_name)
-        val tvProductName: TextView = itemView.findViewById(R.id.tv_rv_item_store_detail_goods_product_name)
-        val tvPrice: TextView = itemView.findViewById(R.id.tv_rv_item_store_detail_goods_product_price)
-
-        val tvStarRate: TextView = itemView.findViewById(R.id.tv_rv_item_store_detail_goods_rate)
-        val tvMinQuantity: TextView = itemView.findViewById(R.id.tv_rv_item_store_detail_goods_minimum_quantity)
-        val tvReviewCount: TextView = itemView.findViewById(R.id.tv_rv_item_store_detail_goods_review_num)
-    }
-
 }
