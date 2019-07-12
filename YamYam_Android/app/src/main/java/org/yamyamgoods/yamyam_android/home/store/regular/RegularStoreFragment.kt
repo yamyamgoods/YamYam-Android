@@ -69,6 +69,9 @@ class RegularStoreFragment : Fragment(), RegularStoreContract.View {
         regularStoreRVAdapter.setRegularStoreRemove(data)
         HomeObject.notifyStoreRankingTabChange()
         toast("단골 스토어가 삭제되었습니다!")
+        if (regularStoreRVAdapter.dataList.isEmpty()) {
+            setNoRegularStoreList()
+        }
     }
 
     private fun presenterInit() {
