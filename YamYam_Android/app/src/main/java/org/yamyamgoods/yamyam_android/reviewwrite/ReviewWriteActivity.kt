@@ -5,6 +5,7 @@ import android.content.ClipData
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
@@ -35,6 +36,8 @@ import org.yamyamgoods.yamyam_android.reviewwrite.dialog.DialogReviewWriteSave
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.ByteArrayOutputStream
+import java.io.File
 import java.io.InputStream
 
 class ReviewWriteActivity : AppCompatActivity() {
@@ -131,12 +134,33 @@ class ReviewWriteActivity : AppCompatActivity() {
                         for (i in 0 until data.clipData.itemCount) {
                             var item: ClipData.Item = data.clipData.getItemAt(i)
 
+                            var selectedPictureUri: Uri = item.uri
+                            val options = BitmapFactory.Options()
+                            val inputStream: InputStream = contentResolver!!.openInputStream(selectedPictureUri)
+                            val bitmap = BitmapFactory.decodeStream(inputStream, null, options)
+                            val byteArrayOutputStream = ByteArrayOutputStream()
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 20, byteArrayOutputStream)
+                            val photoBody = RequestBody.create(MediaType.parse("image/jpg"), byteArrayOutputStream.toByteArray())
+
+
                             // 클립데이터의 uri을 리사이클러뷰 데이터 클래스에 추가하기.
                             uploadImageList.add(ReviewWriteUploadImagesItem(1, item.uri.toString()))
+                            images.add(MultipartBody.Part.createFormData("img",
+                                File(selectedPictureUri.toString()).name , photoBody))//여기의 image는 키값의 이름하고 같아야함
                         }
                     }
                 } else {
+                    var selectedPictureUri: Uri = uri
+                    val options = BitmapFactory.Options()
+                    val inputStream: InputStream = contentResolver!!.openInputStream(selectedPictureUri)
+                    val bitmap = BitmapFactory.decodeStream(inputStream, null, options)
+                    val byteArrayOutputStream = ByteArrayOutputStream()
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 20, byteArrayOutputStream)
+                    val photoBody = RequestBody.create(MediaType.parse("image/jpg"), byteArrayOutputStream.toByteArray())
+
+                    // 클립데이터의 uri을 리사이클러뷰 데이터 클래스에 추가하기.
                     uploadImageList.add(ReviewWriteUploadImagesItem(1, uri.toString()))
+                    images.add(MultipartBody.Part.createFormData("img", File(selectedPictureUri.toString()).name, photoBody))//여기의 image는 키값의 이름하고 같아야함
                 }
             }
         } catch (e: Exception) {
@@ -224,15 +248,15 @@ class ReviewWriteActivity : AppCompatActivity() {
     fun saveReview(goodsIdx: Int, img: ArrayList<MultipartBody.Part>) {
         //서버랑 통신.
         // 별점, 리뷰 스트링, 사진 저장
-        var rating_data: Int = rb_review_write_star_rate.rating.toInt()
-        var content_data: String = edt_review_write.text.toString()
+        var rating_data :Int = rb_review_write_star_rate.rating.toInt()
+        var content_data :String = edt_review_write.text.toString()
 
-        //var rating =  RequestBody.create(MediaType.parse("text/plain"), rating_data);
-        var content = RequestBody.create(MediaType.parse("text/plain"), content_data)
+        var content =  RequestBody.create(MediaType.parse("text/plain"), content_data)
 
-        networkService.postReviewWriteRequest(token, goodsIdx, content, rating_data, img).
-            enqueue(object : Callback<PostReviewWriteResponse> {
+        networkService.postReviewWriteRequest(
+            token,goodsIdx,content,rating_data,img).enqueue(object : Callback<PostReviewWriteResponse> {
             override fun onFailure(call: Call<PostReviewWriteResponse>, t: Throwable) {
+
             }
 
             override fun onResponse(call: Call<PostReviewWriteResponse>, response: Response<PostReviewWriteResponse>) {

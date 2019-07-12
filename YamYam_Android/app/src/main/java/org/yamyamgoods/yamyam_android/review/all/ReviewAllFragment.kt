@@ -7,14 +7,18 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import kotlinx.android.synthetic.main.fragment_review_all.*
 import kotlinx.android.synthetic.main.top_navigation_tab_review.*
 import org.jetbrains.anko.support.v4.ctx
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.dataclass.ReviewData
+import org.yamyamgoods.yamyam_android.mypage.MypageActivity
 import org.yamyamgoods.yamyam_android.network.ApplicationController
 import org.yamyamgoods.yamyam_android.network.NetworkServiceGoods
 import org.yamyamgoods.yamyam_android.network.get.GetReviewResponse
+import org.yamyamgoods.yamyam_android.network.get.ReviewCountData
+import org.yamyamgoods.yamyam_android.review.ReviewActivity
 import org.yamyamgoods.yamyam_android.review.all.adapter.ReviewAllRVAdapter
 import org.yamyamgoods.yamyam_android.util.TempData
 import retrofit2.Call
@@ -36,20 +40,24 @@ class ReviewAllFragment :Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_review_all, container, false)
 
+    }
+
+    var num: Int = 0
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         setRecyclerView()
 
         var goodsIndex: Int = activity!!.intent.getIntExtra("goodsIdx", -1)
         getReviewResponse(goodsIndex, -1)
-//        var num: String = dataList.size.toString()
-//        tv_review_nav_all_num!!.setText(num)
-    }
+        Log.v("현주", num.toString())
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        //(activity!! as ReviewActivity).setReviewCount(num)
     }
 
     private fun getReviewResponse(goodsIndex: Int, lastIndex: Int){
-        Log.v("현주", goodsIndex.toString())
+        //photoFlag: -1  전체보기
         networkService.getReviewRequest("application/json", token, goodsIndex, -1, lastIndex)
             .enqueue(object: Callback<GetReviewResponse>{
                 override fun onFailure(call: Call<GetReviewResponse>, t: Throwable) {
@@ -57,20 +65,30 @@ class ReviewAllFragment :Fragment() {
                 }
 
                 override fun onResponse(call: Call<GetReviewResponse>, response: Response<GetReviewResponse>) {
+
                     if (response.isSuccessful){
-                        Log.v("ReviewAllFragment", "통신 성공")
-                        dataList = response.body()!!.data!!
+                        Log.v("현주:response", "통신 성공")
+
+                        dataList = response.body()!!.data.review_data
+
                         response.body()?.let {
                             reviewAllRVAdapter = ReviewAllRVAdapter(activity!!, dataList)
+
+                            Log.v("ReviewAllFragment", it.data.review_all_count.toString())
                             rv_review_all_list.apply{
                                 adapter = ReviewAllRVAdapter(activity!!, dataList)
                                 layoutManager = LinearLayoutManager(activity!!)
                             }
+
+                            num  = it.data.review_all_count
+
+                            (activity!! as ReviewActivity).setAllReviewCount(num)
                         }
                         reviewAllRVAdapter.notifyDataSetChanged()
                     }
                 }
             })
+
     }
 
     private fun setRecyclerView(){

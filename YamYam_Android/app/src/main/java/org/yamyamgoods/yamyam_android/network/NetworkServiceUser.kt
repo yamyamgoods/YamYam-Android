@@ -71,5 +71,5 @@ interface NetworkServiceUser {
         @Header("Authorization") authorization: String,
         @Path("alarmIdx") alarmIdx: Int,
         @Path("reviewIdx") reviewIdx: Int
-    ): Call<GetReviewDetailResponse>
+    ): Call<GetAlarmReviewDetailResponse>
 }

@@ -60,14 +60,6 @@ class ReviewDetailActivity : AppCompatActivity() {
     lateinit var reviewContents: String
     lateinit var imageUrl: List<String>
 
-    var productStarRate: List<ImageView> = listOf(
-        findViewById(R.id.iv_review_detail_poduct_star1),
-        findViewById(R.id.iv_review_detail_poduct_star2),
-        findViewById(R.id.iv_review_detail_poduct_star3),
-        findViewById(R.id.iv_review_detail_poduct_star4),
-        findViewById(R.id.iv_review_detail_poduct_star5)
-    )
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_review_detail)
@@ -96,6 +88,15 @@ class ReviewDetailActivity : AppCompatActivity() {
 
     // 리뷰 상세 보기
     fun getReviewDetailResponse() {
+
+        var productStarRate: List<ImageView> = listOf(
+            findViewById(R.id.iv_review_detail_poduct_star1),
+            findViewById(R.id.iv_review_detail_poduct_star2),
+            findViewById(R.id.iv_review_detail_poduct_star3),
+            findViewById(R.id.iv_review_detail_poduct_star4),
+            findViewById(R.id.iv_review_detail_poduct_star5)
+        )
+
         networkService.getReviewDetailResponse(
             "application/json", token, reviewIndex
         ).enqueue(object : Callback<GetReviewDetailResponse> {
@@ -104,7 +105,9 @@ class ReviewDetailActivity : AppCompatActivity() {
             }
 
             override fun onResponse(call: Call<GetReviewDetailResponse>, response: Response<GetReviewDetailResponse>) {
+                Log.v("현주", "리뷰 상세보기 함수에 들어옴")
                 if (response.isSuccessful) {
+                    Log.v("현주", "리뷰 상세보기 통신에 성공")
                     response.body()?.let {
                         /*리뷰*/
                         it.data!!.review.let { review ->
@@ -189,7 +192,7 @@ class ReviewDetailActivity : AppCompatActivity() {
         var etcImageNum: TextView = findViewById(R.id.tv_review_detail_review_etc_image_num) as TextView
         if (imageNum > 3) {
             setVisible(etcImageNum)
-            reviewImage[2].setColorFilter(Color.parseColor("#333333"), PorterDuff.Mode.MULTIPLY)
+            reviewImage[2].setColorFilter(Color.parseColor("#777777"), PorterDuff.Mode.MULTIPLY)
             etcImageNum.text = "+" + (imageNum - 3).toString()
             imageNum = 3
         }

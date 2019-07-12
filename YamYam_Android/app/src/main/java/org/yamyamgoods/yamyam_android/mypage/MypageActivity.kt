@@ -26,6 +26,7 @@ import kotlinx.android.synthetic.main.activity_mypage.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.mypage.adapter.MypageProductRVAdapter
@@ -69,7 +70,7 @@ class MypageActivity : AppCompatActivity() {
         configureTitleBar()
         editUserNickName()
         getMypageRecentlyReviewedProductsRequest()
-        getAlarmListResponse()
+        //getAlarmListResponse()
         openRecentActivity()
         btn_mypage_alarm.setOnClickListener {
             openAlarmDrawer()
@@ -80,10 +81,10 @@ class MypageActivity : AppCompatActivity() {
 
         // 리뷰 작성창 확인하기 위한 임시코드
         // 나중에 지우기
-        btn_mypage_notice.setOnClickListener {
-            var intent = Intent(this@MypageActivity, ReviewWriteActivity::class.java)
-            startActivity(intent)
-        }
+//        btn_mypage_notice.setOnClickListener {
+//            var intent = Intent(this@MypageActivity, ReviewWriteActivity::class.java)
+//            startActivity(intent)
+//        }
     }
 
     // 유저 정보 서버 통신
@@ -282,20 +283,26 @@ class MypageActivity : AppCompatActivity() {
             }
 
             override fun onResponse(call: Call<GetAlarmListResponse>, response: Response<GetAlarmListResponse>) {
-                if (response.isSuccessful) {
-                    Log.v("현주", "알람 목록 response: ${response.body()}")
-                    if (response.body()!!.data.toString() == "[]")  // 아무 알람도 없을 때
-                        setVisible(cl_mypage_alarm_empty)
-
-                    response.body()?.let {
-                        var tmp: ArrayList<AlarmListData> = response.body()!!.data!!
-                        rv_mypage_alarm_list.apply {
-                            adapter = MypageAlarmRVAdapter(this@MypageActivity, tmp)
-                            layoutManager = LinearLayoutManager(this@MypageActivity)
+                try {
+                    if (response.isSuccessful) {
+                        Log.v("현주", "마이페이지- 알람 목록 서버 통신 성공")
+                        Log.v("현주", "알람 목록 response: ${response.body()}")
+                        if (response.body()!!.data.toString() == "[]")  // 아무 알람도 없을 때
+                            setVisible(cl_mypage_alarm_empty)
+                        else {
+                            response.body()?.let {
+                                var tmp: ArrayList<AlarmListData> = response.body()!!.data!!
+                                rv_mypage_alarm_list.apply {
+                                    adapter = MypageAlarmRVAdapter(this@MypageActivity, tmp)
+                                    layoutManager = LinearLayoutManager(this@MypageActivity)
+                                }
+                                mypageAlarmRVAdapter = MypageAlarmRVAdapter(this@MypageActivity, tmp)
+                                //mypageProductRVAdapter.notifyDataSetChanged()
+                            }
                         }
-                        mypageAlarmRVAdapter = MypageAlarmRVAdapter(this@MypageActivity, tmp)
-                        //mypageProductRVAdapter.notifyDataSetChanged()
                     }
+                }catch(e: java.lang.Exception){
+                    Log.v("현주-마이페이지", "에러 났다")
                 }
 
                 response.errorBody()?.let {
@@ -317,25 +324,26 @@ class MypageActivity : AppCompatActivity() {
     }
 
     // 알람 목록에서 리뷰 상세보기
-    fun getAlarmReviewDetailResponse() {
+    fun getAlarmReviewDetailResponse(alarmIndex: Int, reviewIndex: Int) {
         networkService.getAlarmReviewDetail(
-            "application/json", token,
-            -1, -1
-        ).enqueue(object : Callback<GetReviewDetailResponse> {
-            override fun onFailure(call: Call<GetReviewDetailResponse>, t: Throwable) {
+            "application/json", token, alarmIndex, reviewIndex
+        ).enqueue(object : Callback<GetAlarmReviewDetailResponse> {
+            override fun onFailure(call: Call<GetAlarmReviewDetailResponse>, t: Throwable) {
                 Log.e("현주", t.toString())
             }
 
             override fun onResponse(
-                call: Call<GetReviewDetailResponse>,
-                response: Response<GetReviewDetailResponse>
+                call: Call<GetAlarmReviewDetailResponse>,
+                response: Response<GetAlarmReviewDetailResponse>
             ) {
                 if (response.isSuccessful) {
                     Log.v("MypageActivity", "알람 목록 response: ${response.body()}")
                     response.body()?.let {
-                        val intent = Intent(this@MypageActivity, ReviewDetailActivity::class.java)
-                        startActivity(intent)
-                        // 어떻게 그 리뷰 아이디로 받아오지????....????...???
+//                        val intent = Intent(this@MypageActivity, ReviewDetailActivity::class.java)
+
+//                        this@MypageActivity.startActivity<ReviewDetailActivity>(
+//                            "alarmIdx" to alarmIndex,
+//                            "reviewIdx" to reviewIndex)
                     }
                 }
             }

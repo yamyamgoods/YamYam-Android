@@ -22,6 +22,7 @@ import org.yamyamgoods.yamyam_android.home.best.review.adapter.BestReviewRVAdapt
 import org.yamyamgoods.yamyam_android.network.ApplicationController
 import org.yamyamgoods.yamyam_android.network.NetworkServiceGoods
 import org.yamyamgoods.yamyam_android.network.delete.DeleteReviewLikeResponseData
+import org.yamyamgoods.yamyam_android.network.get.GetBestReviewResponse
 import org.yamyamgoods.yamyam_android.network.get.GetReviewResponse
 import org.yamyamgoods.yamyam_android.network.post.PostReviewLikeData
 import org.yamyamgoods.yamyam_android.util.TempData
@@ -62,12 +63,12 @@ class BestReviewFragment : Fragment() {
     // 베스트 리뷰 보기 서버 통신
     fun getBestReviewResponse() {
         networkService.getBestReviewItemRequest("application/json", token, -1)
-            .enqueue(object : Callback<GetReviewResponse> {
-                override fun onFailure(call: Call<GetReviewResponse>, t: Throwable) {
+            .enqueue(object : Callback<GetBestReviewResponse> {
+                override fun onFailure(call: Call<GetBestReviewResponse>, t: Throwable) {
                     Log.e("BestReviewFragment", t.toString())
                 }
 
-                override fun onResponse(call: Call<GetReviewResponse>, response: Response<GetReviewResponse>) {
+                override fun onResponse(call: Call<GetBestReviewResponse>, response: Response<GetBestReviewResponse>) {
                     if (response.isSuccessful) {
                         Log.v("BestReviewFragment", "통신 성공")
                         response.body()?.let {

@@ -128,7 +128,7 @@ interface NetworkServiceGoods {
         @Header("Content-Type") content_type: String,
         @Header("Authorization") authorization: String?,
         @Path("lastIndex") lastIndex: Int
-    ): Call<GetReviewResponse>
+    ): Call<GetBestReviewResponse>
 
     // 댓글 작성하기
     @POST("/goods/review/comment")

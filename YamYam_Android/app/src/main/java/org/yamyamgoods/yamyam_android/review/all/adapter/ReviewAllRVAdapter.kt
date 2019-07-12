@@ -18,9 +18,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.dataclass.ReviewData
-import org.yamyamgoods.yamyam_android.reviewdetail.ReviewBasicDTO
 import org.yamyamgoods.yamyam_android.reviewdetail.ReviewDetailActivity
-import java.lang.Exception
 
 class ReviewAllRVAdapter (private val ctx: Context, private val dataList: List<ReviewData>): RecyclerView.Adapter<ReviewAllRVAdapter.Holder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewAllRVAdapter.Holder {
@@ -79,6 +77,7 @@ class ReviewAllRVAdapter (private val ctx: Context, private val dataList: List<R
             holder.tvThumbNum.text = item.goods_review_like_count.toString()
             holder.btnComments.setImageResource(R.drawable.icon_comment)
             holder.tvCommentsNum.text = item.goods_review_cmt_count.toString()
+
         }
     }
 

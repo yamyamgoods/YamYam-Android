@@ -8,14 +8,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_review_photo.*
-import kotlinx.android.synthetic.main.top_navigation_tab_review.*
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.dataclass.ReviewData
 import org.yamyamgoods.yamyam_android.network.ApplicationController
 import org.yamyamgoods.yamyam_android.network.NetworkServiceGoods
 import org.yamyamgoods.yamyam_android.network.get.GetReviewResponse
+import org.yamyamgoods.yamyam_android.review.ReviewActivity
 import org.yamyamgoods.yamyam_android.review.photo.adapter.ReviewPhotoRVAdapter
-import org.yamyamgoods.yamyam_android.util.TempData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,6 +24,7 @@ class ReviewPhotoFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_review_photo, container, false)
     }
 
+    var num: Int = 0
     var dataList: ArrayList<ReviewData> = ArrayList()
 
     val token: String =
@@ -42,13 +42,12 @@ class ReviewPhotoFragment : Fragment() {
         setRecyclerView()
 
         var goodsIndex: Int = activity!!.intent.getIntExtra("goodsIdx", -1)
-        getReviewResponse(goodsIndex, 1)
-
+        getReviewResponse(goodsIndex, -1)
     }
 
     private fun getReviewResponse(goodsIndex: Int, lastIndex: Int){
         Log.v("현주", goodsIndex.toString())
-        networkService.getReviewRequest("application/json", token, goodsIndex, -1, lastIndex)
+        networkService.getReviewRequest("application/json", token, goodsIndex, 1, lastIndex)
             .enqueue(object: Callback<GetReviewResponse> {
                 override fun onFailure(call: Call<GetReviewResponse>, t: Throwable) {
                     Log.e("ReviewAllFragment", t.toString())
@@ -57,13 +56,18 @@ class ReviewPhotoFragment : Fragment() {
                 override fun onResponse(call: Call<GetReviewResponse>, response: Response<GetReviewResponse>) {
                     if (response.isSuccessful){
                         Log.v("ReviewAllFragment", "통신 성공")
-                        dataList = response.body()!!.data!!
+
+                        dataList = response.body()!!.data!!.review_data
+
                         response.body()?.let {
                             reviewPhotoRVAdapter = ReviewPhotoRVAdapter(activity!!, dataList)
+
                             rv_review_photo_list.apply{
                                 adapter = ReviewPhotoRVAdapter(activity!!, dataList)
                                 layoutManager = LinearLayoutManager(activity!!)
                             }
+                            num  = it.data.photo_count
+                            (activity!! as ReviewActivity).setPhotoReviewCount(num)
                         }
                         reviewPhotoRVAdapter.notifyDataSetChanged()
                     }
