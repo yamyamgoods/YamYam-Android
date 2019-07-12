@@ -1,5 +1,6 @@
 package org.yamyamgoods.yamyam_android.home.bookmark
 
+import org.yamyamgoods.yamyam_android.dataclass.BookmarkData
 import org.yamyamgoods.yamyam_android.network.NetworkServiceGoods
 import org.yamyamgoods.yamyam_android.network.get.GetBookmarkListResponseData
 import org.yamyamgoods.yamyam_android.network.get.GetDeleteBookmarkResponseData
@@ -42,7 +43,7 @@ class BookmarkPresenter : BookmarkContract.Presenter {
         )
     }
 
-    override fun deleteBookmark(scrapIdx: Int, position: Int) {
+    override fun deleteBookmark(scrapIdx: Int, bookmarkData: BookmarkData) {
         goodsRepository.getDeleteBookmarkRequest(token = userToken, scrapIdx = scrapIdx).enqueue(
             object : Callback<GetDeleteBookmarkResponseData> {
                 override fun onFailure(call: Call<GetDeleteBookmarkResponseData>, t: Throwable) {
@@ -54,7 +55,8 @@ class BookmarkPresenter : BookmarkContract.Presenter {
                     response: Response<GetDeleteBookmarkResponseData>
                 ) {
                     if (response.isSuccessful) {
-                        view.deleteBookmarkData(position)
+                        view.deleteBookmarkData(bookmarkData)
+                        return
                     }
                 }
             }

@@ -3,6 +3,7 @@ package org.yamyamgoods.yamyam_android.home.bookmark.adapter
 import android.content.Context
 import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,7 +55,8 @@ class BookmarkRVAdapter(private val ctx: Context, private val presenter: Bookmar
             }
 
             holder.btnBookmark.setOnClickListener {
-                presenter.deleteBookmark(item.goods_scrap_idx, position)
+                Log.v("Malibin Debug", " btnBookmark.setOnClickListener : position : $position")
+                presenter.deleteBookmark(item.goods_scrap_idx, item)
             }
 
             holder.tvStoreName.text = item.store_name
@@ -76,9 +78,9 @@ class BookmarkRVAdapter(private val ctx: Context, private val presenter: Bookmar
         notifyItemRangeInserted(previousSize, itemCount)
     }
 
-    fun deleteBookmarkAt(position: Int) {
-        dataList.removeAt(position)
-        notifyItemRemoved(position)
+    fun deleteBookmark(bookmarkData: BookmarkData) {
+        dataList.remove(bookmarkData)
+        notifyDataSetChanged()
     }
 
     private fun getDynamicImageWidth(): Int {
