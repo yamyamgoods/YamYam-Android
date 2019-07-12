@@ -38,6 +38,10 @@ class StoreRankingRVAdapter(private val ctx: Context) : RecyclerView.Adapter<Sto
                 imageResource = R.drawable.selector_bookmark_flag
                 isSelected = item.store_scrap_flag
             }
+
+            holder.btnLike.setOnClickListener {
+
+            }
         }
     }
 
@@ -46,7 +50,7 @@ class StoreRankingRVAdapter(private val ctx: Context) : RecyclerView.Adapter<Sto
         dataList.clear()
         notifyItemRangeRemoved(0, currentSize)
         dataList.addAll(data)
-        notifyItemRangeInserted(0,itemCount)
+        notifyItemRangeInserted(0, itemCount)
     }
 
     private fun setCircleImage(view: ImageView, imageUrl: String) =

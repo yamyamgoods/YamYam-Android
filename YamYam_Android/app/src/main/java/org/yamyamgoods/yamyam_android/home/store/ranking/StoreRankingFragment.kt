@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import kotlinx.android.synthetic.main.fragment_store_ranking.*
 import org.jetbrains.anko.toast
@@ -24,6 +25,24 @@ class StoreRankingFragment : Fragment(), StoreRankingContract.View {
     override lateinit var presenter: StoreRankingContract.Presenter
 
     private lateinit var storeRankingRVAdapter: StoreRankingRVAdapter
+    private lateinit var storeCategories: List<StoreCategory>
+
+    private var isFirstSpinner = true
+
+    private val spinnerListener = object : AdapterView.OnItemSelectedListener {
+
+        override fun onNothingSelected(parent: AdapterView<*>?) {
+        }
+
+        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            if (isFirstSpinner) {
+                isFirstSpinner = false
+                return
+            }
+            val categoryIdx = storeCategories[position].store_category_idx
+            presenter.getStoreRankingList(categoryIdx)
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_store_ranking, container, false)
@@ -44,6 +63,7 @@ class StoreRankingFragment : Fragment(), StoreRankingContract.View {
     }
 
     override fun setStoreCategory(data: List<StoreCategory>) {
+        storeCategories = data
         categorySpinnerInit(data)
         val firstCategoryIdx = data[0].store_category_idx
         presenter.getStoreRankingList(firstCategoryIdx)
@@ -68,8 +88,10 @@ class StoreRankingFragment : Fragment(), StoreRankingContract.View {
 
     private fun categorySpinnerInit(data: List<StoreCategory>) {
         val categories = getCategoryList(data)
-        spinner_rv_item_store_ranking_frag.adapter =
-            ArrayAdapter(activity!!, R.layout.spinner_item_category, R.id.tv_spinner_category, categories)
+        spinner_rv_item_store_ranking_frag.apply {
+            adapter = ArrayAdapter(activity!!, R.layout.spinner_item_category, R.id.tv_spinner_category, categories)
+            onItemSelectedListener = spinnerListener
+        }
     }
 
     private fun getCategoryList(data: List<StoreCategory>): List<String> {
