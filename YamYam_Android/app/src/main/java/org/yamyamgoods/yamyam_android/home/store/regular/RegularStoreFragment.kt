@@ -2,6 +2,7 @@ package org.yamyamgoods.yamyam_android.home.store.regular
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
@@ -79,10 +80,14 @@ class RegularStoreFragment : Fragment(), RegularStoreContract.View {
     private fun viewInit() {
         val ctx = activity!!
         regularStoreRVAdapter = RegularStoreRVAdapter(ctx)
+
+        val dividerItem = DividerItemDecoration(ctx, DividerItemDecoration.VERTICAL).apply {
+            setDrawable(ContextCompat.getDrawable(activity!!, R.drawable.divider_gray_line_05dp)!!)
+        }
         rv_regular_store_frag_list.apply {
             adapter = regularStoreRVAdapter
             layoutManager = LinearLayoutManager(ctx)
-            addItemDecoration(DividerItemDecoration(ctx, DividerItemDecoration.VERTICAL))
+            addItemDecoration(dividerItem)
         }
     }
 

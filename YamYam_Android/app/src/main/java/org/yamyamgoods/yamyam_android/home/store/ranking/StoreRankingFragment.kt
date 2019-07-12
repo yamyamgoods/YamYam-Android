@@ -2,6 +2,7 @@ package org.yamyamgoods.yamyam_android.home.store.ranking
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
@@ -18,6 +19,7 @@ import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.dataclass.StoreCategory
 import org.yamyamgoods.yamyam_android.dataclass.StoreData
 import org.yamyamgoods.yamyam_android.home.store.ranking.adapter.StoreRankingRVAdapter
+import org.yamyamgoods.yamyam_android.home.store.regular.RegularStoreFragment
 import org.yamyamgoods.yamyam_android.network.ApplicationController
 import org.yamyamgoods.yamyam_android.productdetail.dialog.LoginRequestDialog
 import org.yamyamgoods.yamyam_android.util.HomeObject
@@ -25,12 +27,20 @@ import org.yamyamgoods.yamyam_android.util.User
 
 class StoreRankingFragment : Fragment(), StoreRankingContract.View {
 
+    companion object {
+        private var instance: RegularStoreFragment? = null
+
+        fun getInstance(): RegularStoreFragment = instance
+            ?: RegularStoreFragment().apply { instance = this }
+    }
+
     override lateinit var presenter: StoreRankingContract.Presenter
 
     private lateinit var storeRankingRVAdapter: StoreRankingRVAdapter
     private lateinit var storeCategories: List<StoreCategory>
 
     private var isFirstSpinner = true
+    private var currentCategory = -1
 
     private val spinnerListener = object : AdapterView.OnItemSelectedListener {
 
@@ -44,6 +54,7 @@ class StoreRankingFragment : Fragment(), StoreRankingContract.View {
             }
             val categoryIdx = storeCategories[position].store_category_idx
             presenter.getStoreRankingList(categoryIdx)
+            currentCategory = categoryIdx
         }
     }
 
@@ -68,6 +79,7 @@ class StoreRankingFragment : Fragment(), StoreRankingContract.View {
         storeCategories = data
         categorySpinnerInit(data)
         val firstCategoryIdx = data[0].store_category_idx
+        currentCategory = firstCategoryIdx
         presenter.getStoreRankingList(firstCategoryIdx)
     }
 
@@ -123,12 +135,23 @@ class StoreRankingFragment : Fragment(), StoreRankingContract.View {
         val ctx = activity!!
         storeRankingRVAdapter = StoreRankingRVAdapter(ctx, presenter)
 
+        val dividerItem = DividerItemDecoration(ctx, DividerItemDecoration.VERTICAL).apply {
+            setDrawable(ContextCompat.getDrawable(activity!!, R.drawable.divider_gray_line_05dp)!!)
+        }
         rv_item_store_ranking_frag_list.apply {
             adapter = storeRankingRVAdapter
             layoutManager = LinearLayoutManager(ctx)
-            addItemDecoration(DividerItemDecoration(ctx, DividerItemDecoration.VERTICAL))
+            addItemDecoration(dividerItem)
         }
     }
 
+    fun refreshDataList() {
+        val size = storeRankingRVAdapter.itemCount
+        storeRankingRVAdapter.dataList.clear()
+        storeRankingRVAdapter.notifyItemRangeRemoved(0, size)
+        presenter.getStoreRankingList(currentCategory)
+
+        Log.v("Malibin Debug", "Bookmark Frag refreshDataList() called")
+    }
 
 }
