@@ -2,6 +2,8 @@ package org.yamyamgoods.yamyam_android.home.goods.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
+import android.support.annotation.RequiresApi
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -24,16 +26,19 @@ class GoodsCategoryRecyclerViewAdapter (val ctx: Context, val dataList: ArrayLis
 
     override fun getItemCount(): Int = dataList.size
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: Holder, position: Int) {
 
         holder.category_name.text = dataList[position].goods_category_name
 
         if(position==selected_position){
             holder.category_name.setTextColor(ctx.resources.getColor(R.color.colorWhite))
+            holder.category_name.typeface = ctx.resources.getFont(R.font.notosansbold)
             holder.category_color.setImageDrawable(ctx.resources.getDrawable(R.drawable.buttons_circley))
         }
         else{
             holder.category_name.setTextColor(ctx.resources.getColor(R.color.category_gray))
+            holder.category_name.typeface = ctx.resources.getFont(R.font.notosansmedium)
             holder.category_color.setImageDrawable(ctx.resources.getDrawable(R.drawable.buttons_circleline))
         }
 
