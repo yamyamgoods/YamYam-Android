@@ -1,5 +1,6 @@
 package org.yamyamgoods.yamyam_android.home.store.ranking
 
+import android.util.Log
 import org.yamyamgoods.yamyam_android.network.NetworkServiceStore
 import org.yamyamgoods.yamyam_android.network.get.GetStoreCategoryListResponseData
 import org.yamyamgoods.yamyam_android.network.get.GetStoreRankingResponseData
@@ -53,7 +54,11 @@ class StoreRankingPresenter : StoreRankingContract.Presenter {
                 call: Call<GetStoreRankingResponseData>,
                 response: Response<GetStoreRankingResponseData>
             ) {
-
+                Log.v("Malibin Debug", "서버응답 : ${response.message()}")
+                if (response.isSuccessful) {
+                    Log.v("Malibin Debug", "서버응답 : ${response.body()!!}")
+                    view.setStoreRankingList(response.body()!!.data)
+                }
             }
         })
     }

@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.fragment_store_ranking.*
 import org.jetbrains.anko.toast
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.dataclass.StoreCategory
+import org.yamyamgoods.yamyam_android.dataclass.StoreData
 import org.yamyamgoods.yamyam_android.home.store.ranking.adapter.StoreRankingRVAdapter
 import org.yamyamgoods.yamyam_android.network.ApplicationController
 import org.yamyamgoods.yamyam_android.util.TempData
@@ -21,6 +22,8 @@ import org.yamyamgoods.yamyam_android.util.TempData
 class StoreRankingFragment : Fragment(), StoreRankingContract.View {
 
     override lateinit var presenter: StoreRankingContract.Presenter
+
+    private lateinit var storeRankingRVAdapter: StoreRankingRVAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_store_ranking, container, false)
@@ -42,6 +45,12 @@ class StoreRankingFragment : Fragment(), StoreRankingContract.View {
 
     override fun setStoreCategory(data: List<StoreCategory>) {
         categorySpinnerInit(data)
+        val firstCategoryIdx = data[0].store_category_idx
+        presenter.getStoreRankingList(firstCategoryIdx)
+    }
+
+    override fun setStoreRankingList(data: List<StoreData>) {
+        storeRankingRVAdapter.refreshAllDataWith(data)
     }
 
     private fun presenterInit() {
@@ -72,9 +81,11 @@ class StoreRankingFragment : Fragment(), StoreRankingContract.View {
     }
 
     private fun viewInit() {
+        val ctx = activity!!
+        storeRankingRVAdapter = StoreRankingRVAdapter(ctx)
+
         rv_item_store_ranking_frag_list.apply {
-            val ctx = activity!!.applicationContext
-            adapter = StoreRankingRVAdapter(ctx, TempData.storeRankings())
+            adapter = storeRankingRVAdapter
             layoutManager = LinearLayoutManager(ctx)
             addItemDecoration(DividerItemDecoration(ctx, DividerItemDecoration.VERTICAL))
         }

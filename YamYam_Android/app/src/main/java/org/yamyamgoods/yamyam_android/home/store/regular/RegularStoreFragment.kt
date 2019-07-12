@@ -20,6 +20,13 @@ import org.yamyamgoods.yamyam_android.util.TempData
 
 class RegularStoreFragment : Fragment(), RegularStoreContract.View {
 
+    companion object {
+        private var instance: RegularStoreFragment? = null
+
+        fun getInstance(): RegularStoreFragment = instance
+            ?: RegularStoreFragment().apply { instance = this }
+    }
+
     override lateinit var presenter: RegularStoreContract.Presenter
 
     private lateinit var regularStoreRVAdapter: RegularStoreRVAdapter
@@ -77,5 +84,14 @@ class RegularStoreFragment : Fragment(), RegularStoreContract.View {
             layoutManager = LinearLayoutManager(ctx)
             addItemDecoration(DividerItemDecoration(ctx, DividerItemDecoration.VERTICAL))
         }
+    }
+
+    fun refreshDataList() {
+        val size = regularStoreRVAdapter.itemCount
+        regularStoreRVAdapter.dataList.clear()
+        regularStoreRVAdapter.notifyItemRangeRemoved(0, size)
+        presenter.getRegularStoreList()
+
+        Log.v("Malibin Debug", "Bookmark Frag refreshDataList() called")
     }
 }

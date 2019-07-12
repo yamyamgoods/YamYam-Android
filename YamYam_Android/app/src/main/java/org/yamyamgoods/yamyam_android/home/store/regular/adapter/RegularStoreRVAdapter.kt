@@ -16,7 +16,7 @@ import org.yamyamgoods.yamyam_android.dataclass.StoreData
 
 class RegularStoreRVAdapter(private val ctx: Context) : RecyclerView.Adapter<RegularStoreRVAdapter.Holder>() {
 
-    private val dataList = ArrayList<StoreData>()
+    val dataList = ArrayList<StoreData>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val view: View = LayoutInflater.from(ctx).inflate(R.layout.rv_item_regular_store, parent, false)

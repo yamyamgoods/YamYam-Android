@@ -11,7 +11,7 @@ class StoreTabFragmentStatePagerAdapter(fm: FragmentManager, private val fragmen
 
         when (position) {
             0 -> return StoreRankingFragment()
-            1 -> return RegularStoreFragment()
+            1 -> return RegularStoreFragment.getInstance()
             else -> return null
         }
     }

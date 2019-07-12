@@ -1,6 +1,7 @@
 package org.yamyamgoods.yamyam_android.home.store.ranking
 
 import org.yamyamgoods.yamyam_android.dataclass.StoreCategory
+import org.yamyamgoods.yamyam_android.dataclass.StoreData
 import org.yamyamgoods.yamyam_android.util.BasePresenter
 import org.yamyamgoods.yamyam_android.util.BaseView
 
@@ -17,6 +18,7 @@ interface StoreRankingContract {
 
         fun setStoreCategory(data: List<StoreCategory>)
 
+        fun setStoreRankingList(data: List<StoreData>)
     }
 
     interface Presenter : BasePresenter {
