@@ -1,6 +1,7 @@
 package org.yamyamgoods.yamyam_android.reviewdetail
 
 import android.app.Activity
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
@@ -10,12 +11,14 @@ import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_review_detail.*
+import org.jetbrains.anko.startActivity
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.dataclass.ReviewData
 import org.yamyamgoods.yamyam_android.network.ApplicationController
@@ -25,6 +28,8 @@ import org.yamyamgoods.yamyam_android.network.get.GetReviewDetailResponse
 import org.yamyamgoods.yamyam_android.network.get.ReviewCommentData
 import org.yamyamgoods.yamyam_android.network.post.PostCommentWriteRequestData
 import org.yamyamgoods.yamyam_android.network.post.PostReviewLikeData
+import org.yamyamgoods.yamyam_android.review.Data.PhotoZoomInData
+import org.yamyamgoods.yamyam_android.review.PhotoZoomInActivity
 import org.yamyamgoods.yamyam_android.reviewdetail.adapter.ReviewDetailRVAdapter
 import retrofit2.Call
 import retrofit2.Callback
@@ -41,6 +46,8 @@ class ReviewDetailActivity : AppCompatActivity() {
     }
 
     var dataList: ArrayList<ReviewCommentData> = ArrayList()
+
+    var likeCount: Int = 0
 
     lateinit var reviewDetailRVAdapter: ReviewDetailRVAdapter
     lateinit var edtComment: EditText;
@@ -62,6 +69,7 @@ class ReviewDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.v("현주", "들어왔습니다.")
         setContentView(R.layout.activity_review_detail)
         getVariables()
         getReviewDetailResponse()
@@ -69,6 +77,12 @@ class ReviewDetailActivity : AppCompatActivity() {
         btn_review_detail_comment_input.setOnClickListener {
             inputComment()
         }
+        var llImages: LinearLayout = findViewById(R.id.ll_review_detail_review_images) as LinearLayout
+        llImages.setOnClickListener{
+            Log.v("현주", "눌려졌습니다.")
+            photoZoomIn()
+        }
+
     }
 
     private fun getVariables() {
@@ -84,6 +98,16 @@ class ReviewDetailActivity : AppCompatActivity() {
         thumbFlag = rvDTO.review_like_flag
         thumbCount = rvDTO.goods_review_like_count
         commentCount = rvDTO.goods_review_cmt_count
+    }
+
+    // 포토 줌 인 액티비티 띄우기
+    fun photoZoomIn(){
+        var imgList = ArrayList<String>()
+        
+        for (i in 0 until imageUrl.size){
+            imgList.add(imageUrl[i])
+        }
+        this@ReviewDetailActivity.startActivity<PhotoZoomInActivity>("imageList" to imgList)
     }
 
     // 리뷰 상세 보기
@@ -165,6 +189,8 @@ class ReviewDetailActivity : AppCompatActivity() {
 
         Log.v("현주-리뷰상세-thumbFlag: ", thumbFlag.toString())
 
+        likeCount = thumbCount
+
         if (thumbFlag == 1)
             iv_review_detail_review_thumbs.isSelected = true
         if (thumbFlag == 0)
@@ -208,7 +234,8 @@ class ReviewDetailActivity : AppCompatActivity() {
                 postReviewLike(reviewIndex)
                 thumbFlag = 1
                 iv_review_detail_review_thumbs.isSelected = true
-                //holder.tvThumbNum.text = (item.goods_review_like_count + 1).toString()
+                tv_review_detail_review_thumbs_num.text = (likeCount + 1).toString()
+                likeCount = likeCount + 1
             }
 
             // 리뷰 좋아요 취소
@@ -216,14 +243,14 @@ class ReviewDetailActivity : AppCompatActivity() {
                 deleteReviewLike(reviewIndex)
                 thumbFlag = 0
                 iv_review_detail_review_thumbs.isSelected = false
-                //holder.tvThumbNum.text = (item.goods_review_like_count - 1).toString()
+                tv_review_detail_review_thumbs_num.text = (likeCount - 1).toString()
+                likeCount = likeCount - 1
             }
         }
 
         tv_review_detail_review_thumbs_num.text = thumbCount.toString()
         tv_rv_item_best_review_all_comments_num.text = commentCount.toString()
     }
-
 
     // 리뷰 좋아요
     fun postReviewLike(reviewIdx: Int) {

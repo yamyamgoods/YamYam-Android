@@ -102,7 +102,7 @@ class ReviewWriteActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         configureRecyclerView()
-        getReviewWritePage(102) // 리뷰 작성 페이지
+        getReviewWritePage(goodsIdx) // 리뷰 작성 페이지
         configureSaveButton()
     }
 
@@ -114,7 +114,7 @@ class ReviewWriteActivity : AppCompatActivity() {
         goodsName = rgDTO.goods_name
         goodsPrice = rgDTO.goods_price
         goodsRating = rgDTO.goods_rating
-        Log.v("현주", goodsPrice.toString())
+        Log.v("현주", goodsPrice)
     }
 
     private fun configureGoodsTab(){

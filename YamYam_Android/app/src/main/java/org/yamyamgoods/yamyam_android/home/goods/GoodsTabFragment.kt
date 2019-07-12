@@ -43,7 +43,7 @@ class GoodsTabFragment : Fragment(){
 
         //Goods탭 처음에 기획전 화면을 띄우도록
         val transaction: FragmentTransaction = (context as HomeActivity).supportFragmentManager.beginTransaction()
-        transaction.add(R.id.fl_goods_fragment_frag, GoodsExhibitionFragment()).commit()
+        //transaction.add(R.id.fl_goods_fragment_frag, GoodsExhibitionFragment()).commit()
     }
 
     private fun goodsTabResponse(){

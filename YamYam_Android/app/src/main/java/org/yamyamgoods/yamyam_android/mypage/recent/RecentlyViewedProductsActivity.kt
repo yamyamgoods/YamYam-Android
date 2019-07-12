@@ -37,13 +37,6 @@ class RecentlyViewedProductsActivity : AppCompatActivity() {
 
     }
 
-//    private fun viewInit() {
-//        rv_recently_viewed_products_product_list.apply {
-//            adapter = RecentlyViewedProductsRVAdapter(this@RecentlyViewedProductsActivity, TempData.mypageProducts())
-//            layoutManager = GridLayoutManager(this@RecentlyViewedProductsActivity, 3)
-//        }
-//    }
-
     private fun getMypageRecentlyReviewedProductsRequest(lastIndex: Int){
         networkService.getMypageRecentlyViewedProductsResponse(
                 "application/json",

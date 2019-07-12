@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import org.yamyamgoods.yamyam_android.R
@@ -47,5 +48,4 @@ class ReviewDetailRVAdapter(private val ctx: Context, private val dataList: List
         var tvDate: TextView = itemView.findViewById(R.id.tv_rv_item_review_detail_comment_date) as TextView
         var tvContents: TextView = itemView.findViewById(R.id.tv_rv_item_review_detail_comment_contents) as TextView
     }
-
 }
