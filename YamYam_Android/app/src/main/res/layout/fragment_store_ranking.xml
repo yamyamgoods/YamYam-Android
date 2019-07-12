@@ -25,7 +25,14 @@
                     android:background="@drawable/background_hashtag"
                     android:layout_marginStart="16dp"
                     android:textAlignment="center"
-                    android:gravity="center"/>
+                    android:gravity="center"
+                    android:textColor="@color/darkgray"
+                    android:letterSpacing="-0.04"
+                    android:lineSpacingExtra="10sp"
+                    android:fontFamily="@font/notosansdemilight"
+                    android:includeFontPadding="false"
+                    android:textSize="13dp"
+            />
             <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_item_store_ranking_frag_list"
                     android:layout_width="0dp"

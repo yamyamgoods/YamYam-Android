@@ -115,6 +115,7 @@
                 android:id="@+id/tv_rv_item_best_goods_rate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
                 android:text="4.8"
                 android:textSize="12dp"
                 app:layout_constraintBottom_toBottomOf="parent"

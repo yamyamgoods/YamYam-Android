@@ -7,9 +7,21 @@
     <TextView
             android:text="TextView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toBottomOf="parent"
-            android:id="@+id/tv_spinner_category" android:textSize="13dp" android:layout_marginTop="6dp"
-            android:layout_marginBottom="6dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="12dp"
-            android:layout_marginStart="12dp" android:gravity="center"/>
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/tv_spinner_category"
+            android:textSize="13dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="12dp"
+            android:layout_marginStart="12dp"
+            android:gravity="center"
+            android:textColor="@color/darkgray"
+            android:letterSpacing="-0.04"
+            android:lineSpacingExtra="10sp"
+            android:fontFamily="@font/notosansregular"
+            android:includeFontPadding="false"/>
 </android.support.constraint.ConstraintLayout>

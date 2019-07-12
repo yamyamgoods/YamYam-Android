@@ -53,6 +53,8 @@
                         android:textSize="13dp"
                         android:letterSpacing="-0.04"
                         android:lineSpacingExtra="10sp"
+                        android:fontFamily="@font/notosansregular"
+                        android:includeFontPadding="false"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" android:textColor="#a2a2a2"/>
