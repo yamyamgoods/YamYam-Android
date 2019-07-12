@@ -89,6 +89,7 @@ class ReviewWriteActivity : AppCompatActivity() {
         btn_review_write_upload_image.setOnClickListener {
             try {
                 getPermission()
+                //openGallery()
                 configureRecyclerView()
             }
             catch(e:Exception){
@@ -162,7 +163,7 @@ class ReviewWriteActivity : AppCompatActivity() {
         val permissionListener = object : PermissionListener {
             override fun onPermissionGranted() {
                 // 권한 요청 성공
-                openGallery()
+                    openGallery()
             }
 
             override fun onPermissionDenied(deniedPermissions: ArrayList<String>) {
@@ -170,12 +171,19 @@ class ReviewWriteActivity : AppCompatActivity() {
                 Toast.makeText(this@ReviewWriteActivity, "갤러리 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show()
             }
         }
-        TedPermission.with(this)
-            .setPermissionListener(permissionListener)
-            .setRationaleMessage(getString(R.string.txt_permission2))
-            .setDeniedMessage(getString(R.string.txt_permission1))
-            .setPermissions(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.CAMERA)
-            .check()
+        try{
+            Log.v("현주", "들어옴")
+            TedPermission.with(this@ReviewWriteActivity)
+                .setPermissionListener(permissionListener)
+                .setRationaleMessage(getString(R.string.txt_permission2))
+                .setDeniedMessage(getString(R.string.txt_permission1))
+                .setPermissions(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.CAMERA)
+                .check()
+        }catch(e: java.lang.Exception){
+            Log.v("현주", "권한 설정 실패")
+            toast("권한 설정이 필요합니다.")
+        }
+
     }
 
     fun openGallery() {

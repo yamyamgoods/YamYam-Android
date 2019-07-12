@@ -77,12 +77,16 @@ class ReviewDetailActivity : AppCompatActivity() {
         btn_review_detail_comment_input.setOnClickListener {
             inputComment()
         }
+
+        sl_best_review_refresh.setOnRefreshListener{
+            getReviewDetailResponse()
+            sl_best_review_refresh.isRefreshing = false
+        }
         var llImages: LinearLayout = findViewById(R.id.ll_review_detail_review_images) as LinearLayout
         llImages.setOnClickListener{
             Log.v("현주", "눌려졌습니다.")
             photoZoomIn()
         }
-
     }
 
     private fun getVariables() {
