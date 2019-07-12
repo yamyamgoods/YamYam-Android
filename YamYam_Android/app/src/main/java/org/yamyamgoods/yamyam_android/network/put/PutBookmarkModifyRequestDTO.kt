@@ -8,9 +8,9 @@ import org.yamyamgoods.yamyam_android.dataclass.SelectedOption
  */
 
 data class PutBookmarkModifyRequestDTO(
-    val goodsScrapIdx: String,
+    val goodsScrapIdx: Int,
     val goodsIdx: Int,
     val goodsScrapPrice: Int,
-    val label: String,
+    val goodsScrapLabel: String,
     var options: List<SelectedOption>?
 )

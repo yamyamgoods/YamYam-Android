@@ -34,6 +34,7 @@ class BookmarkOptionsRVAdapter(
     var selectedOptionsMap: Map<String, String>
     var basePrice = data.goods_price.replace(",", "").toInt()
     var totalPrice = -1
+    var oneTotalPrice = basePrice
 
     init {
         dataList.addAll(data.goods_option_data)
@@ -63,10 +64,6 @@ class BookmarkOptionsRVAdapter(
             holder.optionDetails = optionList
             holder.optionMap = optionMap
 
-            Log.v(
-                "Malibin Debug",
-                "currentOptionDetailName : $currentOptionDetailName , currentOptionDetailValue : $currentOptionDetailValue"
-            )
             holder.currentOptionDetail = ProductOptionDetail(currentOptionDetailName!!, currentOptionDetailValue!!)
 
             holder.optionNameTextView.text = it.goods_option_name
@@ -76,9 +73,19 @@ class BookmarkOptionsRVAdapter(
 
             val optionIdx = optionList.indexOf(currentOptionDetailName)
             holder.setSpinnerItem(optionIdx)
+            oneTotalPrice += currentOptionDetailValue
+            dialog.oneTotalPrice = oneTotalPrice
             holder.setSpinnerListener()
+
+
         }
+
+        Log.v("Malibin Debug", "oneTotalPrice: $oneTotalPrice")
+        Log.v("Malibin Debug", "currunt Price : $totalPrice, basePrice : $basePrice")
         Log.v("Malibin Debug", "onBindViewHolder : $selectedOptions")
+        Log.v("Malibin Debug", "dialog.selectedOptions : ${dialog.selectedOptions}")
+        Log.v("Malibin Debug", "dialog.oneTotalPrice : ${dialog.oneTotalPrice}")
+        Log.v("Malibin Debug", "dialog.productQuantity : ${dialog.productQuantity}")
     }
 
     private fun getOptionValueMap(list: List<ProductOptionDetail>): Map<String, Int> {
@@ -163,6 +170,9 @@ class BookmarkOptionsRVAdapter(
 
             Log.v("Malibin Debug", "currunt Price : $totalPrice, basePrice : $basePrice")
             Log.v("Malibin Debug", "onItemSelected : $selectedOptions")
+            Log.v("Malibin Debug", "dialog.selectedOptions : ${dialog.selectedOptions}")
+            Log.v("Malibin Debug", "dialog.oneTotalPrice : ${dialog.oneTotalPrice}")
+            Log.v("Malibin Debug", "dialog.productQuantity : ${dialog.productQuantity}")
         }
     }
 }

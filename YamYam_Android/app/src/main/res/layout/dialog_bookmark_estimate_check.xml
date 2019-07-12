@@ -125,19 +125,19 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <EditText
-                        android:id="@+id/et_bookmark_option_dialog_amount"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:background="@android:color/transparent"
-                        android:ems="10"
-                        android:gravity="center"
-                        android:inputType="textPersonName"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                            android:id="@+id/et_bookmark_option_dialog_amount"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:background="@android:color/transparent"
+                            android:ems="10"
+                            android:gravity="center"
+                            android:inputType="number"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
 
                     <ImageView
                         android:id="@+id/imageView10"

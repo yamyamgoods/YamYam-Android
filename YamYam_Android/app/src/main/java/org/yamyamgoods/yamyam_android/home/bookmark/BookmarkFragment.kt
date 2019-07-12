@@ -94,5 +94,7 @@ class BookmarkFragment : Fragment(), BookmarkContract.View {
         bookmarkRVAdapter.dataList.clear()
         bookmarkRVAdapter.notifyItemRangeRemoved(0,size)
         presenter.getBookmarkData()
+
+        Log.v("Malibin Debug", "Bookmark Frag refreshDataList() called")
     }
 }
