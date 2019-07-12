@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import org.jetbrains.anko.imageResource
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.dataclass.BookmarkData
+import org.yamyamgoods.yamyam_android.home.bookmark.BookmarkActivity
 import org.yamyamgoods.yamyam_android.home.bookmark.BookmarkContract
 import org.yamyamgoods.yamyam_android.home.bookmark.dialog.BookmarkOptionDialog
 import org.yamyamgoods.yamyam_android.util.dp2px
@@ -81,6 +82,9 @@ class BookmarkRVAdapter(private val ctx: Context, private val presenter: Bookmar
     fun deleteBookmark(bookmarkData: BookmarkData) {
         dataList.remove(bookmarkData)
         notifyDataSetChanged()
+        if (ctx is BookmarkActivity && dataList.isEmpty()) {
+            ctx.showNoItemView()
+        }
     }
 
     private fun getDynamicImageWidth(): Int {
