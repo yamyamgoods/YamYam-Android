@@ -22,18 +22,23 @@ import org.yamyamgoods.yamyam_android.productdetail.ProductDetailActivity
  * on 7월 10, 2019
  */
 
-class BookmarkOptionsRVAdapter(private val ctx: Context, private val data: BookmarkItemOption) :
+class BookmarkOptionsRVAdapter(
+    private val ctx: Context,
+    private val data: BookmarkItemOption,
+    private val dialog: BookmarkOptionDialog
+) :
     RecyclerView.Adapter<BookmarkOptionsRVAdapter.Holder>() {
 
     var dataList = ArrayList<ProductOption>()
     var selectedOptions = ArrayList<SelectedOption>()
+    var selectedOptionsMap: Map<String, String>
     var basePrice = data.goods_price.replace(",", "").toInt()
     var totalPrice = -1
 
     init {
         dataList.addAll(data.goods_option_data)
         selectedOptions.addAll(data.goods_scrap_option_data)
-
+        selectedOptionsMap = getSelectedOptionsMap(selectedOptions)
         Log.v("Malibin Debug", "init{} selectedOptions : $selectedOptions")
 
     }
@@ -50,16 +55,28 @@ class BookmarkOptionsRVAdapter(private val ctx: Context, private val data: Bookm
         dataList[position].let {
             val optionMap = getOptionValueMap(it.goods_option_detail)
             val optionList = getOptionValueList(it.goods_option_detail)
+            val optionName = it.goods_option_name
+            val currentOptionDetailName = selectedOptionsMap[optionName]
+            val currentOptionDetailValue = optionMap[currentOptionDetailName]
 
-            holder.optionName = it.goods_option_name
+            holder.optionName = optionName
             holder.optionDetails = optionList
             holder.optionMap = optionMap
-            holder.currentOptionDetail = it.goods_option_detail[0]
+
+            Log.v(
+                "Malibin Debug",
+                "currentOptionDetailName : $currentOptionDetailName , currentOptionDetailValue : $currentOptionDetailValue"
+            )
+            holder.currentOptionDetail = ProductOptionDetail(currentOptionDetailName!!, currentOptionDetailValue!!)
 
             holder.optionNameTextView.text = it.goods_option_name
             holder.optionSpinner.apply {
                 adapter = ArrayAdapter(ctx, R.layout.spinner_item_option, R.id.tv_spinner_option, optionList)
             }
+
+            val optionIdx = optionList.indexOf(currentOptionDetailName)
+            holder.setSpinnerItem(optionIdx)
+            holder.setSpinnerListener()
         }
         Log.v("Malibin Debug", "onBindViewHolder : $selectedOptions")
     }
@@ -83,6 +100,14 @@ class BookmarkOptionsRVAdapter(private val ctx: Context, private val data: Bookm
         selectedOptions.add(newOption)
     }
 
+    private fun getSelectedOptionsMap(options: List<SelectedOption>): Map<String, String> {
+        val result = HashMap<String, String>()
+        for (option in options) {
+            result[option.optionName] = option.optionValue
+        }
+        return result
+    }
+
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         lateinit var optionName: String
@@ -101,7 +126,7 @@ class BookmarkOptionsRVAdapter(private val ctx: Context, private val data: Bookm
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                if(isFirstSpinner){
+                if (isFirstSpinner) {
                     isFirstSpinner = false
                     return
                 }
@@ -109,9 +134,11 @@ class BookmarkOptionsRVAdapter(private val ctx: Context, private val data: Bookm
             }
         }
 
-        init {
-            optionSpinner.isSelected = false
-            optionSpinner.setSelection(0, false)
+        fun setSpinnerItem(optionIdx: Int) {
+            optionSpinner.setSelection(optionIdx)
+        }
+
+        fun setSpinnerListener() {
             optionSpinner.onItemSelectedListener = spinnerListener
         }
 
@@ -131,8 +158,8 @@ class BookmarkOptionsRVAdapter(private val ctx: Context, private val data: Bookm
 
             totalPrice = totalPrice - oldOptionDetailPrice!! + newOptionDetailPrice
 
-            //(ctx as ProductDetailActivity).refreshOptionData(totalPrice, selectedOptions)
-            //ctx.notifyTotalPrice()
+            dialog.refreshOptionData(totalPrice, selectedOptions)
+            dialog.notifyTotalPrice()
 
             Log.v("Malibin Debug", "currunt Price : $totalPrice, basePrice : $basePrice")
             Log.v("Malibin Debug", "onItemSelected : $selectedOptions")

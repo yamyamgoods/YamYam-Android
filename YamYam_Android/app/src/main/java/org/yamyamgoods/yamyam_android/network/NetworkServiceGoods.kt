@@ -6,6 +6,8 @@ import org.yamyamgoods.yamyam_android.network.delete.DeleteBookmarkResponseData
 import org.yamyamgoods.yamyam_android.network.delete.DeleteReviewLikeResponseData
 import org.yamyamgoods.yamyam_android.network.get.*
 import org.yamyamgoods.yamyam_android.network.post.*
+import org.yamyamgoods.yamyam_android.network.put.PutBookmarkModifyRequestDTO
+import org.yamyamgoods.yamyam_android.network.put.PutBookmarkModifyResponseData
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -198,4 +200,12 @@ interface NetworkServiceGoods {
         @Header("Authorization") token: String?,
         @Path("goodsScrapId") goodsScrapId: Int
     ): Call<GetBookmarkItemOptionResponseData>
+
+    // 북마크 탭 견적 수정 요청
+    @PUT("/goods/scrap")
+    fun putBookmarkModifyRequest(
+        @Header("Content-Type") contentType: String = "application/json",
+        @Header("Authorization") token: String?,
+        @Body body: PutBookmarkModifyRequestDTO
+    ): Call<PutBookmarkModifyResponseData>
 }

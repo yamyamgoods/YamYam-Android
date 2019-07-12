@@ -4,10 +4,13 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.text.Editable
 import android.text.TextUtils
+import android.text.TextWatcher
 import android.util.Log
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.dialog_bookmark_estimate_check.*
+import org.jetbrains.anko.toast
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.dataclass.BookmarkData
 import org.yamyamgoods.yamyam_android.dataclass.ProductOptionDetail
@@ -15,6 +18,8 @@ import org.yamyamgoods.yamyam_android.dataclass.SelectedOption
 import org.yamyamgoods.yamyam_android.network.ApplicationController
 import org.yamyamgoods.yamyam_android.network.get.BookmarkItemOption
 import org.yamyamgoods.yamyam_android.network.get.GetBookmarkItemOptionResponseData
+import org.yamyamgoods.yamyam_android.network.put.PutBookmarkModifyRequestDTO
+import org.yamyamgoods.yamyam_android.network.put.PutBookmarkModifyResponseData
 import org.yamyamgoods.yamyam_android.util.User
 import retrofit2.Call
 import retrofit2.Callback
@@ -30,6 +35,11 @@ import java.util.*
 class BookmarkOptionDialog(private val ctx: Context, private val bookmarkIdx: Int) : Dialog(ctx) {
 
     var totalPrice = -1
+
+    private var oneTotalPrice = -1
+    private var productQuantity = 1
+    private var selectedOptions: List<SelectedOption>? = null
+
     lateinit var bookmarkData: BookmarkData
 
     private val goodsRepository = ApplicationController.networkServiceGoods
@@ -47,23 +57,65 @@ class BookmarkOptionDialog(private val ctx: Context, private val bookmarkIdx: In
     private fun viewInit() {
         window!!.setBackgroundDrawableResource(R.color.transparent)
         window!!.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+
+        et_bookmark_option_dialog_amount.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                if (s!!.isEmpty()) {
+                    productQuantity = 0
+                    notifyTotalPrice()
+                    return
+                }
+                productQuantity = s.toString().toInt()
+                notifyTotalPrice()
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+        })
     }
 
     private fun setOptionData(data: BookmarkItemOption) {
-        optionsRVAdapter = BookmarkOptionsRVAdapter(ctx, data)
+        val amount = getAmountData(data.goods_scrap_option_data)
+        et_bookmark_option_dialog_amount.setText(amount.toString())
+        et_bookmark_option_dialog_tag.setText(bookmarkData.goods_scrap_label)
+
+        optionsRVAdapter = BookmarkOptionsRVAdapter(ctx, data, this).apply {
+            this.totalPrice = this@BookmarkOptionDialog.totalPrice / amount
+        }
         rv_bookmark_option_dialog_option_list.apply {
             adapter = optionsRVAdapter
             layoutManager = LinearLayoutManager(ctx)
         }
-        val amount = getAmountData(data.goods_scrap_option_data)
-        et_bookmark_option_dialog_amount.setText(amount.toString())
-        et_bookmark_option_dialog_tag.setText(bookmarkData.goods_scrap_label)
     }
 
     private fun bindViewServerData() {
         tv_bookmark_option_dialog_total_price.text = toNumberFormat(totalPrice)
         tv_bookmark_option_dialog_main_name.text = bookmarkData.getStoreGoodsName()
+    }
 
+    private fun toNumberFormat(price: Int): String = NumberFormat.getNumberInstance(Locale.US).format(price)
+
+    private fun getAmountData(data: List<SelectedOption>): Int {
+        for (option in data) {
+            if (option.optionName == "수량") {
+                return option.optionValue.replace(",", "").toInt()
+            }
+        }
+        return -1
+    }
+
+    fun refreshOptionData(totalPrice: Int, selectedOptions: List<SelectedOption>) {
+        this.oneTotalPrice = totalPrice
+        this.selectedOptions = selectedOptions
+    }
+
+    fun notifyTotalPrice() {
+        val totalPrice = toNumberFormat(oneTotalPrice * productQuantity)
+        tv_bookmark_option_dialog_total_price.text = totalPrice
     }
 
     private fun getServerData() {
@@ -86,15 +138,22 @@ class BookmarkOptionDialog(private val ctx: Context, private val bookmarkIdx: In
         })
     }
 
-    private fun toNumberFormat(price: Int): String = NumberFormat.getNumberInstance(Locale.US).format(price)
+    private fun scrapModifyRequest(body: PutBookmarkModifyRequestDTO) {
+        goodsRepository.putBookmarkModifyRequest(token = userToken, body = body)
+            .enqueue(object : Callback<PutBookmarkModifyResponseData> {
+                override fun onFailure(call: Call<PutBookmarkModifyResponseData>, t: Throwable) {
+                    Log.v("Malibin Debug", "t : ${t.message}, stack : ${TextUtils.join("\n", t.stackTrace)}")
+                }
 
-    private fun getAmountData(data: List<SelectedOption>): Int {
-        for (option in data) {
-            if (option.optionName == "수량") {
-                return option.optionValue.replace(",", "").toInt()
-            }
-        }
-        return -1
+                override fun onResponse(
+                    call: Call<PutBookmarkModifyResponseData>,
+                    response: Response<PutBookmarkModifyResponseData>
+                ) {
+                    if (response.isSuccessful) {
+                        ctx.toast("견적 수정이 완료되었습니다!")
+                    }
+                }
+            })
     }
 
 
