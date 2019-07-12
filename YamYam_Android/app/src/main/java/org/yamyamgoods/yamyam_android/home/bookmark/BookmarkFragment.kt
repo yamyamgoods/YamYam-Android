@@ -101,4 +101,9 @@ class BookmarkFragment : Fragment(), BookmarkContract.View {
 
         Log.v("Malibin Debug", "Bookmark Frag refreshDataList() called")
     }
+
+    fun showNoItemView(){
+        rv_bookmark_frag_list.visibility = View.GONE
+        cl_bookmark_frag_no_list.visibility = View.VISIBLE
+    }
 }

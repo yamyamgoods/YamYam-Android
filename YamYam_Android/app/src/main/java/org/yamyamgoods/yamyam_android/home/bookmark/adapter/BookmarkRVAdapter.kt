@@ -13,8 +13,10 @@ import com.bumptech.glide.Glide
 import org.jetbrains.anko.imageResource
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.dataclass.BookmarkData
+import org.yamyamgoods.yamyam_android.home.HomeActivity
 import org.yamyamgoods.yamyam_android.home.bookmark.BookmarkActivity
 import org.yamyamgoods.yamyam_android.home.bookmark.BookmarkContract
+import org.yamyamgoods.yamyam_android.home.bookmark.BookmarkFragment
 import org.yamyamgoods.yamyam_android.home.bookmark.dialog.BookmarkOptionDialog
 import org.yamyamgoods.yamyam_android.util.dp2px
 import org.yamyamgoods.yamyam_android.util.getScreenWidth
@@ -56,7 +58,6 @@ class BookmarkRVAdapter(private val ctx: Context, private val presenter: Bookmar
             }
 
             holder.btnBookmark.setOnClickListener {
-                Log.v("Malibin Debug", " btnBookmark.setOnClickListener : position : $position")
                 presenter.deleteBookmark(item.goods_scrap_idx, item)
             }
 
@@ -80,10 +81,14 @@ class BookmarkRVAdapter(private val ctx: Context, private val presenter: Bookmar
     }
 
     fun deleteBookmark(bookmarkData: BookmarkData) {
+        val position = dataList.indexOf(bookmarkData)
         dataList.remove(bookmarkData)
-        notifyDataSetChanged()
+        notifyItemRemoved(position)
         if (ctx is BookmarkActivity && dataList.isEmpty()) {
             ctx.showNoItemView()
+        }
+        if(ctx is HomeActivity && dataList.isEmpty()){
+            BookmarkFragment.getInstance().showNoItemView()
         }
     }
 
