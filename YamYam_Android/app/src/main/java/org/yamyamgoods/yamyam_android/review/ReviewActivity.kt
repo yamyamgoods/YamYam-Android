@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.activity_review.*
 import kotlinx.android.synthetic.main.top_navigation_tab_review.*
 import org.jetbrains.anko.startActivity
 import org.yamyamgoods.yamyam_android.R
+import org.yamyamgoods.yamyam_android.productdetail.dto.ProductDetailShortDTO
 import org.yamyamgoods.yamyam_android.review.adapter.ReviewStatePagerAdapter
 import org.yamyamgoods.yamyam_android.reviewwrite.ReviewWriteActivity
 
@@ -23,9 +24,9 @@ class ReviewActivity : AppCompatActivity() {
         configureMainTab()
 
         btn_review_tab_write.setOnClickListener{
-          this@ReviewActivity.startActivity<ReviewWriteActivity>(
-                // 리뷰 작성 페이지로 넘기기
-          )
+            var rgDTO : ProductDetailShortDTO = intent.getParcelableExtra("reviewGoods")
+
+          this@ReviewActivity.startActivity<ReviewWriteActivity>("reviewGoods" to rgDTO)
         }
     }
 

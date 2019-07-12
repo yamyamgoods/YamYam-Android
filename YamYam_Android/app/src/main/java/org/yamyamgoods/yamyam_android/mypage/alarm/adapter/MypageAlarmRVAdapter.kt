@@ -33,12 +33,12 @@ class MypageAlarmRVAdapter(private val ctx: Context, var dataList: List<AlarmLis
 
         dataList[position].let { item ->
             //알람 목록에 있는 빨간 색
-            if (item.alarm_check_flag == 0)   //읽지 않음
-                holder.ivReddot.isSelected = true
-            if (item.alarm_check_flag == 1) {    //읽음
-                holder.ivReddot.isSelected = false
-                setInvisible(holder.ivReddot)
-            }
+//            if (item.alarm_check_flag == 0)   //읽지 않음
+//                holder.ivReddot.isSelected = true
+//            if (item.alarm_check_flag == 1) {    //읽음
+//                holder.ivReddot.isSelected = false
+//                setInvisible(holder.ivReddot)
+//            }
 
             holder.alarmContents.text = item.alarm_message
             holder.date.text = item.alarm_date_time

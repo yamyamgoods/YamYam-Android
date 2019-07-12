@@ -1,6 +1,5 @@
 package org.yamyamgoods.yamyam_android.reviewwrite
 
-import android.app.Activity
 import android.content.ClipData
 import android.content.Context
 import android.content.Intent
@@ -10,7 +9,6 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.text.Editable
@@ -18,19 +16,26 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
 import android.widget.Toast
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import kotlinx.android.synthetic.main.activity_review_write.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.jetbrains.anko.ctx
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.network.ApplicationController
 import org.yamyamgoods.yamyam_android.network.NetworkServiceGoods
 import org.yamyamgoods.yamyam_android.network.get.GetReviewWritePageResponse
 import org.yamyamgoods.yamyam_android.network.get.GetReviewWritePageResponseData
 import org.yamyamgoods.yamyam_android.network.post.PostReviewWriteResponse
+import org.yamyamgoods.yamyam_android.productdetail.dto.ProductDetailShortDTO
 import org.yamyamgoods.yamyam_android.reviewwrite.adapter.ReviewWriteUploadImagesRVAdapter
 import org.yamyamgoods.yamyam_android.reviewwrite.dialog.DialogReviewWriteSave
 import retrofit2.Call
@@ -52,9 +57,16 @@ class ReviewWriteActivity : AppCompatActivity() {
         ApplicationController.networkServiceGoods
     }
 
+    var goodsIdx: Int = -1
+    lateinit var goodsImg: String
+    lateinit var storeName: String
+    lateinit var goodsName: String
+    lateinit var goodsPrice: String
+    var goodsRating: Float? = 0f
+
     var images = ArrayList<MultipartBody.Part>()
     lateinit var getReviewWritePageResponseData: GetReviewWritePageResponseData
-
+    var options: RequestOptions = RequestOptions().transform(CenterCrop(), RoundedCorners(10))
     private var PICTURE_REQUEST_CODE: Int = 100
 
     lateinit var clipData: ClipData
@@ -68,6 +80,10 @@ class ReviewWriteActivity : AppCompatActivity() {
 
         btn_review_write_save.isEnabled = false
 
+        getVariables()
+
+        configureGoodsTab()
+
         // 사진넣기 버튼 눌렀을 때
         btn_review_write_upload_image.setOnClickListener {
             getPermission()
@@ -79,15 +95,61 @@ class ReviewWriteActivity : AppCompatActivity() {
         }
 
         btn_review_write_save.setOnClickListener {
-            saveReview(102, images)
+            saveReview(goodsIdx, images)
         }
     }
 
     override fun onResume() {
         super.onResume()
         configureRecyclerView()
-        getReviewWritePage(102) // 리뷰 작성 페이지
+        getReviewWritePage(goodsIdx) // 리뷰 작성 페이지
         configureSaveButton()
+    }
+
+    private fun getVariables(){
+        var rgDTO : ProductDetailShortDTO = intent.getParcelableExtra("reviewGoods")
+        goodsIdx = rgDTO.goods_idx
+        goodsImg = rgDTO.goods_img
+        storeName = rgDTO.store_name
+        goodsName = rgDTO.goods_name
+        goodsPrice = rgDTO.goods_price
+        goodsRating = rgDTO.goods_rating
+        Log.v("현주", goodsPrice)
+    }
+
+    private fun configureGoodsTab(){
+        var productStarRate: List<ImageView> = listOf(
+            findViewById(R.id.iv_review_write_product_star1),
+            findViewById(R.id.iv_review_write_product_star2),
+            findViewById(R.id.iv_review_write_product_star3),
+            findViewById(R.id.iv_review_write_product_star4),
+            findViewById(R.id.iv_review_write_product_star5)
+        )
+
+        Glide.with(this@ReviewWriteActivity)
+            .load(goodsImg)
+            .apply(options)
+            .into(iv_review_write_product)
+        tv_review_write_store_name.text = storeName
+        tv_review_write_product_name.text = goodsName
+        tv_review_write_product_price.text = goodsPrice
+
+        if (goodsPrice == "0"){
+            setInvisible(tv_review_write_price_won)
+        }
+
+        tv_review_write_products_star_rating.text = roundString(goodsRating)
+        var productStarCount = goodsRating
+        var intStarCount: Int = productStarCount!!.toInt()
+        var remainder: Float = goodsRating!! - intStarCount.toFloat()
+
+        for (i in 0 until (intStarCount)) {
+            productStarRate[i].setImageResource(R.drawable.img_goods_star)
+            if (0.5 > remainder && remainder >= 0)
+                continue
+            if (1 > remainder && remainder >= 0.5)
+                productStarRate[i + 1].setImageResource(R.drawable.img_goods_star_half)
+        }
     }
 
     fun getPermission() {
@@ -140,13 +202,18 @@ class ReviewWriteActivity : AppCompatActivity() {
                             val bitmap = BitmapFactory.decodeStream(inputStream, null, options)
                             val byteArrayOutputStream = ByteArrayOutputStream()
                             bitmap.compress(Bitmap.CompressFormat.JPEG, 20, byteArrayOutputStream)
-                            val photoBody = RequestBody.create(MediaType.parse("image/jpg"), byteArrayOutputStream.toByteArray())
+                            val photoBody =
+                                RequestBody.create(MediaType.parse("image/jpg"), byteArrayOutputStream.toByteArray())
 
 
                             // 클립데이터의 uri을 리사이클러뷰 데이터 클래스에 추가하기.
                             uploadImageList.add(ReviewWriteUploadImagesItem(1, item.uri.toString()))
-                            images.add(MultipartBody.Part.createFormData("img",
-                                File(selectedPictureUri.toString()).name , photoBody))//여기의 image는 키값의 이름하고 같아야함
+                            images.add(
+                                MultipartBody.Part.createFormData(
+                                    "img",
+                                    File(selectedPictureUri.toString()).name, photoBody
+                                )
+                            )//여기의 image는 키값의 이름하고 같아야함
                         }
                     }
                 } else {
@@ -156,11 +223,18 @@ class ReviewWriteActivity : AppCompatActivity() {
                     val bitmap = BitmapFactory.decodeStream(inputStream, null, options)
                     val byteArrayOutputStream = ByteArrayOutputStream()
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 20, byteArrayOutputStream)
-                    val photoBody = RequestBody.create(MediaType.parse("image/jpg"), byteArrayOutputStream.toByteArray())
+                    val photoBody =
+                        RequestBody.create(MediaType.parse("image/jpg"), byteArrayOutputStream.toByteArray())
 
                     // 클립데이터의 uri을 리사이클러뷰 데이터 클래스에 추가하기.
                     uploadImageList.add(ReviewWriteUploadImagesItem(1, uri.toString()))
-                    images.add(MultipartBody.Part.createFormData("img", File(selectedPictureUri.toString()).name, photoBody))//여기의 image는 키값의 이름하고 같아야함
+                    images.add(
+                        MultipartBody.Part.createFormData(
+                            "img",
+                            File(selectedPictureUri.toString()).name,
+                            photoBody
+                        )
+                    )//여기의 image는 키값의 이름하고 같아야함
                 }
             }
         } catch (e: Exception) {
@@ -182,7 +256,7 @@ class ReviewWriteActivity : AppCompatActivity() {
     fun configureRecyclerView() {
         setVisible(cl_rv_review_write_image)
         rv_review_write_image_list.apply {
-            adapter = ReviewWriteUploadImagesRVAdapter(this@ReviewWriteActivity, uploadImageList)
+            adapter = ReviewWriteUploadImagesRVAdapter(this@ReviewWriteActivity, uploadImageList, images)
             layoutManager = LinearLayoutManager(this@ReviewWriteActivity, LinearLayoutManager.HORIZONTAL, false)
         }
     }
@@ -227,7 +301,7 @@ class ReviewWriteActivity : AppCompatActivity() {
                         //굿즈의 옵션 받아옴
                         var option = getReviewWritePageResponseData.goods_option_name;
                         var optionLength = option.size;
-                        var optionString = "";
+                        var optionString = ""
 
                         for (i in 0 until optionLength) {
                             if (i == optionLength - 1) {
@@ -248,13 +322,14 @@ class ReviewWriteActivity : AppCompatActivity() {
     fun saveReview(goodsIdx: Int, img: ArrayList<MultipartBody.Part>) {
         //서버랑 통신.
         // 별점, 리뷰 스트링, 사진 저장
-        var rating_data :Int = rb_review_write_star_rate.rating.toInt()
-        var content_data :String = edt_review_write.text.toString()
+        var rating_data: Int = rb_review_write_star_rate.rating.toInt()
+        var content_data: String = edt_review_write.text.toString()
 
-        var content =  RequestBody.create(MediaType.parse("text/plain"), content_data)
+        var content = RequestBody.create(MediaType.parse("text/plain"), content_data)
 
         networkService.postReviewWriteRequest(
-            token,goodsIdx,content,rating_data,img).enqueue(object : Callback<PostReviewWriteResponse> {
+            token, goodsIdx, content, rating_data, img
+        ).enqueue(object : Callback<PostReviewWriteResponse> {
             override fun onFailure(call: Call<PostReviewWriteResponse>, t: Throwable) {
 
             }
@@ -262,17 +337,31 @@ class ReviewWriteActivity : AppCompatActivity() {
             override fun onResponse(call: Call<PostReviewWriteResponse>, response: Response<PostReviewWriteResponse>) {
                 if (response.isSuccessful) {
                     //포인트 쌓기 다이얼로그 띄우기
-                    var imageBtnDialog = DialogReviewWriteSave(this@ReviewWriteActivity)
-                    imageBtnDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                    imageBtnDialog.setCanceledOnTouchOutside(false)
-                    imageBtnDialog.show()
+                    btn_review_write_save.setOnClickListener {
+                        var imageBtnDialog = DialogReviewWriteSave(this@ReviewWriteActivity)
+                        imageBtnDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                        imageBtnDialog.setCanceledOnTouchOutside(false)
+                        imageBtnDialog.show()
+                        Log.v("현주", "다이얼로그 띄우기")
+                    }
                 } else {
                 }
             }
         })
     }
+
+    // 소수점 첫째자리까지만 표현하기
+    fun roundString(value: Float?): String {
+        var strFloat: String = String.format("%.1f ", value)
+        return strFloat
+    }
+
+    private fun setVisible(view: View) {
+        view.visibility = View.VISIBLE
+    }
+
+    private fun setInvisible(view: View) {
+        view.visibility = View.INVISIBLE
+    }
 }
 
-private fun setVisible(view: View) {
-    view.visibility = View.VISIBLE
-}

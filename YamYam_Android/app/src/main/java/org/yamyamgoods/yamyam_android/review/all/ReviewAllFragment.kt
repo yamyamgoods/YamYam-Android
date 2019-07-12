@@ -59,30 +59,24 @@ class ReviewAllFragment :Fragment() {
                 }
 
                 override fun onResponse(call: Call<GetReviewResponse>, response: Response<GetReviewResponse>) {
-
                     if (response.isSuccessful){
                         Log.v("현주:response", "통신 성공")
 
                         dataList = response.body()!!.data.review_data
-
                         response.body()?.let {
                             reviewAllRVAdapter = ReviewAllRVAdapter(activity!!, dataList)
-
                             Log.v("ReviewAllFragment", it.data.review_all_count.toString())
                             rv_review_all_list.apply{
                                 adapter = ReviewAllRVAdapter(activity!!, dataList)
                                 layoutManager = LinearLayoutManager(activity!!)
                             }
-
                             num  = it.data.review_all_count
-
                             (activity!! as ReviewActivity).setAllReviewCount(num)
                         }
                         reviewAllRVAdapter.notifyDataSetChanged()
                     }
                 }
             })
-
     }
 
     private fun setRecyclerView(){

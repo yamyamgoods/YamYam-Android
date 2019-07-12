@@ -35,6 +35,7 @@ class BestReviewRVAdapter(private val ctx: Context, var dataList: List<ReviewDat
 
     override fun getItemCount(): Int = dataList.size
 
+    var likeCount: Int = 0
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
 
@@ -52,6 +53,8 @@ class BestReviewRVAdapter(private val ctx: Context, var dataList: List<ReviewDat
                 holder.ivThumb.isSelected = true
             if (item.review_like_flag == 0)
                 holder.ivThumb.isSelected = false
+
+            likeCount = item.goods_review_like_count
 
             for (i in 0 until (item.goods_review_rating)) {
                 holder.starRate[i].setImageResource(R.drawable.icon_colorstar)
@@ -96,7 +99,8 @@ class BestReviewRVAdapter(private val ctx: Context, var dataList: List<ReviewDat
                     fragment.postReviewLike(reviewIndex)
                     item.review_like_flag = 1
                     holder.ivThumb.isSelected = true
-                    holder.tvThumbNum.text = (item.goods_review_like_count + 1).toString()
+                    holder.tvThumbNum.text = (likeCount + 1).toString()
+                    likeCount = likeCount + 1
                 }
 
                 // 리뷰 좋아요 취소
@@ -104,7 +108,8 @@ class BestReviewRVAdapter(private val ctx: Context, var dataList: List<ReviewDat
                     fragment.deleteReviewLike(reviewIndex)
                     item.review_like_flag = 0
                     holder.ivThumb.isSelected = false
-                    holder.tvThumbNum.text = (item.goods_review_like_count - 1).toString()
+                    holder.tvThumbNum.text = (likeCount - 1).toString()
+                    likeCount = likeCount - 1
                 }
             }
         }

@@ -1,7 +1,7 @@
 package org.yamyamgoods.yamyam_android.mypage.recent
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import android.util.Log
 import com.google.gson.Gson
@@ -36,13 +36,6 @@ class RecentlyViewedProductsActivity : AppCompatActivity() {
         getMypageRecentlyReviewedProductsRequest(-1)
 
     }
-
-//    private fun viewInit() {
-//        rv_recently_viewed_products_product_list.apply {
-//            adapter = RecentlyViewedProductsRVAdapter(this@RecentlyViewedProductsActivity, TempData.mypageProducts())
-//            layoutManager = GridLayoutManager(this@RecentlyViewedProductsActivity, 3)
-//        }
-//    }
 
     private fun getMypageRecentlyReviewedProductsRequest(lastIndex: Int){
         networkService.getMypageRecentlyViewedProductsResponse(

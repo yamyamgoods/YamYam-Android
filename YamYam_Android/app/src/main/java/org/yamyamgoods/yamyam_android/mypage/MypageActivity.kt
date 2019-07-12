@@ -70,7 +70,7 @@ class MypageActivity : AppCompatActivity() {
         configureTitleBar()
         editUserNickName()
         getMypageRecentlyReviewedProductsRequest()
-        //getAlarmListResponse()
+        getAlarmListResponse()
         openRecentActivity()
         btn_mypage_alarm.setOnClickListener {
             openAlarmDrawer()
@@ -78,13 +78,6 @@ class MypageActivity : AppCompatActivity() {
         btn_mypage_user_image_edit.setOnClickListener {
             changeProfileImage()
         }
-
-        // 리뷰 작성창 확인하기 위한 임시코드
-        // 나중에 지우기
-//        btn_mypage_notice.setOnClickListener {
-//            var intent = Intent(this@MypageActivity, ReviewWriteActivity::class.java)
-//            startActivity(intent)
-//        }
     }
 
     // 유저 정보 서버 통신
@@ -156,23 +149,25 @@ class MypageActivity : AppCompatActivity() {
 
     // 권한 요청
     fun getPermission() {
-        val permissionListener = object : PermissionListener {
-            override fun onPermissionGranted() {
-                // 권한 요청 성공
-                openGallery()
-            }
+        try {
+            val permissionListener = object : PermissionListener {
+                override fun onPermissionGranted() {
+                    // 권한 요청 성공
+                    openGallery()
+                }
 
-            override fun onPermissionDenied(deniedPermissions: ArrayList<String>) {
-                // 권한 요청 실패
-                Toast.makeText(this@MypageActivity, "갤러리 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show()
+                override fun onPermissionDenied(deniedPermissions: ArrayList<String>) {
+                    // 권한 요청 실패
+                    Toast.makeText(this@MypageActivity, "갤러리 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show()
+                }
             }
-        }
-        TedPermission.with(this)
-            .setPermissionListener(permissionListener)
-            .setRationaleMessage(getString(R.string.txt_permission2))
-            .setDeniedMessage(getString(R.string.txt_permission1))
-            .setPermissions(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.CAMERA)
-            .check()
+            TedPermission.with(this)
+                .setPermissionListener(permissionListener)
+                .setRationaleMessage(getString(R.string.txt_permission2))
+                .setDeniedMessage(getString(R.string.txt_permission1))
+                .setPermissions(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.CAMERA)
+                .check()
+        }catch (e: Exception){}
     }
 
     fun openGallery() {
