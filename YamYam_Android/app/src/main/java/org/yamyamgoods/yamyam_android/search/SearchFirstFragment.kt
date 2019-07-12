@@ -36,7 +36,8 @@ class SearchFirstFragment : Fragment() {
             transaction.replace(R.id.fl_search_act_pager, SearchResultFragment()).commit()
             SearchResultStoreFragment.instance.storeName = "스티커"
             SearchResultGoodsFragment.instance.goodsName = tv_recommend1.text.toString()
-            et_search_act.setText(tv_recommend1.text.toString())
+            //edittext에 text 넣을려고 함
+            //et_search_act.setText(tv_recommend1.text.toString())
         }
         (recommend2 as RelativeLayout).setOnClickListener {
             SearchActivity.instance.clicksearch =  tv_recommend2.text.toString()
