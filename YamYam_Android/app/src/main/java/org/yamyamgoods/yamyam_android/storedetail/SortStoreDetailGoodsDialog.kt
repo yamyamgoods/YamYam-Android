@@ -23,7 +23,7 @@ class SortStoreDetailGoodsDialog(context: Context) : Dialog(context), View.OnCli
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dialog_sort)
-        sort = SearchResultGoodsFragment.instance.sort
+        sort = StoreDetailGoodsFragment.instance.sort
         setView()
         setOnClickListner()
     }
@@ -94,7 +94,7 @@ class SortStoreDetailGoodsDialog(context: Context) : Dialog(context), View.OnCli
         }
 
         btn_dialog_sort_confirm.setOnClickListener {
-            SearchResultGoodsFragment.instance.sort_flag = sort_flag
+            StoreDetailGoodsFragment.instance.sort_flag = sort_flag
             dismiss()
         }
     }

@@ -13,8 +13,10 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestOptions
 import org.jetbrains.anko.imageResource
+import org.jetbrains.anko.startActivity
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.network.get.SearchStoreData
+import org.yamyamgoods.yamyam_android.storedetail.StoreDetailActivity
 
 class SearchResultStoreRecyclerViewAdapter(val ctx: Context, var dataList: ArrayList<SearchStoreData>): RecyclerView.Adapter<SearchResultStoreRecyclerViewAdapter.Holder>(){
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): Holder {
@@ -36,10 +38,23 @@ class SearchResultStoreRecyclerViewAdapter(val ctx: Context, var dataList: Array
         } else{
             holder.like.setImageDrawable(ctx.resources.getDrawable(R.drawable.icon_storegray))
         }
+        holder.whole.setOnClickListener {
+            try{
+                ctx.startActivity<StoreDetailActivity>(
+                    "s_idx" to dataList[position].store_idx,
+                    "title" to dataList[position].store_name,
+                    "image" to dataList[position].store_img,
+                    "hashtag" to dataList[position].hash_tag,
+                    "store_url" to dataList[position].store_url,
+                    "scrap_flag" to dataList[position].store_scrap_flag)
+            } catch (e:Exception){
+            }
+        }
 
     }
 
     inner class Holder(itemView: View): RecyclerView.ViewHolder(itemView){
+        var whole = itemView.findViewById(R.id.btn_rv_item_search_store_whole) as RelativeLayout
         var img = itemView.findViewById(R.id.iv_rv_item_store_search_image) as ImageView
         var name = itemView.findViewById(R.id.tv_rv_item_store_search_name) as TextView
         var tags = itemView.findViewById(R.id.tv_rv_item_store_search_tags) as TextView

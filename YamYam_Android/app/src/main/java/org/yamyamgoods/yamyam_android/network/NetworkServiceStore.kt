@@ -1,12 +1,8 @@
 package org.yamyamgoods.yamyam_android.network
 
-import org.yamyamgoods.yamyam_android.network.delete.DeleteRegularStoreMarkResponseData
-import org.yamyamgoods.yamyam_android.network.get.GetRegularStoreResponseData
-import org.yamyamgoods.yamyam_android.network.get.GetSearchStoreResponse
-import org.yamyamgoods.yamyam_android.network.get.GetStoreCategoryListResponseData
-import org.yamyamgoods.yamyam_android.network.get.GetStoreRankingResponseData
-import org.yamyamgoods.yamyam_android.network.post.PostRegularStoreMarkRequestDTO
-import org.yamyamgoods.yamyam_android.network.post.PostRegularStoreMarkResponseData
+import org.yamyamgoods.yamyam_android.network.get.*
+import org.yamyamgoods.yamyam_android.network.post.*
+import org.yamyamgoods.yamyam_android.network.delete.*
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -59,4 +55,24 @@ interface NetworkServiceStore {
         @Header("Authorization") token: String?,
         @Path("storeIdx") storeIdx: Int
     ): Call<DeleteRegularStoreMarkResponseData>
+
+
+    //업체 굿즈 보기
+    @GET("/store/{storeIdx}/goods/{order}/{lastIndex}")
+    fun getStoreDetailGoodsResponse(
+        @Header("Content-Type") content_type: String,
+        @Header("Authorization") token: String?,
+        @Path("storeIdx") storeIdx: Int,
+        @Path("order") order: Int,
+        @Path("lastIndex") lastIndex: Int,
+        @Query("goodsCategoryIdx") goodsCategoryIdx: Int?,
+        @Query("firstFlag") firstFlag: Int?
+    ): Call<GetStoreDetailGoodsResponse>
+
+    //업체 굿즈 카테고리 보기
+    @GET("/store/{storeIdx}/category")
+    fun getStoreDetailGoodsCategoryResponse(
+        @Header("Content-Type") content_type: String,
+        @Path("storeIdx") storeIdx: Int
+    ): Call<GetStoreDetailGoodsCategoryResponse>
 }

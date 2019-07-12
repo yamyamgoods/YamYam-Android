@@ -2,6 +2,7 @@ package org.yamyamgoods.yamyam_android.storedetail.adapter
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,13 +15,9 @@ import com.bumptech.glide.request.RequestOptions
 import org.yamyamgoods.yamyam_android.R
 import org.yamyamgoods.yamyam_android.dataclass.GoodsData
 
-/**
- * Created By Yun Hyeok
- * on 7월 09, 2019
- */
-
 class StoreDetailRVAdapter(val ctx: Context, var dataList: ArrayList<GoodsData>): RecyclerView.Adapter<StoreDetailRVAdapter.Holder>(){
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): Holder {
+        Log.e("**SDGF","RECYCELRVIEW")
         val view: View = LayoutInflater.from(ctx).inflate(R.layout.rv_item_goods, viewGroup,false)
         return Holder(view)
     }
