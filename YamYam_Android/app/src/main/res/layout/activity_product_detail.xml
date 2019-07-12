@@ -522,14 +522,6 @@
                                                 android:letterSpacing="-0.04"
                                                 android:lineSpacingExtra="15sp"/>
 
-                                        <TextView
-                                                android:id="@+id/textView14"
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:layout_marginLeft="2dp"
-                                                android:text="원"
-                                                android:textColor="@android:color/black"
-                                                android:textSize="17dp"/>
                                     </LinearLayout>
                                 </LinearLayout>
 

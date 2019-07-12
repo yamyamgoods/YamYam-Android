@@ -56,6 +56,11 @@
             android:layout_marginTop="8dp"
             android:text="스토어이름"
             android:textSize="12dp"
+            android:textColor="#6E6E6E"
+            android:fontFamily="@font/notosansregular"
+            android:letterSpacing="-0.04"
+            android:lineSpacingExtra="8sp"
+            android:includeFontPadding="false"
             app:layout_constraintStart_toStartOf="@+id/cl_rv_item_best_goods_image"
             app:layout_constraintTop_toBottomOf="@+id/cl_rv_item_best_goods_image"/>
 
@@ -66,6 +71,11 @@
             android:layout_marginTop="1dp"
             android:text="제품이름"
             android:textSize="15dp"
+            android:textColor="@color/darkgray"
+            android:letterSpacing="-0.04"
+            android:lineSpacingExtra="11sp"
+            android:fontFamily="@font/notosansmedium"
+            android:includeFontPadding="false"
             app:layout_constraintStart_toStartOf="@+id/tv_rv_item_best_goods_store_name"
             app:layout_constraintTop_toBottomOf="@+id/tv_rv_item_best_goods_store_name"/>
 
@@ -74,15 +84,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="00000"
-            android:textColor="@android:color/black"
             android:textSize="15dp"
+            android:textColor="@color/darkgray"
+            android:letterSpacing="-0.04"
+            android:lineSpacingExtra="11sp"
+            android:fontFamily="@font/notosansbold"
+            android:textStyle="bold"
+            android:includeFontPadding="false"
             app:layout_constraintStart_toStartOf="@+id/tv_rv_item_best_goods_product_name"
             app:layout_constraintTop_toBottomOf="@+id/tv_rv_item_best_goods_product_name"/>
 
     <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="@+id/tv_rv_item_best_goods_product_price"
             app:layout_constraintTop_toBottomOf="@+id/tv_rv_item_best_goods_product_price">
@@ -105,7 +119,13 @@
                 android:textSize="12dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/iv_rv_item_best_goods_star"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent"
+                android:letterSpacing="-0.04"
+                android:lineSpacingExtra="8sp"
+                android:fontFamily="@font/notosansbold"
+                android:includeFontPadding="false"
+                android:textColor="@color/darkgray"
+                android:textStyle="bold"/>
 
         <TextView
                 android:id="@+id/textView5"
@@ -114,6 +134,11 @@
                 android:layout_marginStart="8dp"
                 android:text="최소수량 "
                 android:textSize="12dp"
+                android:textColor="#a2a2a2"
+                android:letterSpacing="-0.04"
+                android:lineSpacingExtra="8sp"
+                android:includeFontPadding="false"
+                android:fontFamily="@font/notosansmedium"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/tv_rv_item_best_goods_rate"
                 app:layout_constraintTop_toTopOf="parent"/>
@@ -125,6 +150,11 @@
                 android:foregroundGravity="center_vertical"
                 android:text="10"
                 android:textSize="12dp"
+                android:textColor="#a2a2a2"
+                android:letterSpacing="-0.04"
+                android:lineSpacingExtra="8sp"
+                android:includeFontPadding="false"
+                android:fontFamily="@font/notosansmedium"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView5"
                 app:layout_constraintTop_toTopOf="parent"
@@ -137,6 +167,11 @@
                 android:layout_marginStart="8dp"
                 android:text="리뷰 "
                 android:textSize="12dp"
+                android:textColor="#a2a2a2"
+                android:letterSpacing="-0.04"
+                android:lineSpacingExtra="8sp"
+                android:includeFontPadding="false"
+                android:fontFamily="@font/notosansmedium"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/tv_rv_item_best_goods_minimum_quantity"
                 app:layout_constraintTop_toTopOf="parent"/>
@@ -147,6 +182,11 @@
                 android:layout_height="wrap_content"
                 android:text="300"
                 android:textSize="12dp"
+                android:textColor="#a2a2a2"
+                android:letterSpacing="-0.04"
+                android:lineSpacingExtra="8sp"
+                android:includeFontPadding="false"
+                android:fontFamily="@font/notosansmedium"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView7"
                 app:layout_constraintTop_toTopOf="parent"
