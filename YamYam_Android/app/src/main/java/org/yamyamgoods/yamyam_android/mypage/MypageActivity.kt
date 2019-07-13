@@ -58,6 +58,8 @@ class MypageActivity : AppCompatActivity() {
         ApplicationController.networkServiceUser
     }
 
+//    var alarmIndex: Int = -1
+//    var reviewIndex: Int = -1
     lateinit var mypageProductRVAdapter: MypageProductRVAdapter
     lateinit var mypageAlarmRVAdapter: MypageAlarmRVAdapter
     lateinit var input_profile_img: MultipartBody.Part
@@ -79,6 +81,11 @@ class MypageActivity : AppCompatActivity() {
         btn_mypage_user_image_edit.setOnClickListener {
             changeProfileImage()
         }
+
+//        cl_rv_item_mypage_alarm.setOnClickListener{
+//            getAlarmReviewDetailResponse(alarmIndex, reviewIndex)
+//        }
+
     }
 
     // 유저 정보 서버 통신
@@ -301,6 +308,7 @@ class MypageActivity : AppCompatActivity() {
                                         adapter = MypageAlarmRVAdapter(this@MypageActivity, tmp)
                                         layoutManager = LinearLayoutManager(this@MypageActivity)
                                     }
+
                                     mypageAlarmRVAdapter = MypageAlarmRVAdapter(this@MypageActivity, tmp)
                                     //mypageProductRVAdapter.notifyDataSetChanged()
                                 }
@@ -349,7 +357,7 @@ class MypageActivity : AppCompatActivity() {
                         var intent = Intent(this@MypageActivity, ReviewDetailActivity::class.java)
                         intent.putExtra("reviewIdx", reviewIndex)
                         intent.putExtra("alarmIdx", alarmIndex)
-                        startActivity(intent)
+                        //startActivity(intent)
                     }
                 }
             }

@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+
+<ScrollView android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+
+            tools:context=".reviewwrite.ReviewWriteActivity"
+            xmlns:tools="http://schemas.android.com/tools">
+<android.support.constraint.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".reviewwrite.ReviewWriteActivity"
     android:background="@android:color/white">
 
 
@@ -45,6 +50,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/cl_review_write_top"/>
 
+
+    <!--<ScrollView android:layout_height="match_parent"-->
+                <!--android:layout_width="match_parent">-->
     <android.support.constraint.ConstraintLayout
             android:id="@+id/cl_review_write_product_short_info"
             android:layout_width="0dp"
@@ -389,4 +397,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" android:fontFamily="@font/notosanslight"/>
     </android.support.constraint.ConstraintLayout>
+
 </android.support.constraint.ConstraintLayout>
+</ScrollView>

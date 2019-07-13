@@ -23,6 +23,20 @@ data class ReviewDetailGoodsData(
     val goods_rating: Float,
     val store_name: String
 )
+//
+//data class ReviewAlarmGoodsData(
+//    val goods_review_idx: Int,
+//    val user_idx: Int,
+//    val user_name: String,
+//    val user_img: String,
+//    val goods_review_date: String,
+//    val goods_review_rating: Int,
+//    val goods_review_photo_flag: Int,
+//    val goods_review_like_count: String,
+//    val goods_review_cmt_content: String,
+//    val review_like_flag: Int,
+//    val goods_review_img,
+//)
 
 data class ReviewCommentData(
     val goods_review_cmt_idx: Int,

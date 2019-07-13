@@ -15,6 +15,11 @@ import org.yamyamgoods.yamyam_android.mypage.MypageActivity
 import org.yamyamgoods.yamyam_android.mypage.alarm.MypageAlarmItem
 import org.yamyamgoods.yamyam_android.network.get.AlarmListData
 
+
+var alarmIndex: Int = -1
+var reviewIndex: Int = -1
+
+
 class MypageAlarmRVAdapter(private val ctx: Context, var dataList: List<AlarmListData>) :
     RecyclerView.Adapter<MypageAlarmRVAdapter.Holder>() {
 
@@ -26,10 +31,10 @@ class MypageAlarmRVAdapter(private val ctx: Context, var dataList: List<AlarmLis
     override fun getItemCount(): Int = dataList.size
 
     override fun onBindViewHolder(holder: MypageAlarmRVAdapter.Holder, position: Int) {
-        if (dataList.size.toString() == "[]")
-        {
-            setVisible(holder.emptyClAlarm)
-        }
+//        if (dataList.size.toString() == "[]")
+//        {
+//            setVisible(holder.emptyClAlarm)
+//        }
 
         dataList[position].let { item ->
             //알람 목록에 있는 빨간 색
@@ -40,17 +45,19 @@ class MypageAlarmRVAdapter(private val ctx: Context, var dataList: List<AlarmLis
 //                setInvisible(holder.ivReddot)
 //            }
 
+            alarmIndex = item.alarm_idx
+            reviewIndex = item.goods_review_idx
             holder.alarmContents.text = item.alarm_message
             holder.date.text = item.alarm_date_time
 
-//            holder.clAlarm.setOnClickListener{
-//                (ctx as MypageActivity).getAlarmReviewDetailResponse(item.alarm_idx, item.goods_review_idx)
-//            }
+            holder.clAlarm.setOnClickListener{
+                (ctx as MypageActivity).getAlarmReviewDetailResponse(item.alarm_idx, item.goods_review_idx)
+            }
         }
     }
 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var emptyClAlarm: ConstraintLayout = itemView.findViewById(R.id.cl_mypage_alarm_empty) as ConstraintLayout
+        //var emptyClAlarm: ConstraintLayout = itemView.findViewById(R.id.cl_mypage_alarm_empty) as ConstraintLayout
         var clAlarm: ConstraintLayout = itemView.findViewById(R.id.cl_rv_item_mypage_alarm) as ConstraintLayout
         var ivReddot: ImageView = itemView.findViewById(R.id.iv_rv_item_mypage_alarm_reddot) as ImageView
         var alarmContents: TextView = itemView.findViewById(R.id.tv_rv_item_mypage_alarm_contents) as TextView

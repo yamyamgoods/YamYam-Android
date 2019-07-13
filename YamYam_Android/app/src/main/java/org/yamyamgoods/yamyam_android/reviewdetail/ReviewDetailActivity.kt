@@ -45,12 +45,16 @@ class ReviewDetailActivity : AppCompatActivity() {
         ApplicationController.networkServiceGoods
     }
 
+    var alarmFlag = -1
+
+
     var dataList: ArrayList<ReviewCommentData> = ArrayList()
 
     var likeCount: Int = 0
 
     lateinit var reviewDetailRVAdapter: ReviewDetailRVAdapter
     lateinit var edtComment: EditText;
+
 
     var options: RequestOptions = RequestOptions().transform(CenterCrop(), RoundedCorners(10))
 
@@ -71,6 +75,7 @@ class ReviewDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         Log.v("현주", "들어왔습니다.")
         setContentView(R.layout.activity_review_detail)
+
         getVariables()
         getReviewDetailResponse()
         configureReview()

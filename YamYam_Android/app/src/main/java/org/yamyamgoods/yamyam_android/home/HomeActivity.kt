@@ -41,7 +41,7 @@ class HomeActivity : AppCompatActivity() {
     }
 //    액티비티에서는 Back버튼을 두번 눌렀을 때, 종료되도록
     override fun onBackPressed() {
-        val count = supportFragmentManager.backStackEntryCount
+        var count = supportFragmentManager.backStackEntryCount
         if(count == 0) {
             Log.e("homeActivity", "count0")
             super.onBackPressed()
@@ -53,6 +53,7 @@ class HomeActivity : AppCompatActivity() {
             transaction.addToBackStack(null)
 
             transaction.commit()
+            count = 0
 
         }
     }
