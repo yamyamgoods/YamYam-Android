@@ -37,10 +37,10 @@ class GoodsExhibitionRecyclerViewAdapter(val dataList: ArrayList<ExhibitionData>
 
         var title: String= dataList[position].exhibition_name
         val seperate_title= title.split("/")
-//
-//        holder.title1.text = seperate_title[0]
-//        holder.title2.text = seperate_title[1]
-//        holder.title3.text = seperate_title[2]
+
+        holder.title1.text = seperate_title[0]
+        holder.title2.text = seperate_title[1]
+        holder.title3.text = seperate_title[2]
 
 
         holder.btn.setOnClickListener {
