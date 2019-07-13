@@ -37,7 +37,7 @@
                 android:scaleType="fitCenter"
                 android:layout_marginTop="23dp"
                 android:layout_centerHorizontal="true"
-                app:srcCompat="@drawable/img_store_profile" />
+                app:srcCompat="@drawable/selector_bookmark_flag" />
 
         <TextView
                 android:id="@+id/tv_store_detail_act_store_name"

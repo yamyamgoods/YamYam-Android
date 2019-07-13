@@ -55,16 +55,14 @@ class StoreRankingRVAdapter(private val ctx: Context, private val presenter: Sto
             }
         }
         holder.whole.setOnClickListener {
-            try{
-                ctx.startActivity<StoreDetailActivity>(
-                    "s_idx" to dataList[position].store_idx,
-                    "title" to dataList[position].store_name,
-                    "image" to dataList[position].store_img,
-                    "hashtag" to dataList[position].store_hashtags,
-                    "store_url" to dataList[position].store_url,
-                    "scrap_flag" to dataList[position].store_scrap_flag)
-            } catch (e:Exception){
-            }
+            ctx.startActivity<StoreDetailActivity>(
+                "s_idx" to dataList[position].store_idx,
+                "title" to dataList[position].store_name,
+                "image" to dataList[position].store_img,
+                "hashtag" to dataList[position].store_hashtags,
+                "store_url" to dataList[position].store_url,
+                "isBookmarked" to dataList[position].store_scrap_flag
+            )
         }
     }
 
