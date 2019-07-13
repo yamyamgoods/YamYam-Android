@@ -17,6 +17,16 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme.NoActionBar"
             android:usesCleartextTraffic="true">
+        <activity
+                android:name=".SplashActivity"
+                  android:label="얌얌굿즈"
+                  android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
         <activity android:name=".home.bookmark.BookmarkActivity">
         </activity>
 
@@ -41,13 +51,9 @@
                 android:name=".LoginActivity"
                 android:label="얌얌굿즈"
                 android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity android:name=".home.HomeActivity">
+
         </activity>
     </application>
 
