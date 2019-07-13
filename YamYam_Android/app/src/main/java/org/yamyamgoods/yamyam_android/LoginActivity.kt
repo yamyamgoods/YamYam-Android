@@ -36,7 +36,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         btn_login_act_twitter_login.setOnClickListener {
-            Toast.makeText(this, "트위터 로그인 서비스 불가능", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "트위터 로그인 서비스 준비중입니다!!", Toast.LENGTH_LONG).show()
         }
 
         btn_login_act_without_login.setOnClickListener {

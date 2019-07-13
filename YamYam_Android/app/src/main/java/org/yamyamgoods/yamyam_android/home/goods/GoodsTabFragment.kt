@@ -46,14 +46,16 @@ class GoodsTabFragment : Fragment(){
         super.onActivityCreated(savedInstanceState)
         //Goods탭 처음에 기획전 화면을 띄우도록
         val transaction: FragmentTransaction = (context as HomeActivity).supportFragmentManager.beginTransaction()
-        transaction.add(R.id.fl_goods_fragment_frag, GoodsExhibitionFragment()).commit()
+        transaction.add(R.id.fl_goods_fragment_frag, GoodsExhibitionFragment())
+        transaction.addToBackStack(null)
+        transaction.commit()
 
         btn_goods_fragment_search.setOnClickListener {
             (context as HomeActivity).startActivity<SearchActivity>()
         }
     }
 
-    private fun goodsTabResponse(){
+    fun goodsTabResponse(){
         val getGoodsTabResponse = networkServiceGoods.getGoodsTabResponse("application/json", User.authorization)
         getGoodsTabResponse.enqueue(object: Callback<GetGoodsTabResponse> {
             override fun onFailure(call: Call<GetGoodsTabResponse>, t:Throwable) {
@@ -72,7 +74,7 @@ class GoodsTabFragment : Fragment(){
         })
     }
 
-    private fun setRecyclerView(){
+    fun setRecyclerView(){
         goodsCategoryRecyclerViewAdapter = GoodsCategoryRecyclerViewAdapter(context!!,dataList)
         rv_goods_frag_category.adapter = goodsCategoryRecyclerViewAdapter
         rv_goods_frag_category.layoutManager = LinearLayoutManager(context, LinearLayout.HORIZONTAL,false) as RecyclerView.LayoutManager?

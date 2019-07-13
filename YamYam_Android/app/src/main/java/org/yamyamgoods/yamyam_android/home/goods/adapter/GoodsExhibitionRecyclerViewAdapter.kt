@@ -29,7 +29,7 @@ class GoodsExhibitionRecyclerViewAdapter(val dataList: ArrayList<ExhibitionData>
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
         var options: RequestOptions = RequestOptions().transform(CenterCrop(), RoundedCorners(10))
-//        //통신할때
+        //통신할때
         Glide.with(ctx)
                 .load(dataList[position].exhibition_img)
                 .apply(options)

@@ -50,7 +50,10 @@ class GoodsCategoryRecyclerViewAdapter (val ctx: Context, val dataList: ArrayLis
 
                 //vp를 CategoryDetail로 변환
                 val transaction: FragmentTransaction = (ctx as HomeActivity).supportFragmentManager.beginTransaction()
-                transaction.replace(R.id.fl_goods_fragment_frag, GoodsCategoryDetailFragment()).commit()
+                transaction.replace(R.id.fl_goods_fragment_frag, GoodsCategoryDetailFragment())
+                //transaction.addToBackStack(null)
+                transaction.commit()
+
                 GoodsCategoryDetailFragment.instance.categoryIdx = dataList[position].goods_category_idx
             } catch (e: Exception){
             }

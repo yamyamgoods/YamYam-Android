@@ -79,7 +79,7 @@
                     android:includeFontPadding="false"
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginVertical="8dp"
-                    android:text="폰케이스" />
+                    android:text="스티커" />
         </RelativeLayout>
         <RelativeLayout
                 android:id="@+id/recommend3"
@@ -98,7 +98,7 @@
                     android:includeFontPadding="false"
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginVertical="8dp"
-                    android:text="아크릴 키링" />
+                    android:text="양면슬로건" />
         </RelativeLayout>
         <RelativeLayout
                 android:id="@+id/recommend4"
@@ -117,7 +117,7 @@
                     android:includeFontPadding="false"
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginVertical="8dp"
-                    android:text="에폭시 스티커" />
+                    android:text="홀로그램슬로건" />
         </RelativeLayout>
         <RelativeLayout
                 android:id="@+id/recommend5"
@@ -138,7 +138,7 @@
                     android:includeFontPadding="false"
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginVertical="8dp"
-                    android:text="등신대" />
+                    android:text="블링" />
         </RelativeLayout>
         <RelativeLayout
                 android:id="@+id/recommend6"
@@ -159,7 +159,7 @@
                     android:includeFontPadding="false"
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginVertical="8dp"
-                    android:text="떡메모지" />
+                    android:text="후니프린팅" />
         </RelativeLayout>
         <RelativeLayout
                 android:id="@+id/recommend7"
@@ -178,7 +178,7 @@
                     android:includeFontPadding="false"
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginVertical="8dp"
-                    android:text="파우치" />
+                    android:text="명함" />
         </RelativeLayout>
         <RelativeLayout
                 android:id="@+id/recommend8"
@@ -199,7 +199,7 @@
                     android:includeFontPadding="false"
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginVertical="8dp"
-                    android:text="홀로그램 슬로건" />
+                    android:text="핀버튼" />
         </RelativeLayout>
         <RelativeLayout
                 android:id="@+id/recommend9"
@@ -220,7 +220,7 @@
                     android:includeFontPadding="false"
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginVertical="8dp"
-                    android:text="뱃지" />
+                    android:text="레드프린팅" />
         </RelativeLayout>
         <RelativeLayout
                 android:id="@+id/recommend10"
@@ -239,7 +239,7 @@
                     android:includeFontPadding="false"
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginVertical="8dp"
-                    android:text="스트랩 키링" />
+                    android:text="키링" />
         </RelativeLayout>
         <RelativeLayout
                 android:id="@+id/recommend11"
@@ -260,7 +260,7 @@
                     android:includeFontPadding="false"
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginVertical="8dp"
-                    android:text="그립톡" />
+                    android:text="리플렛" />
         </RelativeLayout>
     </RelativeLayout>
 

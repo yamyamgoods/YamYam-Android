@@ -42,8 +42,6 @@ class SessionCallback(mContext: Context) : ISessionCallback {
         user.requestMe(object : MeResponseCallback(){
             override fun onSuccess(result: UserProfile?) {
                 if(result != null){
-
-
                     KakaoLoginResponse()
                 }
             }
@@ -76,7 +74,7 @@ class SessionCallback(mContext: Context) : ISessionCallback {
                     User.authorization = authorization
                     User.refreshtoken = refreshtoken
                     Log.e("*****KakaoLogin Success","성공옹ㅇ")
-                    Toast.makeText(mContext,"성공",Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(mContext,"얌얌!",Toast.LENGTH_SHORT).show()
 
                     val intent = Intent(mContext,HomeActivity::class.java)
                     mContext.startActivity(intent)

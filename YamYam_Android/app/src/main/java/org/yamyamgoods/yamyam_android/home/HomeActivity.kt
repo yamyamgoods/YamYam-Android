@@ -1,10 +1,14 @@
 package org.yamyamgoods.yamyam_android.home
 
 import android.os.Bundle
+import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.View
 import kotlinx.android.synthetic.main.activity_home.*
 import org.yamyamgoods.yamyam_android.R
+import org.yamyamgoods.yamyam_android.home.goods.GoodsExhibitionFragment
+import org.yamyamgoods.yamyam_android.home.goods.GoodsTabFragment
 
 class HomeActivity : AppCompatActivity() {
 
@@ -35,12 +39,21 @@ class HomeActivity : AppCompatActivity() {
     fun gotoBookmarkTab() {
         vp_home_act_pager.currentItem = 3
     }
+//    액티비티에서는 Back버튼을 두번 눌렀을 때, 종료되도록
+    override fun onBackPressed() {
+        val count = supportFragmentManager.backStackEntryCount
+        if(count == 0) {
+            Log.e("homeActivity", "count0")
+            super.onBackPressed()
+        } else {
+            supportFragmentManager.popBackStack()
+            Log.e("homeActivity", "pop")
+            val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fl_goods_fragment_frag, GoodsExhibitionFragment())
+            transaction.addToBackStack(null)
 
-    //액티비티에서는 Back버튼을 두번 눌렀을 때, 종료되도록
-//    override fun onBackPressed() {
-//        val fragment = this.supportFragmentManager.findFragmentById(R.id.fl_goods_fragment_frag)
-//        (fragment as? GoodsTabFragment.IOnBackPrssed)?.onBackPressed()?.not()?.let{
-//            super.onBackPressed()
-//        }
-//    }
+            transaction.commit()
+
+        }
+    }
 }
