@@ -6,7 +6,7 @@
 
 ### Workflow
 
-![yamyam-workflow](./public/images/yamyam-workflow.jpeg)
+![yamyam-workflow](https://user-images.githubusercontent.com/41736866/71546486-91908b80-29da-11ea-936c-562686ca201b.jpeg)
 
 ------
 
