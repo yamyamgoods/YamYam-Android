@@ -13,3 +13,4 @@
 ### Development Environment
 
 - Kotlin
+- Android Studio 3.5.2
